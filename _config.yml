@@ -164,5 +164,5 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
       type: git
-      repo: ssh://git@github.com/zengjunjie1026/zengjunjie.github.io.git
+      repo: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git
       branch: master

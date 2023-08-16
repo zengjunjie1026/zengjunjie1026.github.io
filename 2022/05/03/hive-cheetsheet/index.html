@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>hive-cheetsheet | 分子美食家的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1. Hive导出到.csv文件由于Hive中导出的文件不是以逗号，而是以Tab（或者说’\t’）为分隔符的，因此，下面的命令自己试过可以转换为逗号分隔的文件，也就是真正的csv文件。 当然，有时候可能还需要跟转码的工具进行组合，转换编码格式。 sed -i ‘s&#x2F;\t&#x2F;,&#x2F;g’ xxx.csv 当然，第一步是 hive -e “SQL语句” &gt; xxx.csv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hive-cheetsheet">
+<meta property="og:url" content="http://example.com/2022/05/03/hive-cheetsheet/index.html">
+<meta property="og:site_name" content="分子美食家的博客">
+<meta property="og:description" content="1. Hive导出到.csv文件由于Hive中导出的文件不是以逗号，而是以Tab（或者说’\t’）为分隔符的，因此，下面的命令自己试过可以转换为逗号分隔的文件，也就是真正的csv文件。 当然，有时候可能还需要跟转码的工具进行组合，转换编码格式。 sed -i ‘s&#x2F;\t&#x2F;,&#x2F;g’ xxx.csv 当然，第一步是 hive -e “SQL语句” &gt; xxx.csv">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-03T00:51:47.000Z">
+<meta property="article:modified_time" content="2022-05-04T00:07:08.068Z">
+<meta property="article:author" content="andrew">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="分子美食家的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">分子美食家的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">野生工程师的专栏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-hive-cheetsheet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/hive-cheetsheet/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:51:47.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      hive-cheetsheet
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1-Hive导出到-csv文件"><a href="#1-Hive导出到-csv文件" class="headerlink" title="1. Hive导出到.csv文件"></a>1. Hive导出到.csv文件</h3><p>由于Hive中导出的文件不是以逗号，而是以Tab（或者说’\t’）为分隔符的，因此，下面的命令自己试过可以转换为逗号分隔的文件，也就是真正的csv文件。</p>
+<p>当然，有时候可能还需要跟转码的工具进行组合，转换编码格式。</p>
+<p>sed -i ‘s&#x2F;\t&#x2F;,&#x2F;g’ xxx.csv</p>
+<p>当然，第一步是</p>
+<p>hive -e “SQL语句” &gt; xxx.csv</p>
+<p>所以完整的流程代码是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive -e <span class="string">&quot;SQL query&quot;</span> &gt; xxx.csv</span><br><span class="line">sed -i <span class="string">&#x27;s/\t/,/g&#x27;</span> xxx.csv</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-Hive导入-csv文件建表"><a href="#2-Hive导入-csv文件建表" class="headerlink" title="2. Hive导入.csv文件建表"></a>2. Hive导入.csv文件建表</h3><p>注意：</p>
+<p>为了配合csv文件，建表的时候，最后一行的row format delimited fields terminated by ‘,’;必须要有，否则列会出问题</p>
+<p>（这牵涉到csv和tsv等问题）</p>
+<p>所以，在Hive下完整的删表建表导数据的流程如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> table_name;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> beike.beike_ershoufang (</span><br><span class="line">    details_name string,</span><br><span class="line">    postition_url string ,</span><br><span class="line">    house_url string,</span><br><span class="line">    house_id string,</span><br><span class="line">    house_info string,</span><br><span class="line">    follew_info string,</span><br><span class="line">    subway string,</span><br><span class="line">    total_price <span class="type">float</span>,</span><br><span class="line">    total_price_danwei string,</span><br><span class="line">    unit_price <span class="type">float</span>,</span><br><span class="line">    district string,</span><br><span class="line">    city_name string,</span><br><span class="line">    fetchtime <span class="type">timestamp</span></span><br><span class="line">)COMMENT <span class="string">&#x27;贝壳二手房&#x27;</span></span><br><span class="line">PARTITIONED <span class="keyword">BY</span> (dt STRING, cd3 STRING)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line"></span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/home/andrew/output.csv&#x27;</span> </span><br><span class="line"><span class="keyword">into</span> <span class="keyword">table</span>  beike.beike_ershoufang <span class="keyword">PARTITION</span>(dt<span class="operator">=</span><span class="string">&#x27;2017-03-31&#x27;</span> ,cd3<span class="operator">=</span><span class="string">&#x27;1389&#x27;</span>);;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Hive看包括行数在内的信息"><a href="#3-Hive看包括行数在内的信息" class="headerlink" title="3. Hive看包括行数在内的信息"></a>3. Hive看包括行数在内的信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show tblproperties table_name;</span><br><span class="line"></span><br><span class="line">desc formatted table_name;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Hive一次写入一个表的多个分区的数据"><a href="#4-Hive一次写入一个表的多个分区的数据" class="headerlink" title="4. Hive一次写入一个表的多个分区的数据"></a>4. Hive一次写入一个表的多个分区的数据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition=true;</span><br><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line">insert overwrite table table1 partition(partition_column)</span><br><span class="line">select col1, col2,..., partition_column from table1;</span><br></pre></td></tr></table></figure>
+<h3 id="5-Hive一次写入大量分区"><a href="#5-Hive一次写入大量分区" class="headerlink" title="5. Hive一次写入大量分区"></a>5. Hive一次写入大量分区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.max.dynamic.partitions=100000;</span><br><span class="line">--每一个mapreduce job允许创建的分区的最大数量，如果超过了这个数量就会报错</span><br><span class="line">set hive.exec.max.dynamic.partitions.pernode=100000;</span><br><span class="line">--hive.exec.max.created.files ：所有的mapreduce job允许创建的文件的最大数量</span><br><span class="line">set hive.exec.max.created.files=10000;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6避免产生小文件"><a href="#6避免产生小文件" class="headerlink" title="6避免产生小文件"></a>6避免产生小文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--在MapReduce的任务结束时合并小文件</span><br><span class="line">set hive.merge.mapredfiles=true;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7Hive开启本地模式"><a href="#7Hive开启本地模式" class="headerlink" title="7Hive开启本地模式"></a>7Hive开启本地模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.mode.local.auto=true;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8查询打印表头"><a href="#8查询打印表头" class="headerlink" title="8查询打印表头"></a>8查询打印表头</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.cli.print.header=true;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/hive-cheetsheet/" data-id="cl2qt6jbd0001k0rlhklk2k9e" data-title="hive-cheetsheet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/03/elasticsearch-cheetsheet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          elasticsearch-cheetsheet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/03/spark-cheetsheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">spark-cheetsheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/scala-spark-na-null%E5%A4%84%E7%90%86/">scala spark na null处理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">scala-spark-dataframe—groupby基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/fedora-k8s/">fedora-k8s</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/openwrt%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">openwrt安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/ubuntu-supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">ubuntu supervisor进程管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 andrew<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

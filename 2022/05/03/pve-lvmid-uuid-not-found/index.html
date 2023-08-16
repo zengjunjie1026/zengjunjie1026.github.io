@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>pve lvmid/uuid not found | 分子美食家的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="这个是官方的修复指南，but并没有什么卵用。https:&#x2F;&#x2F;pve.proxmox.com&#x2F;wiki&#x2F;Recover_From_Grub_Failure 不过这chroot的命令很重要。pve自己的iso的debug模式不好用，键盘输入不了字，我选择的是archlinux的livecd。   12345678910111213141516#激活逻辑卷sudo vgscansudo vgchange">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pve lvmid&#x2F;uuid not found">
+<meta property="og:url" content="http://example.com/2022/05/03/pve-lvmid-uuid-not-found/index.html">
+<meta property="og:site_name" content="分子美食家的博客">
+<meta property="og:description" content="这个是官方的修复指南，but并没有什么卵用。https:&#x2F;&#x2F;pve.proxmox.com&#x2F;wiki&#x2F;Recover_From_Grub_Failure 不过这chroot的命令很重要。pve自己的iso的debug模式不好用，键盘输入不了字，我选择的是archlinux的livecd。   12345678910111213141516#激活逻辑卷sudo vgscansudo vgchange">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-03T00:05:00.000Z">
+<meta property="article:modified_time" content="2022-05-03T00:23:51.332Z">
+<meta property="article:author" content="andrew">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="分子美食家的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">分子美食家的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">野生工程师的专栏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-pve-lvmid-uuid-not-found" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/pve-lvmid-uuid-not-found/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:05:00.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      pve lvmid/uuid not found
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>这个是官方的修复指南，but并没有什么卵用。<br><a target="_blank" rel="noopener" href="https://pve.proxmox.com/wiki/Recover_From_Grub_Failure">https://pve.proxmox.com/wiki/Recover_From_Grub_Failure</a></p>
+<p>不过这chroot的命令很重要。pve自己的iso的debug模式不好用，键盘输入不了字，我选择的是archlinux的livecd。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#激活逻辑卷</span></span><br><span class="line">sudo vgscan</span><br><span class="line">sudo vgchange -ay</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#chroot 大法</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> /mnt/lvm/</span><br><span class="line">sudo mount /dev/pve/root /mnt/lvm/</span><br><span class="line">sudo mount /dev/sda1 /mnt/lvm/boot/efi  <span class="comment">#必须得挂在efi下面</span></span><br><span class="line">sudo mount -t proc proc /mnt/lvm/proc</span><br><span class="line">sudo mount -t sysfs sys /mnt/lvm//sys</span><br><span class="line"><span class="comment"># -t 是文件类型 -o 是绑定</span></span><br><span class="line">sudo mount -o <span class="built_in">bind</span> /dev /mnt/lvm//dev</span><br><span class="line">sudo mount -o <span class="built_in">bind</span> /run /mnt/lvm//run</span><br><span class="line"></span><br><span class="line"><span class="built_in">chroot</span> /mnt/lvm</span><br></pre></td></tr></table></figure>
+
+
+<p>参考<a target="_blank" rel="noopener" href="https://zhangguanzhang.github.io/2022/02/18/proxmox-boot-disk-lvmid-not-found/">https://zhangguanzhang.github.io/2022/02/18/proxmox-boot-disk-lvmid-not-found/</a><br>这位大佬的文章，终于意识到是不小心拔了服务器电源后导致lvmid发生变化。需要修改lvmid </p>
+<pre><code>chroot之后有三个问题，一个是/bin/zsh not find,
+修改为bash chroot /mnt/lvm bash
+
+执行update-grub command not finb
+source /etc/profile
+激活环境变量
+
+updete-grub之后，gurb-install /dev/sda 必须是这个
+不报错的话就可以reboot好了。
+
+我比较衰，还是抱错lvmid/uuid not found
+</code></pre>
+<p>重要命令是这些  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修复lvmid</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 结尾 pve 是 root 所在的 vg 名字  </span></span><br><span class="line">vgcfgrestore --<span class="built_in">test</span> -f /etc/lvm/backup/pve pve  </span><br><span class="line"><span class="comment"># 输入 y 回车，失败了就下面的 --force 选项运行  </span></span><br><span class="line">vgcfgrestore --force -f /etc/lvm/backup/pve pve  </span><br></pre></td></tr></table></figure>
+
+
+<p>修复不报vmid&#x2F;uuid not found，但是有磁盘signature错误 &#x2F;grub&#x2F;stage1 not correct read.</p>
+<p>绝望之际。试了试安装 grub-pc这个取代 grub<br>apt instal grub-pc<br>选择sda安装。</p>
+<p>然后就好了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/pve-lvmid-uuid-not-found/" data-id="cl2per5a300008hrl0do779qn" data-title="pve lvmid/uuid not found" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/03/hive%E5%90%8C%E6%AD%A5elasticsearch%E7%9A%84%E6%95%B0%E6%8D%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          hive同步elasticsearch的数据
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/03/%E6%9B%BE%E4%BF%8A%E6%9D%B0%E7%9A%84%E5%B0%8F%E7%AB%99/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">曾俊杰的小站</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/scala-spark-na-null%E5%A4%84%E7%90%86/">scala spark na null处理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">scala-spark-dataframe—groupby基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/fedora-k8s/">fedora-k8s</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/openwrt%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">openwrt安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/ubuntu-supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">ubuntu supervisor进程管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 andrew<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

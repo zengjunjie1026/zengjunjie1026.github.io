@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>fedora-k8s | 分子美食家的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="[root@fedora-pve]&#x2F;home&#x2F;andrew# systemctl disable firewalldRemoved &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service.Removed &#x2F;etc&#x2F;systemd&#x2F;system">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fedora-k8s">
+<meta property="og:url" content="http://example.com/2022/05/04/fedora-k8s/index.html">
+<meta property="og:site_name" content="分子美食家的博客">
+<meta property="og:description" content="[root@fedora-pve]&#x2F;home&#x2F;andrew# systemctl disable firewalldRemoved &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service.Removed &#x2F;etc&#x2F;systemd&#x2F;system">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-04T10:23:20.000Z">
+<meta property="article:modified_time" content="2022-05-04T14:07:19.470Z">
+<meta property="article:author" content="andrew">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="分子美食家的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">分子美食家的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">野生工程师的专栏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-fedora-k8s" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/04/fedora-k8s/" class="article-date">
+  <time class="dt-published" datetime="2022-05-04T10:23:20.000Z" itemprop="datePublished">2022-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      fedora-k8s
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>[root@fedora-pve]&#x2F;home&#x2F;andrew# systemctl disable firewalld<br>Removed &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service.<br>Removed &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;firewalld.service.<br>[root@fedora-pve]&#x2F;home&#x2F;andrew# systemctl stop firewalld<br>[root@fedora-pve]&#x2F;home&#x2F;andrew# setenforce 0<br>sed -i ‘s&#x2F;SELINUX&#x3D;enforcing&#x2F;SELINUX&#x3D;disabled&#x2F;g’ &#x2F;etc&#x2F;selinux&#x2F;config</p>
+<p>swapoff -a<br>sed -ri ‘s&#x2F;.<em>swap.</em>&#x2F;#&amp;&#x2F;‘ &#x2F;etc&#x2F;fstab<br>echo “vm.swappiness &#x3D; 0” &gt;&gt; &#x2F;etc&#x2F;sysctl.conf<br>sysctl -p</p>
+<p>cat &lt;<EOF >  &#x2F;etc&#x2F;sysctl.d&#x2F;k8s.conf<br>net.bridge.bridge-nf-call-ip6tables &#x3D; 1<br>net.bridge.bridge-nf-call-iptables &#x3D; 1<br>EOF</p>
+<p>[root@fedora-pve]&#x2F;home&#x2F;andrew# cat &lt;<EOF > &#x2F;etc&#x2F;yum.repos.d&#x2F;kubernetes.repo<br>[kubernetes]<br>name&#x3D;Kubernetes<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/">https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</a><br>enabled&#x3D;1<br>gpgcheck&#x3D;1<br>repo_gpgcheck&#x3D;1<br>gpgkey&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a> <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</a><br>EOF<br>[root@fedora-pve]&#x2F;home&#x2F;andrew# yum install -y kubelet kubeadm kubectl<br>Kubernetes                                      1.0 kB&#x2F;s | 844  B     00:00<br>Kubernetes                                      119 kB&#x2F;s | 6.0 kB     00:00<br>导入 GPG 公钥 0x0B5FC9E2:<br> Userid: “Rapture Automatic Signing Key (cloud-rapture-signing-key-2022-03-07-08_01_01.pub)”<br> 指纹: 9C5A 47A0 DEDD 6927 121F 9095 DAFF B062 0B5F C9E2<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入 GPG 公钥 0x307EA071:<br> Userid: “Rapture Automatic Signing Key (cloud-rapture-signing-key-2021-03-01-08_01_09.pub)”<br> 指纹: 7F92 E05B 3109 3BEF 5A3C 2D38 FEEA 9169 307E A071<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入 GPG 公钥 0x836F4BEB:<br> Userid: “gLinux Rapture Automatic Signing Key (&#x2F;&#x2F;depot&#x2F;google3&#x2F;production&#x2F;borg&#x2F;cloud-rapture&#x2F;keys&#x2F;cloud-rapture-pubkeys&#x2F;cloud-rapture-signing-key-2020-12-03-16_08_05.pub) <a href="mailto:&#x67;&#x6c;&#x69;&#110;&#117;&#120;&#45;&#116;&#101;&#97;&#x6d;&#x40;&#x67;&#x6f;&#x6f;&#x67;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;">&#x67;&#x6c;&#x69;&#110;&#117;&#120;&#45;&#116;&#101;&#97;&#x6d;&#x40;&#x67;&#x6f;&#x6f;&#x67;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;</a>“<br> 指纹: 59FE 0256 8272 69DC 8157 8F92 8B57 C5C2 836F 4BEB<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入 GPG 公钥 0xDC6315A3:<br> Userid: “Artifact Registry Repository Signer <a href="mailto:&#97;&#x72;&#x74;&#x69;&#102;&#97;&#99;&#116;&#x2d;&#x72;&#x65;&#103;&#105;&#x73;&#116;&#x72;&#121;&#x2d;&#114;&#x65;&#112;&#111;&#115;&#x69;&#116;&#x6f;&#114;&#x79;&#45;&#115;&#x69;&#103;&#110;&#101;&#x72;&#64;&#x67;&#111;&#111;&#x67;&#108;&#101;&#x2e;&#x63;&#x6f;&#109;">&#97;&#x72;&#x74;&#x69;&#102;&#97;&#99;&#116;&#x2d;&#x72;&#x65;&#103;&#105;&#x73;&#116;&#x72;&#121;&#x2d;&#114;&#x65;&#112;&#111;&#115;&#x69;&#116;&#x6f;&#114;&#x79;&#45;&#115;&#x69;&#103;&#110;&#101;&#x72;&#64;&#x67;&#111;&#111;&#x67;&#108;&#101;&#x2e;&#x63;&#x6f;&#109;</a>“<br> 指纹: 35BA A0B3 3E9E B396 F59C A838 C0BA 5CE6 DC63 15A3<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>Kubernetes                                       20 kB&#x2F;s | 975  B     00:00<br>导入 GPG 公钥 0x3E1BA8D5:<br> Userid: “Google Cloud Packages RPM Signing Key <a href="mailto:&#x67;&#99;&#x2d;&#x74;&#101;&#97;&#x6d;&#x40;&#x67;&#x6f;&#x6f;&#103;&#x6c;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x67;&#99;&#x2d;&#x74;&#101;&#97;&#x6d;&#x40;&#x67;&#x6f;&#x6f;&#103;&#x6c;&#x65;&#x2e;&#99;&#111;&#x6d;</a>“<br> 指纹: 3749 E1BA 95A8 6CE0 5454 6ED2 F09C 394C 3E1B A8D5<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</a><br>Kubernetes                                      439 kB&#x2F;s | 144 kB     00:00<br>依赖关系解决。<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br> 软件包                     架构       版本                仓库            大小<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>安装:<br> kubeadm                    x86_64     1.24.0-0            kubernetes     9.5 M<br> kubectl                    x86_64     1.24.0-0            kubernetes     9.9 M<br> kubelet                    x86_64     1.24.0-0            kubernetes      20 M<br>安装依赖关系:<br> conntrack-tools            x86_64     1.4.5-8.fc35        fedora         202 k<br> cri-tools                  x86_64     1.23.0-0            kubernetes     7.1 M<br> libnetfilter_cthelper      x86_64     1.0.0-20.fc35       fedora          22 k<br> libnetfilter_cttimeout     x86_64     1.0.0-18.fc35       fedora          22 k<br> libnetfilter_queue         x86_64     1.0.2-18.fc35       fedora          27 k<br> socat                      x86_64     1.7.4.2-1.fc35      updates        302 k</p>
+<h1 id="事务概要"><a href="#事务概要" class="headerlink" title="事务概要"></a>事务概要</h1><p>安装  9 软件包</p>
+<p>总下载：47 M<br>安装大小：233 M<br>下载软件包：<br>(1&#x2F;9): libnetfilter_cthelper-1.0.0-20.fc35.x86_  34 kB&#x2F;s |  22 kB     00:00<br>(2&#x2F;9): libnetfilter_cttimeout-1.0.0-18.fc35.x86  32 kB&#x2F;s |  22 kB     00:00<br>(3&#x2F;9): conntrack-tools-1.4.5-8.fc35.x86_64.rpm  238 kB&#x2F;s | 202 kB     00:00<br>(4&#x2F;9): libnetfilter_queue-1.0.2-18.fc35.x86_64.  40 kB&#x2F;s |  27 kB     00:00<br>(5&#x2F;9): 4d300a7655f56307d35f127d99dc192b6aa4997f 5.5 MB&#x2F;s | 7.1 MB     00:01<br>(6&#x2F;9): socat-1.7.4.2-1.fc35.x86_64.rpm          195 kB&#x2F;s | 302 kB     00:01<br>(7&#x2F;9): dda11ee75bc7fcb01e32512cefb8f686dc6a7383 4.2 MB&#x2F;s | 9.5 MB     00:02<br>(8&#x2F;9): 363f3fbfa8b89bb978e2d089e52ba59847f14383 4.1 MB&#x2F;s |  20 MB     00:04</p>
+<h2 id="9-x2F-9-0c7a02e05273d05ea82ca13546853b65fbc257dd-1-6-MB-x2F-s-9-9-MB-00-06"><a href="#9-x2F-9-0c7a02e05273d05ea82ca13546853b65fbc257dd-1-6-MB-x2F-s-9-9-MB-00-06" class="headerlink" title="(9&#x2F;9): 0c7a02e05273d05ea82ca13546853b65fbc257dd 1.6 MB&#x2F;s | 9.9 MB     00:06"></a>(9&#x2F;9): 0c7a02e05273d05ea82ca13546853b65fbc257dd 1.6 MB&#x2F;s | 9.9 MB     00:06</h2><p>总计                                            3.8 MB&#x2F;s |  47 MB     00:12<br>Kubernetes                                      124 kB&#x2F;s | 6.0 kB     00:00<br>导入 GPG 公钥 0x0B5FC9E2:<br> Userid: “Rapture Automatic Signing Key (cloud-rapture-signing-key-2022-03-07-08_01_01.pub)”<br> 指纹: 9C5A 47A0 DEDD 6927 121F 9095 DAFF B062 0B5F C9E2<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入公钥成功<br>导入 GPG 公钥 0x307EA071:<br> Userid: “Rapture Automatic Signing Key (cloud-rapture-signing-key-2021-03-01-08_01_09.pub)”<br> 指纹: 7F92 E05B 3109 3BEF 5A3C 2D38 FEEA 9169 307E A071<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入公钥成功<br>导入 GPG 公钥 0x836F4BEB:<br> Userid: “gLinux Rapture Automatic Signing Key (&#x2F;&#x2F;depot&#x2F;google3&#x2F;production&#x2F;borg&#x2F;cloud-rapture&#x2F;keys&#x2F;cloud-rapture-pubkeys&#x2F;cloud-rapture-signing-key-2020-12-03-16_08_05.pub) <a href="mailto:&#103;&#x6c;&#x69;&#110;&#x75;&#120;&#x2d;&#x74;&#101;&#97;&#x6d;&#64;&#103;&#111;&#x6f;&#103;&#x6c;&#x65;&#46;&#x63;&#111;&#x6d;">&#103;&#x6c;&#x69;&#110;&#x75;&#120;&#x2d;&#x74;&#101;&#97;&#x6d;&#64;&#103;&#111;&#x6f;&#103;&#x6c;&#x65;&#46;&#x63;&#111;&#x6d;</a>“<br> 指纹: 59FE 0256 8272 69DC 8157 8F92 8B57 C5C2 836F 4BEB<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入公钥成功<br>导入 GPG 公钥 0xDC6315A3:<br> Userid: “Artifact Registry Repository Signer <a href="mailto:&#97;&#x72;&#116;&#x69;&#102;&#x61;&#x63;&#116;&#45;&#x72;&#x65;&#103;&#x69;&#115;&#116;&#x72;&#x79;&#x2d;&#114;&#x65;&#x70;&#x6f;&#115;&#x69;&#x74;&#x6f;&#114;&#x79;&#45;&#115;&#105;&#x67;&#x6e;&#x65;&#114;&#64;&#x67;&#x6f;&#111;&#x67;&#108;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#97;&#x72;&#116;&#x69;&#102;&#x61;&#x63;&#116;&#45;&#x72;&#x65;&#103;&#x69;&#115;&#116;&#x72;&#x79;&#x2d;&#114;&#x65;&#x70;&#x6f;&#115;&#x69;&#x74;&#x6f;&#114;&#x79;&#45;&#115;&#105;&#x67;&#x6e;&#x65;&#114;&#64;&#x67;&#x6f;&#111;&#x67;&#108;&#101;&#x2e;&#99;&#x6f;&#x6d;</a>“<br> 指纹: 35BA A0B3 3E9E B396 F59C A838 C0BA 5CE6 DC63 15A3<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</a><br>导入公钥成功<br>Kubernetes                                       13 kB&#x2F;s | 975  B     00:00<br>导入 GPG 公钥 0x3E1BA8D5:<br> Userid: “Google Cloud Packages RPM Signing Key <a href="mailto:&#103;&#x63;&#45;&#116;&#x65;&#x61;&#x6d;&#x40;&#x67;&#x6f;&#111;&#103;&#108;&#x65;&#46;&#99;&#111;&#x6d;">&#103;&#x63;&#45;&#116;&#x65;&#x61;&#x6d;&#x40;&#x67;&#x6f;&#111;&#103;&#108;&#x65;&#46;&#99;&#111;&#x6d;</a>“<br> 指纹: 3749 E1BA 95A8 6CE0 5454 6ED2 F09C 394C 3E1B A8D5<br> 来自: <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg">https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</a><br>导入公钥成功<br>运行事务检查<br>事务检查成功。<br>运行事务测试<br>事务测试成功。<br>运行事务<br>  准备中  :                                                                 1&#x2F;1<br>  安装    : kubectl-1.24.0-0.x86_64                                         1&#x2F;9<br>  安装    : cri-tools-1.23.0-0.x86_64                                       2&#x2F;9<br>  安装    : socat-1.7.4.2-1.fc35.x86_64                                     3&#x2F;9<br>  安装    : libnetfilter_queue-1.0.2-18.fc35.x86_64                         4&#x2F;9<br>  安装    : libnetfilter_cttimeout-1.0.0-18.fc35.x86_64                     5&#x2F;9<br>  安装    : libnetfilter_cthelper-1.0.0-20.fc35.x86_64                      6&#x2F;9<br>  安装    : conntrack-tools-1.4.5-8.fc35.x86_64                             7&#x2F;9<br>  运行脚本: conntrack-tools-1.4.5-8.fc35.x86_64                             7&#x2F;9<br>  安装    : kubelet-1.24.0-0.x86_64                                         8&#x2F;9<br>  安装    : kubeadm-1.24.0-0.x86_64                                         9&#x2F;9<br>  运行脚本: kubeadm-1.24.0-0.x86_64                                         9&#x2F;9<br>  验证    : conntrack-tools-1.4.5-8.fc35.x86_64                             1&#x2F;9<br>  验证    : libnetfilter_cthelper-1.0.0-20.fc35.x86_64                      2&#x2F;9<br>  验证    : libnetfilter_cttimeout-1.0.0-18.fc35.x86_64                     3&#x2F;9<br>  验证    : libnetfilter_queue-1.0.2-18.fc35.x86_64                         4&#x2F;9<br>  验证    : socat-1.7.4.2-1.fc35.x86_64                                     5&#x2F;9<br>  验证    : cri-tools-1.23.0-0.x86_64                                       6&#x2F;9<br>  验证    : kubeadm-1.24.0-0.x86_64                                         7&#x2F;9<br>  验证    : kubectl-1.24.0-0.x86_64                                         8&#x2F;9<br>  验证    : kubelet-1.24.0-0.x86_64                                         9&#x2F;9</p>
+<p>已安装:<br>  conntrack-tools-1.4.5-8.fc35.x86_64<br>  cri-tools-1.23.0-0.x86_64<br>  kubeadm-1.24.0-0.x86_64<br>  kubectl-1.24.0-0.x86_64<br>  kubelet-1.24.0-0.x86_64<br>  libnetfilter_cthelper-1.0.0-20.fc35.x86_64<br>  libnetfilter_cttimeout-1.0.0-18.fc35.x86_64<br>  libnetfilter_queue-1.0.2-18.fc35.x86_64<br>  socat-1.7.4.2-1.fc35.x86_64</p>
+<p>完毕！</p>
+<p>sudo yum -y install kubelet-1.21.1 kubeadm-1.21.1 kubectl-1.21.1<br>Docker CE Stable - x86_64                                                                10 kB&#x2F;s | 2.3 kB     00:00<br>Errors during downloading metadata for repository ‘docker-ce-stable’:</p>
+<ul>
+<li>Status code: 404 for <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/docker-ce/linux/centos/35/x86_64/stable/repodata/repomd.xml">https://mirrors.aliyun.com/docker-ce/linux/centos/35/x86_64/stable/repodata/repomd.xml</a> (IP: 221.195.209.69)<br>Error: 为仓库 ‘docker-ce-stable’ 下载元数据失败 : Cannot download repomd.xml: Cannot download repodata&#x2F;repomd.xml: All mirrors were tried<br>正在忽略仓库:docker-ce-stable<br>上次元数据过期检查：0:10:29 前，执行于 2022年05月04日 星期三 18时29分12秒。<h1 id="依赖关系解决。"><a href="#依赖关系解决。" class="headerlink" title="依赖关系解决。"></a>依赖关系解决。</h1><h1 id="软件包-架构-版本-仓库-大小"><a href="#软件包-架构-版本-仓库-大小" class="headerlink" title=" 软件包                     架构                      版本                          仓库                           大小"></a> 软件包                     架构                      版本                          仓库                           大小</h1>降级:<br> kubeadm                    x86_64                    1.21.1-0                      kubernetes                    9.5 M<br> kubectl                    x86_64                    1.21.1-0                      kubernetes                    9.8 M<br> kubelet                    x86_64                    1.21.1-0                      kubernetes                     20 M</li>
+</ul>
+<h1 id="事务概要-1"><a href="#事务概要-1" class="headerlink" title="事务概要"></a>事务概要</h1><p>降级  3 软件包</p>
+<p>总下载：39 M<br>下载软件包：<br>(1&#x2F;3): 3944a45bec4c99d3489993e3642b63972b62ed0a4ccb04cc7655ce0467fddfef-kubectl-1.21.1- 2.7 MB&#x2F;s | 9.8 MB     00:03<br>(2&#x2F;3): e0511a4d8d070fa4c7bcd2a04217c80774ba11d44e4e0096614288189894f1c5-kubeadm-1.21.1- 2.3 MB&#x2F;s | 9.5 MB     00:04</p>
+<h2 id="3-x2F-3-c47efa28c5935ed2ffad234e2b402d937dde16ab072f2f6013c71d39ab526f40-kubelet-1-21-1-2-8-MB-x2F-s-20-MB-00-07"><a href="#3-x2F-3-c47efa28c5935ed2ffad234e2b402d937dde16ab072f2f6013c71d39ab526f40-kubelet-1-21-1-2-8-MB-x2F-s-20-MB-00-07" class="headerlink" title="(3&#x2F;3): c47efa28c5935ed2ffad234e2b402d937dde16ab072f2f6013c71d39ab526f40-kubelet-1.21.1- 2.8 MB&#x2F;s |  20 MB     00:07"></a>(3&#x2F;3): c47efa28c5935ed2ffad234e2b402d937dde16ab072f2f6013c71d39ab526f40-kubelet-1.21.1- 2.8 MB&#x2F;s |  20 MB     00:07</h2><p>总计                                                                                    5.4 MB&#x2F;s |  39 MB     00:07<br>运行事务检查<br>事务检查成功。<br>运行事务测试<br>事务测试成功。<br>运行事务<br>  准备中  :                                                                                                         1&#x2F;1<br>  降级    : kubelet-1.21.1-0.x86_64                                                                                 1&#x2F;6<br>  降级    : kubectl-1.21.1-0.x86_64                                                                                 2&#x2F;6<br>  降级    : kubeadm-1.21.1-0.x86_64                                                                                 3&#x2F;6<br>  清理    : kubeadm-1.24.0-0.x86_64                                                                                 4&#x2F;6<br>  清理    : kubectl-1.24.0-0.x86_64                                                                                 5&#x2F;6<br>  清理    : kubelet-1.24.0-0.x86_64                                                                                 6&#x2F;6<br>  运行脚本: kubelet-1.24.0-0.x86_64                                                                                 6&#x2F;6<br>  验证    : kubeadm-1.21.1-0.x86_64                                                                                 1&#x2F;6<br>  验证    : kubeadm-1.24.0-0.x86_64                                                                                 2&#x2F;6<br>  验证    : kubectl-1.21.1-0.x86_64                                                                                 3&#x2F;6<br>  验证    : kubectl-1.24.0-0.x86_64                                                                                 4&#x2F;6<br>  验证    : kubelet-1.21.1-0.x86_64                                                                                 5&#x2F;6<br>  验证    : kubelet-1.24.0-0.x86_64                                                                                 6&#x2F;6</p>
+<p>已降级:<br>  kubeadm-1.21.1-0.x86_64                kubectl-1.21.1-0.x86_64                kubelet-1.21.1-0.x86_64</p>
+<p>完毕！</p>
+<p>[root@fedora-pve]<del># kubeadm init –apiserver-advertise-address&#x3D;192.168.2.141 –image-repository registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers –kubernetes-version v1.21.1 –service-cidr&#x3D;10.96.0.0&#x2F;16 –pod-network-cidr&#x3D;10.244.0.0&#x2F;16<br>[init] Using Kubernetes version: v1.21.1<br>[preflight] Running pre-flight checks<br>error execution phase preflight: [preflight] Some fatal errors occurred:<br>    [ERROR Swap]: running with swap on is not supported. Please disable swap<br>[preflight] If you know what you are doing, you can make a check non-fatal with <code>--ignore-preflight-errors=...</code><br>To see the stack trace of this error execute with –v&#x3D;5 or higher<br>[root@fedora-pve]</del># htop<br>[root@fedora-pve]<del># swap -a<br>zsh: swap: command not found…<br>Similar command is: ‘swapon’<br>[root@fedora-pve]</del># swapoff -a<br>[root@fedora-pve]~# kubeadm init –apiserver-advertise-address&#x3D;192.168.2.141 –image-repository registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers –kubernetes-version v1.21.1 –service-cidr&#x3D;10.96.0.0&#x2F;16 –pod-network-cidr&#x3D;10.244.0.0&#x2F;16<br>[init] Using Kubernetes version: v1.21.1<br>[preflight] Running pre-flight checks<br>[preflight] Pulling images required for setting up a Kubernetes cluster<br>[preflight] This might take a minute or two, depending on the speed of your internet connection<br>[preflight] You can also perform this action in beforehand using ‘kubeadm config images pull’</p>
+<p>临时关闭swap分区<br>swapoff -a</p>
+<p>永久关闭swap分区<br>1、关闭&#x2F;etc&#x2F;fstab中swap挂载<br>2、systemctl mask dev-zram0.swap</p>
+<p>error execution phase preflight: [preflight] Some fatal errors occurred:<br>    [ERROR ImagePull]: failed to pull image registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns:v1.8.0: output: Error response from daemon: pull access denied for registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns, repository does not exist or may require ‘docker login’: denied: requested access to the resource is denied<br>, error: exit status 1<br>[preflight] If you know what you are doing, you can make a check non-fatal with <code>--ignore-preflight-errors=...</code><br>To see the stack trace of this error execute with –v&#x3D;5 or higher</p>
+<p>docker tag coredns&#x2F;coredns:latest registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns:v1.8.0</p>
+<p>[root@fedora-pve]<del># kubeadm init –apiserver-advertise-address&#x3D;192.168.2.141 –image-repository registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers –kubernetes-version v1.21.1 –service-cidr&#x3D;10.96.0.0&#x2F;16 –pod-network-cidr&#x3D;10.244.0.0&#x2F;16<br>[init] Using Kubernetes version: v1.21.1<br>[preflight] Running pre-flight checks<br>[preflight] Pulling images required for setting up a Kubernetes cluster<br>[preflight] This might take a minute or two, depending on the speed of your internet connection<br>[preflight] You can also perform this action in beforehand using ‘kubeadm config images pull’<br>error execution phase preflight: [preflight] Some fatal errors occurred:<br>    [ERROR ImagePull]: failed to pull image registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns:v1.8.0: output: Error response from daemon: pull access denied for registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns, repository does not exist or may require ‘docker login’: denied: requested access to the resource is denied<br>, error: exit status 1<br>[preflight] If you know what you are doing, you can make a check non-fatal with <code>--ignore-preflight-errors=...</code><br>To see the stack trace of this error execute with –v&#x3D;5 or higher<br>[root@fedora-pve]</del># docker pull coredns&#x2F;coredns<br>docker tag coredns&#x2F;coredns:latest<br>docker tag coredns&#x2F;coredns:latest registry.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns:v1.8.0</p>
+<p>Using default tag: latest<br>latest: Pulling from coredns&#x2F;coredns<br>d92bdee79785: Pull complete<br>236ef3896477: Pull complete<br>Digest: sha256:d5a7db9ab4cb3efc22a08707385c54c328db3df32841d6c4a8ae78f102f1f49a<br>Status: Downloaded newer image for coredns&#x2F;coredns:latest<br>docker.io&#x2F;coredns&#x2F;coredns:latest<br>“docker tag” requires exactly 2 arguments.<br>See ‘docker tag –help’.</p>
+<p>Usage:  docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]</p>
+<p>Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE<br>[root@fedora-pve]<del># docker images<br>REPOSITORY                                                                    TAG        IMAGE ID       CREATED         SIZE<br>coredns&#x2F;coredns                                                               latest     99376d8f35e0   7 weeks ago     49.5MB<br>registry.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns                       v1.8.0     99376d8f35e0   7 weeks ago     49.5MB<br>hello-world                                                                   latest     feb5d9fea6a5   7 months ago    13.3kB<br>registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;kube-apiserver            v1.21.1    771ffcf9ca63   11 months ago   126MB<br>registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;kube-controller-manager   v1.21.1    e16544fd47b0   11 months ago   120MB<br>registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;kube-proxy                v1.21.1    4359e752b596   11 months ago   131MB<br>registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;kube-scheduler            v1.21.1    a4183b88f6e6   11 months ago   50.6MB<br>registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;pause                     3.4.1      0f8457a4c2ec   15 months ago   683kB<br>registry.aliyuncs.com&#x2F;google_containers&#x2F;coredns                               v1.8.0     296a6d5035e2   18 months ago   42.5MB<br>coredns&#x2F;coredns                                                               1.8.0      296a6d5035e2   18 months ago   42.5MB<br>registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;etcd                      3.4.13-0   0369cf4303ff   20 months ago   253MB<br>[root@fedora-pve]</del># kubeadm init –apiserver-advertise-address&#x3D;192.168.2.141 –image-repository registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers –kubernetes-version v1.21.1 –service-cidr&#x3D;10.96.0.0&#x2F;16 –pod-network-cidr&#x3D;10.244.0.0&#x2F;16<br>[init] Using Kubernetes version: v1.21.1<br>[preflight] Running pre-flight checks<br>[preflight] Pulling images required for setting up a Kubernetes cluster<br>[preflight] This might take a minute or two, depending on the speed of your internet connection<br>[preflight] You can also perform this action in beforehand using ‘kubeadm config images pull’<br>error execution phase preflight: [preflight] Some fatal errors occurred:<br>    [ERROR ImagePull]: failed to pull image registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns:v1.8.0: output: Error response from daemon: pull access denied for registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns, repository does not exist or may require ‘docker login’: denied: requested access to the resource is denied<br>, error: exit status 1<br>[preflight] If you know what you are doing, you can make a check non-fatal with <code>--ignore-preflight-errors=...</code><br>To see the stack trace of this error execute with –v&#x3D;5 or higher<br>[root@fedora-pve]<del># docker tag coredns&#x2F;coredns:latest registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;coredns&#x2F;coredns:v1.8.0<br>[root@fedora-pve]</del># kubeadm init –apiserver-advertise-address&#x3D;192.168.2.141 –image-repository registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers –kubernetes-version v1.21.1 –service-cidr&#x3D;10.96.0.0&#x2F;16 –pod-network-cidr&#x3D;10.244.0.0&#x2F;16<br>[init] Using Kubernetes version: v1.21.1<br>[preflight] Running pre-flight checks<br>[preflight] Pulling images required for setting up a Kubernetes cluster<br>[preflight] This might take a minute or two, depending on the speed of your internet connection<br>[preflight] You can also perform this action in beforehand using ‘kubeadm config images pull’<br>[certs] Using certificateDir folder “&#x2F;etc&#x2F;kubernetes&#x2F;pki”<br>[certs] Generating “ca” certificate and key<br>[certs] Generating “apiserver” certificate and key<br>[certs] apiserver serving cert is signed for DNS names [fedora-pve kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.2.141]<br>[certs] Generating “apiserver-kubelet-client” certificate and key<br>[certs] Generating “front-proxy-ca” certificate and key<br>[certs] Generating “front-proxy-client” certificate and key<br>[certs] Generating “etcd&#x2F;ca” certificate and key<br>[certs] Generating “etcd&#x2F;server” certificate and key<br>[certs] etcd&#x2F;server serving cert is signed for DNS names [fedora-pve localhost] and IPs [192.168.2.141 127.0.0.1 ::1]<br>[certs] Generating “etcd&#x2F;peer” certificate and key<br>[certs] etcd&#x2F;peer serving cert is signed for DNS names [fedora-pve localhost] and IPs [192.168.2.141 127.0.0.1 ::1]<br>[certs] Generating “etcd&#x2F;healthcheck-client” certificate and key<br>[certs] Generating “apiserver-etcd-client” certificate and key<br>[certs] Generating “sa” key and public key<br>[kubeconfig] Using kubeconfig folder “&#x2F;etc&#x2F;kubernetes”<br>[kubeconfig] Writing “admin.conf” kubeconfig file<br>[kubeconfig] Writing “kubelet.conf” kubeconfig file<br>[kubeconfig] Writing “controller-manager.conf” kubeconfig file<br>[kubeconfig] Writing “scheduler.conf” kubeconfig file<br>[kubelet-start] Writing kubelet environment file with flags to file “&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;kubeadm-flags.env”<br>[kubelet-start] Writing kubelet configuration to file “&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml”<br>[kubelet-start] Starting the kubelet<br>[control-plane] Using manifest folder “&#x2F;etc&#x2F;kubernetes&#x2F;manifests”<br>[control-plane] Creating static Pod manifest for “kube-apiserver”<br>[control-plane] Creating static Pod manifest for “kube-controller-manager”<br>[control-plane] Creating static Pod manifest for “kube-scheduler”<br>[etcd] Creating static Pod manifest for local etcd in “&#x2F;etc&#x2F;kubernetes&#x2F;manifests”<br>[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory “&#x2F;etc&#x2F;kubernetes&#x2F;manifests”. This can take up to 4m0s<br>[kubelet-check] Initial timeout of 40s passed.</p>
+<p>[apiclient] All control plane components are healthy after 83.054062 seconds<br>[upload-config] Storing the configuration used in ConfigMap “kubeadm-config” in the “kube-system” Namespace<br>[kubelet] Creating a ConfigMap “kubelet-config-1.21” in namespace kube-system with the configuration for the kubelets in the cluster<br>[upload-certs] Skipping phase. Please see –upload-certs<br>[mark-control-plane] Marking the node fedora-pve as control-plane by adding the labels: [node-role.kubernetes.io&#x2F;master(deprecated) node-role.kubernetes.io&#x2F;control-plane node.kubernetes.io&#x2F;exclude-from-external-load-balancers]<br>[mark-control-plane] Marking the node fedora-pve as control-plane by adding the taints [node-role.kubernetes.io&#x2F;master:NoSchedule]<br>[bootstrap-token] Using token: ctv0vk.6xihjasbflvrdedf<br>[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles<br>[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes<br>[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials<br>[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token<br>[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster<br>[bootstrap-token] Creating the “cluster-info” ConfigMap in the “kube-public” namespace<br>[kubelet-finalize] Updating “&#x2F;etc&#x2F;kubernetes&#x2F;kubelet.conf” to point to a rotatable kubelet client certificate and key<br>[addons] Applied essential addon: CoreDNS<br>[addons] Applied essential addon: kube-proxy</p>
+<p>Your Kubernetes control-plane has initialized successfully!</p>
+<p>To start using your cluster, you need to run the following as a regular user:</p>
+<p>  mkdir -p $HOME&#x2F;.kube<br>  sudo cp -i &#x2F;etc&#x2F;kubernetes&#x2F;admin.conf $HOME&#x2F;.kube&#x2F;config<br>  sudo chown $(id -u):$(id -g) $HOME&#x2F;.kube&#x2F;config</p>
+<p>Alternatively, if you are the root user, you can run:</p>
+<p>  export KUBECONFIG&#x3D;&#x2F;etc&#x2F;kubernetes&#x2F;admin.conf</p>
+<p>You should now deploy a pod network to the cluster.<br>Run “kubectl apply -f [podnetwork].yaml” with one of the options listed at:<br>  <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/cluster-administration/addons/">https://kubernetes.io/docs/concepts/cluster-administration/addons/</a></p>
+<p>Then you can join any number of worker nodes by running the following on each as root:</p>
+<p>kubeadm join 192.168.2.141:6443 –token ctv0vk.6xihjasbflvrdedf <br>    –discovery-token-ca-cert-hash sha256:8ce039230fd6b348bee92ec7d7811dc1216cc1c54a67dd9eced46bcba97b4d47</p>
+<p>UEFI 启动的 </p>
+<p>After upgrading to Fedora 33, run free. Notice that swap size is the sum of the 4G zram device plus your previous disk-based swap device. Try zramctl and lsblk commands for more info.<br>Stop swapping to the swap device we’re about to remove. If using LVM, expect the VG and LV names to be different.<br>swapoff &#x2F;dev&#x2F;vg0&#x2F;swap<br>If LVM, remove the no-longer-needed logical volume.<br>lvremove &#x2F;dev&#x2F;vg0&#x2F;swap<br>Edit &#x2F;etc&#x2F;fstab and remove (or comment out) the line for your swap device.<br>Edit &#x2F;etc&#x2F;default&#x2F;grub.<br>In the GRUB_CMDLINE_LINUX line, remove the “resume&#x3D;” part referring to the now-gone swap partition, and the “rd.lvm.lv&#x3D;” part that also refers to it.<br>Apply above changes to actual GRUB configuration:<br>grub2-mkconfig -o &#x2F;boot&#x2F;efi&#x2F;EFI&#x2F;fedora&#x2F;grub.cfg</p>
+<p>docker pull quay.io&#x2F;coreos&#x2F;flannel:v0.9.1-amd64</p>
+<p>mkdir -p &#x2F;etc&#x2F;cni&#x2F;net.d&#x2F;</p>
+<p>cat &lt;<EOF> &#x2F;etc&#x2F;cni&#x2F;net.d&#x2F;10-flannel.conf<br>{“name”:”cbr0”,”type”:”flannel”,”delegate”: {“isDefaultGateway”: true}}<br>EOF<br>mkdir &#x2F;usr&#x2F;share&#x2F;oci-umount&#x2F;oci-umount.d -p<br>mkdir &#x2F;run&#x2F;flannel&#x2F;<br>cat &lt;<EOF> &#x2F;run&#x2F;flannel&#x2F;subnet.env<br>FLANNEL_NETWORK&#x3D;172.100.0.0&#x2F;16<br>FLANNEL_SUBNET&#x3D;172.100.1.0&#x2F;24<br>FLANNEL_MTU&#x3D;1450<br>FLANNEL_IPMASQ&#x3D;true<br>EOF</p>
+<p>然后执行命令:<br>kubectl apply -f <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml">https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml</a></p>
+<p>node not ready</p>
+<p>journalctl -f -u kubelet</p>
+<p>reset </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[reset] Reading configuration from the cluster...</span><br><span class="line">[reset] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -o yaml&#x27;</span><br><span class="line">[reset] WARNING: Changes made to this host by &#x27;kubeadm init&#x27; or &#x27;kubeadm join&#x27; will be reverted.</span><br><span class="line">[reset] Are you sure you want to proceed? [y/N]: y</span><br><span class="line">[preflight] Running pre-flight checks</span><br><span class="line">[reset] Removing info for node &quot;fedora-pve&quot; from the ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace</span><br><span class="line">[reset] Stopping the kubelet service</span><br><span class="line">[reset] Unmounting mounted directories in &quot;/var/lib/kubelet&quot;</span><br><span class="line">kubeadm reset[reset] Deleting contents of config directories: [/etc/kubernetes/manifests /etc/kubernetes/pki]</span><br><span class="line">[reset] Deleting files: [/etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf]</span><br><span class="line">[reset] Deleting contents of stateful directories: [/var/lib/etcd /var/lib/kubelet /var/lib/dockershim /var/run/kubernetes /var/lib/cni]</span><br><span class="line"></span><br><span class="line">The reset process does not clean CNI configuration. To do so, you must remove /etc/cni/net.d</span><br><span class="line"></span><br><span class="line">The reset process does not reset or clean up iptables rules or IPVS tables.</span><br><span class="line">If you wish to reset iptables, you must do so manually by using the &quot;iptables&quot; command.</span><br><span class="line"></span><br><span class="line">If your cluster was setup to utilize IPVS, run ipvsadm --clear (or similar)</span><br><span class="line">to reset your system&#x27;s IPVS tables.</span><br><span class="line"></span><br><span class="line">The reset process does not clean your kubeconfig files and you must remove them manually.</span><br><span class="line">Please, check the contents of the $HOME/.kube/config file.</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>“Error syncing pod, skipping” err&#x3D;”failed to &quot;KillPodSandbox&quot; for &quot;0b600a02-560c-45ad-bfe7-4202e503c3ad&quot; with KillPodSandboxError: &quot;rpc error: code &#x3D; Unknown desc &#x3D; networkPlugin cni failed to teardown pod \&quot;coredns-57d4cbf879-4bv84_kube-system\&quot; network: invalid version \&quot;\&quot;: the version is empty&quot;“ pod&#x3D;”kube-system&#x2F;coredns-57d4cbf879-4bv84” podUID&#x3D;0b600a02-560c-45ad-bfe7-4202e503c3ad</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/04/fedora-k8s/" data-id="cl2senm1t0000xirlbgaxgeuo" data-title="fedora-k8s" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/07/scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          scala-spark-dataframe—groupby基本操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/04/openwrt%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">openwrt安装配置</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/scala-spark-na-null%E5%A4%84%E7%90%86/">scala spark na null处理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">scala-spark-dataframe—groupby基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/fedora-k8s/">fedora-k8s</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/openwrt%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">openwrt安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/ubuntu-supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">ubuntu supervisor进程管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 andrew<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>分子美食家的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="在下机器学习爱好者">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分子美食家的博客">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="分子美食家的博客">
+<meta property="og:description" content="在下机器学习爱好者">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="andrew">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="分子美食家的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">分子美食家的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">野生工程师的专栏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-elasticsearch-cheetsheet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/elasticsearch-cheetsheet/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:51:58.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/elasticsearch-cheetsheet/">elasticsearch-cheetsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/elasticsearch-cheetsheet/" data-id="cl2qt6jba0000k0rla4q50xjx" data-title="elasticsearch-cheetsheet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hive-cheetsheet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/hive-cheetsheet/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:51:47.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/hive-cheetsheet/">hive-cheetsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1-Hive导出到-csv文件"><a href="#1-Hive导出到-csv文件" class="headerlink" title="1. Hive导出到.csv文件"></a>1. Hive导出到.csv文件</h3><p>由于Hive中导出的文件不是以逗号，而是以Tab（或者说’\t’）为分隔符的，因此，下面的命令自己试过可以转换为逗号分隔的文件，也就是真正的csv文件。</p>
+<p>当然，有时候可能还需要跟转码的工具进行组合，转换编码格式。</p>
+<p>sed -i ‘s&#x2F;\t&#x2F;,&#x2F;g’ xxx.csv</p>
+<p>当然，第一步是</p>
+<p>hive -e “SQL语句” &gt; xxx.csv</p>
+<p>所以完整的流程代码是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive -e <span class="string">&quot;SQL query&quot;</span> &gt; xxx.csv</span><br><span class="line">sed -i <span class="string">&#x27;s/\t/,/g&#x27;</span> xxx.csv</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-Hive导入-csv文件建表"><a href="#2-Hive导入-csv文件建表" class="headerlink" title="2. Hive导入.csv文件建表"></a>2. Hive导入.csv文件建表</h3><p>注意：</p>
+<p>为了配合csv文件，建表的时候，最后一行的row format delimited fields terminated by ‘,’;必须要有，否则列会出问题</p>
+<p>（这牵涉到csv和tsv等问题）</p>
+<p>所以，在Hive下完整的删表建表导数据的流程如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> table_name;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> beike.beike_ershoufang (</span><br><span class="line">    details_name string,</span><br><span class="line">    postition_url string ,</span><br><span class="line">    house_url string,</span><br><span class="line">    house_id string,</span><br><span class="line">    house_info string,</span><br><span class="line">    follew_info string,</span><br><span class="line">    subway string,</span><br><span class="line">    total_price <span class="type">float</span>,</span><br><span class="line">    total_price_danwei string,</span><br><span class="line">    unit_price <span class="type">float</span>,</span><br><span class="line">    district string,</span><br><span class="line">    city_name string,</span><br><span class="line">    fetchtime <span class="type">timestamp</span></span><br><span class="line">)COMMENT <span class="string">&#x27;贝壳二手房&#x27;</span></span><br><span class="line">PARTITIONED <span class="keyword">BY</span> (dt STRING, cd3 STRING)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line"></span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/home/andrew/output.csv&#x27;</span> </span><br><span class="line"><span class="keyword">into</span> <span class="keyword">table</span>  beike.beike_ershoufang <span class="keyword">PARTITION</span>(dt<span class="operator">=</span><span class="string">&#x27;2017-03-31&#x27;</span> ,cd3<span class="operator">=</span><span class="string">&#x27;1389&#x27;</span>);;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Hive看包括行数在内的信息"><a href="#3-Hive看包括行数在内的信息" class="headerlink" title="3. Hive看包括行数在内的信息"></a>3. Hive看包括行数在内的信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show tblproperties table_name;</span><br><span class="line"></span><br><span class="line">desc formatted table_name;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Hive一次写入一个表的多个分区的数据"><a href="#4-Hive一次写入一个表的多个分区的数据" class="headerlink" title="4. Hive一次写入一个表的多个分区的数据"></a>4. Hive一次写入一个表的多个分区的数据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition=true;</span><br><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line">insert overwrite table table1 partition(partition_column)</span><br><span class="line">select col1, col2,..., partition_column from table1;</span><br></pre></td></tr></table></figure>
+<h3 id="5-Hive一次写入大量分区"><a href="#5-Hive一次写入大量分区" class="headerlink" title="5. Hive一次写入大量分区"></a>5. Hive一次写入大量分区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.max.dynamic.partitions=100000;</span><br><span class="line">--每一个mapreduce job允许创建的分区的最大数量，如果超过了这个数量就会报错</span><br><span class="line">set hive.exec.max.dynamic.partitions.pernode=100000;</span><br><span class="line">--hive.exec.max.created.files ：所有的mapreduce job允许创建的文件的最大数量</span><br><span class="line">set hive.exec.max.created.files=10000;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6避免产生小文件"><a href="#6避免产生小文件" class="headerlink" title="6避免产生小文件"></a>6避免产生小文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--在MapReduce的任务结束时合并小文件</span><br><span class="line">set hive.merge.mapredfiles=true;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7Hive开启本地模式"><a href="#7Hive开启本地模式" class="headerlink" title="7Hive开启本地模式"></a>7Hive开启本地模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.mode.local.auto=true;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8查询打印表头"><a href="#8查询打印表头" class="headerlink" title="8查询打印表头"></a>8查询打印表头</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.cli.print.header=true;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/hive-cheetsheet/" data-id="cl2qt6jbd0001k0rlhklk2k9e" data-title="hive-cheetsheet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-spark-cheetsheet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/spark-cheetsheet/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:51:41.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/spark-cheetsheet/">spark-cheetsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/spark-cheetsheet/" data-id="cl2qt6jbg0005k0rl22yp6q97" data-title="spark-cheetsheet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-大数据cheetsheet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/%E5%A4%A7%E6%95%B0%E6%8D%AEcheetsheet/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:51:13.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/%E5%A4%A7%E6%95%B0%E6%8D%AEcheetsheet/">大数据cheetsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/%E5%A4%A7%E6%95%B0%E6%8D%AEcheetsheet/" data-id="cl2qt6jbi0008k0rl5a1o6cv4" data-title="大数据cheetsheet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-scala学习cheetsheet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/scala%E5%AD%A6%E4%B9%A0cheetsheet/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:41:02.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/scala%E5%AD%A6%E4%B9%A0cheetsheet/">scala学习cheetsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>原始链接：<a target="_blank" rel="noopener" href="https://github.com/lampepfl/progfun-wiki/blob/gh-pages/CheatSheet.md">https://github.com/lampepfl/progfun-wiki/blob/gh-pages/CheatSheet.md</a></p>
+<p>快速入手scala</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example</span> </span>= <span class="number">2</span>      <span class="comment">// evaluated when called</span></span><br><span class="line"><span class="keyword">val</span> example = <span class="number">2</span>      <span class="comment">// evaluated immediately</span></span><br><span class="line"><span class="keyword">lazy</span> <span class="keyword">val</span> example = <span class="number">2</span> <span class="comment">// evaluated once when needed</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span></span>(x: <span class="type">Double</span>)    <span class="comment">// call by value</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span></span>(x: =&gt; <span class="type">Double</span>) <span class="comment">// call by name</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myFct</span></span>(bindings: <span class="type">Int</span>*) =  ...  <span class="comment">// bindings is a sequence of int, containing a varying # of arguments</span></span><br></pre></td></tr></table></figure>
+
+<p>高阶函数  </p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sum takes a function that takes an integer and returns an integer then</span></span><br><span class="line"><span class="comment">// returns a function that takes two integers and returns an integer</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>(f: <span class="type">Int</span> =&gt; <span class="type">Int</span>): (<span class="type">Int</span>, <span class="type">Int</span>) =&gt; <span class="type">Int</span> =</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sumf</span></span>(a: <span class="type">Int</span>, b: <span class="type">Int</span>): <span class="type">Int</span> = f(a) + f(b)</span><br><span class="line">  sumf</span><br><span class="line"></span><br><span class="line"><span class="comment">// same as above. Its type is (Int =&gt; Int) =&gt; (Int, Int) =&gt; Int</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>(f: <span class="type">Int</span> =&gt; <span class="type">Int</span>)(a: <span class="type">Int</span>, b: <span class="type">Int</span>): <span class="type">Int</span> =  ...</span><br><span class="line"></span><br><span class="line"><span class="comment">// Called like this</span></span><br><span class="line">sum((x: <span class="type">Int</span>) =&gt; x * x * x)          <span class="comment">// Anonymous function, i.e. does not have a name</span></span><br><span class="line">sum(x =&gt; x * x * x)                 <span class="comment">// Same anonymous function with type inferred</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cube</span></span>(x: <span class="type">Int</span>) = x * x * x</span><br><span class="line">sum(x =&gt; x * x * x)(<span class="number">1</span>, <span class="number">10</span>) <span class="comment">// sum of 1 cubed and 10 cubed</span></span><br><span class="line">sum(cube)(<span class="number">1</span>, <span class="number">10</span>)           <span class="comment">// same as above  </span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> f2: (<span class="type">Int</span>, <span class="type">Int</span>) =&gt; <span class="type">Int</span> = f <span class="comment">// uncurried version (type is (Int, Int) =&gt; Int)</span></span><br><span class="line"><span class="keyword">val</span> f3: <span class="type">Int</span> =&gt; <span class="type">Int</span> =&gt; <span class="type">Int</span> = f2.curried <span class="comment">// transform it to a curried version (type is Int =&gt; Int =&gt; Int)</span></span><br><span class="line"><span class="keyword">val</span> f4: (<span class="type">Int</span>, <span class="type">Int</span>) =&gt; <span class="type">Int</span> = <span class="type">Function</span>.uncurried(f3) <span class="comment">// go back to the uncurried version (type is (Int, Int) =&gt; Int)</span></span><br></pre></td></tr></table></figure>
+
+
+<p>class</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>(<span class="params">x: <span class="type">Int</span>, val y: <span class="type">Int</span>,</span></span></span><br><span class="line"><span class="params"><span class="class">                      var z: <span class="type">Int</span></span>)</span>:        <span class="comment">// Defines a new type MyClass with a constructor</span></span><br><span class="line">                                          <span class="comment">// x will not be available outside MyClass</span></span><br><span class="line">                                          <span class="comment">// val will generate a getter for y</span></span><br><span class="line">                                          <span class="comment">// var will generate a getter and a setter for z</span></span><br><span class="line">  require(y &gt; <span class="number">0</span>, <span class="string">&quot;y must be positive&quot;</span>)    <span class="comment">// precondition, triggering an IllegalArgumentException if not met</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">this</span> </span>(x: <span class="type">Int</span>) =  ...                <span class="comment">// auxiliary constructor</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">nb1</span> </span>= x                             <span class="comment">// public method computed every time it is called</span></span><br><span class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">def</span> <span class="title">test</span></span>(a: <span class="type">Int</span>): <span class="type">Int</span> =  ...    <span class="comment">// private method</span></span><br><span class="line">  <span class="keyword">val</span> nb3 = x + y                         <span class="comment">// computed only once</span></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">toString</span> </span>=                 <span class="comment">// overridden method</span></span><br><span class="line">      x + <span class="string">&quot;, &quot;</span> + y</span><br><span class="line"><span class="keyword">end</span> <span class="type">MyClass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="type">MyClass</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) <span class="comment">// creates a new object of type</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>(<span class="params">a: <span class="type">Int</span>, b: <span class="type">String</span></span>)</span>:</span><br><span class="line">    <span class="comment">// body</span></span><br><span class="line"><span class="keyword">end</span> <span class="type">MyClass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyObject</span></span>:</span><br><span class="line">    <span class="comment">// body</span></span><br><span class="line"><span class="keyword">end</span> <span class="type">MyObject</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyTrait</span></span>:</span><br><span class="line">    <span class="comment">// body</span></span><br><span class="line"><span class="keyword">end</span> <span class="type">MyTrait</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myMethod</span></span>(name: <span class="type">String</span>): <span class="type">Unit</span> =</span><br><span class="line">    println(<span class="string">s&quot;Hello <span class="subst">$name</span>&quot;</span>)</span><br><span class="line"><span class="keyword">end</span> myMethod</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> myVal: <span class="type">Int</span> =</span><br><span class="line">    <span class="number">42</span></span><br><span class="line"><span class="keyword">end</span> myVal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>operations</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(all letters)</span><br><span class="line">|</span><br><span class="line">^</span><br><span class="line">&amp;</span><br><span class="line">&lt; &gt;</span><br><span class="line">= !</span><br><span class="line">:</span><br><span class="line">+ -</span><br><span class="line">* / %</span><br><span class="line">(all other special characters)</span><br></pre></td></tr></table></figure>
+
+<p>继承</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TopLevel</span></span>:     <span class="comment">// abstract class</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method1</span></span>(x: <span class="type">Int</span>): <span class="type">Int</span>   <span class="comment">// abstract method</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method2</span></span>(x: <span class="type">Int</span>): <span class="type">Int</span> =  ...</span><br><span class="line"><span class="keyword">end</span> <span class="type">TopLevel</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Level1</span> <span class="keyword">extends</span> <span class="title">TopLevel</span></span>:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method1</span></span>(x: <span class="type">Int</span>): <span class="type">Int</span> = ...</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">method2</span></span>(x: <span class="type">Int</span>): <span class="type">Int</span> = ... <span class="comment">// TopLevel&#x27;s method2 needs to be explicitly overridden</span></span><br><span class="line"><span class="keyword">end</span> <span class="type">Level1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyObject</span> <span class="keyword">extends</span> <span class="title">TopLevel</span></span>:</span><br><span class="line">  ...  <span class="comment">// defines a singleton object. No other instance can be created</span></span><br></pre></td></tr></table></figure>
+
+<p>runable appliaction</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@main</span> <span class="function"><span class="keyword">def</span> <span class="title">run</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) =</span><br><span class="line">  println(<span class="string">&quot;Hello world&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">App</span></span>:</span><br><span class="line">  println(<span class="string">&quot;Hello World&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>trait</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Planar</span></span>:</span><br><span class="line">  ...</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">extends</span> <span class="title">Shape</span> <span class="keyword">with</span> <span class="title">Planar</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myFct</span></span>[<span class="type">T</span> &lt;: <span class="type">TopLevel</span>](arg: <span class="type">T</span>): <span class="type">T</span> = ... <span class="comment">// T must derive from TopLevel or be TopLevel</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">myFct</span></span>[<span class="type">T</span> &gt;: <span class="type">Level1</span>](arg: <span class="type">T</span>): <span class="type">T</span> = ...   <span class="comment">// T must be a supertype of Level1</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">myFct</span></span>[<span class="type">T</span> &gt;: <span class="type">Level1</span> &lt;: <span class="type">TopLevel</span>](arg: <span class="type">T</span>): <span class="type">T</span> = ...</span><br></pre></td></tr></table></figure>
+
+<p>varance</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>[+<span class="type">A</span>]  <span class="comment">// C is covariant</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>[-<span class="type">A</span>]  <span class="comment">// C is contravariant</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>[<span class="type">A</span>]   <span class="comment">// C is nonvariant</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Function1</span>[-<span class="type">T</span>, +<span class="type">U</span>]</span>:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(x: <span class="type">T</span>): <span class="type">U</span></span><br><span class="line"><span class="comment">// Variance check is OK because T is contravariant and U is covariant</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Array</span>[+<span class="type">T</span>]</span>:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">update</span></span>(x: <span class="type">T</span>) <span class="comment">// variance checks fails</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/scala%E5%AD%A6%E4%B9%A0cheetsheet/" data-id="cl2pfk43e0000cvrl70944wde" data-title="scala学习cheetsheet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hadoop启动集群的聚合命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/hadoop%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4%E7%9A%84%E8%81%9A%E5%90%88%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:38:38.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/hadoop%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4%E7%9A%84%E8%81%9A%E5%90%88%E5%91%BD%E4%BB%A4/">hadoop启动集群的聚合命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -lt 1 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;No args input&quot;</span></span><br><span class="line">    <span class="built_in">exit</span>;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line"><span class="string">&quot;start&quot;</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;=================启动hadoop集群======================&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;-----------------启动HDFS集群-----------------------&quot;</span></span><br><span class="line">    ssh hadoop102  <span class="string">&quot;/opt/module/hadoop-3.1.3/sbin/start-dfs.sh&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;----------------启动yarn集群------------------------&quot;</span></span><br><span class="line">    ssh hadoop103 <span class="string">&quot;/opt/module/hadoop-3.1.3/sbin/start-yarn.sh&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;----------------启动history server------------------&quot;</span></span><br><span class="line">    ssh hadoop102 <span class="string">&quot;/opt/module/hadoop-3.1.3/bin/mapred  --daemon start historyserver&quot;</span></span><br><span class="line">;;</span><br><span class="line"><span class="string">&quot;stop&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;================关闭hadoop集群======================&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;----------------关闭history server------------------&quot;</span></span><br><span class="line">    ssh hadoop102 <span class="string">&quot;/opt/module/hadoop-3.1.3/bin/mapred  --daemon stop historyserver&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;----------------关闭yarn----------------------------&quot;</span></span><br><span class="line">    ssh hadoop103 <span class="string">&quot;/opt/module/hadoop-3.1.3/sbin/stop-yarn.sh&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;----------------关闭hdfs----------------------------&quot;</span></span><br><span class="line">    ssh hadoop102 <span class="string">&quot;/opt/module/hadoop-3.1.3/sbin/stop-dfs.sh&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;all stopped&quot;</span></span><br><span class="line">;;</span><br><span class="line"></span><br><span class="line">*) </span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Inpur args arror&quot;</span></span><br><span class="line">;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/hadoop%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4%E7%9A%84%E8%81%9A%E5%90%88%E5%91%BD%E4%BB%A4/" data-id="cl2pfajm50000lvrl0gu23l1v" data-title="hadoop启动集群的聚合命令" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hive同步elasticsearch的数据" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/hive%E5%90%8C%E6%AD%A5elasticsearch%E7%9A%84%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:34:18.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/hive%E5%90%8C%E6%AD%A5elasticsearch%E7%9A%84%E6%95%B0%E6%8D%AE/">hive同步elasticsearch的数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>hive-elasticsearch同步数据</p>
+<p>以二手房数据同步为例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 需要同步的elastic表</span><br><span class="line">add jar hdfs:///elasticsearch-jars/elasticsearch-hadoop-hive-8.1.1.jar;</span><br><span class="line">-- create database ods_beike;</span><br><span class="line">CREATE EXTERNAL TABLE ods_beike.ershoufang_detail_from_es(</span><br><span class="line"></span><br><span class="line">house_url string comment &#x27;house url&#x27;,</span><br><span class="line">house_id string comment &#x27;house id&#x27;,</span><br><span class="line">title string comment &#x27;标题&#x27;,</span><br><span class="line">unit string comment &#x27;&#x27;,</span><br><span class="line">main_info string comment &#x27;厅房&#x27;,</span><br><span class="line">type_main string comment &#x27;direction&#x27;,</span><br><span class="line">type_sub string comment  &#x27;&#x27;,</span><br><span class="line">district_detail string comment  &#x27;&#x27;,</span><br><span class="line">districr_url  string comment  &#x27;小区url&#x27;,</span><br><span class="line">district_detail_url string comment  &#x27;&#x27;,</span><br><span class="line">communityname string comment  &#x27;小区信息&#x27;,</span><br><span class="line">communityurl string  comment &#x27;小区url&#x27;,</span><br><span class="line">district string comment &#x27;区或者县&#x27;,</span><br><span class="line">area string comment &#x27;房子面积&#x27;,</span><br><span class="line">year string comment &#x27;建成年份&#x27;,</span><br><span class="line">fetch_time timestamp,</span><br><span class="line">fundamental_values</span><br><span class="line">    struct&lt;</span><br><span class="line">  house_con : string,</span><br><span class="line">       house_floor:string,</span><br><span class="line">     house_area:string,</span><br><span class="line">        house_struct:string,</span><br><span class="line">       house_contruct_type:string,</span><br><span class="line">       house_direction:string,</span><br><span class="line">       house_construction:string,</span><br><span class="line">        house_detraction:string,</span><br><span class="line">       elevtor_percent:string,</span><br><span class="line">      warn_type:string,</span><br><span class="line">       has_elevtor:string,</span><br><span class="line">       gas_price:string,</span><br><span class="line">        bighouse_type:string,</span><br><span class="line">    userful_area:string,</span><br><span class="line">        water_type:string,</span><br><span class="line">        power_type:string,</span><br><span class="line">        rent_area:string</span><br><span class="line"></span><br><span class="line">    &gt;,</span><br><span class="line"></span><br><span class="line">sells_values  struct&lt;</span><br><span class="line">up_time: string ,--comment &#x27;挂牌时间&#x27;,</span><br><span class="line">sell_type: string, --comment  --&quot;交易权属&quot;,</span><br><span class="line"> last_sell: string, --comment --&quot;上次交易&quot;,</span><br><span class="line"> house_type :string, --comment -- &quot;房屋用途&quot;,</span><br><span class="line">house_age :string, --comment  --&quot;房屋年限&quot;: ,</span><br><span class="line"> property_type: string ,--comment  ,--&quot;产权所属&quot;,</span><br><span class="line"> mostage_type: string ,--comment  ,--&quot;抵押信息&quot;,</span><br><span class="line"> house_paper: string ,--comment ,-- &quot;房本备件&quot; ,</span><br><span class="line"> house_validation_code :string ,--comment  &quot;房源核验码&quot;,</span><br><span class="line">house_validation_code2: string ,-- comment  &#x27;房源核验统一编码&#x27; ,</span><br><span class="line">house_validation_code3 :string ,--comment  &#x27;房管局核验码&#x27; ,</span><br><span class="line"> house_code: string, --comment  &#x27;房源编码&#x27;,</span><br><span class="line"> code4: string,-- comment , --&quot;房源核验编码&quot;,</span><br><span class="line">code5: string --comment --comment &#x27;房协编码&#x27;</span><br><span class="line">&gt;</span><br><span class="line">)</span><br><span class="line">STORED BY &#x27;org.elasticsearch.hadoop.hive.EsStorageHandler&#x27;</span><br><span class="line">TBLPROPERTIES(</span><br><span class="line">    &#x27;es.resource&#x27; = &#x27;beike_ershoufang_details_english/doc&#x27;,</span><br><span class="line">    &#x27;es.nodes&#x27; = &#x27;http://10.147.20.10&#x27;,</span><br><span class="line">    &#x27;es.port&#x27;=&#x27;9200&#x27;,</span><br><span class="line">    &#x27;es.index.auto.create&#x27;=&#x27;false&#x27;,</span><br><span class="line">    &#x27;es.read.metadata&#x27;=&#x27;true&#x27;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 目的表</span><br><span class="line">add jar hdfs:///elasticsearch-jars/elasticsearch-hadoop-hive-8.1.1.jar;</span><br><span class="line">-- create database ods_beike;</span><br><span class="line">CREATE EXTERNAL TABLE ods_beike.ershoufang_detail_from_es2(</span><br><span class="line"></span><br><span class="line">house_url string comment &#x27;house url&#x27;,</span><br><span class="line">house_id string comment &#x27;house id&#x27;,</span><br><span class="line">title string comment &#x27;标题&#x27;,</span><br><span class="line">unit string comment &#x27;&#x27;,</span><br><span class="line">main_info string comment &#x27;厅房&#x27;,</span><br><span class="line">type_main string comment &#x27;direction&#x27;,</span><br><span class="line">type_sub string comment  &#x27;&#x27;,</span><br><span class="line">district_detail string comment  &#x27;&#x27;,</span><br><span class="line">districr_url  string comment  &#x27;小区url&#x27;,</span><br><span class="line">district_detail_url string comment  &#x27;&#x27;,</span><br><span class="line">communityname string comment  &#x27;小区信息&#x27;,</span><br><span class="line">communityurl string  comment &#x27;小区url&#x27;,</span><br><span class="line">district string comment &#x27;区或者县&#x27;,</span><br><span class="line">area string comment &#x27;房子面积&#x27;,</span><br><span class="line">year string comment &#x27;建成年份&#x27;,</span><br><span class="line">fetch_time timestamp,</span><br><span class="line">fundamental_values</span><br><span class="line">    struct&lt;</span><br><span class="line">  house_con : string,</span><br><span class="line">       house_floor:string,</span><br><span class="line">     house_area:string,</span><br><span class="line">        house_struct:string,</span><br><span class="line">       house_contruct_type:string,</span><br><span class="line">       house_direction:string,</span><br><span class="line">       house_construction:string,</span><br><span class="line">        house_detraction:string,</span><br><span class="line">       elevtor_percent:string,</span><br><span class="line">      warn_type:string,</span><br><span class="line">       has_elevtor:string,</span><br><span class="line">       gas_price:string,</span><br><span class="line">        bighouse_type:string,</span><br><span class="line">    userful_area:string,</span><br><span class="line">        water_type:string,</span><br><span class="line">        power_type:string,</span><br><span class="line">        rent_area:string</span><br><span class="line"></span><br><span class="line">    &gt;,</span><br><span class="line"></span><br><span class="line">sells_values  struct&lt;</span><br><span class="line">up_time: string ,--comment &#x27;挂牌时间&#x27;,</span><br><span class="line">sell_type: string, --comment  --&quot;交易权属&quot;,</span><br><span class="line"> last_sell: string, --comment --&quot;上次交易&quot;,</span><br><span class="line"> house_type :string, --comment -- &quot;房屋用途&quot;,</span><br><span class="line">house_age :string, --comment  --&quot;房屋年限&quot;: ,</span><br><span class="line"> property_type: string ,--comment  ,--&quot;产权所属&quot;,</span><br><span class="line"> mostage_type: string ,--comment  ,--&quot;抵押信息&quot;,</span><br><span class="line"> house_paper: string ,--comment ,-- &quot;房本备件&quot; ,</span><br><span class="line"> house_validation_code :string ,--comment  &quot;房源核验码&quot;,</span><br><span class="line">house_validation_code2: string ,-- comment  &#x27;房源核验统一编码&#x27; ,</span><br><span class="line">house_validation_code3 :string ,--comment  &#x27;房管局核验码&#x27; ,</span><br><span class="line"> house_code: string, --comment  &#x27;房源编码&#x27;,</span><br><span class="line"> code4: string,-- comment , --&quot;房源核验编码&quot;,</span><br><span class="line">code5: string --comment --comment &#x27;房协编码&#x27;</span><br><span class="line">&gt;</span><br><span class="line">)</span><br><span class="line">STORED BY &#x27;org.elasticsearch.hadoop.hive.EsStorageHandler&#x27;</span><br><span class="line">TBLPROPERTIES(</span><br><span class="line">    &#x27;es.resource&#x27; = &#x27;beike_ershoufang_details_english/doc&#x27;,</span><br><span class="line">    &#x27;es.nodes&#x27; = &#x27;http://10.147.20.96&#x27;,</span><br><span class="line">    &#x27;es.port&#x27;=&#x27;9200&#x27;,</span><br><span class="line">    &#x27;es.index.auto.create&#x27;=&#x27;false&#x27;,</span><br><span class="line">    &#x27;es.read.metadata&#x27;=&#x27;true&#x27;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 同步</span><br><span class="line"></span><br><span class="line">select count(*) from  ods_beike.ershoufang_detail_from_es2;</span><br><span class="line">desc ods_beike.ershoufang_detail_from_es2;</span><br><span class="line"></span><br><span class="line">insert into table ods_beike.ershoufang_detail_from_es2</span><br><span class="line">select * from ods_beike.ershoufang_detail_from_es;</span><br><span class="line"></span><br><span class="line">select count(*) from  ods_beike.ershoufang_detail_from_es2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下次同步mongodb的数据，敬请期待。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/hive%E5%90%8C%E6%AD%A5elasticsearch%E7%9A%84%E6%95%B0%E6%8D%AE/" data-id="cl2pf4uno0000esrla2ph3hyo" data-title="hive同步elasticsearch的数据" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-pve-lvmid-uuid-not-found" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/pve-lvmid-uuid-not-found/" class="article-date">
+  <time class="dt-published" datetime="2022-05-03T00:05:00.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/pve-lvmid-uuid-not-found/">pve lvmid/uuid not found</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>这个是官方的修复指南，but并没有什么卵用。<br><a target="_blank" rel="noopener" href="https://pve.proxmox.com/wiki/Recover_From_Grub_Failure">https://pve.proxmox.com/wiki/Recover_From_Grub_Failure</a></p>
+<p>不过这chroot的命令很重要。pve自己的iso的debug模式不好用，键盘输入不了字，我选择的是archlinux的livecd。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#激活逻辑卷</span></span><br><span class="line">sudo vgscan</span><br><span class="line">sudo vgchange -ay</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#chroot 大法</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> /mnt/lvm/</span><br><span class="line">sudo mount /dev/pve/root /mnt/lvm/</span><br><span class="line">sudo mount /dev/sda1 /mnt/lvm/boot/efi  <span class="comment">#必须得挂在efi下面</span></span><br><span class="line">sudo mount -t proc proc /mnt/lvm/proc</span><br><span class="line">sudo mount -t sysfs sys /mnt/lvm//sys</span><br><span class="line"><span class="comment"># -t 是文件类型 -o 是绑定</span></span><br><span class="line">sudo mount -o <span class="built_in">bind</span> /dev /mnt/lvm//dev</span><br><span class="line">sudo mount -o <span class="built_in">bind</span> /run /mnt/lvm//run</span><br><span class="line"></span><br><span class="line"><span class="built_in">chroot</span> /mnt/lvm</span><br></pre></td></tr></table></figure>
+
+
+<p>参考<a target="_blank" rel="noopener" href="https://zhangguanzhang.github.io/2022/02/18/proxmox-boot-disk-lvmid-not-found/">https://zhangguanzhang.github.io/2022/02/18/proxmox-boot-disk-lvmid-not-found/</a><br>这位大佬的文章，终于意识到是不小心拔了服务器电源后导致lvmid发生变化。需要修改lvmid </p>
+<pre><code>chroot之后有三个问题，一个是/bin/zsh not find,
+修改为bash chroot /mnt/lvm bash
+
+执行update-grub command not finb
+source /etc/profile
+激活环境变量
+
+updete-grub之后，gurb-install /dev/sda 必须是这个
+不报错的话就可以reboot好了。
+
+我比较衰，还是抱错lvmid/uuid not found
+</code></pre>
+<p>重要命令是这些  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修复lvmid</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 结尾 pve 是 root 所在的 vg 名字  </span></span><br><span class="line">vgcfgrestore --<span class="built_in">test</span> -f /etc/lvm/backup/pve pve  </span><br><span class="line"><span class="comment"># 输入 y 回车，失败了就下面的 --force 选项运行  </span></span><br><span class="line">vgcfgrestore --force -f /etc/lvm/backup/pve pve  </span><br></pre></td></tr></table></figure>
+
+
+<p>修复不报vmid&#x2F;uuid not found，但是有磁盘signature错误 &#x2F;grub&#x2F;stage1 not correct read.</p>
+<p>绝望之际。试了试安装 grub-pc这个取代 grub<br>apt instal grub-pc<br>选择sda安装。</p>
+<p>然后就好了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/pve-lvmid-uuid-not-found/" data-id="cl2per5a300008hrl0do779qn" data-title="pve lvmid/uuid not found" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-曾俊杰的小站" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/%E6%9B%BE%E4%BF%8A%E6%9D%B0%E7%9A%84%E5%B0%8F%E7%AB%99/" class="article-date">
+  <time class="dt-published" datetime="2022-05-02T23:30:43.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/%E6%9B%BE%E4%BF%8A%E6%9D%B0%E7%9A%84%E5%B0%8F%E7%AB%99/">曾俊杰的小站</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/%E6%9B%BE%E4%BF%8A%E6%9D%B0%E7%9A%84%E5%B0%8F%E7%AB%99/" data-id="cl2pd70n40002yorlc81ueaiz" data-title="曾俊杰的小站" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hivesql指南" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/03/hivesql%E6%8C%87%E5%8D%97/" class="article-date">
+  <time class="dt-published" datetime="2022-05-02T23:30:43.000Z" itemprop="datePublished">2022-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/03/hivesql%E6%8C%87%E5%8D%97/">hivesql指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>hive-elasticsearch同步数据</p>
+<p>以二手房数据同步为例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 需要同步的elastic表</span><br><span class="line">add jar hdfs:///elasticsearch-jars/elasticsearch-hadoop-hive-8.1.1.jar;</span><br><span class="line">-- create database ods_beike;</span><br><span class="line">CREATE EXTERNAL TABLE ods_beike.ershoufang_detail_from_es(</span><br><span class="line"></span><br><span class="line">house_url string comment &#x27;house url&#x27;,</span><br><span class="line">house_id string comment &#x27;house id&#x27;,</span><br><span class="line">title string comment &#x27;标题&#x27;,</span><br><span class="line">unit string comment &#x27;&#x27;,</span><br><span class="line">main_info string comment &#x27;厅房&#x27;,</span><br><span class="line">type_main string comment &#x27;direction&#x27;,</span><br><span class="line">type_sub string comment  &#x27;&#x27;,</span><br><span class="line">district_detail string comment  &#x27;&#x27;,</span><br><span class="line">districr_url  string comment  &#x27;小区url&#x27;,</span><br><span class="line">district_detail_url string comment  &#x27;&#x27;,</span><br><span class="line">communityname string comment  &#x27;小区信息&#x27;,</span><br><span class="line">communityurl string  comment &#x27;小区url&#x27;,</span><br><span class="line">district string comment &#x27;区或者县&#x27;,</span><br><span class="line">area string comment &#x27;房子面积&#x27;,</span><br><span class="line">year string comment &#x27;建成年份&#x27;,</span><br><span class="line">fetch_time timestamp,</span><br><span class="line">fundamental_values</span><br><span class="line">    struct&lt;</span><br><span class="line">  house_con : string,</span><br><span class="line">       house_floor:string,</span><br><span class="line">     house_area:string,</span><br><span class="line">        house_struct:string,</span><br><span class="line">       house_contruct_type:string,</span><br><span class="line">       house_direction:string,</span><br><span class="line">       house_construction:string,</span><br><span class="line">        house_detraction:string,</span><br><span class="line">       elevtor_percent:string,</span><br><span class="line">      warn_type:string,</span><br><span class="line">       has_elevtor:string,</span><br><span class="line">       gas_price:string,</span><br><span class="line">        bighouse_type:string,</span><br><span class="line">    userful_area:string,</span><br><span class="line">        water_type:string,</span><br><span class="line">        power_type:string,</span><br><span class="line">        rent_area:string</span><br><span class="line"></span><br><span class="line">    &gt;,</span><br><span class="line"></span><br><span class="line">sells_values  struct&lt;</span><br><span class="line">up_time: string ,--comment &#x27;挂牌时间&#x27;,</span><br><span class="line">sell_type: string, --comment  --&quot;交易权属&quot;,</span><br><span class="line"> last_sell: string, --comment --&quot;上次交易&quot;,</span><br><span class="line"> house_type :string, --comment -- &quot;房屋用途&quot;,</span><br><span class="line">house_age :string, --comment  --&quot;房屋年限&quot;: ,</span><br><span class="line"> property_type: string ,--comment  ,--&quot;产权所属&quot;,</span><br><span class="line"> mostage_type: string ,--comment  ,--&quot;抵押信息&quot;,</span><br><span class="line"> house_paper: string ,--comment ,-- &quot;房本备件&quot; ,</span><br><span class="line"> house_validation_code :string ,--comment  &quot;房源核验码&quot;,</span><br><span class="line">house_validation_code2: string ,-- comment  &#x27;房源核验统一编码&#x27; ,</span><br><span class="line">house_validation_code3 :string ,--comment  &#x27;房管局核验码&#x27; ,</span><br><span class="line"> house_code: string, --comment  &#x27;房源编码&#x27;,</span><br><span class="line"> code4: string,-- comment , --&quot;房源核验编码&quot;,</span><br><span class="line">code5: string --comment --comment &#x27;房协编码&#x27;</span><br><span class="line">&gt;</span><br><span class="line">)</span><br><span class="line">STORED BY &#x27;org.elasticsearch.hadoop.hive.EsStorageHandler&#x27;</span><br><span class="line">TBLPROPERTIES(</span><br><span class="line">    &#x27;es.resource&#x27; = &#x27;beike_ershoufang_details_english/doc&#x27;,</span><br><span class="line">    &#x27;es.nodes&#x27; = &#x27;http://10.147.20.10&#x27;,</span><br><span class="line">    &#x27;es.port&#x27;=&#x27;9200&#x27;,</span><br><span class="line">    &#x27;es.index.auto.create&#x27;=&#x27;false&#x27;,</span><br><span class="line">    &#x27;es.read.metadata&#x27;=&#x27;true&#x27;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 目的表</span><br><span class="line">add jar hdfs:///elasticsearch-jars/elasticsearch-hadoop-hive-8.1.1.jar;</span><br><span class="line">-- create database ods_beike;</span><br><span class="line">CREATE EXTERNAL TABLE ods_beike.ershoufang_detail_from_es2(</span><br><span class="line"></span><br><span class="line">house_url string comment &#x27;house url&#x27;,</span><br><span class="line">house_id string comment &#x27;house id&#x27;,</span><br><span class="line">title string comment &#x27;标题&#x27;,</span><br><span class="line">unit string comment &#x27;&#x27;,</span><br><span class="line">main_info string comment &#x27;厅房&#x27;,</span><br><span class="line">type_main string comment &#x27;direction&#x27;,</span><br><span class="line">type_sub string comment  &#x27;&#x27;,</span><br><span class="line">district_detail string comment  &#x27;&#x27;,</span><br><span class="line">districr_url  string comment  &#x27;小区url&#x27;,</span><br><span class="line">district_detail_url string comment  &#x27;&#x27;,</span><br><span class="line">communityname string comment  &#x27;小区信息&#x27;,</span><br><span class="line">communityurl string  comment &#x27;小区url&#x27;,</span><br><span class="line">district string comment &#x27;区或者县&#x27;,</span><br><span class="line">area string comment &#x27;房子面积&#x27;,</span><br><span class="line">year string comment &#x27;建成年份&#x27;,</span><br><span class="line">fetch_time timestamp,</span><br><span class="line">fundamental_values</span><br><span class="line">    struct&lt;</span><br><span class="line">  house_con : string,</span><br><span class="line">       house_floor:string,</span><br><span class="line">     house_area:string,</span><br><span class="line">        house_struct:string,</span><br><span class="line">       house_contruct_type:string,</span><br><span class="line">       house_direction:string,</span><br><span class="line">       house_construction:string,</span><br><span class="line">        house_detraction:string,</span><br><span class="line">       elevtor_percent:string,</span><br><span class="line">      warn_type:string,</span><br><span class="line">       has_elevtor:string,</span><br><span class="line">       gas_price:string,</span><br><span class="line">        bighouse_type:string,</span><br><span class="line">    userful_area:string,</span><br><span class="line">        water_type:string,</span><br><span class="line">        power_type:string,</span><br><span class="line">        rent_area:string</span><br><span class="line"></span><br><span class="line">    &gt;,</span><br><span class="line"></span><br><span class="line">sells_values  struct&lt;</span><br><span class="line">up_time: string ,--comment &#x27;挂牌时间&#x27;,</span><br><span class="line">sell_type: string, --comment  --&quot;交易权属&quot;,</span><br><span class="line"> last_sell: string, --comment --&quot;上次交易&quot;,</span><br><span class="line"> house_type :string, --comment -- &quot;房屋用途&quot;,</span><br><span class="line">house_age :string, --comment  --&quot;房屋年限&quot;: ,</span><br><span class="line"> property_type: string ,--comment  ,--&quot;产权所属&quot;,</span><br><span class="line"> mostage_type: string ,--comment  ,--&quot;抵押信息&quot;,</span><br><span class="line"> house_paper: string ,--comment ,-- &quot;房本备件&quot; ,</span><br><span class="line"> house_validation_code :string ,--comment  &quot;房源核验码&quot;,</span><br><span class="line">house_validation_code2: string ,-- comment  &#x27;房源核验统一编码&#x27; ,</span><br><span class="line">house_validation_code3 :string ,--comment  &#x27;房管局核验码&#x27; ,</span><br><span class="line"> house_code: string, --comment  &#x27;房源编码&#x27;,</span><br><span class="line"> code4: string,-- comment , --&quot;房源核验编码&quot;,</span><br><span class="line">code5: string --comment --comment &#x27;房协编码&#x27;</span><br><span class="line">&gt;</span><br><span class="line">)</span><br><span class="line">STORED BY &#x27;org.elasticsearch.hadoop.hive.EsStorageHandler&#x27;</span><br><span class="line">TBLPROPERTIES(</span><br><span class="line">    &#x27;es.resource&#x27; = &#x27;beike_ershoufang_details_english/doc&#x27;,</span><br><span class="line">    &#x27;es.nodes&#x27; = &#x27;http://10.147.20.96&#x27;,</span><br><span class="line">    &#x27;es.port&#x27;=&#x27;9200&#x27;,</span><br><span class="line">    &#x27;es.index.auto.create&#x27;=&#x27;false&#x27;,</span><br><span class="line">    &#x27;es.read.metadata&#x27;=&#x27;true&#x27;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 同步</span><br><span class="line"></span><br><span class="line">select count(*) from  ods_beike.ershoufang_detail_from_es2;</span><br><span class="line">desc ods_beike.ershoufang_detail_from_es2;</span><br><span class="line"></span><br><span class="line">insert into table ods_beike.ershoufang_detail_from_es2</span><br><span class="line">select * from ods_beike.ershoufang_detail_from_es;</span><br><span class="line"></span><br><span class="line">select count(*) from  ods_beike.ershoufang_detail_from_es2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下次同步mongodb的数据，敬请期待。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/03/hivesql%E6%8C%87%E5%8D%97/" data-id="cl2pf6n3g0000f7rl300v8992" data-title="hivesql指南" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/scala-spark-na-null%E5%A4%84%E7%90%86/">scala spark na null处理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">scala-spark-dataframe—groupby基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/fedora-k8s/">fedora-k8s</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/openwrt%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">openwrt安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/04/ubuntu-supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">ubuntu supervisor进程管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 andrew<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
