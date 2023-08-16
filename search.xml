@@ -561,7 +561,7 @@
   </entry>
   <entry>
     <title>hdfs</title>
-    <url>/2023/08/16/hdfs/</url>
+    <url>/2022/06/17/hdfs/</url>
     <content><![CDATA[<h2 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h2><h3 id="HDFS产生背景"><a href="#HDFS产生背景" class="headerlink" title="HDFS产生背景"></a>HDFS产生背景</h3><p>随着数据量越来越大，在一个操作系统管辖的范围内存不下了，那么就分配到更多的操作系统管理的磁盘中，但是不方便管理和维护，迫切需要一种<br>系统来管理多台机器上的文件，这就是分布式文件管理系统。HDFS只是分布式文件管理系统中的一种。</p>
 <h3 id="HDFS概念"><a href="#HDFS概念" class="headerlink" title="HDFS概念"></a>HDFS概念</h3><p>HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有<br>各自的角色。HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用</p>
 <h3 id="HDFS优缺点"><a href="#HDFS优缺点" class="headerlink" title="HDFS优缺点"></a>HDFS优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
@@ -952,7 +952,7 @@
   </entry>
   <entry>
     <title>hbase安装</title>
-    <url>/2023/08/16/hbase%E5%AE%89%E8%A3%85/</url>
+    <url>/2021/08/16/hbase%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h3 id="2-1-HBase-安装部署"><a href="#2-1-HBase-安装部署" class="headerlink" title="2.1 HBase 安装部署"></a>2.1 HBase 安装部署</h3><h5 id="2-1-1-Zookeeper-正常部署"><a href="#2-1-1-Zookeeper-正常部署" class="headerlink" title="2.1.1 Zookeeper 正常部署"></a>2.1.1 Zookeeper 正常部署</h5><p>首先保证 Zookeeper 集群的正常部署，并启动之:</p>
 <p>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start</p>
 <h5 id="2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动"><a href="#2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动" class="headerlink" title="2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:"></a>2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:</h5><p>[andrew@hadoop101 hadoop-2.7.2]$ sbin&#x2F;start-dfs.sh<br>[andrew@hadoop103 hadoop-2.7.2]$ sbin&#x2F;start-yarn.sh</p>
