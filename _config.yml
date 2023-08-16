@@ -170,4 +170,4 @@ deploy:
 backup:
     type: git
     repository:
-       github: git@github.com:zengjunjie1026/markdown.git,main
+       github: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git,main
