@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -142,7 +142,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/05/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/%E7%BE%A4%E6%99%96%E5%8F%98%E8%BA%ABairdrop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -160,7 +160,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">spark null 值处理</a>
+          <a href="/2023/08/16/%E7%BE%A4%E6%99%96%E5%8F%98%E8%BA%ABairdrop/" class="post-title-link" itemprop="url">群晖变身airdrop</a>
         </h2>
 
         <div class="post-meta-container">
@@ -170,15 +170,119 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-05-16 17:50:24" itemprop="dateCreated datePublished" datetime="2022-05-16T17:50:24+08:00">2022-05-16</time>
+      <time title="创建时间：2023-08-16 21:09:19 / 修改时间：21:09:33" itemprop="dateCreated datePublished" datetime="2023-08-16T21:09:19+08:00">2023-08-16</time>
     </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>把群晖 NAS 变成「时间返回舱」，轻松搞定 Time Machine 无线备份</p>
+<p>2018年11月18日</p>
+<p>相比 Windows 自带的系统还原功能，macOS 有着更加完善的备份还原机制：通过内置的 Time Machine，我们可以方便地进行整机备份，在关键时候成为系统以及重要资料一颗「后悔药」。</p>
+<p>当然，如果需要使用 Time Machine 功能备份，苹果官方提供了两种方式，无论哪一种方式，你都需要外置的存储来解决：一种是准备一个较合适容量的移动硬盘，如果你正好有一个闲置不用的移动硬盘，拿出来做专门的 Mac 的 Time Machine 备份倒是不错，只不过就会比较麻烦——每一次备份都需要插入移动硬盘。</p>
+<p>还有一种是使用网络存储器，比如说苹果官方的高存储容量 AirPort Time Capsule（时间返回舱），设置一次就可以轻松完成自动备份工作，但其售价高昂不说，现在也已经全面在苹果在线商店下架，显然无论是从经济角度还是便利性角度而言，以上两个方案似乎都并不合适。</p>
+<p>其实，如果你恰好有一台群晖 NAS ，就可以将其轻松打造成一个稳定可靠的「时间返回舱」，而该功能从入门级的 J 系列就已经默认搭载，换句话说，你几乎没有什么额外成本就可以拥有和 AirPort Time Capsule 近乎一样的功能，那么如何使用 Time Machine 将 Mac 文件备份至群晖呢？</p>
+<h2 id="如何让群晖-NAS-支持-Time-Machine-功能？"><a href="#如何让群晖-NAS-支持-Time-Machine-功能？" class="headerlink" title="如何让群晖 NAS 支持 Time Machine 功能？"></a>如何让群晖 NAS 支持 Time Machine 功能？</h2><p>要想让群晖支持 Time Machine ，还需要对群晖进行一番设置，首先我们使用管理员账号登录群晖的 DSM 系统1 ，首先来创建一个共享文件夹，专门用来存放 Time Machine 的备份数据：</p>
+<p>登录到 DSM 之后，点击「控制面板 - 共享文件夹」，点击「创建」来添加共享文件夹。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/ac135adbe134d0703a7acac6bbc4a04c.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>然后输入共享文件夹的名字2 ，然后选择一个所在位置（单盘 NAS 选择默认）：</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/7992d79626fd2f571cae842bde49b2c1.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>后面一步就是是否需要加密，因为我是本地家庭环境使用，为了减少一些不必要的麻烦直接跳过，如果你是在公司中来操作则建议设置加密，然后点击下一步。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/940f3d290ab4cb4f91a7e6ee58d08d49.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>后面是为共享文件夹配置高级功能，这里我就直接跳过，然后确认设置下面选择应用。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/57993635211b319945fe96921a7ef000.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>最后会弹出读取权限的设置，这里面默认应该只有管理员（当前你登录的账户）读写权限，这里默认不修改，点击确定生成分享文件夹。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/a715c3349fbeca61d476e5050bb05bcf.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>现在你应该可以看到名为 Time Machine Folder 新共享文件夹了，下面进入到下一步，为这个文件夹配可访问的账号。</p>
+<h2 id="在-NAS-中为-Time-Machine-创建管理用户"><a href="#在-NAS-中为-Time-Machine-创建管理用户" class="headerlink" title="在 NAS 中为 Time Machine 创建管理用户"></a>在 NAS 中为 Time Machine 创建管理用户</h2><p>Time Machine Folder 这个文件夹显然应该只需要有一个专门操作的账户来操作，使用管理员账号操作并不安全，因此在这里我们需要给 Time Machine 创建管理用户并为其配备的对应配额限制。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/86234695bbbb0758f2aa1d1567eca86b.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>首先，还是通过群晖的管理员账户登录 DSM ，在「控制面板 - 用户」中，点击「创建用户」，输入用户名3 并设置一个复杂密码，然后点下一步，在群组中保持默认再点下一步。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/9b3e81fc108b528526b47257a8c8e7a5.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>在文件夹的权限分配这个设置页中，找到之前设置的共享文件夹「Time Machine Folder」，<strong>勾选中「读写」权限（一定要做），</strong>然后点击下一步，在用户配合设置页面中，选择存储配额。</p>
+<p>这一步需要注意的是，为了避免 Time Machine 备份占用你全部的存储空间，建议设置在一个额定的空间范围内，比如我的 MacBook Pro 是 128GB 的存储，而我的群晖 NAS 的存储「空间 1」剩余 2.0 TB ，因此从使用权衡来看，选择 200GB 完全是绰绰有余，制定好之后选择下一步。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/85d0d591291cf483391f7ad169493d12.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>后续两个设置中都默认不选，直接点下一步，最后点击到应用后完成用户「Time Machine User」的新建，最后你在「控制面板 - 用户」中应该可以看到这个新建的用户了。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/cf650e3ab4e93f9bb7ec52c84e61124b.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>p.s.  如果你是在企业生产环境中，可以通过生成配对的「共享文件夹」+「对应的用户」来创建多个 Time Machine 备份空间，这样可以为多台 Mac 设备开启单独的备份，管理也更方便。</p>
+<h2 id="在-NAS-中开启相关文件服务"><a href="#在-NAS-中开启相关文件服务" class="headerlink" title="在 NAS 中开启相关文件服务"></a>在 NAS 中开启相关文件服务</h2><p>前面共享文件夹和相关的访问用户已经设置完毕，那么接下来就是对相关的文件夹进行一系列的设置。首先在群晖的「控制面板 - 文件服务」设置中，找到 <strong>SMB&#x2F;AFP&#x2F;NFS</strong> 选项卡，然后点击勾选 启用 SMB 服务以及 AFP 服务。注意下方生成的访问地址，例如我这里生成的 SMB 访问地址：<code>smb://DS215J</code>。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/9a0808946eb2a9d0c1e4cebe4919a8bb.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>然后切换到高级设置中，在 Bonjour 中勾选「启用 Bonjour 服务发现」，以及下方的「启用通过 SMB 进行 Bonjour Time Machine 播送」和「启用通过 AFP 进行 Bonjour Time Machine 播送」，然后点击下方的设置 Time machine 文件夹，选择之前我们建立的 「Time Machine Folder」共享文件夹点击确定即可。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/dbf8339cefcd9273213e57735e8c8d4d.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>p.s. 如果你的环境中，Mac 设备的系统版本在 10.12 以上，那么只需要启用 SMB 相关服务即可，可以不用勾选 AFP 服务。</p>
+<p>至此，在群晖上的相关设置就全部完成了，换言之，这时候的群晖已经脱胎换骨成为一台「时间返回舱」了。</p>
+<h2 id="让-Mac-的-Time-Machine-备份至-NAS"><a href="#让-Mac-的-Time-Machine-备份至-NAS" class="headerlink" title="让 Mac 的 Time Machine 备份至 NAS"></a>让 Mac 的 Time Machine 备份至 NAS</h2><p>接下来的步骤就是在 Mac 上设置时间机器，然后将备份目的地改成刚才设置好的群晖，首先在我们需要可以让 Mac 访问群晖中的备份文件夹。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/c67463c703df1874de7c6318052b2430.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>打开访达，在菜单中点击「前往 - 连接服务器」，然后输入 NAS 的 smb 地址，例如我这里的 <code>smb://DS215J</code>，然后点击链接，在输入之前设置的账户名和密码之后，在弹出的文件夹中，选择时间机器的备份文件夹，之后点击好完成装载。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/1f1c1dea15242ee5d673acbdbc7e7429.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>接下来从 Dock 栏中打开「系统偏好设置」，在「时间机器」中选择「备份磁盘」，然后选择之前链接的群晖对应的文件夹，然后点击使用磁盘。</p>
+<p>这时候还有可能会要求输入之前在群晖中创建的账户和密码，然后点击链接，然后时间机器会自动绑定群晖设置到了备份目的磁盘，然后到这里你的时间机器就算是真正意义上的设置好了，如果不出意外的话就会自动开始进行备份工作。</p>
+<p>通过一连串的操作之后，你的群晖可以轻松化身为一台「廉价版 AirPort Time Capsule」，为你的 Mac 设备保驾护航，而无论是性价比上还是便利性上都可以称作是 Mac 时间机器的最佳解决方案，如果你恰好有一台 Mac 和群晖设备，不妨试试这个方案来打造一个最廉价的时间机器备份方案。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/kubeflow%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/kubeflow%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">kubeflow基础搭建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
+        <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:28:46" itemprop="dateModified" datetime="2023-08-16T21:28:46+08:00">2023-08-16</time>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-16 18:02:52 / 修改时间：21:29:03" itemprop="dateCreated datePublished" datetime="2023-08-16T18:02:52+08:00">2023-08-16</time>
     </span>
 
   
@@ -217,7 +321,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/01/16/hadoop/">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -235,7 +339,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/16/hadoop/" class="post-title-link" itemprop="url">hadoop</a>
+          <a href="/2023/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">docker基本操作</a>
         </h2>
 
         <div class="post-meta-container">
@@ -245,15 +349,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-01-16 21:14:23" itemprop="dateCreated datePublished" datetime="2022-01-16T21:14:23+08:00">2022-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:12" itemprop="dateModified" datetime="2023-08-16T21:29:12+08:00">2023-08-16</time>
+      <time title="创建时间：2023-08-16 18:02:32 / 修改时间：21:29:17" itemprop="dateCreated datePublished" datetime="2023-08-16T18:02:32+08:00">2023-08-16</time>
     </span>
 
   
@@ -266,89 +364,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="大数据概念"><a href="#大数据概念" class="headerlink" title="大数据概念"></a>大数据概念</h2><p>大数据（big data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、<br>洞察发现力和流程优化能力的海量、高增长率和多样化的信息资产。</p>
-<blockquote>
-<p>主要解决，海量数据的存储和海量数据的分析计算问题。</p>
-</blockquote>
-<h2 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h2><p>当然，目前这个生态是越来越大了，但是它的本质还是在二个方面 计算 和 存储</p>
-<h3 id="开源生态"><a href="#开源生态" class="headerlink" title="开源生态"></a>开源生态</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5f63ebfc9e784f7690d0ed92f290e7bb~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li><p>Sqoop：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如：MySQL ,<br>Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-</li>
-<li><p>Flume：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统，Flume支持在日志系统中定制各类数据发送方，<br>用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-</li>
-<li><p>Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，有如下特性：</p>
-<ul>
-<li>通过O(1)的磁盘数据结构提供消息的持久化，这种结构对于即使数以TB的消息存储也能够保持长时间的稳定性能。</li>
-<li>高吞吐量：即使是非常普通的硬件Kafka也可以支持每秒数百万的消息。</li>
-<li>支持通过Kafka服务器和消费机集群来分区消息。</li>
-<li>支持Hadoop并行数据加载。</li>
-</ul>
-</li>
-<li><p>Storm：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。这是管理队列及工作者集群的另一种方式。<br>Storm也可被用于“连续计算”（continuous computation），对数据流做连续查询，在计算时就将结果以流的形式输出给用户。</p>
-</li>
-<li><p>Spark：Spark是当前最流行的开源大数据内存计算框架。可以基于Hadoop上存储的大数据进行计算。</p>
-</li>
-<li><p>Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-</li>
-<li><p>Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-</li>
-<li><p>Hive：hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce<br>任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-</li>
-<li><p>Mahout:Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。<br>聚集：收集文件并进行相关文件分组。分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标签的文档进行正确的归类。频繁项集挖掘：将一组项分组，<br>并识别哪些个别项会经常一起出现。</p>
-</li>
-<li><p>ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。它是一个针对大型分布式系统的可靠协调系统，提供的功能包括：配置维护、名字服务、分布式同步、<br>组服务等。ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</p>
-</li>
-</ul>
-<h3 id="阿里云MaxCompute"><a href="#阿里云MaxCompute" class="headerlink" title="阿里云MaxCompute"></a>阿里云MaxCompute</h3><p>MaxCompute（大数据计算服务）是是一种快速、完全托管的TB&#x2F;PB级数据仓库解决方案。MaxCompute主要用于实时性要求不高的、批量结构化数据的存储和计算。<br>并可提供大数据分析建模服务。其特点如下： </p>
-<ul>
-<li>采用分布式架构高效处理海量数据</li>
-<li>基于表的数据存储</li>
-<li>于SQL的数据处理</li>
-<li>支持多用户协同分析数据，多种权限管理方式，具有灵活的数据访问控制策略</li>
-<li>兼容Hive</li>
-</ul>
-<p>MaxCompute架构<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/521857b4c5af453e8967446f719eee2c~tplv-k3u1fbpfcp-watermark.image"></p>
-<p>MaxCompute功能</p>
-<ul>
-<li>数据存储</li>
-</ul>
-<p>适用于TB以上规模的存储及计算需求，最大可达EB级别。数据分布式存储，多副本冗余，数据存储对外仅开放表的操作接口，不提供文件系统访问接口。表数据列式存储，<br>默认高度压缩，后续将提供兼容ORC的Ali-ORC存储格式。<br>支持外表，将存储在OSS对象存储、OTS表格存储的数据映射为二维表。<br>支持Partition、Bucket的分区、分桶存储。<br>底层是盘古文件系统（不是HDFS）。<br>使用时，存储与计算解耦，不需要仅仅为了存储而扩大不必要的计算资源。</p>
-<ul>
-<li>数据通道<br>TUNNEL：提供高并发的离线数据上传下载服务。支持每天TB&#x2F;PB级别的数据导入导出。适合于全量数据或历史数据的批量导入。</li>
-</ul>
-<p>DataHub：针对实时数据上传的场景，具有延迟低、使用方便的特点，适用于增量数据的导入。Datahub还支持多种数据传输插件，包括Logstash、Flume、Fluentd、<br>Sqoop等。同时支持日志服务Log Service中的日志数据的一键投递至MaxCompute，进而利用大数据开发套件进行日志分析和挖掘。</p>
-<ul>
-<li>多种计算模型<br>SQL：以二维表的形式存储数据，支持多种数据类型，MaxCompute以二维表的形式存储数据，对外提供了SQL查询功能。不支持事务、索引及Update&#x2F;Delete等操作，<br>SQL语法与Oracle，MySQL等有一定差别。无法在毫秒级别返回结果。</li>
-</ul>
-<p>MapReduce：支持MapReduce java编程接口（提供优化增强的MaxCompute MapReduce，也提供高度兼容Hadoop的MapReduce版本）。不暴露文件系统，<br>输入输出都是表。通过MaxCompute客户端工具、Dataworks提交作业。</p>
-<p>Graph：是一套面向迭代的图计算处理框架。图计算作业使用图进行建模，图由点（Vertex）和边（Edge）组成，点和边包含权值（Value）。通过迭代对图进行编辑、<br>演化，最终求解出结果，典型应用：PageRank、单源最短距离算法 、K-均值聚类算法等。</p>
-<ul>
-<li>Spark</li>
-</ul>
-<p>MaxCompute提供了Spark on MaxCompute的解决方案，在统一的计算资源和数据集权限体系之上，提供Spark计算框架，支持用户以熟悉的开发使用方式提交运行<br>Spark作业。</p>
-<ul>
-<li>交互式分析(Lightning)<br>MaxCompute产品的交互式查询服务。兼容PostgreSQL协议的JDBC&#x2F;ODBC接口。支持主流BI及SQL客户端工具的连接访问，如Tableau、帆软BI、Navicat、SQL<br>Workbench&#x2F;J等。</li>
-</ul>
-<h2 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h2><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，海量数据的存储和海量数据的分析计算问题。</li>
-<li>广义上来说，HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
-</ul>
-<h2 id="Hadoop的组成"><a href="#Hadoop的组成" class="headerlink" title="Hadoop的组成"></a>Hadoop的组成</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94def613dbab4f819ff61a0802b4a5d2~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h3><ul>
-<li>NameNode（nn）：存储文件的元数据，如文件名，文件目录结构，文件属性（生成时间、副本数、文件权限），以及每个文件的块列表和块所在的DataNode等。</li>
-<li>DataNode(dn)：在本地文件系统存储文件块数据，以及块数据的校验和。</li>
-<li>Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</li>
-</ul>
-<h3 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e22495656df4cb1b6bbf187dac7b733~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h3><p>MapReduce将计算过程分为两个阶段：Map和Reduce</p>
-<ul>
-<li>Map阶段并行处理输入数据</li>
-<li>Reduce阶段对Map结果进行汇总</li>
-</ul>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2fe4c16a0a4b4ea3b04b80c2318513cb~tplv-k3u1fbpfcp-watermark.image"></p>
-<h2 id="Hadoop分布式搭建"><a href="#Hadoop分布式搭建" class="headerlink" title="Hadoop分布式搭建"></a>Hadoop分布式搭建</h2>
+          
       
     </div>
 
@@ -374,7 +390,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2021/08/16/hbase%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -392,7 +408,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/16/hbase%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">hbase安装</a>
+          <a href="/2023/08/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/" class="post-title-link" itemprop="url">linux硬盘格式化与挂载</a>
         </h2>
 
         <div class="post-meta-container">
@@ -402,15 +418,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-08-16 21:16:42" itemprop="dateCreated datePublished" datetime="2021-08-16T21:16:42+08:00">2021-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:11" itemprop="dateModified" datetime="2023-08-16T21:29:11+08:00">2023-08-16</time>
+      <time title="创建时间：2023-08-16 18:01:58 / 修改时间：21:29:01" itemprop="dateCreated datePublished" datetime="2023-08-16T18:01:58+08:00">2023-08-16</time>
     </span>
 
   
@@ -423,19 +433,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="2-1-HBase-安装部署"><a href="#2-1-HBase-安装部署" class="headerlink" title="2.1 HBase 安装部署"></a>2.1 HBase 安装部署</h3><h5 id="2-1-1-Zookeeper-正常部署"><a href="#2-1-1-Zookeeper-正常部署" class="headerlink" title="2.1.1 Zookeeper 正常部署"></a>2.1.1 Zookeeper 正常部署</h5><p>首先保证 Zookeeper 集群的正常部署，并启动之:</p>
-<p>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start</p>
-<h5 id="2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动"><a href="#2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动" class="headerlink" title="2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:"></a>2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:</h5><p>[andrew@hadoop101 hadoop-2.7.2]$ sbin&#x2F;start-dfs.sh<br>[andrew@hadoop103 hadoop-2.7.2]$ sbin&#x2F;start-yarn.sh</p>
-<h5 id="2-1-3-HBase-的解压-解压-Hbase-到指定目录"><a href="#2-1-3-HBase-的解压-解压-Hbase-到指定目录" class="headerlink" title="2.1.3 HBase 的解压 解压 Hbase 到指定目录:"></a>2.1.3 HBase 的解压 解压 Hbase 到指定目录:</h5><p>[andrew@hadoop101 software]$ tar -zxvf hbase-1.3.1-bin.tar.gz -C &#x2F;opt&#x2F;module</p>
-<p>2.1.4 HBase 的配置文件<br>修改 HBase 对应的配置文件。</p>
-<p> 1)hbase-env.sh 修改内容: 2)hbase-site.xml 修改内容:<br>vim ~&#x2F;.bashrc<br>export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;jdk1.8.0_144<br>export HBASE_MANAGES_ZK&#x3D;false </p>
-<p>hbase-site.xml 修改内容</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:8020/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 0.98 后的新变动，之前版本没有.port,默认端口为 60000 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>16000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--  --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/zookeeper-3.5.7/zkData<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.unsafe.stream.capability.enforce<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- &lt;property&gt;</span></span><br><span class="line"><span class="comment">      &lt;name&gt;phoenix.schema.isNamespaceMappingEnabled&lt;/name&gt;</span></span><br><span class="line"><span class="comment">      &lt;value&gt;true&lt;/value&gt;</span></span><br><span class="line"><span class="comment">    &lt;/property&gt;</span></span><br><span class="line"><span class="comment">    &lt;property&gt;</span></span><br><span class="line"><span class="comment">    &lt;name&gt;phoenix.schema.mapSystemTablesToNamespace&lt;/name&gt;</span></span><br><span class="line"><span class="comment">      &lt;value&gt;true&lt;/value&gt;</span></span><br><span class="line"><span class="comment">   &lt;/property&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>vim regionservers</p>
-<p>localhost</p>
-<p>启动hbase</p>
-<p>bin&#x2F;hbase-daemon.sh start </p>
-
+          
       
     </div>
 
@@ -461,7 +459,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2019/08/16/spark/">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/hadoop%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -479,7 +477,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/16/spark/" class="post-title-link" itemprop="url">spark</a>
+          <a href="/2023/08/16/hadoop%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">hadoop安装</a>
         </h2>
 
         <div class="post-meta-container">
@@ -489,15 +487,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2019-08-16 21:40:18" itemprop="dateCreated datePublished" datetime="2019-08-16T21:40:18+08:00">2019-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:40:36" itemprop="dateModified" datetime="2023-08-16T21:40:36+08:00">2023-08-16</time>
+      <time title="创建时间：2023-08-16 18:01:31 / 修改时间：21:13:03" itemprop="dateCreated datePublished" datetime="2023-08-16T18:01:31+08:00">2023-08-16</time>
     </span>
 
   
@@ -510,213 +502,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h1><nav>
-<a href="#一简介">一、简介</a><br/>
-<a href="#二特点">二、特点</a><br/>
-<a href="#三集群架构">三、集群架构</a><br/>
-<a href="#四核心组件">四、核心组件</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-Spark--SQL">3.1 Spark  SQL</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-Spark-Streaming">3.2 Spark Streaming</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-MLlib">3.3 MLlib</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-Graphx">3.4 Graphx</a><br/>
-<a href="#">  </a><br/>
-</nav>
+          <p>Hadoop 下载地址:<a target="_blank" rel="noopener" href="https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/">https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/</a></p>
+<p>cd &#x2F;opt&#x2F;software&#x2F;</p>
+<p>解压安装文件到&#x2F;opt&#x2F;module 下面<br>[andrew@hadoop101 software]$ tar -zxvf hadoop-3.1.3.tar.gz -C &#x2F;opt&#x2F;module&#x2F;</p>
+<p>将 Hadoop 添加到环境变量<br>vim ~&#x2F;.bashrc</p>
+<p>#HADOOP_HOME<br>export HADOOP_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;hadoop-3.1.3<br>export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;bin<br>export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;sbin   </p>
+<p>source ~&#x2F;.bashrc</p>
+<p>修改以下文件<br>vim mapred-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Spark 于 2009 年诞生于加州大学伯克利分校 AMPLab，2013 年被捐赠给 Apache 软件基金会，2014 年 2 月成为 Apache 的顶级项目。相对于 MapReduce 的批处理计算，Spark 可以带来上百倍的性能提升，因此它成为继 MapReduce 之后，最为广泛使用的分布式计算框架。</p>
-<h2 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h2><p>Apache Spark 具有以下特点：</p>
-<ul>
-<li>使用先进的 DAG 调度程序，查询优化器和物理执行引擎，以实现性能上的保证；</li>
-<li>多语言支持，目前支持的有 Java，Scala，Python 和 R；</li>
-<li>提供了 80 多个高级 API，可以轻松地构建应用程序；</li>
-<li>支持批处理，流处理和复杂的业务分析；</li>
-<li>丰富的类库支持：包括 SQL，MLlib，GraphX 和 Spark Streaming 等库，并且可以将它们无缝地进行组合；  </li>
-<li>丰富的部署模式：支持本地模式和自带的集群模式，也支持在 Hadoop，Mesos，Kubernetes 上运行；</li>
-<li>多数据源支持：支持访问 HDFS，Alluxio，Cassandra，HBase，Hive 以及数百个其他数据源中的数据。</li>
-</ul>
-<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/future-of-spark.png"/> </div>
-
-<h2 id="三、集群架构"><a href="#三、集群架构" class="headerlink" title="三、集群架构"></a>三、集群架构</h2><table>
-<thead>
-<tr>
-<th>Term（术语）</th>
-<th>Meaning（含义）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Application</td>
-<td>Spark 应用程序，由集群上的一个 Driver 节点和多个 Executor 节点组成。</td>
-</tr>
-<tr>
-<td>Driver program</td>
-<td>主运用程序，该进程运行应用的 main() 方法并且创建  SparkContext</td>
-</tr>
-<tr>
-<td>Cluster manager</td>
-<td>集群资源管理器（例如，Standlone Manager，Mesos，YARN）</td>
-</tr>
-<tr>
-<td>Worker node</td>
-<td>执行计算任务的工作节点</td>
-</tr>
-<tr>
-<td>Executor</td>
-<td>位于工作节点上的应用进程，负责执行计算任务并且将输出数据保存到内存或者磁盘中</td>
-</tr>
-<tr>
-<td>Task</td>
-<td>被发送到 Executor 中的工作单元</td>
-</tr>
-</tbody></table>
-<div align="center"> <img src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-集群模式.png"/> </div>
-
-<p><strong>执行过程</strong>：</p>
-<ol>
-<li>用户程序创建 SparkContext 后，它会连接到集群资源管理器，集群资源管理器会为用户程序分配计算资源，并启动 Executor；</li>
-<li>Driver 将计算程序划分为不同的执行阶段和多个 Task，之后将 Task 发送给 Executor；</li>
-<li>Executor 负责执行 Task，并将执行状态汇报给 Driver，同时也会将当前节点资源的使用情况汇报给集群资源管理器。</li>
-</ol>
-<h2 id="四、核心组件"><a href="#四、核心组件" class="headerlink" title="四、核心组件"></a>四、核心组件</h2><p>Spark 基于 Spark Core 扩展了四个核心组件，分别用于满足不同领域的计算需求。</p>
-<div align="center"> <img  width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-stack.png"/> </div>
-
-<h3 id="3-1-Spark-SQL"><a href="#3-1-Spark-SQL" class="headerlink" title="3.1 Spark  SQL"></a>3.1 Spark  SQL</h3><p>Spark SQL 主要用于结构化数据的处理。其具有以下特点：</p>
-<ul>
-<li>能够将 SQL 查询与 Spark 程序无缝混合，允许您使用 SQL 或 DataFrame API 对结构化数据进行查询；</li>
-<li>支持多种数据源，包括 Hive，Avro，Parquet，ORC，JSON 和 JDBC；</li>
-<li>支持 HiveQL 语法以及用户自定义函数 (UDF)，允许你访问现有的 Hive 仓库；</li>
-<li>支持标准的 JDBC 和 ODBC 连接；</li>
-<li>支持优化器，列式存储和代码生成等特性，以提高查询效率。</li>
-</ul>
-<h3 id="3-2-Spark-Streaming"><a href="#3-2-Spark-Streaming" class="headerlink" title="3.2 Spark Streaming"></a>3.2 Spark Streaming</h3><p>Spark Streaming 主要用于快速构建可扩展，高吞吐量，高容错的流处理程序。支持从 HDFS，Flume，Kafka，Twitter 和 ZeroMQ 读取数据，并进行处理。</p>
-<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-arch.png"/> </div>
-
-<p> Spark Streaming 的本质是微批处理，它将数据流进行极小粒度的拆分，拆分为多个批处理，从而达到接近于流处理的效果。</p>
-<div align="center"> <img width="600px"   src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-flow.png"/> </div>
+<p>vim yarn-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Site specific YARN configuration properties --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--MR shuffle --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services.mapreduce.shuffle.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.maximum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.memory-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 关闭yarn对物理内存和虚拟内存的限制检查 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.pmen-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmen-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
+<p>vim hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--nn web访问 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:9870<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!--2nn web访问 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:9868<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!-- 指定hdfs副本数量 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///opt/module/hadoop-3.1.3/data/dfs/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="3-3-MLlib"><a href="#3-3-MLlib" class="headerlink" title="3.3 MLlib"></a>3.3 MLlib</h3><p>MLlib 是 Spark 的机器学习库。其设计目标是使得机器学习变得简单且可扩展。它提供了以下工具：</p>
-<ul>
-<li><strong>常见的机器学习算法</strong>：如分类，回归，聚类和协同过滤；</li>
-<li><strong>特征化</strong>：特征提取，转换，降维和选择；</li>
-<li><strong>管道</strong>：用于构建，评估和调整 ML 管道的工具；</li>
-<li><strong>持久性</strong>：保存和加载算法，模型，管道数据；</li>
-<li><strong>实用工具</strong>：线性代数，统计，数据处理等。</li>
-</ul>
-<h3 id="3-4-Graphx"><a href="#3-4-Graphx" class="headerlink" title="3.4 Graphx"></a>3.4 Graphx</h3><p>GraphX 是 Spark 中用于图形计算和图形并行计算的新组件。在高层次上，GraphX 通过引入一个新的图形抽象来扩展 RDD(一种具有附加到每个顶点和边缘的属性的定向多重图形)。为了支持图计算，GraphX 提供了一组基本运算符（如： subgraph，joinVertices 和 aggregateMessages）以及优化后的 Pregel API。此外，GraphX 还包括越来越多的图形算法和构建器，以简化图形分析任务。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
-      
-    </div>
+<p>vim workers<br>localhost</p>
+<p>vim core-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/xsl&quot;</span> href=<span class="string">&quot;configuration.xsl&quot;</span>?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></span><br><span class="line"><span class="comment">  you may not use this file except in compliance with the License.</span></span><br><span class="line"><span class="comment">  You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  Unless required by applicable law or agreed to in writing, software</span></span><br><span class="line"><span class="comment">  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></span><br><span class="line"><span class="comment">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="comment">  See the License for the specific language governing permissions and</span></span><br><span class="line"><span class="comment">  limitations under the License. See accompanying LICENSE file.</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Put site-specific property overrides in this file. --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!--指定NameNode的地址 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:8020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- hadoop数据存放目录 --&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/hadoop-3.1.3/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--HDFS网页登入使用的的静态用户为andrew --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.http.staticuser.user<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>andrew<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 配置andrew允通过代理访问主机节点 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.andrew.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 配置andrew允通过代理访问主机节点 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.andrew.groups<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codecs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">			org.apache.hadoop.io.compress.GzipCodec,</span><br><span class="line">			org.apache.hadoop.io.compress.DefaultCodec,</span><br><span class="line">			org.apache.hadoop.io.compress.BZip2Codec,</span><br><span class="line">			org.apache.hadoop.io.compress.SnappyCodec,</span><br><span class="line">			com.hadoop.compression.lzo.LzoCodec,</span><br><span class="line">			com.hadoop.compression.lzo.LzopCodec</span><br><span class="line">		<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codec.lzo.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>com.hadoop.compression.lzo.LzoCodec<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2019/08/16/kafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/16/kafka/" class="post-title-link" itemprop="url">kafka</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-08-16 21:38:48" itemprop="dateCreated datePublished" datetime="2019-08-16T21:38:48+08:00">2019-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:39:11" itemprop="dateModified" datetime="2023-08-16T21:39:11+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h1><nav>
-<a href="#一Kafka简介">一、Kafka简介</a><br/>
-<a href="#二Kafka核心概念">二、Kafka核心概念</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-Messages-And-Batches">2.1 Messages And Batches</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-Topics-And-Partitions">2.2 Topics And Partitions</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-Producers-And-Consumers">2.3 Producers And Consumers</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-Brokers-And-Clusters">2.4 Brokers And Clusters </a><br/>
-</nav>
-
-
-<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>ApacheKafka 是一个分布式的流处理平台。它具有以下特点：</p>
-<ul>
-<li>支持消息的发布和订阅，类似于 RabbtMQ、ActiveMQ 等消息队列；</li>
-<li>支持数据实时处理；</li>
-<li>能保证消息的可靠性投递；</li>
-<li>支持消息的持久化存储，并通过多副本分布式的存储方案来保证消息的容错；</li>
-<li>高吞吐率，单 Broker 可以轻松处理数千个分区以及每秒百万级的消息量。</li>
-</ul>
-<h2 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h2><h3 id="2-1-Messages-And-Batches"><a href="#2-1-Messages-And-Batches" class="headerlink" title="2.1 Messages And Batches"></a>2.1 Messages And Batches</h3><p>Kafka 的基本数据单元被称为 message(消息)，为减少网络开销，提高效率，多个消息会被放入同一批次 (Batch) 中后再写入。</p>
-<h3 id="2-2-Topics-And-Partitions"><a href="#2-2-Topics-And-Partitions" class="headerlink" title="2.2 Topics And Partitions"></a>2.2 Topics And Partitions</h3><p>Kafka 的消息通过 Topics(主题) 进行分类，一个主题可以被分为若干个 Partitions(分区)，一个分区就是一个提交日志 (commit log)。消息以追加的方式写入分区，然后以先入先出的顺序读取。Kafka 通过分区来实现数据的冗余和伸缩性，分区可以分布在不同的服务器上，这意味着一个 Topic 可以横跨多个服务器，以提供比单个服务器更强大的性能。</p>
-<p>由于一个 Topic 包含多个分区，因此无法在整个 Topic 范围内保证消息的顺序性，但可以保证消息在单个分区内的顺序性。</p>
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/kafka-topic.png"/> </div>
-
-<h3 id="2-3-Producers-And-Consumers"><a href="#2-3-Producers-And-Consumers" class="headerlink" title="2.3 Producers And Consumers"></a>2.3 Producers And Consumers</h3><h4 id="1-生产者"><a href="#1-生产者" class="headerlink" title="1. 生产者"></a>1. 生产者</h4><p>生产者负责创建消息。一般情况下，生产者在把消息均衡地分布到在主题的所有分区上，而并不关心消息会被写到哪个分区。如果我们想要把消息写到指定的分区，可以通过自定义分区器来实现。</p>
-<h4 id="2-消费者"><a href="#2-消费者" class="headerlink" title="2. 消费者"></a>2. 消费者</h4><p>消费者是消费者群组的一部分，消费者负责消费消息。消费者可以订阅一个或者多个主题，并按照消息生成的顺序来读取它们。消费者通过检查消息的偏移量 (offset) 来区分读取过的消息。偏移量是一个不断递增的数值，在创建消息时，Kafka 会把它添加到其中，在给定的分区里，每个消息的偏移量都是唯一的。消费者把每个分区最后读取的偏移量保存在 Zookeeper 或 Kafka 上，如果消费者关闭或者重启，它还可以重新获取该偏移量，以保证读取状态不会丢失。</p>
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/kafka-producer-consumer.png"/> </div>
-
-<p>一个分区只能被同一个消费者群组里面的一个消费者读取，但可以被不同消费者群组中所组成的多个消费者共同读取。多个消费者群组中消费者共同读取同一个主题时，彼此之间互不影响。</p>
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/kafka消费者.png"/> </div>
-
-<h3 id="2-4-Brokers-And-Clusters"><a href="#2-4-Brokers-And-Clusters" class="headerlink" title="2.4 Brokers And Clusters"></a>2.4 Brokers And Clusters</h3><p>一个独立的 Kafka 服务器被称为 Broker。Broker 接收来自生产者的消息，为消息设置偏移量，并提交消息到磁盘保存。Broker 为消费者提供服务，对读取分区的请求做出响应，返回已经提交到磁盘的消息。</p>
-<p>Broker 是集群 (Cluster) 的组成部分。每一个集群都会选举出一个 Broker 作为集群控制器 (Controller)，集群控制器负责管理工作，包括将分区分配给 Broker 和监控 Broker。</p>
-<p>在集群中，一个分区 (Partition) 从属一个 Broker，该 Broker 被称为分区的首领 (Leader)。一个分区可以分配给多个 Brokers，这个时候会发生分区复制。这种复制机制为分区提供了消息冗余，如果有一个 Broker 失效，其他 Broker 可以接管领导权。</p>
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/kafka-cluster.png"/> </div>
-
-
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>Neha Narkhede, Gwen Shapira ,Todd Palino(著) , 薛命灯 (译) . Kafka 权威指南 . 人民邮电出版社 . 2017-12-26</p>
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
+<p>vim hadoop-env.sh</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export HDFS_NAMENODE_USER=andrew</span><br><span class="line">export HDFS_DATANODE_USER=andrew</span><br><span class="line">export HDFS_SECONDARYNAMENODE_USER=andrew</span><br><span class="line">export YARN_RESOURCEMANAGER_USER=andrew</span><br><span class="line">export YARN_NODEMANAGER_USER=andrew</span><br><span class="line">export HDFS_JOURNALNODE_USER=andrew</span><br><span class="line">export HDFS_ZKFC_USER=andrew</span><br><span class="line">export HADOOP_SHELL_EXECNAME=andrew</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -735,7 +542,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
