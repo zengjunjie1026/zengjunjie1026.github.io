@@ -169,5 +169,7 @@ deploy:
 
 backup:
     type: git
-    repo: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git
-    branch: main
+    theme: coney,landscape,xxx
+    repository:
+       github: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git,main
+       gitcafe: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git,backup
