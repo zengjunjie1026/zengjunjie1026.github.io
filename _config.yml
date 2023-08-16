@@ -169,5 +169,5 @@ deploy:
 
 backup:
     type: git
-    repository:
-       github: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git,main
+    repo: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git
+    branch: main
