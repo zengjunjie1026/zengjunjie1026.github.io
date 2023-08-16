@@ -122,7 +122,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -292,7 +292,7 @@
 <h3 id="配置安全"><a href="#配置安全" class="headerlink" title="配置安全"></a>配置安全</h3><p>4.1 安全验证设置用户<br>1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。<br>a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix&#x2F;linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)</p>
 <p>执行命令：openssl rand -base64 756 &gt; &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;生成密钥</p>
 <p>执行命令：chmod 400 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;赋予权限</p>
-<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#111;&#111;&#x74;&#x40;&#49;&#x30;&#46;&#51;&#x30;&#46;&#x30;&#46;&#x34;&#57;">&#114;&#111;&#111;&#x74;&#x40;&#49;&#x30;&#46;&#51;&#x30;&#46;&#x30;&#46;&#x34;&#57;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#111;&#116;&#64;&#x31;&#x30;&#46;&#51;&#x30;&#x2e;&#48;&#46;&#52;&#57;">&#114;&#x6f;&#111;&#116;&#64;&#x31;&#x30;&#46;&#51;&#x30;&#x2e;&#48;&#46;&#52;&#57;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
 <p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file root@:10.30.0.49 &#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.56服务器上</p>
 <p>创建用户成功后，关闭所有的节点（三台机都需要操作）</p>
 <p>执行命令：按照先后顺序来处理关闭，mongos&gt;config&gt;shadr3&gt;shadr2&gt;shadr1</p>
