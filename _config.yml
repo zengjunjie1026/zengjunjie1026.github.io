@@ -17,7 +17,7 @@ description: 做自己爱做的事，爱自己在做的事！
 #作者昵称
 author: andrew
 #网站语言，默认英语，设置简体汉语
-language: zh-Hans
+language: zh-CN
 
 #时区，默认电脑时区
 #timezone: 
@@ -166,3 +166,8 @@ deploy:
       type: git
       repo: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git
       branch: master
+
+backup:
+    type: git
+    repository:
+       github: git@github.com:zengjunjie1026/markdown.git,main
