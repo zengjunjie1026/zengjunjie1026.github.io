@@ -1,107 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>spark group by 操作 | 分子美食家的博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="scala-spark-dataframe—groupby基本操作[andrew@hadoop102 bin]$ .&#x2F;spark-shell2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-jav">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="scala-spark-dataframe—groupby基本操作[andrew@hadoop102 bin]$ .&#x2F;spark-shell2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-jav">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spark group by 操作">
 <meta property="og:url" content="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="分子美食家的博客">
 <meta property="og:description" content="scala-spark-dataframe—groupby基本操作[andrew@hadoop102 bin]$ .&#x2F;spark-shell2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-jav">
-<meta property="og:locale">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-16T09:54:33.000Z">
 <meta property="article:modified_time" content="2023-08-16T09:56:23.279Z">
 <meta property="article:author" content="andrew">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="分子美食家的博客" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="canonical" href="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/">
 
-  
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">分子美食家的博客</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">记录学习的技能和遇到的问题</a>
-        </h2>
-      
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/","path":"2023/08/16/spark-group-by-操作/","title":"spark group by 操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>spark group by 操作 | 分子美食家的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">分子美食家的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录学习的技能和遇到的问题</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zengjunjie1026.github.io"></form>
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">andrew</p>
+  <div class="site-description" itemprop="description">做自己爱做的事，爱自己在做的事！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main"><article id="post-spark-group-by-操作" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time class="dt-published" datetime="2023-08-16T09:54:33.000Z" itemprop="datePublished">2023-08-16</time>
-</a>
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      spark group by 操作
-    </h1>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
   
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="spark group by 操作 | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spark group by 操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-        <p>scala-spark-dataframe—groupby基本操作<br>[andrew@hadoop102 bin]$ .&#x2F;spark-shell<br>2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>Setting default log level to “WARN”.<br>To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).<br>Spark context Web UI available at <a target="_blank" rel="noopener" href="http://hadoop102:4040/">http://hadoop102:4040</a><br>Spark context available as ‘sc’ (master &#x3D; local[*], app id &#x3D; local-1651926921962).<br>Spark session available as ‘spark’.<br>Welcome to<br>      ____              __<br>     &#x2F; <strong>&#x2F;</strong>  ___ _<em><em><strong>&#x2F; &#x2F;</strong><br>    <em>\ / _ / _ &#96;&#x2F; _<em>&#x2F;  ‘</em>&#x2F;<br>   &#x2F;_</em></em>&#x2F; .__&#x2F;_,</em>&#x2F;<em>&#x2F; &#x2F;</em>&#x2F;_\   version 3.0.0<br>      &#x2F;_&#x2F;</p>
+
+      <time title="创建时间：2023-08-16 17:54:33 / 修改时间：17:56:23" itemprop="dateCreated datePublished" datetime="2023-08-16T17:54:33+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>scala-spark-dataframe—groupby基本操作<br>[andrew@hadoop102 bin]$ .&#x2F;spark-shell<br>2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>Setting default log level to “WARN”.<br>To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).<br>Spark context Web UI available at <a target="_blank" rel="noopener" href="http://hadoop102:4040/">http://hadoop102:4040</a><br>Spark context available as ‘sc’ (master &#x3D; local[*], app id &#x3D; local-1651926921962).<br>Spark session available as ‘spark’.<br>Welcome to<br>      ____              __<br>     &#x2F; <strong>&#x2F;</strong>  ___ _<em><em><strong>&#x2F; &#x2F;</strong><br>    <em>\ / _ / _ &#96;&#x2F; _<em>&#x2F;  ‘</em>&#x2F;<br>   &#x2F;_</em></em>&#x2F; .__&#x2F;_,</em>&#x2F;<em>&#x2F; &#x2F;</em>&#x2F;_\   version 3.0.0<br>      &#x2F;_&#x2F;</p>
 <p>Using Scala version 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_212)<br>Type in expressions to have them evaluated.<br>Type :help for more information.</p>
 <p>scala&gt; val df &#x3D; spark.createDataset(Seq(<br>     |   (“aaa”,1,2),(“bbb”,3,4),(“ccc”,3,5),(“bbb”,4, 6))   ).toDF(“key1”,”key2”,”key3”)<br>df: org.apache.spark.sql.DataFrame &#x3D; [key1: string, key2: int … 1 more field]</p>
 <p>scala&gt; df.show()<br>+—-+—-+—-+<br>|key1|key2|key3|<br>+—-+—-+—-+<br>| aaa|   1|   2|<br>| bbb|   3|   4|<br>| ccc|   3|   5|<br>| bbb|   4|   6|<br>+—-+—-+—-+</p>
@@ -153,134 +239,90 @@ df.groupBy(&quot;key1&quot;)
 <p>  }</p>
 <p>}</p>
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/" data-id="clldk5lom0000kzcid94acl1g" data-title="spark group by 操作" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
-      
-      
-      
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" rel="prev" title="spark null 值处理">
+                  <i class="fa fa-angle-left"></i> spark null 值处理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/08/16/fedora-k8s-%E5%AE%89%E8%A3%85/" rel="next" title="fedora k8s 安装">
+                  fedora k8s 安装 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">andrew</span>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2023/08/16/fedora-k8s-%E5%AE%89%E8%A3%85/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
-      <div class="article-nav-title">
-        
-          fedora k8s 安装
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">spark null 值处理</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li></ul>
-    </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/08/16/kubeflow%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA/">kubeflow基础搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">docker基本操作</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/">linux硬盘格式化与挂载</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/16/hadoop%E5%AE%89%E8%A3%85/">hadoop安装</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/16/k8s%E5%AE%89%E8%A3%85/">k8s安装</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 andrew<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
+  </footer>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
 </body>
 </html>
