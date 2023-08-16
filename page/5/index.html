@@ -19,27 +19,25 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="scala-spark-dataframe—groupby基本操作[andrew@hadoop102 bin]$ .&#x2F;spark-shell2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-jav">
-<meta property="og:type" content="article">
-<meta property="og:title" content="spark group by 操作">
-<meta property="og:url" content="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/index.html">
+    <meta name="description" content="做自己爱做的事，爱自己在做的事！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分子美食家的博客">
+<meta property="og:url" content="https://zengjunjie1026.github.io/page/5/index.html">
 <meta property="og:site_name" content="分子美食家的博客">
-<meta property="og:description" content="scala-spark-dataframe—groupby基本操作[andrew@hadoop102 bin]$ .&#x2F;spark-shell2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-jav">
+<meta property="og:description" content="做自己爱做的事，爱自己在做的事！">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-16T09:54:33.000Z">
-<meta property="article:modified_time" content="2023-08-16T09:56:23.279Z">
 <meta property="article:author" content="andrew">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/">
+<link rel="canonical" href="https://zengjunjie1026.github.io/page/5/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/","path":"2023/08/16/spark-group-by-操作/","title":"spark group by 操作"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/5/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>spark group by 操作 | 分子美食家的博客</title>
+<title>分子美食家的博客</title>
   
 
 
@@ -69,7 +67,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">分子美食家的博客</p>
+      <h1 class="site-title">分子美食家的博客</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">记录学习的技能和遇到的问题</p>
@@ -134,17 +132,16 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner index posts-expand">
 
-
-  
+    
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -158,13 +155,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="spark group by 操作 | 分子美食家的博客">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          spark group by 操作
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">spark group by 操作</a>
+        </h2>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -187,7 +184,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>scala-spark-dataframe—groupby基本操作<br>[andrew@hadoop102 bin]$ .&#x2F;spark-shell<br>2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>Setting default log level to “WARN”.<br>To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).<br>Spark context Web UI available at <a target="_blank" rel="noopener" href="http://hadoop102:4040/">http://hadoop102:4040</a><br>Spark context available as ‘sc’ (master &#x3D; local[*], app id &#x3D; local-1651926921962).<br>Spark session available as ‘spark’.<br>Welcome to<br>      ____              __<br>     &#x2F; <strong>&#x2F;</strong>  ___ _<em><em><strong>&#x2F; &#x2F;</strong><br>    <em>\ / _ / _ &#96;&#x2F; _<em>&#x2F;  ‘</em>&#x2F;<br>   &#x2F;_</em></em>&#x2F; .__&#x2F;_,</em>&#x2F;<em>&#x2F; &#x2F;</em>&#x2F;_\   version 3.0.0<br>      &#x2F;_&#x2F;</p>
+    <div class="post-body" itemprop="articleBody">
+          <p>scala-spark-dataframe—groupby基本操作<br>[andrew@hadoop102 bin]$ .&#x2F;spark-shell<br>2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>Setting default log level to “WARN”.<br>To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).<br>Spark context Web UI available at <a target="_blank" rel="noopener" href="http://hadoop102:4040/">http://hadoop102:4040</a><br>Spark context available as ‘sc’ (master &#x3D; local[*], app id &#x3D; local-1651926921962).<br>Spark session available as ‘spark’.<br>Welcome to<br>      ____              __<br>     &#x2F; <strong>&#x2F;</strong>  ___ _<em><em><strong>&#x2F; &#x2F;</strong><br>    <em>\ / _ / _ &#96;&#x2F; _<em>&#x2F;  ‘</em>&#x2F;<br>   &#x2F;_</em></em>&#x2F; .__&#x2F;_,</em>&#x2F;<em>&#x2F; &#x2F;</em>&#x2F;_\   version 3.0.0<br>      &#x2F;_&#x2F;</p>
 <p>Using Scala version 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_212)<br>Type in expressions to have them evaluated.<br>Type :help for more information.</p>
 <p>scala&gt; val df &#x3D; spark.createDataset(Seq(<br>     |   (“aaa”,1,2),(“bbb”,3,4),(“ccc”,3,5),(“bbb”,4, 6))   ).toDF(“key1”,”key2”,”key3”)<br>df: org.apache.spark.sql.DataFrame &#x3D; [key1: string, key2: int … 1 more field]</p>
 <p>scala&gt; df.show()<br>+—-+—-+—-+<br>|key1|key2|key3|<br>+—-+—-+—-+<br>| aaa|   1|   2|<br>| bbb|   3|   4|<br>| ccc|   3|   5|<br>| bbb|   4|   6|<br>+—-+—-+—-+</p>
@@ -239,6 +237,7 @@ df.groupBy(&quot;key1&quot;)
 <p>  }</p>
 <p>}</p>
 
+      
     </div>
 
     
@@ -246,21 +245,8 @@ df.groupBy(&quot;key1&quot;)
     
 
     <footer class="post-footer">
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" rel="prev" title="spark null 值处理">
-                  <i class="fa fa-angle-left"></i> spark null 值处理
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2023/08/16/fedora-k8s-%E5%AE%89%E8%A3%85/" rel="next" title="fedora k8s 安装">
-                  fedora k8s 安装 <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
+        <div class="post-eof"></div>
+      
     </footer>
   </article>
 </div>
@@ -268,7 +254,102 @@ df.groupBy(&quot;key1&quot;)
 
 
 
+    
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">spark null 值处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-16 17:50:24 / 修改时间：17:51:02" itemprop="dateCreated datePublished" datetime="2023-08-16T17:50:24+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p> scala spark na null处理 | 分子美食家的博客                  </p>
+<h1 id="分子美食家的博客"><a href="#分子美食家的博客" class="headerlink" title="分子美食家的博客"></a><a href="/">分子美食家的博客</a></h1><h2 id="野生工程师的专栏"><a href="#野生工程师的专栏" class="headerlink" title="野生工程师的专栏"></a><a href="/">野生工程师的专栏</a></h2><p><a href="/">Home</a> <a href="/archives">Archives</a></p>
+<p><a href="/atom.xml" title="RSS Feed"></a></p>
+<p></p>
+<p><a href="/2022/05/14/scala-spark-na-null%E5%A4%84%E7%90%86/">2022-05-14</a></p>
+<h1 id="scala-spark-na-null处理"><a href="#scala-spark-na-null处理" class="headerlink" title="scala spark na null处理"></a>scala spark na null处理</h1><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parseCheck</span></span>(s: <span class="type">String</span>,min:<span class="type">Double</span>,max:<span class="type">Double</span>): <span class="type">Option</span>[<span class="type">Double</span>] = {</span><br><span class="line">      <span class="keyword">try</span> {</span><br><span class="line">        <span class="keyword">val</span> va = s.toDouble</span><br><span class="line">        <span class="keyword">if</span> (va &lt; min || va &gt; max) {</span><br><span class="line">          <span class="type">Some</span>(va)</span><br><span class="line">        }<span class="keyword">else</span> {</span><br><span class="line">          <span class="type">Some</span>(<span class="type">Double</span>.<span class="type">NaN</span>)</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">catch</span> { <span class="keyword">case</span> _ =&gt; <span class="type">Some</span>(<span class="type">Double</span>.<span class="type">NaN</span>)</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parseDouble</span></span>(s: <span class="type">String</span>): <span class="type">Option</span>[<span class="type">Double</span>] = <span class="keyword">try</span> { <span class="type">Some</span>(s.toDouble) } <span class="keyword">catch</span> { <span class="keyword">case</span> _ =&gt; <span class="type">Some</span>(<span class="type">Double</span>.<span class="type">NaN</span>) }</span><br></pre></td></tr></tbody></table>
+
+<p>Share</p>
+<p>[<strong>Older</strong></p>
+<p>scala-spark-dataframe—groupby基本操作</p>
+<p>](&#x2F;2022&#x2F;05&#x2F;07&#x2F;scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C&#x2F;)</p>
+<h3 id="Archives"><a href="#Archives" class="headerlink" title="Archives"></a>Archives</h3><ul>
+<li><a href="/archives/2022/05/">May 2022</a></li>
+</ul>
+<h3 id="Recent-Posts"><a href="#Recent-Posts" class="headerlink" title="Recent Posts"></a>Recent Posts</h3><ul>
+<li><a href="/2022/05/14/scala-spark-na-null%E5%A4%84%E7%90%86/">scala spark na null处理</a></li>
+<li><a href="/2022/05/07/scala-spark-dataframe%E2%80%94groupby%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">scala-spark-dataframe—groupby基本操作</a></li>
+<li><a href="/2022/05/04/fedora-k8s/">fedora-k8s</a></li>
+<li><a href="/2022/05/04/openwrt%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">openwrt安装配置</a></li>
+<li><a href="/2022/05/04/ubuntu-supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">ubuntu supervisor进程管理</a></li>
+</ul>
+<p>© 2022 andrew<br>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a></p>
+<p><a href="/">Home</a> <a href="/archives">Archives</a></p>
+<p>%</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
 
 </div>
   </main>
