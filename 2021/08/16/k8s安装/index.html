@@ -19,25 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="做自己爱做的事，爱自己在做的事！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分子美食家的博客">
-<meta property="og:url" content="https://zengjunjie1026.github.io/page/8/index.html">
+    <meta name="description" content="k8s-安装Kubernetes是什么？Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。 通过Kubernetes你可以： 快速部署应用快速扩展应用无缝对接新的应用功能节省资源，优化硬件资源的使用Kubernetes 特点可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）可扩展: 模块化, 插件化, 可挂载, 可组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s安装">
+<meta property="og:url" content="https://zengjunjie1026.github.io/2021/08/16/k8s%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="分子美食家的博客">
-<meta property="og:description" content="做自己爱做的事，爱自己在做的事！">
+<meta property="og:description" content="k8s-安装Kubernetes是什么？Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。 通过Kubernetes你可以： 快速部署应用快速扩展应用无缝对接新的应用功能节省资源，优化硬件资源的使用Kubernetes 特点可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）可扩展: 模块化, 插件化, 可挂载, 可组">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-16T10:01:24.000Z">
+<meta property="article:modified_time" content="2023-08-17T03:28:01.373Z">
 <meta property="article:author" content="andrew">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://zengjunjie1026.github.io/page/8/">
+<link rel="canonical" href="https://zengjunjie1026.github.io/2021/08/16/k8s%E5%AE%89%E8%A3%85/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/8/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2021/08/16/k8s%E5%AE%89%E8%A3%85/","path":"2021/08/16/k8s安装/","title":"k8s安装"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分子美食家的博客</title>
+<title>k8s安装 | 分子美食家的博客</title>
   
 
 
@@ -67,7 +69,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">分子美食家的博客</h1>
+      <p class="site-title">分子美食家的博客</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">记录学习的技能和遇到的问题</p>
@@ -90,7 +92,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -103,6 +105,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E5%A6%82%E4%B8%8B%E8%AF%AD%E5%8F%A5%E5%8D%B3%E8%A1%A8%E7%A4%BA%E9%85%8D%E7%BD%AE%E6%88%90%E5%8A%9F"><span class="nav-number">1.</span> <span class="nav-text">出现如下语句即表示配置成功</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E9%9C%80%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">查看所需镜像列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E5%AE%89%E8%A3%85%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="nav-number">2.0.1.</span> <span class="nav-text">确认安装是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-Ingress"><span class="nav-number">2.0.2.</span> <span class="nav-text">部署 Ingress</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%A6%82%E4%B8%8B"><span class="nav-number">3.</span> <span class="nav-text">输出如下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%A6%82%E4%B8%8B-1"><span class="nav-number">4.</span> <span class="nav-text">输出如下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-Nginx-Ingress-Controller"><span class="nav-number">4.0.1.</span> <span class="nav-text">查看 Nginx Ingress Controller</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -132,440 +135,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/06/16/hive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/16/hive/" class="post-title-link" itemprop="url">hive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-16 21:17:46" itemprop="dateCreated datePublished" datetime="2022-06-16T21:17:46+08:00">2022-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:09" itemprop="dateModified" datetime="2023-08-16T21:29:09+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="Hive安装"><a href="#Hive安装" class="headerlink" title="Hive安装"></a>Hive安装</h4><h5 id="2-1-Hive-安装地址"><a href="#2-1-Hive-安装地址" class="headerlink" title="2.1 Hive 安装地址"></a>2.1 Hive 安装地址</h5><p>1)Hive 官网地址 <a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a><br>2)文档查看地址 <a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</a><br>3)下载地址 <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/hive/">http://archive.apache.org/dist/hive/</a><br>4)github 地址 <a target="_blank" rel="noopener" href="https://github.com/apache/hive">https://github.com/apache/hive</a></p>
-<h5 id="2-2Hive-安装部署-2-2-1-安装-Hive"><a href="#2-2Hive-安装部署-2-2-1-安装-Hive" class="headerlink" title="2.2Hive 安装部署 2.2.1 安装 Hive"></a>2.2Hive 安装部署 2.2.1 安装 Hive</h5><p>1)把 apache-hive-3.1.2-bin.tar.gz 上传到 linux 的&#x2F;opt&#x2F;software 目录下<br>2)解压 apache-hive-3.1.2-bin.tar.gz 到&#x2F;opt&#x2F;module&#x2F;目录下面<br>3)修改 apache-hive-3.1.2-bin.tar.gz 的名称为 hive<br>4)修改&#x2F;etc&#x2F;profile.d&#x2F;my_env.sh，添加环境变量<br>    [andrw@hadoop101 software]$ sudo vim &#x2F;etc&#x2F;profile.d&#x2F;my_env.sh<br>5)添加内容<br>6)解决日志 Jar 包冲突<br>7)初始化元数据库<br>    [andrw@hadoop101 hive]$ bin&#x2F;schematool -dbType derby -initSchema<br>2.2.2 启动并使用 Hive 1)启动 Hive<br>    [andrw@hadoop101 hive]$ bin&#x2F;hive<br>2)使用 Hive<br>3)在 CRT 窗口中开启另一个窗口开启 Hive，在&#x2F;tmp&#x2F;andrw 目录下监控 hive.log 文件<br>    [andrw@hadoop101 software]$ tar -zxvf &#x2F;opt&#x2F;software&#x2F;apache-hive-3.1.2-bin.tar.gz -C &#x2F;opt&#x2F;module&#x2F;<br>    [andrw@hadoop101 software]$ mv &#x2F;opt&#x2F;module&#x2F;apache-hive-3.1.2-bin&#x2F; &#x2F;opt&#x2F;module&#x2F;hive  </p>
-<p>#HIVE_HOME<br>export HIVE_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;hive<br>export PATH&#x3D;$PATH:$HIVE_HOME&#x2F;bin<br>[andrw@hadoop101 software]$ mv $HIVE_HOME&#x2F;lib&#x2F;log4j-slf4j-impl-2.10.0.jar $HIVE_HOME&#x2F;lib&#x2F;log4j-slf4j-impl-2.10.0.bak<br>hive&gt; show databases;<br>hive&gt; show tables;<br>hive&gt; create table test(id int);<br>hive&gt; insert into test values(1);<br>hive&gt; select * from test;<br>Caused by: ERROR XSDB6: Another instance of Derby may have already booted<br>the database &#x2F;opt&#x2F;module&#x2F;hive&#x2F;metastore_db.at<br>org.apache.derby.iapi.error.StandardException.newException(Unknown<br>Source)<br>       at<br>org.apache.derby.iapi.error.StandardException.newException(Unknown<br>Source) at<br>org.apache.derby.impl.store.raw.data.BaseDataFileFactory.privGetJBMSLockO<br>nDB(Unknown Source)<br>       at<br>org.apache.derby.impl.store.raw.data.BaseDataFileFactory.run(Unknown<br>Source)<br>…<br>原因在于 Hive 默认使用的元数据库为 derby，开启 Hive 之后就会占用元数据库，且不与 其他客户端共享数据，所以我们需要将 Hive 的元数据地址改为 MySQL。</p>
-<p>2.4 Hive 元数据配置到 MySQL 2.4.1 拷贝驱动<br>将 MySQL 的 JDBC 驱动拷贝到 Hive 的 lib 目录下<br>2.4.2 配置 Metastore 到 MySQL<br>1)在$HIVE_HOME&#x2F;conf 目录下新建 hive-site.xml 文件<br>    [andrew@hadoop101 software]$ vim $HIVE_HOME&#x2F;conf&#x2F;hive-site.xml<br>添加如下内容<br>   [andrew@hadoop101 software]$ cp &#x2F;opt&#x2F;software&#x2F;mysql-connector-java-5.1.37.jar $HIVE_HOME&#x2F;lib  </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/xsl&quot;</span> href=<span class="string">&quot;configuration.xsl&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 URL --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://hadoop101:3306/metastore?useSSL=false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 Driver--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 username--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 password --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Hive 元数据存储版本的验证 --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.schema.verification<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--元数据存储授权--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.event.db.notification.api.auth<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Hive 默认在 HDFS 的工作目录 --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/user/hive/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2)登陆 MySQL<br>[andrew@hadoop101 software]$ mysql -uroot -p000000<br>3)新建 Hive 元数据库<br>mysql&gt; create database metastore chartset utf8mb4;<br>mysql&gt; quit;</p>
-<ol start="4">
-<li>初始化 Hive 元数据库<br>schematool -initSchema -dbType mysql -verbose</li>
-</ol>
-<p>2.4.3 再次启动 Hive </p>
-<p>1)启动 Hive<br>hive&gt; show databases;<br>hive&gt; show tables;<br>hive&gt; create table test (id int);<br>hive&gt; insert into test values(1);<br>hive&gt; select * from test;</p>
-<p>2.5 使用元数据服务的方式访问 Hive </p>
-<p>1)在 hive-site.xml 文件中添加如下配置信息</p>
-<!-- 指定存储元数据要连接的地址 -->
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.uris<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>thrift://hadoop101:9083<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2)启动 metastore<br> [andrew@hadoop101 hive]$ hive –service metastore<br> 2020-04-24 16:58:08: Starting Hive Metastore Server<br> 注意: 启动后窗口不能再操作，需打开一个新的 shell 窗口做别的操作</p>
-<p>3)启动 hive<br>[andrew@hadoop101 hive]$ bin&#x2F;hive</p>
-<p>2.6 使用 JDBC 方式访问 Hive<br>1)在 hive-site.xml 文件中添加如下配置信息</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- 指定 hiveserver2 连接的 host --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.bind.host<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop101<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定 hiveserver2 连接的端口号 --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>10000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2)启动 hiveserver2<br>bin&#x2F;hive –service hiveserver2</p>
-<p>3)启动 beeline 客户端(需要多等待一会)<br>beeline -u jdbc:hive2:&#x2F;&#x2F;hadoop101:10000 -n andrew</p>
-<p>4)看到如下界面<br>Connecting to jdbc:hive2:&#x2F;&#x2F;hadoop101:10000<br>Connected to: Apache Hive (version 3.1.2)<br>Driver: Hive JDBC (version 3.1.2)<br>Transaction isolation: TRANSACTION_REPEATABLE_READ<br>Beeline version 3.1.2 by Apache Hive<br>0: jdbc:hive2:&#x2F;&#x2F;hadoop101:10000&gt;</p>
-<p>nohup hive –service metastore 2&gt;&amp;1 &amp;<br>nohup hive –service hiveserver2 2&gt;&amp;1 &amp;</p>
-<p>打印当前数据库名和表头</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.header<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.current.db<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看当前设置<br>hive&gt;set;</p>
-<p>comment 中文乱码</p>
-<p>①修改表字段注解和表注解<br>alter table COLUMNS_V2 modify column COMMENT varchar(256) character set utf8;<br>alter table TABLE_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>② 修改分区字段注解：<br>alter table PARTITION_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>alter table PARTITION_KEYS modify column PKEY_COMMENT varchar(4000) character set utf8;<br>③修改索引注解：<br>alter table INDEX_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;  </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/05/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">spark null 值处理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-16 17:50:24" itemprop="dateCreated datePublished" datetime="2022-05-16T17:50:24+08:00">2022-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:28:46" itemprop="dateModified" datetime="2023-08-16T21:28:46+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/01/16/hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/16/hadoop/" class="post-title-link" itemprop="url">hadoop</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-16 21:14:23" itemprop="dateCreated datePublished" datetime="2022-01-16T21:14:23+08:00">2022-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:12" itemprop="dateModified" datetime="2023-08-16T21:29:12+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="大数据概念"><a href="#大数据概念" class="headerlink" title="大数据概念"></a>大数据概念</h2><p>大数据（big data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、<br>洞察发现力和流程优化能力的海量、高增长率和多样化的信息资产。</p>
-<blockquote>
-<p>主要解决，海量数据的存储和海量数据的分析计算问题。</p>
-</blockquote>
-<h2 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h2><p>当然，目前这个生态是越来越大了，但是它的本质还是在二个方面 计算 和 存储</p>
-<h3 id="开源生态"><a href="#开源生态" class="headerlink" title="开源生态"></a>开源生态</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5f63ebfc9e784f7690d0ed92f290e7bb~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li><p>Sqoop：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如：MySQL ,<br>Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-</li>
-<li><p>Flume：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统，Flume支持在日志系统中定制各类数据发送方，<br>用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-</li>
-<li><p>Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，有如下特性：</p>
-<ul>
-<li>通过O(1)的磁盘数据结构提供消息的持久化，这种结构对于即使数以TB的消息存储也能够保持长时间的稳定性能。</li>
-<li>高吞吐量：即使是非常普通的硬件Kafka也可以支持每秒数百万的消息。</li>
-<li>支持通过Kafka服务器和消费机集群来分区消息。</li>
-<li>支持Hadoop并行数据加载。</li>
-</ul>
-</li>
-<li><p>Storm：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。这是管理队列及工作者集群的另一种方式。<br>Storm也可被用于“连续计算”（continuous computation），对数据流做连续查询，在计算时就将结果以流的形式输出给用户。</p>
-</li>
-<li><p>Spark：Spark是当前最流行的开源大数据内存计算框架。可以基于Hadoop上存储的大数据进行计算。</p>
-</li>
-<li><p>Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-</li>
-<li><p>Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-</li>
-<li><p>Hive：hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce<br>任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-</li>
-<li><p>Mahout:Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。<br>聚集：收集文件并进行相关文件分组。分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标签的文档进行正确的归类。频繁项集挖掘：将一组项分组，<br>并识别哪些个别项会经常一起出现。</p>
-</li>
-<li><p>ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。它是一个针对大型分布式系统的可靠协调系统，提供的功能包括：配置维护、名字服务、分布式同步、<br>组服务等。ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</p>
-</li>
-</ul>
-<h3 id="阿里云MaxCompute"><a href="#阿里云MaxCompute" class="headerlink" title="阿里云MaxCompute"></a>阿里云MaxCompute</h3><p>MaxCompute（大数据计算服务）是是一种快速、完全托管的TB&#x2F;PB级数据仓库解决方案。MaxCompute主要用于实时性要求不高的、批量结构化数据的存储和计算。<br>并可提供大数据分析建模服务。其特点如下： </p>
-<ul>
-<li>采用分布式架构高效处理海量数据</li>
-<li>基于表的数据存储</li>
-<li>于SQL的数据处理</li>
-<li>支持多用户协同分析数据，多种权限管理方式，具有灵活的数据访问控制策略</li>
-<li>兼容Hive</li>
-</ul>
-<p>MaxCompute架构<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/521857b4c5af453e8967446f719eee2c~tplv-k3u1fbpfcp-watermark.image"></p>
-<p>MaxCompute功能</p>
-<ul>
-<li>数据存储</li>
-</ul>
-<p>适用于TB以上规模的存储及计算需求，最大可达EB级别。数据分布式存储，多副本冗余，数据存储对外仅开放表的操作接口，不提供文件系统访问接口。表数据列式存储，<br>默认高度压缩，后续将提供兼容ORC的Ali-ORC存储格式。<br>支持外表，将存储在OSS对象存储、OTS表格存储的数据映射为二维表。<br>支持Partition、Bucket的分区、分桶存储。<br>底层是盘古文件系统（不是HDFS）。<br>使用时，存储与计算解耦，不需要仅仅为了存储而扩大不必要的计算资源。</p>
-<ul>
-<li>数据通道<br>TUNNEL：提供高并发的离线数据上传下载服务。支持每天TB&#x2F;PB级别的数据导入导出。适合于全量数据或历史数据的批量导入。</li>
-</ul>
-<p>DataHub：针对实时数据上传的场景，具有延迟低、使用方便的特点，适用于增量数据的导入。Datahub还支持多种数据传输插件，包括Logstash、Flume、Fluentd、<br>Sqoop等。同时支持日志服务Log Service中的日志数据的一键投递至MaxCompute，进而利用大数据开发套件进行日志分析和挖掘。</p>
-<ul>
-<li>多种计算模型<br>SQL：以二维表的形式存储数据，支持多种数据类型，MaxCompute以二维表的形式存储数据，对外提供了SQL查询功能。不支持事务、索引及Update&#x2F;Delete等操作，<br>SQL语法与Oracle，MySQL等有一定差别。无法在毫秒级别返回结果。</li>
-</ul>
-<p>MapReduce：支持MapReduce java编程接口（提供优化增强的MaxCompute MapReduce，也提供高度兼容Hadoop的MapReduce版本）。不暴露文件系统，<br>输入输出都是表。通过MaxCompute客户端工具、Dataworks提交作业。</p>
-<p>Graph：是一套面向迭代的图计算处理框架。图计算作业使用图进行建模，图由点（Vertex）和边（Edge）组成，点和边包含权值（Value）。通过迭代对图进行编辑、<br>演化，最终求解出结果，典型应用：PageRank、单源最短距离算法 、K-均值聚类算法等。</p>
-<ul>
-<li>Spark</li>
-</ul>
-<p>MaxCompute提供了Spark on MaxCompute的解决方案，在统一的计算资源和数据集权限体系之上，提供Spark计算框架，支持用户以熟悉的开发使用方式提交运行<br>Spark作业。</p>
-<ul>
-<li>交互式分析(Lightning)<br>MaxCompute产品的交互式查询服务。兼容PostgreSQL协议的JDBC&#x2F;ODBC接口。支持主流BI及SQL客户端工具的连接访问，如Tableau、帆软BI、Navicat、SQL<br>Workbench&#x2F;J等。</li>
-</ul>
-<h2 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h2><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，海量数据的存储和海量数据的分析计算问题。</li>
-<li>广义上来说，HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
-</ul>
-<h2 id="Hadoop的组成"><a href="#Hadoop的组成" class="headerlink" title="Hadoop的组成"></a>Hadoop的组成</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94def613dbab4f819ff61a0802b4a5d2~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h3><ul>
-<li>NameNode（nn）：存储文件的元数据，如文件名，文件目录结构，文件属性（生成时间、副本数、文件权限），以及每个文件的块列表和块所在的DataNode等。</li>
-<li>DataNode(dn)：在本地文件系统存储文件块数据，以及块数据的校验和。</li>
-<li>Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</li>
-</ul>
-<h3 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e22495656df4cb1b6bbf187dac7b733~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h3><p>MapReduce将计算过程分为两个阶段：Map和Reduce</p>
-<ul>
-<li>Map阶段并行处理输入数据</li>
-<li>Reduce阶段对Map结果进行汇总</li>
-</ul>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2fe4c16a0a4b4ea3b04b80c2318513cb~tplv-k3u1fbpfcp-watermark.image"></p>
-<h2 id="Hadoop分布式搭建"><a href="#Hadoop分布式搭建" class="headerlink" title="Hadoop分布式搭建"></a>Hadoop分布式搭建</h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2021/08/16/hbase%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/16/hbase%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">hbase安装</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-16 21:16:42" itemprop="dateCreated datePublished" datetime="2021-08-16T21:16:42+08:00">2021-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:11" itemprop="dateModified" datetime="2023-08-16T21:29:11+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="2-1-HBase-安装部署"><a href="#2-1-HBase-安装部署" class="headerlink" title="2.1 HBase 安装部署"></a>2.1 HBase 安装部署</h3><h5 id="2-1-1-Zookeeper-正常部署"><a href="#2-1-1-Zookeeper-正常部署" class="headerlink" title="2.1.1 Zookeeper 正常部署"></a>2.1.1 Zookeeper 正常部署</h5><p>首先保证 Zookeeper 集群的正常部署，并启动之:</p>
-<p>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start</p>
-<h5 id="2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动"><a href="#2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动" class="headerlink" title="2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:"></a>2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:</h5><p>[andrew@hadoop101 hadoop-2.7.2]$ sbin&#x2F;start-dfs.sh<br>[andrew@hadoop103 hadoop-2.7.2]$ sbin&#x2F;start-yarn.sh</p>
-<h5 id="2-1-3-HBase-的解压-解压-Hbase-到指定目录"><a href="#2-1-3-HBase-的解压-解压-Hbase-到指定目录" class="headerlink" title="2.1.3 HBase 的解压 解压 Hbase 到指定目录:"></a>2.1.3 HBase 的解压 解压 Hbase 到指定目录:</h5><p>[andrew@hadoop101 software]$ tar -zxvf hbase-1.3.1-bin.tar.gz -C &#x2F;opt&#x2F;module</p>
-<p>2.1.4 HBase 的配置文件<br>修改 HBase 对应的配置文件。</p>
-<p> 1)hbase-env.sh 修改内容: 2)hbase-site.xml 修改内容:<br>vim ~&#x2F;.bashrc<br>export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;jdk1.8.0_144<br>export HBASE_MANAGES_ZK&#x3D;false </p>
-<p>hbase-site.xml 修改内容</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:8020/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 0.98 后的新变动，之前版本没有.port,默认端口为 60000 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>16000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--  --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/zookeeper-3.5.7/zkData<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.unsafe.stream.capability.enforce<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- &lt;property&gt;</span></span><br><span class="line"><span class="comment">      &lt;name&gt;phoenix.schema.isNamespaceMappingEnabled&lt;/name&gt;</span></span><br><span class="line"><span class="comment">      &lt;value&gt;true&lt;/value&gt;</span></span><br><span class="line"><span class="comment">    &lt;/property&gt;</span></span><br><span class="line"><span class="comment">    &lt;property&gt;</span></span><br><span class="line"><span class="comment">    &lt;name&gt;phoenix.schema.mapSystemTablesToNamespace&lt;/name&gt;</span></span><br><span class="line"><span class="comment">      &lt;value&gt;true&lt;/value&gt;</span></span><br><span class="line"><span class="comment">   &lt;/property&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>vim regionservers</p>
-<p>localhost</p>
-<p>启动hbase</p>
-<p>bin&#x2F;hbase-daemon.sh start </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2021/08/16/k8s%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -579,13 +159,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="name" content="k8s安装 | 分子美食家的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/16/k8s%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s安装</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          k8s安装
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -614,8 +194,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <p>k8s-安装<br>Kubernetes是什么？<br>Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。 通过Kubernetes你可以：</p>
+    <div class="post-body" itemprop="articleBody"><p>k8s-安装<br>Kubernetes是什么？<br>Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。 通过Kubernetes你可以：</p>
 <p>快速部署应用<br>快速扩展应用<br>无缝对接新的应用功能<br>节省资源，优化硬件资源的使用<br>Kubernetes 特点<br>可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）<br>可扩展: 模块化, 插件化, 可挂载, 可组合<br>自动化: 自动部署，自动重启，自动复制，自动伸缩&#x2F;扩展<br>使用Kubernetes能做什么？<br>多个进程（作为容器运行）协同工作。（Pod）<br>存储系统挂载<br>Distributing secrets<br>应用健康检测<br>应用实例的复制<br>Pod自动伸缩&#x2F;扩展<br>Naming and discovering<br>负载均衡<br>滚动更新<br>资源监控<br>日志访问<br>调试应用程序<br>提供认证和授权<br>Kubernetes 组件<br>K8s是由许多个的组件组成的 分为Master组件和节点（Node）组件</p>
 <p>Master组件<br>Master组件提供集群的管理控制中心。 Master组件可以在集群中任何节点上运行。但是为了简单起见，通常在一台VM&#x2F;机器上启动所有Master组件，并且不会在此VM&#x2F;机器上运行用户容器。</p>
 <p>kube-apiserver<br>kube-apiserver用于暴露Kubernetes API。任何的资源请求&#x2F;调用操作都是通过kube-apiserver提供的接口进行。请参阅构建高可用群集。</p>
@@ -760,7 +339,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出如下，注意下面的 IP 地址，就是我们实际访问地址</span></span><br><span class="line">NAME                                        READY   STATUS    RESTARTS   AGE   IP                NODE                 NOMINATED NODE   READINESS GATES</span><br><span class="line">nginx-ingress-controller-76f9fddcf8-vzkm5   1/1     Running   0          61m   192.168.141.160   kubernetes-node-01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">kubectl get ingress</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下</span></span><br><span class="line">NAME        HOSTS          ADDRESS   PORTS   AGE</span><br><span class="line">nginx-web   k8s.test.com             80      61m</span><br></pre></td></tr></table></figure>
 <p>测试访问<br>成功代理到 Tomcat 即表示成功</p>
 
-      
     </div>
 
     
@@ -768,8 +346,21 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/16/spark/" rel="prev" title="spark">
+                  <i class="fa fa-angle-left"></i> spark
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/16/hbase%E5%AE%89%E8%A3%85/" rel="next" title="hbase安装">
+                  hbase安装 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -777,9 +368,7 @@
 
 
 
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+
 
 </div>
   </main>
