@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -133,6 +133,75 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/17/nfs-centos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/17/nfs-centos/" class="post-title-link" itemprop="url">nfs centos</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-17 11:38:04 / 修改时间：11:39:28" itemprop="dateCreated datePublished" datetime="2023-08-17T11:38:04+08:00">2023-08-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@frps.cn ~]<span class="comment"># yum install -y nfs-utils rpcbind</span></span><br><span class="line"></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start nfs</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable nfs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#首先检查nfs挂载目录是否正常</span></span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e localhost</span></span><br><span class="line">Export list <span class="keyword">for</span> localhost:</span><br><span class="line">/volume1/nfs01 *</span><br><span class="line"></span><br><span class="line"><span class="comment">#先在客户端创建数据目录（挂载点位置）</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mkdir -p /data1/k8s/</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mount -t nfs 10.4.82.118:/volume1/nfs01 /data1/k8s</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#现在进行挂载 分别是ip:nfs目录  节点存储目录</span></span><br><span class="line"></span><br><span class="line">挂在完成后我们使用<span class="built_in">df</span> -h 就可以看到挂载点</span><br><span class="line">[root@所有节点 ~]<span class="comment"># df -h|grep 10.4.82.135</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -173,6 +242,13 @@
 
       <time title="创建时间：2023-08-16 21:49:26" itemprop="dateCreated datePublished" datetime="2023-08-16T21:49:26+08:00">2023-08-16</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 11:40:38" itemprop="dateModified" datetime="2023-08-17T11:40:38+08:00">2023-08-17</time>
+    </span>
 
   
 </div>
@@ -184,7 +260,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <h3 id="Archlinux-安装mysql；"><a href="#Archlinux-安装mysql；" class="headerlink" title="Archlinux  安装mysql；"></a>Archlinux  安装mysql；</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Paceman -S mariadb</span><br><span class="line">sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql</span><br><span class="line"></span><br><span class="line">Two all-privilege accounts were created.</span><br><span class="line">One is root@localhost, it has no password, but you need to</span><br><span class="line">be system <span class="string">&#x27;root&#x27;</span> user to connect. Use, <span class="keyword">for</span> example, sudo mysql</span><br><span class="line">The second is mysql@localhost, it has no password either, but</span><br><span class="line">you need to be the system <span class="string">&#x27;mysql&#x27;</span> user to connect.</span><br><span class="line">After connecting you can <span class="built_in">set</span> the password, <span class="keyword">if</span> you would need to be</span><br><span class="line">able to connect as any of these <span class="built_in">users</span> with a password and without sudo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Sudo systemctl stop mariadb;</span><br><span class="line">mysqld_safe --skip-grant-tables &amp;</span><br><span class="line"></span><br><span class="line">Mysql;</span><br><span class="line">Use mysql;</span><br><span class="line">Delete from user <span class="built_in">where</span> user=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@<span class="string">&#x27;localhost&#x27;</span>=password(<span class="string">&#x27;redhat&#x27;</span>);</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> mysql@‘ocalhost<span class="string">&#x27;=password(&#x27;</span>redhat<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">grant all privileges on *.* to username@&#x27;</span>%<span class="string">&#x27; identified by &#x27;</span>pass<span class="string">&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Exit</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> UPDATE mysql.user SET authentication_string = PASSWORD(&quot;pass&quot;), plugin = &#x27;</span>mysql_native_password<span class="string">&#x27; WHERE User = &#x27;</span>root<span class="string">&#x27; AND Host = &#x27;</span>localhost<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -376,74 +452,6 @@
       <span class="post-meta-item-text">发表于</span>
 
       <time title="创建时间：2023-08-16 21:48:39" itemprop="dateCreated datePublished" datetime="2023-08-16T21:48:39+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/jupyter-notebook/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/16/jupyter-notebook/" class="post-title-link" itemprop="url">jupyter notebook</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-16 21:48:30" itemprop="dateCreated datePublished" datetime="2023-08-16T21:48:30+08:00">2023-08-16</time>
     </span>
 
   

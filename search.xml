@@ -355,7 +355,7 @@
     <url>/2023/08/16/mongodb-%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<p>参考搭建文档<a href="https://blog.csdn.net/msh6453/article/details/131161845">https://blog.csdn.net/msh6453/article/details/131161845</a></p>
 <p>前言<br>官方文档：<a href="https://www.mongodb.com/docs/%EF%BC%88%E5%8F%AF%E4%BB%A5%E5%8F%82%E8%80%83%EF%BC%89">https://www.mongodb.com/docs/（可以参考）</a></p>
-<p>一，安装说明<br>1.1环境说明<br>1、首先确定部署的环境，确定下服务器的端口，一般默认是22的端口；<br>2、操作系统Centos7.9；<br>3、 数据库mongodb-linux-x86_64-rhel70-4.4.22。<br>mongodb版本4.4.22</p>
+<h2 id="一，安装说明"><a href="#一，安装说明" class="headerlink" title="一，安装说明"></a>一，安装说明</h2><p>1.1环境说明<br>1、首先确定部署的环境，确定下服务器的端口，一般默认是22的端口；<br>2、操作系统Centos7.9；<br>3、 数据库mongodb-linux-x86_64-rhel70-4.4.22。<br>mongodb版本4.4.22</p>
 <p><img src="/image-1.png" alt="Alt text"></p>
 <p>mongos，数据库集群请求的入口，所有的请求都通过mongos进行协调，不需要在应用程序添加一个路由选择器，mongos自己就是一个请求分发中心，它负责把对应的数据请求请求转发到对应的shard服务器上。在生产环境通常有多mongos作为请求的入口，防止其中一个挂掉所有的mongodb请求都没有办法操作。</p>
 <p>config server，顾名思义为配置服务器，存储所有数据库元信息（路由、分片）的配置。mongos本身没有物理存储分片服务器和数据路由信息，只是缓存在内存里，配置服务器则实际存储这些数据。mongos第一次启动或者关掉重启就会从 config server 加载配置信息，以后如果配置服务器信息变化会通知到所有的 mongos 更新自己的状态，这样 mongos 就能继续准确路由。在生产环境通常有多个 config server 配置服务器，因为它存储了分片路由的元数据，防止数据丢失！</p>
@@ -413,7 +413,10 @@
 
 <p>配置文件如mongo&#x2F;conf 下面<br>注意安装的时候不要设置最后的安全密钥，待完毕后添加</p>
 <p>启动服务顺序</p>
-<p>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;config.conf<br>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;shard1.conf<br>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;shard2.conf<br>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;shard3.conf<br>mongos -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;mongos.conf</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod -f /opt/mongo/MongoDB/conf/config.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard1.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard2.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard3.conf</span><br><span class="line">mongos -f /opt/mongo/MongoDB/conf/mongos.conf</span><br></pre></td></tr></table></figure>
+
+
+
 <p>随便登入一台</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mongo 10.30.0.48:21000</span><br><span class="line">use admin</span><br><span class="line">config = &#123;_id : &quot;config&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:21000&quot; &#125;,</span><br><span class="line">&#123;_id : 1, host : &quot;10.30.0.49:21000&quot; &#125;,&#123;_id : 2, host : &quot;10.30.0.50:21000&quot; &#125;]&#125;</span><br><span class="line">rs.initiate(config)</span><br></pre></td></tr></table></figure>
 
@@ -433,43 +436,28 @@
 
 
 <p>创建用户</p>
-<p>执行命令： mongo -port 20000<br>执行命令： use admin&#x2F;&#x2F;这个条件是必须的<br>执行命令：db.createUser(</p>
-<pre><code>&#123;
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">执行命令： mongo -port 20000</span><br><span class="line">执行命令： use admin//这个条件是必须的</span><br><span class="line">执行命令：db.createUser(</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">        user:<span class="string">&quot;ml_grp&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="built_in">pwd</span>:<span class="string">&quot;ml&amp;dl#mongodb&quot;</span>,</span><br><span class="line"></span><br><span class="line">        roles:[&#123;role:<span class="string">&quot;root&quot;</span>,db:<span class="string">&quot;admin&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
-    user:&quot;ml_grp&quot;,
-
-    pwd:&quot;ml&amp;dl#mongodb&quot;,
-
-    roles:[&#123;role:&quot;root&quot;,db:&quot;admin&quot;&#125;]
-
-&#125;
-</code></pre>
-<p>)</p>
 <p>use admin<br>执行命令：db.auth(‘ml_grp’,’passwd’)<br>执行命令：db.runCommand( { enablesharding :”zjxndc”});&#x2F;&#x2F;为zjxndc开启分片功能<br>执行命令：db.runCommand( { shardcollection : “zjxndc.measureHisvalues”,key : {_id: 1} } )&#x2F;</p>
 <p>use config<br>db.settings.save({“_id”:”chunksize”,”value”:1})<br>use zjxndc<br>d、执行命令：for (var i &#x3D; 1; i &lt;&#x3D; 100000; i++){</p>
 <p>db.measureHisvalues.insert({“_id”:i,”test1”:”testval1”+i});</p>
 <p>}</p>
 <p><img src="/1408af41c022dc62726ecf884c95ff0a.png" alt="enable partition"><br><img src="/image.png" alt="查看是否分区成功"></p>
-<h3 id="配置安全"><a href="#配置安全" class="headerlink" title="配置安全"></a>配置安全</h3><p>4.1 安全验证设置用户<br>1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。<br>a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix&#x2F;linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)</p>
+<h3 id="配置安全"><a href="#配置安全" class="headerlink" title="配置安全"></a>配置安全</h3><h4 id="4-1-安全验证设置用户"><a href="#4-1-安全验证设置用户" class="headerlink" title="4.1 安全验证设置用户"></a>4.1 安全验证设置用户</h4><p>1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。<br>a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix&#x2F;linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)</p>
 <p>执行命令：openssl rand -base64 756 &gt; &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;生成密钥</p>
 <p>执行命令：chmod 400 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;赋予权限</p>
-<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#48;&#46;&#52;&#57;">&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#48;&#46;&#52;&#57;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;">&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
 <p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file root@:10.30.0.49 &#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.56服务器上</p>
 <p>创建用户成功后，关闭所有的节点（三台机都需要操作）</p>
 <p>执行命令：按照先后顺序来处理关闭，mongos&gt;config&gt;shadr3&gt;shadr2&gt;shadr1</p>
 <p>&#x2F;&#x2F;注意的是每一个服务的关闭都需要在三台机上关闭，在关闭其他服务。例如关闭shadr3服务，先关闭0.54服务器上的shadr3服务，其次0.55服务器上的shadr3服务，再是0.56服务器上的shadr3服务；然后在关闭shadr2服务，也是按照这个顺序处理。（这个地方主要新手操作避免出错）</p>
 <p>执行命令：</p>
-<p>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;shard1.conf –shutdown</p>
-<p>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;shard2.conf –shutdown</p>
-<p>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;shard3.conf –shutdown</p>
-<p>mongod -f &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;conf&#x2F;config.conf –shutdown</p>
-<p>mongo 10.30.0.48:20000&#x2F;&#x2F;mongos需要这样关闭，用上面的命令有问题。</p>
-<p>use admin<br>db.auth(‘ml_grp’,’passwd’)<br>db.shutdownServer()</p>
-<p>3、配置testKeyFile.file，依次在每台机器上的mongos.conf、config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。<br>a、先是config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。（三台机器的这些文件都需要添加）<br>在conf这几个文件的的最后添加：<br>security:</p>
-<p>  keyFile: &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file</p>
-<p>  authorization: enabled</p>
-<p>b、然后在三台机器的mongos.conf配置文件中最后添加：<br>security:</p>
-<p>  keyFile: &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard1.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard2.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard3.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/config.conf --shutdown</span><br><span class="line">mongo 10.30.0.48:20000//mongos需要这样关闭，用上面的命令有问题。</span><br><span class="line"></span><br><span class="line">use admin</span><br><span class="line">db.auth(<span class="string">&#x27;ml_grp&#x27;</span>,<span class="string">&#x27;passwd&#x27;</span>)</span><br><span class="line">db.shutdownServer()</span><br></pre></td></tr></table></figure>
+
+<p>3、配置testKeyFile.file，依次在每台机器上的mongos.conf、config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。<br>a、先是config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。（三台机器的这些文件都需要添加）<br>在conf这几个文件的的最后添加：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">security:</span><br><span class="line">  keyFile: /opt/mongo/MongoDB/testKeyFile.file</span><br><span class="line">  authorization: enabled</span><br></pre></td></tr></table></figure>
+<p>b、然后在三台机器的mongos.conf配置文件中最后添加：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">security:</span><br><span class="line">  keyFile: /opt/mongo/MongoDB/testKeyFile.file</span><br></pre></td></tr></table></figure>
 <p>&#x2F;&#x2F;这里就说明了testKeyFile.file最好在每台机器放在一个位置，为了后面复制粘贴处理</p>
 <p>&#x2F;&#x2F;解释说明： mongos比mongod少了authorization：enabled的配置。原因是，副本集加分片的安全认证需要配置两方面的，副本集各个节点之间使用内部身份验证，用于内部各个mongo实例的通信，只有相同keyfile才能相互访问。所以都要开启keyFile: &#x2F;data&#x2F;mongodb&#x2F;testKeyFile.file</p>
 <pre><code>然而对于所有的mongod，才是真正的保存数据的分片。mongos只做路由，不保存数据。所以所有的mongod开启访问数据的授权authorization:enabled。这样用户只有账号密码正确才能访问到数据
@@ -1532,7 +1520,7 @@
   <entry>
     <title>mysql</title>
     <url>/2023/08/16/mysql/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="Archlinux-安装mysql；"><a href="#Archlinux-安装mysql；" class="headerlink" title="Archlinux  安装mysql；"></a>Archlinux  安装mysql；</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Paceman -S mariadb</span><br><span class="line">sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql</span><br><span class="line"></span><br><span class="line">Two all-privilege accounts were created.</span><br><span class="line">One is root@localhost, it has no password, but you need to</span><br><span class="line">be system <span class="string">&#x27;root&#x27;</span> user to connect. Use, <span class="keyword">for</span> example, sudo mysql</span><br><span class="line">The second is mysql@localhost, it has no password either, but</span><br><span class="line">you need to be the system <span class="string">&#x27;mysql&#x27;</span> user to connect.</span><br><span class="line">After connecting you can <span class="built_in">set</span> the password, <span class="keyword">if</span> you would need to be</span><br><span class="line">able to connect as any of these <span class="built_in">users</span> with a password and without sudo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Sudo systemctl stop mariadb;</span><br><span class="line">mysqld_safe --skip-grant-tables &amp;</span><br><span class="line"></span><br><span class="line">Mysql;</span><br><span class="line">Use mysql;</span><br><span class="line">Delete from user <span class="built_in">where</span> user=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@<span class="string">&#x27;localhost&#x27;</span>=password(<span class="string">&#x27;redhat&#x27;</span>);</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> mysql@‘ocalhost<span class="string">&#x27;=password(&#x27;</span>redhat<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">grant all privileges on *.* to username@&#x27;</span>%<span class="string">&#x27; identified by &#x27;</span>pass<span class="string">&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Exit</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> UPDATE mysql.user SET authentication_string = PASSWORD(&quot;pass&quot;), plugin = &#x27;</span>mysql_native_password<span class="string">&#x27; WHERE User = &#x27;</span>root<span class="string">&#x27; AND Host = &#x27;</span>localhost<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>nginx</title>
@@ -1623,6 +1611,11 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> search:</span><br><span class="line">      path: search.xml</span><br><span class="line">      field: post</span><br><span class="line">      format: html</span><br><span class="line">      <span class="built_in">limit</span>: 10000</span><br><span class="line"></span><br><span class="line">主题配置文件下，local_search改成<span class="literal">true</span>即可</span><br><span class="line">local_search:</span><br><span class="line">      <span class="built_in">enable</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>14、新建文章<br>hexo new 文章名称<br>存储在&#x2F;source&#x2F;_posts下<br>hexo 插件<br>插件汇总：<a href="https://blog.csdn.net/qq_43701912/article/details/107310923">https://blog.csdn.net/qq_43701912/article/details/107310923</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>nfs centos</title>
+    <url>/2023/08/17/nfs-centos/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@frps.cn ~]<span class="comment"># yum install -y nfs-utils rpcbind</span></span><br><span class="line"></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start nfs</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable nfs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#首先检查nfs挂载目录是否正常</span></span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e localhost</span></span><br><span class="line">Export list <span class="keyword">for</span> localhost:</span><br><span class="line">/volume1/nfs01 *</span><br><span class="line"></span><br><span class="line"><span class="comment">#先在客户端创建数据目录（挂载点位置）</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mkdir -p /data1/k8s/</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mount -t nfs 10.4.82.118:/volume1/nfs01 /data1/k8s</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#现在进行挂载 分别是ip:nfs目录  节点存储目录</span></span><br><span class="line"></span><br><span class="line">挂在完成后我们使用<span class="built_in">df</span> -h 就可以看到挂载点</span><br><span class="line">[root@所有节点 ~]<span class="comment"># df -h|grep 10.4.82.135</span></span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>ceph安装以及测试</title>
