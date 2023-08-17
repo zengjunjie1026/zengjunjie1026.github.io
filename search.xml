@@ -148,7 +148,7 @@
   </entry>
   <entry>
     <title>gitlab_ci runners</title>
-    <url>/2023/08/16/gitlab-ci-runners/</url>
+    <url>/2022/08/18/gitlab-ci-runners/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -157,10 +157,12 @@
     <content><![CDATA[<p>Hadoop 下载地址:<a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/">https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/</a></p>
 <p>cd &#x2F;opt&#x2F;software&#x2F;</p>
 <p>解压安装文件到&#x2F;opt&#x2F;module 下面<br>[andrew@hadoop101 software]$ tar -zxvf hadoop-3.1.3.tar.gz -C &#x2F;opt&#x2F;module&#x2F;</p>
-<p>将 Hadoop 添加到环境变量<br>vim ~&#x2F;.bashrc</p>
-<p>#HADOOP_HOME<br>export HADOOP_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;hadoop-3.1.3<br>export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;bin<br>export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;sbin   </p>
-<p>source ~&#x2F;.bashrc</p>
-<p>修改以下文件<br>vim mapred-site.xml</p>
+<p>将 Hadoop 添加到环境变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment">#HADOOP_HOME  </span></span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/opt/module/hadoop-3.1.3   </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/sbin   </span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>修改以下文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim mapred-site.xml</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>vim yarn-site.xml</p>
@@ -333,8 +335,10 @@
   </entry>
   <entry>
     <title>linux硬盘格式化与挂载</title>
-    <url>/2023/08/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/</url>
-    <content><![CDATA[]]></content>
+    <url>/2020/03/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y gdisk</span><br><span class="line">fdisk /dev/sdb</span><br><span class="line">m</span><br><span class="line">g</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="built_in">mkdir</span> /data</span><br><span class="line">mounr /dev/sdb /data</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>loguru elasticsearch kibana 日志处理</title>
@@ -526,9 +530,7 @@
   <entry>
     <title>RAID技术简介</title>
     <url>/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<p>作者：王奥<br>链接：<a href="https://www.zhihu.com/question/20131784/answer/90235520">https://www.zhihu.com/question/20131784/answer/90235520</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>title: RAID磁盘阵列配置和调优小结<br>date: 2016-03-10 15:52:17<br>categories: 学习 | Study<br>description: RAID的本质是平衡可用性与成本<br>-–</p>
-<p><img src="https://pica.zhimg.com/50/3d84e446492f99c8082089313c3944ac_720w.jpg?source=1940ef5c" alt="img"><img src="https://pica.zhimg.com/80/3d84e446492f99c8082089313c3944ac_1440w.jpg?source=1940ef5c" alt="img"></p>
+    <content><![CDATA[<p><img src="https://pica.zhimg.com/50/3d84e446492f99c8082089313c3944ac_720w.jpg?source=1940ef5c" alt="img"><img src="https://pica.zhimg.com/80/3d84e446492f99c8082089313c3944ac_1440w.jpg?source=1940ef5c" alt="img"></p>
 <p><strong>## 前言</strong></p>
 <p>RAID解释我偷个小懒引用WikipediA，独立硬盘冗余阵列（RAID, Redundant Array of Independent Disks），旧称廉价磁盘冗余阵列（Redundant Array of Inexpensive Disks），简称磁盘阵列。其基本思想就是把多个相对便宜的硬盘组合起来，成为一个硬盘阵列组，使性能达到甚至超过一个价格昂贵、容量巨大的硬盘。根据选择的版本不同，RAID比单颗硬盘有以下一个或多个方面的好处：增强数据集成度，增强容错功能，增加处理量或容量。另外，磁盘阵列对于电脑来说，看起来就像一个单独的硬盘或逻辑存储单元。写这篇文章当然不是单纯的介绍概念和使用方法，更重要的是如何针对不同的业务场景做合理的RAID配置和参数优化，对于SSD固态硬盘的加入我引入小米运维团队的实验数据，同时我也相信分布式存储会逐步走向成熟，以OpenStack，VSAN，Nutanix为代表头顶软件定义和超融合概念的技术也已经开始了暗战。</p>
 <p>&gt; RAID的本质是平衡可用性与成本  </p>
@@ -1098,18 +1100,23 @@
     <title>hbase安装</title>
     <url>/2021/08/16/hbase%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h3 id="2-1-HBase-安装部署"><a href="#2-1-HBase-安装部署" class="headerlink" title="2.1 HBase 安装部署"></a>2.1 HBase 安装部署</h3><h5 id="2-1-1-Zookeeper-正常部署"><a href="#2-1-1-Zookeeper-正常部署" class="headerlink" title="2.1.1 Zookeeper 正常部署"></a>2.1.1 Zookeeper 正常部署</h5><p>首先保证 Zookeeper 集群的正常部署，并启动之:</p>
-<p>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start<br>[andrew@hadoop101 zookeeper-3.4.10]$ bin&#x2F;zkServer.sh start</p>
-<h5 id="2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动"><a href="#2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动" class="headerlink" title="2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:"></a>2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:</h5><p>[andrew@hadoop101 hadoop-2.7.2]$ sbin&#x2F;start-dfs.sh<br>[andrew@hadoop103 hadoop-2.7.2]$ sbin&#x2F;start-yarn.sh</p>
-<h5 id="2-1-3-HBase-的解压-解压-Hbase-到指定目录"><a href="#2-1-3-HBase-的解压-解压-Hbase-到指定目录" class="headerlink" title="2.1.3 HBase 的解压 解压 Hbase 到指定目录:"></a>2.1.3 HBase 的解压 解压 Hbase 到指定目录:</h5><p>[andrew@hadoop101 software]$ tar -zxvf hbase-1.3.1-bin.tar.gz -C &#x2F;opt&#x2F;module</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[andrew@hadoop101 zookeeper-3.4.10]$ bin/zkServer.sh start </span><br><span class="line">[andrew@hadoop101 zookeeper-3.4.10]$ bin/zkServer.sh start </span><br><span class="line">[andrew@hadoop101 zookeeper-3.4.10]$ bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动"><a href="#2-1-2-Hadoop-正常部署-Hadoop-集群的正常部署并启动" class="headerlink" title="2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:"></a>2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[andrew@hadoop101 hadoop-2.7.2]$ sbin/start-dfs.sh </span><br><span class="line">[andrew@hadoop103 hadoop-2.7.2]$ sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-3-HBase-的解压-解压-Hbase-到指定目录"><a href="#2-1-3-HBase-的解压-解压-Hbase-到指定目录" class="headerlink" title="2.1.3 HBase 的解压 解压 Hbase 到指定目录:"></a>2.1.3 HBase 的解压 解压 Hbase 到指定目录:</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[andrew@hadoop101 software]$ tar -zxvf hbase-1.3.1-bin.tar.gz -C /opt/module</span><br></pre></td></tr></table></figure>
+
+
+
 <p>2.1.4 HBase 的配置文件<br>修改 HBase 对应的配置文件。</p>
-<p> 1)hbase-env.sh 修改内容: 2)hbase-site.xml 修改内容:<br>vim ~&#x2F;.bashrc<br>export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;jdk1.8.0_144<br>export HBASE_MANAGES_ZK&#x3D;false </p>
+<p> 1)hbase-env.sh 修改内容: 2)hbase-site.xml 修改内容:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bashrc  </span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/module/jdk1.8.0_144   </span><br><span class="line"><span class="built_in">export</span> HBASE_MANAGES_ZK=<span class="literal">false</span> </span><br></pre></td></tr></table></figure>
+
 <p>hbase-site.xml 修改内容</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:8020/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 0.98 后的新变动，之前版本没有.port,默认端口为 60000 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>16000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--  --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/zookeeper-3.5.7/zkData<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.unsafe.stream.capability.enforce<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- &lt;property&gt;</span></span><br><span class="line"><span class="comment">      &lt;name&gt;phoenix.schema.isNamespaceMappingEnabled&lt;/name&gt;</span></span><br><span class="line"><span class="comment">      &lt;value&gt;true&lt;/value&gt;</span></span><br><span class="line"><span class="comment">    &lt;/property&gt;</span></span><br><span class="line"><span class="comment">    &lt;property&gt;</span></span><br><span class="line"><span class="comment">    &lt;name&gt;phoenix.schema.mapSystemTablesToNamespace&lt;/name&gt;</span></span><br><span class="line"><span class="comment">      &lt;value&gt;true&lt;/value&gt;</span></span><br><span class="line"><span class="comment">   &lt;/property&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>vim regionservers</p>
-<p>localhost</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim regionservers</span><br><span class="line"></span><br><span class="line">localhost</span><br></pre></td></tr></table></figure>
 <p>启动hbase</p>
-<p>bin&#x2F;hbase-daemon.sh start </p>
-]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin/hbase-daemon.sh start </span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>hive</title>
@@ -1529,7 +1536,7 @@
   </entry>
   <entry>
     <title>nginx</title>
-    <url>/2023/08/16/nginx/</url>
+    <url>/2018/08/16/nginx/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
