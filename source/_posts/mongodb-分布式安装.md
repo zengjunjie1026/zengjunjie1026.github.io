@@ -9,7 +9,7 @@ tags:
 前言
 官方文档：https://www.mongodb.com/docs/（可以参考）
 
-一，安装说明
+## 一，安装说明
 1.1环境说明
 1、首先确定部署的环境，确定下服务器的端口，一般默认是22的端口；
 2、操作系统Centos7.9；
@@ -76,13 +76,13 @@ vim /opt/mongo/MongoDB/conf/mongos.conf
 
 
 启动服务顺序
-
+```bash
 mongod -f /opt/mongo/MongoDB/conf/config.conf
 mongod -f /opt/mongo/MongoDB/conf/shard1.conf
 mongod -f /opt/mongo/MongoDB/conf/shard2.conf
 mongod -f /opt/mongo/MongoDB/conf/shard3.conf
 mongos -f /opt/mongo/MongoDB/conf/mongos.conf
-
+```
 
 
 
@@ -145,12 +145,12 @@ sh.status()
 
 
 创建用户
-
+```bash
 执行命令： mongo -port 20000
 执行命令： use admin//这个条件是必须的
 执行命令：db.createUser(
 
-    {
+  {
 
         user:"ml_grp",
 
@@ -161,7 +161,7 @@ sh.status()
     }
 
 )
-
+```
 
 use admin
 执行命令：db.auth('ml_grp','passwd')
@@ -185,7 +185,7 @@ db.measureHisvalues.insert({"_id":i,"test1":"testval1"+i});
 ### 配置安全
 
 
-4.1 安全验证设置用户
+#### 4.1 安全验证设置用户
 1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。
 a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix/linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)
 
@@ -206,35 +206,31 @@ a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod
 
 执行命令：
 
+```bash
 mongod -f /opt/mongo/MongoDB/conf/shard1.conf --shutdown
-
 mongod -f /opt/mongo/MongoDB/conf/shard2.conf --shutdown
-
 mongod -f /opt/mongo/MongoDB/conf/shard3.conf --shutdown
-
 mongod -f /opt/mongo/MongoDB/conf/config.conf --shutdown
-
 mongo 10.30.0.48:20000//mongos需要这样关闭，用上面的命令有问题。
 
 use admin
 db.auth('ml_grp','passwd')
 db.shutdownServer()
-
+```
 
 3、配置testKeyFile.file，依次在每台机器上的mongos.conf、config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。
 a、先是config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。（三台机器的这些文件都需要添加）
 在conf这几个文件的的最后添加：
+```bash
 security:
-
   keyFile: /opt/mongo/MongoDB/testKeyFile.file
-
   authorization: enabled
-
+```
 b、然后在三台机器的mongos.conf配置文件中最后添加：
+```bash
 security:
-
   keyFile: /opt/mongo/MongoDB/testKeyFile.file
-
+```
 //这里就说明了testKeyFile.file最好在每台机器放在一个位置，为了后面复制粘贴处理
 
 //解释说明： mongos比mongod少了authorization：enabled的配置。原因是，副本集加分片的安全认证需要配置两方面的，副本集各个节点之间使用内部身份验证，用于内部各个mongo实例的通信，只有相同keyfile才能相互访问。所以都要开启keyFile: /data/mongodb/testKeyFile.file

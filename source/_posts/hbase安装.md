@@ -8,20 +8,22 @@ tags:
 ##### 2.1.1 Zookeeper 正常部署
 
 首先保证 Zookeeper 集群的正常部署，并启动之:
-
+```bash 
 [andrew@hadoop101 zookeeper-3.4.10]$ bin/zkServer.sh start 
 [andrew@hadoop101 zookeeper-3.4.10]$ bin/zkServer.sh start 
 [andrew@hadoop101 zookeeper-3.4.10]$ bin/zkServer.sh start
-
+```
 
 ##### 2.1.2 Hadoop 正常部署 Hadoop 集群的正常部署并启动:
+```bash
 [andrew@hadoop101 hadoop-2.7.2]$ sbin/start-dfs.sh 
 [andrew@hadoop103 hadoop-2.7.2]$ sbin/start-yarn.sh
+```
 
 ##### 2.1.3 HBase 的解压 解压 Hbase 到指定目录:
+```bash
 [andrew@hadoop101 software]$ tar -zxvf hbase-1.3.1-bin.tar.gz -C /opt/module
-
-
+```
 
 
 
@@ -29,10 +31,11 @@ tags:
 修改 HBase 对应的配置文件。
 
  1)hbase-env.sh 修改内容: 2)hbase-site.xml 修改内容:
+```bash
 vim ~/.bashrc  
 export JAVA_HOME=/opt/module/jdk1.8.0_144   
 export HBASE_MANAGES_ZK=false 
-
+```
 
 hbase-site.xml 修改内容
 ```xml
@@ -78,11 +81,12 @@ hbase-site.xml 修改内容
 </configuration>
 
 ```
- 
+```bash
 vim regionservers
 
 localhost
-
+```
 启动hbase
-
+```bash
 bin/hbase-daemon.sh start 
+```

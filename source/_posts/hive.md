@@ -30,6 +30,7 @@ tags:
     [andrw@hadoop101 software]$ mv /opt/module/apache-hive-3.1.2-bin/ /opt/module/hive  
 
 #HIVE_HOME
+```bash
 export HIVE_HOME=/opt/module/hive  
 export PATH=$PATH:$HIVE_HOME/bin  
 [andrw@hadoop101 software]$ mv $HIVE_HOME/lib/log4j-slf4j-impl-2.10.0.jar $HIVE_HOME/lib/log4j-slf4j-impl-2.10.0.bak  
@@ -50,7 +51,7 @@ nDB(Unknown Source)
        at  
 org.apache.derby.impl.store.raw.data.BaseDataFileFactory.run(Unknown  
 Source)  
-...
+```
 原因在于 Hive 默认使用的元数据库为 derby，开启 Hive 之后就会占用元数据库，且不与 其他客户端共享数据，所以我们需要将 Hive 的元数据地址改为 MySQL。
 
 2.4 Hive 元数据配置到 MySQL 2.4.1 拷贝驱动  
@@ -102,23 +103,28 @@ Source)
 </configuration>
 ```
 2)登陆 MySQL  
-[andrew@hadoop101 software]$ mysql -uroot -p000000  
+```bash
+[andrew@hadoop101 software]$ mysql -uroot -p000000 
+``` 
 3)新建 Hive 元数据库
+```bash
 mysql> create database metastore chartset utf8mb4;
 mysql> quit;
-
+```
 4) 初始化 Hive 元数据库
+```bash
 schematool -initSchema -dbType mysql -verbose
-
+```
 2.4.3 再次启动 Hive 
 
 1)启动 Hive
+```bash
 hive> show databases;
 hive> show tables;
 hive> create table test (id int);
 hive> insert into test values(1);
 hive> select * from test;
-
+```
 
 2.5 使用元数据服务的方式访问 Hive 
 
@@ -131,14 +137,17 @@ hive> select * from test;
 </property>
 ```
 2)启动 metastore
+```bash
  [andrew@hadoop101 hive]$ hive --service metastore 
  2020-04-24 16:58:08: Starting Hive Metastore Server 
+```
  注意: 启动后窗口不能再操作，需打开一个新的 shell 窗口做别的操作
  
  
 3)启动 hive
+```bash 
 [andrew@hadoop101 hive]$ bin/hive
-
+``` 
 
 2.6 使用 JDBC 方式访问 Hive
 1)在 hive-site.xml 文件中添加如下配置信息
@@ -156,24 +165,28 @@ hive> select * from test;
 ```
 
 2)启动 hiveserver2
+```bash
 bin/hive --service hiveserver2
-
+```
 
 3)启动 beeline 客户端(需要多等待一会)
+```bash
 beeline -u jdbc:hive2://hadoop101:10000 -n andrew
-
+```
 4)看到如下界面
+```bash
 Connecting to jdbc:hive2://hadoop101:10000
 Connected to: Apache Hive (version 3.1.2)
 Driver: Hive JDBC (version 3.1.2)
 Transaction isolation: TRANSACTION_REPEATABLE_READ
 Beeline version 3.1.2 by Apache Hive
 0: jdbc:hive2://hadoop101:10000>
+```
 
-
+```bash
 nohup hive --service metastore 2>&1 &
 nohup hive --service hiveserver2 2>&1 &
- 
+```
  
 打印当前数据库名和表头
 ```xml

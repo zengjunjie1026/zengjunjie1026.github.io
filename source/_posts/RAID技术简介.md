@@ -4,20 +4,6 @@ date: 2023-08-16 21:11:00
 tags:
 ---
 
-作者：王奥
-链接：https://www.zhihu.com/question/20131784/answer/90235520
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-
-
-
-title: RAID磁盘阵列配置和调优小结
-date: 2016-03-10 15:52:17
-categories: 学习 | Study
-description: RAID的本质是平衡可用性与成本
-\---
-
-
 
 ![img](https://pica.zhimg.com/50/3d84e446492f99c8082089313c3944ac_720w.jpg?source=1940ef5c)![img](https://pica.zhimg.com/80/3d84e446492f99c8082089313c3944ac_1440w.jpg?source=1940ef5c)
 

@@ -12,6 +12,7 @@ cd /opt/software/
 [andrew@hadoop101 software]$ tar -zxvf hadoop-3.1.3.tar.gz -C /opt/module/
 
 将 Hadoop 添加到环境变量
+```bash 
 vim ~/.bashrc
 
 #HADOOP_HOME  
@@ -20,10 +21,12 @@ export PATH=$PATH:$HADOOP_HOME/bin
 export PATH=$PATH:$HADOOP_HOME/sbin   
 
 source ~/.bashrc
-
+```
 
 修改以下文件
+```bash
 vim mapred-site.xml
+```
 
 ```xml
 <configuration>
