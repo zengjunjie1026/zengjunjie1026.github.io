@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -133,6 +133,190 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/mongodb-%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/mongodb-%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">mongodb 分布式安装</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-16 17:59:17" itemprop="dateCreated datePublished" datetime="2023-08-16T17:59:17+08:00">2023-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 11:41:33" itemprop="dateModified" datetime="2023-08-17T11:41:33+08:00">2023-08-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考搭建文档<a target="_blank" rel="noopener" href="https://blog.csdn.net/msh6453/article/details/131161845">https://blog.csdn.net/msh6453/article/details/131161845</a></p>
+<p>前言<br>官方文档：<a target="_blank" rel="noopener" href="https://www.mongodb.com/docs/%EF%BC%88%E5%8F%AF%E4%BB%A5%E5%8F%82%E8%80%83%EF%BC%89">https://www.mongodb.com/docs/（可以参考）</a></p>
+<h2 id="一，安装说明"><a href="#一，安装说明" class="headerlink" title="一，安装说明"></a>一，安装说明</h2><p>1.1环境说明<br>1、首先确定部署的环境，确定下服务器的端口，一般默认是22的端口；<br>2、操作系统Centos7.9；<br>3、 数据库mongodb-linux-x86_64-rhel70-4.4.22。<br>mongodb版本4.4.22</p>
+<p><img src="/image-1.png" alt="Alt text"></p>
+<p>mongos，数据库集群请求的入口，所有的请求都通过mongos进行协调，不需要在应用程序添加一个路由选择器，mongos自己就是一个请求分发中心，它负责把对应的数据请求请求转发到对应的shard服务器上。在生产环境通常有多mongos作为请求的入口，防止其中一个挂掉所有的mongodb请求都没有办法操作。</p>
+<p>config server，顾名思义为配置服务器，存储所有数据库元信息（路由、分片）的配置。mongos本身没有物理存储分片服务器和数据路由信息，只是缓存在内存里，配置服务器则实际存储这些数据。mongos第一次启动或者关掉重启就会从 config server 加载配置信息，以后如果配置服务器信息变化会通知到所有的 mongos 更新自己的状态，这样 mongos 就能继续准确路由。在生产环境通常有多个 config server 配置服务器，因为它存储了分片路由的元数据，防止数据丢失！</p>
+<p>shard，分片（sharding）是指将数据库拆分，将其分散在不同的机器上的过程。将数据分散到不同的机器上，不需要功能强大的服务器就可以存储更多的数据和处理更大的负载。基本思想就是将集合切成小块，这些块分散到若干片里，每个片只负责总数据的一部分，最后通过一个均衡器来对各个分片进行均衡（数据迁移）。</p>
+<p>replica set，中文翻译副本集，其实就是shard的备份，防止shard挂掉之后数据丢失。复制提供了数据的冗余备份，并在多个服务器上存储数据副本，提高了数据的可用性， 并可以保证数据的安全性。</p>
+<p>仲裁者（Arbiter），是复制集中的一个MongoDB实例，它并不保存数据。仲裁节点使用最小的资源并且不要求硬件设备，不能将Arbiter部署在同一个数据集节点中，可以部署在其他应用服务器或者监视服务器中，也可部署在单独的虚拟机中。为了确保复制集中有奇数的投票成员（包括primary），需要添加仲裁节点做为投票，否则primary不能运行时不会自动切换primary。</p>
+<p>简单了解之后，我们可以这样总结一下，应用请求mongos来操作mongodb的增删改查，配置服务器存储数据库元信息，并且和mongos做同步，数据最终存入在shard（分片）上，为了防止数据丢失同步在副本集中存储了一份，仲裁在数据存储到分片的时候决定存储到哪个节点。</p>
+<table>
+<thead>
+<tr>
+<th>服务器</th>
+<th>ceph-node-1</th>
+<th>ceph-node-2</th>
+<th>ceph-node-3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ip</td>
+<td>10.30.0.48</td>
+<td>10.30.0.49</td>
+<td>10.30.0.50</td>
+</tr>
+<tr>
+<td>server-route</td>
+<td>mongos</td>
+<td>mongos</td>
+<td>mongos</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>config server</td>
+<td>config server</td>
+<td>config server</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>shard server1 主节点</td>
+<td>shard server1 副节点</td>
+<td>shard server1 仲裁</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>shard server2 仲裁</td>
+<td>shard server2 主节点</td>
+<td>shard server2 副节点</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>shard server3 副节点</td>
+<td>shard server3 仲裁</td>
+<td>shard server3 主节点</td>
+</tr>
+</tbody></table>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/conf</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/server</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/mongos/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/config/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/config/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard1/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard1/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard2/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard2/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard3/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard3/log</span><br><span class="line"></span><br><span class="line">wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.22.tgz</span><br><span class="line">tar -xvzf mongodb-linux-x86_64-rhel70-4.4.22.tgz -C /opt/mongo/MongoDB/server/</span><br><span class="line"><span class="built_in">mv</span> /opt/mongo/MongoDB/server/mongodb-linux-x86_64-rhel70-4.4.22 /opt/mongo/MongoDB/server/mongodb</span><br><span class="line"></span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="built_in">export</span> MONGODB_HOME=/opt/mongo/MongoDB/server/mongodb</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$MONGODB_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">:wq!</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line">vim /opt/mongo/MongoDB/conf/config.conf </span><br><span class="line">vim /opt/mongo/MongoDB/conf/shard1.conf</span><br><span class="line">vim /opt/mongo/MongoDB/conf/shard2.conf</span><br><span class="line">vim /opt/mongo/MongoDB/conf/shard3.conf</span><br><span class="line">vim /opt/mongo/MongoDB/conf/mongos.conf</span><br></pre></td></tr></table></figure>
+
+<p>配置文件如mongo&#x2F;conf 下面<br>注意安装的时候不要设置最后的安全密钥，待完毕后添加</p>
+<p>启动服务顺序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /opt/mongo/MongoDB/conf/config.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard1.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard2.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard3.conf</span><br><span class="line">mongos -f /opt/mongo/MongoDB/conf/mongos.conf</span><br></pre></td></tr></table></figure>
+
+
+
+<p>随便登入一台</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:21000</span><br><span class="line">use admin</span><br><span class="line">config = &#123;_id : &quot;config&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:21000&quot; &#125;,</span><br><span class="line">&#123;_id : 1, host : &quot;10.30.0.49:21000&quot; &#125;,&#123;_id : 2, host : &quot;10.30.0.50:21000&quot; &#125;]&#125;</span><br><span class="line">rs.initiate(config)</span><br></pre></td></tr></table></figure>
+
+
+<p>同理 server sharded1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:27001</span><br><span class="line">use admin</span><br><span class="line">config = &#123; _id : &quot;shard1&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:27001&quot; ,priority: 2 &#125;,&#123;_id : 1, host : &quot;10.30.0.49:27001&quot; ,priority: 1 &#125;,&#123;_id : 2, host : &quot;10.30.0.50:27001&quot;,arbiterOnly: true&#125;]&#125;</span><br><span class="line">//(“priority”优先级，数字越大，优先等级越高；“arbiterOnly”冲裁节点；冲裁节点根据优先等级判断哪个节点作为主节点)</span><br><span class="line">rs.initiate(config)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:27002</span><br><span class="line">server shard2</span><br><span class="line">use admin</span><br><span class="line">config = &#123; _id : <span class="string">&quot;shard2&quot;</span>,members : [&#123;_id : 0, host : <span class="string">&quot;10.30.0.48:27002&quot;</span> ,arbiterOnly: <span class="literal">true</span> &#125;,</span><br><span class="line">&#123;_id : 1, host : <span class="string">&quot;10.30.0.49:27002&quot;</span> ,priority: 2 &#125;,&#123;_id : 2, host : <span class="string">&quot;10.30.0.50:27002&quot;</span>,priority: 1&#125;]&#125;</span><br><span class="line">rs.initiate(config)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>server shard3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:27003</span><br><span class="line">use admin</span><br><span class="line">config = &#123; _id : &quot;shard3&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:27003&quot; ,priority: 1 &#125;,</span><br><span class="line"></span><br><span class="line">&#123;_id : 1, host : &quot;10.30.0.49:27003&quot; ,arbiterOnly: true &#125;,&#123;_id : 2, host : &quot;10.30.0.50:27003&quot;,priority: 2&#125;]&#125;</span><br><span class="line"></span><br><span class="line">rs.initiate(config)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>添加分片服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">sh.addShard(<span class="string">&quot;shard1/10.30.0.48:27001,10.30.0.49:27001,10.30.0.50:27001&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.addShard(<span class="string">&quot;shard2/10.30.0.48:27002,10.30.0.49:27002,10.30.0.50:27002&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.addShard(<span class="string">&quot;shard3/10.30.0.48:27003,10.30.0.49:27003,10.30.0.50:27003&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.status()</span><br></pre></td></tr></table></figure>
+
+
+<p>创建用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">执行命令： mongo -port 20000</span><br><span class="line">执行命令： use admin//这个条件是必须的</span><br><span class="line">执行命令：db.createUser(</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">        user:<span class="string">&quot;ml_grp&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="built_in">pwd</span>:<span class="string">&quot;ml&amp;dl#mongodb&quot;</span>,</span><br><span class="line"></span><br><span class="line">        roles:[&#123;role:<span class="string">&quot;root&quot;</span>,db:<span class="string">&quot;admin&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>use admin<br>执行命令：db.auth(‘ml_grp’,’passwd’)<br>执行命令：db.runCommand( { enablesharding :”zjxndc”});&#x2F;&#x2F;为zjxndc开启分片功能<br>执行命令：db.runCommand( { shardcollection : “zjxndc.measureHisvalues”,key : {_id: 1} } )&#x2F;</p>
+<p>use config<br>db.settings.save({“_id”:”chunksize”,”value”:1})<br>use zjxndc<br>d、执行命令：for (var i &#x3D; 1; i &lt;&#x3D; 100000; i++){</p>
+<p>db.measureHisvalues.insert({“_id”:i,”test1”:”testval1”+i});</p>
+<p>}</p>
+<p><img src="/1408af41c022dc62726ecf884c95ff0a.png" alt="enable partition"><br><img src="/image.png" alt="查看是否分区成功"></p>
+<h3 id="配置安全"><a href="#配置安全" class="headerlink" title="配置安全"></a>配置安全</h3><h4 id="4-1-安全验证设置用户"><a href="#4-1-安全验证设置用户" class="headerlink" title="4.1 安全验证设置用户"></a>4.1 安全验证设置用户</h4><p>1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。<br>a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix&#x2F;linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)</p>
+<p>执行命令：openssl rand -base64 756 &gt; &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;生成密钥</p>
+<p>执行命令：chmod 400 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;赋予权限</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;">&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file root@:10.30.0.49 &#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.56服务器上</p>
+<p>创建用户成功后，关闭所有的节点（三台机都需要操作）</p>
+<p>执行命令：按照先后顺序来处理关闭，mongos&gt;config&gt;shadr3&gt;shadr2&gt;shadr1</p>
+<p>&#x2F;&#x2F;注意的是每一个服务的关闭都需要在三台机上关闭，在关闭其他服务。例如关闭shadr3服务，先关闭0.54服务器上的shadr3服务，其次0.55服务器上的shadr3服务，再是0.56服务器上的shadr3服务；然后在关闭shadr2服务，也是按照这个顺序处理。（这个地方主要新手操作避免出错）</p>
+<p>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard1.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard2.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard3.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/config.conf --shutdown</span><br><span class="line">mongo 10.30.0.48:20000//mongos需要这样关闭，用上面的命令有问题。</span><br><span class="line"></span><br><span class="line">use admin</span><br><span class="line">db.auth(<span class="string">&#x27;ml_grp&#x27;</span>,<span class="string">&#x27;passwd&#x27;</span>)</span><br><span class="line">db.shutdownServer()</span><br></pre></td></tr></table></figure>
+
+<p>3、配置testKeyFile.file，依次在每台机器上的mongos.conf、config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。<br>a、先是config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。（三台机器的这些文件都需要添加）<br>在conf这几个文件的的最后添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  keyFile: /opt/mongo/MongoDB/testKeyFile.file</span><br><span class="line">  authorization: enabled</span><br></pre></td></tr></table></figure>
+<p>b、然后在三台机器的mongos.conf配置文件中最后添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  keyFile: /opt/mongo/MongoDB/testKeyFile.file</span><br></pre></td></tr></table></figure>
+<p>&#x2F;&#x2F;这里就说明了testKeyFile.file最好在每台机器放在一个位置，为了后面复制粘贴处理</p>
+<p>&#x2F;&#x2F;解释说明： mongos比mongod少了authorization：enabled的配置。原因是，副本集加分片的安全认证需要配置两方面的，副本集各个节点之间使用内部身份验证，用于内部各个mongo实例的通信，只有相同keyfile才能相互访问。所以都要开启keyFile: &#x2F;data&#x2F;mongodb&#x2F;testKeyFile.file</p>
+<pre><code>然而对于所有的mongod，才是真正的保存数据的分片。mongos只做路由，不保存数据。所以所有的mongod开启访问数据的授权authorization:enabled。这样用户只有账号密码正确才能访问到数据
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -537,249 +721,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/06/17/hdfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/17/hdfs/" class="post-title-link" itemprop="url">hdfs</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-17 21:13:45" itemprop="dateCreated datePublished" datetime="2022-06-17T21:13:45+08:00">2022-06-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:27:42" itemprop="dateModified" datetime="2023-08-16T21:27:42+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h2><h3 id="HDFS产生背景"><a href="#HDFS产生背景" class="headerlink" title="HDFS产生背景"></a>HDFS产生背景</h3><p>随着数据量越来越大，在一个操作系统管辖的范围内存不下了，那么就分配到更多的操作系统管理的磁盘中，但是不方便管理和维护，迫切需要一种<br>系统来管理多台机器上的文件，这就是分布式文件管理系统。HDFS只是分布式文件管理系统中的一种。</p>
-<h3 id="HDFS概念"><a href="#HDFS概念" class="headerlink" title="HDFS概念"></a>HDFS概念</h3><p>HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有<br>各自的角色。HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用</p>
-<h3 id="HDFS优缺点"><a href="#HDFS优缺点" class="headerlink" title="HDFS优缺点"></a>HDFS优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
-<li><p>高容错性</p>
-<ul>
-<li>数据自动保存多个副本。它通过增加副本的形式，提高容错性；</li>
-<li>某一个副本丢失以后，它可以自动恢复</li>
-</ul>
-</li>
-<li><p>适合大数据处理</p>
-<ul>
-<li>数据规模：能够处理数据规模达到GB、TB、甚至PB级别的数据；</li>
-<li>文件规模：能够处理百万规模以上的文件数量，数量相当之大。</li>
-</ul>
-</li>
-<li><p>流式数据访问，它能保证数据的一致性。</p>
-</li>
-<li><p>可构建在廉价机器上，通过多副本机制，提高可靠性。</p>
-</li>
-</ul>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
-<li>不适合低延时数据访问，比如毫秒级的存储数据，是做不到的。</li>
-<li>无法高效的对大量小文件进行存储。<ul>
-<li>存储大量小文件的话，它会占用NameNode大量的内存来存储文件、目录和块信息。这样是不可取的，因为NameNode的内存总是有限的；</li>
-<li>小文件存储的寻址时间会超过读取时间，它违反了HDFS的设计目标。</li>
-</ul>
-</li>
-<li>并发写入、文件随机修改。<ul>
-<li>一个文件只能有一个写，不允许多个线程同时写；</li>
-<li>仅支持数据append（追加），不支持文件的随机修改。</li>
-</ul>
-</li>
-</ul>
-<h3 id="HDFS组成架构"><a href="#HDFS组成架构" class="headerlink" title="HDFS组成架构"></a>HDFS组成架构</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9fb5b498df7b444087880236c63cdc3d~tplv-k3u1fbpfcp-watermark.image"></p>
-<p>这种架构主要由四个部分组成，分别为HDFS Client、NameNode、DataNode和Secondary NameNode。下面我们分别介绍这四个组成部分。</p>
-<ul>
-<li><p>Client：就是客户端。</p>
-<ul>
-<li>文件切分。文件上传HDFS的时候，Client将文件切分成一个一个的Block，然后进行存储；</li>
-<li>与NameNode交互，获取文件的位置信息；</li>
-<li>与DataNode交互，读取或者写入数据；</li>
-<li>Client提供一些命令来管理HDFS，比如启动或者关闭HDFS；</li>
-<li>Client可以通过一些命令来访问HDFS；</li>
-</ul>
-</li>
-<li><p>NameNode：就是Master，它是一个主管、管理者。</p>
-<ul>
-<li>管理HDFS的名称空间；</li>
-<li>管理数据块（Block）映射信息；</li>
-<li>配置副本策略；<br>- 处理客户端读写请求。</li>
-</ul>
-</li>
-<li><p>DataNode：就是Slave。NameNode下达命令，DataNode执行实际的操作。</p>
-<ul>
-<li>存储实际的数据块</li>
-<li>执行数据块的读&#x2F;写操作。</li>
-</ul>
-</li>
-<li><p>Secondary NameNode：并非NameNode的热备。当NameNode挂掉的时候，它并不能马上替换NameNode并提供服务。</p>
-<ul>
-<li>辅助NameNode，分担其工作量；</li>
-<li>定期合并Fsimage和Edits，并推送给NameNode；</li>
-<li>在紧急情况下，可辅助恢复NameNode。</li>
-</ul>
-</li>
-</ul>
-<h3 id="HDFS文件块大小"><a href="#HDFS文件块大小" class="headerlink" title="HDFS文件块大小"></a>HDFS文件块大小</h3><p>HDFS中的文件在物理上是分块存储（block），块的大小可以通过配置参数( dfs.blocksize)来规定，默认大小在hadoop2.x<br>版本中是128M，老版本中是64M。HDFS的块比磁盘的块大，其目的是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的<br>时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。如果寻址时间约为<br>10ms，而传输速率为100MB&#x2F;s，为了使寻址时间仅占传输时间的1%，我们要将块大小设置约为100MB。默认的块大小128MB。块的大小：<br>10ms<em>100</em>100M&#x2F;s &#x3D; 100M</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/32ad8b86eab94a68b65c10857a3c31eb~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS写数据流程"><a href="#HDFS写数据流程" class="headerlink" title="HDFS写数据流程"></a>HDFS写数据流程</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c6014ed71d4c4d57ae45c7c958e02e7c~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li>客户端通过Distributed FileSystem模块向NameNode请求上传文件，NameNode检查目标文件是否已存在，父目录是否存在。</li>
-<li>NameNode返回是否可以上传。</li>
-<li>客户端请求第一个block上传到哪几个datanode服务器上。</li>
-<li>NameNode返回3个datanode节点，分别为dn1、dn2、dn3。</li>
-<li>客户端通过FSDataOutputStream模块请求dn1上传数据，dn1收到请求会继续调用dn2，然后dn2调用dn3，将这个通信管道建立完成。</li>
-<li>dn1、dn2、dn3逐级应答客户端。</li>
-<li>客户端开始往dn1上传第一个block（先从磁盘读取数据放到一个本地内存缓存），以packet为单位，dn1收到一个packet就会传给dn2，<br>dn传给dn3；dn1每传一个packet会放入一个应答队列等待应答。</li>
-<li>当一个block传输完成之后，客户端再次请求NameNode上传第二个block的服务器。（重复执行3-7步）。</li>
-</ul>
-<h3 id="网络拓扑概念"><a href="#网络拓扑概念" class="headerlink" title="网络拓扑概念"></a>网络拓扑概念</h3><p>在本地网络中，两个节点被称为“彼此近邻”是什么意思？在海量数据处理中，其主要限制因素是节点之间数据的传输速率——带宽很稀缺。<br>这里的想法是将两个节点间的带宽作为距离的衡量标准。</p>
-<p>节点距离：两个节点到达最近的共同祖先的距离总和。<br><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c5daea537fea42d7bc72fca6edc765c6~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS读数据流程"><a href="#HDFS读数据流程" class="headerlink" title="HDFS读数据流程"></a>HDFS读数据流程</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b7689706f7194aafa32acdd07b9df0da~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li>客户端通过Distributed FileSystem向NameNode请求下载文件，NameNode通过查询元数据，找到文件块所在的DataNode地址。</li>
-<li>挑选一台DataNode（就近原则，然后随机）服务器，请求读取数据。</li>
-<li>DataNode开始传输数据给客户端（从磁盘里面读取数据输入流，以packet为单位来做校验）。</li>
-<li>客户端以packet为单位接收，先在本地缓存，然后写入目标文件。</li>
-</ul>
-<h2 id="MapReduce入门"><a href="#MapReduce入门" class="headerlink" title="MapReduce入门"></a>MapReduce入门</h2><h3 id="MapReduce定义"><a href="#MapReduce定义" class="headerlink" title="MapReduce定义"></a>MapReduce定义</h3><p>Mapreduce是一个分布式运算程序的编程框架，是用户开发“基于hadoop的数据分析应用”的核心框架。Mapreduce核心功能是将用户编写的<br>业务逻辑代码和自带默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上。</p>
-<h3 id="MapReduce优缺点"><a href="#MapReduce优缺点" class="headerlink" title="MapReduce优缺点"></a>MapReduce优缺点</h3><ul>
-<li><p>优点</p>
-<ul>
-<li>MapReduce易于编程。它简单的实现一些接口，就可以完成一个分布式程序，这个分布式程序可以分布到大量廉价的PC机器上运行。<br>也就是说你写一个分布式程序，跟写一个简单的串行程序是一模一样的。就是因为这个特点使得MapReduce编程变得非常流行。</li>
-<li>良好的扩展性。当你的计算资源不能得到满足的时候，你可以通过简单的增加机器来扩展它的计算能力。</li>
-<li>高容错性。MapReduce设计的初衷就是使程序能够部署在廉价的PC机器上，这就要求它具有很高的容错性。比如其中一台机器挂了，<br>它可以把上面的计算任务转移到另外一个节点上运行，不至于这个任务运行失败，而且这个过程不需要人工参与，而完全是由Hadoop内部完成的。</li>
-<li>适合PB级以上海量数据的离线处理。这里加红字体离线处理，说明它适合离线处理而不适合在线处理。比如像毫秒级别的返回一个结果，<br>MapReduce很难做到。</li>
-</ul>
-</li>
-<li><p>缺点 MapReduce不擅长做实时计算、流式计算、DAG（有向图）计算。</p>
-<ul>
-<li>实时计算。MapReduce无法像Mysql一样，在毫秒或者秒级内返回结果。</li>
-<li>流式计算。流式计算的输入数据是动态的，而MapReduce的输入数据集是静态的，不能动态变化。这是因为MapReduce自身的设计特点决定-<br>据源必须是静态的。</li>
-<li>DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，<br>而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。</li>
-</ul>
-<h3 id="MapReduce核心思想"><a href="#MapReduce核心思想" class="headerlink" title="MapReduce核心思想"></a>MapReduce核心思想</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/591d6d1a27e243f7bf5be80ff9904e1b~tplv-k3u1fbpfcp-watermark.image"></p>
-</li>
-<li><p>分布式的运算程序往往需要分成至少2个阶段。</p>
-</li>
-<li><p>第一个阶段的maptask并发实例，完全并行运行，互不相干。</p>
-</li>
-<li><p>第二个阶段的reduce task并发实例互不相干，但是他们的数据依赖于上一个阶段的所有maptask并发实例的输出。</p>
-</li>
-<li><p>MapReduce编程模型只能包含一个map阶段和一个reduce阶段，如果用户的业务逻辑非常复杂，那就只能多个mapreduce程序，串行运行。</p>
-</li>
-</ul>
-<h3 id="MapReduce进程"><a href="#MapReduce进程" class="headerlink" title="MapReduce进程"></a>MapReduce进程</h3><p>一个完整的mapreduce程序在分布式运行时有三类实例进程：</p>
-<ul>
-<li>MrAppMaster：负责整个程序的过程调度及状态协调。</li>
-<li>MapTask：负责map阶段的整个数据处理流程。</li>
-<li>ReduceTask：负责reduce阶段的整个数据处理流程。</li>
-</ul>
-<h3 id="MapReduce编程规范"><a href="#MapReduce编程规范" class="headerlink" title="MapReduce编程规范"></a>MapReduce编程规范</h3><p>用户编写的程序分成三个部分：Mapper、Reducer和Driver。</p>
-<ul>
-<li><p>Mapper阶段</p>
-<ul>
-<li>用户自定义的Mapper要继承自己的父类</li>
-<li>Mapper的输入数据是KV对的形式（KV的类型可自定义）</li>
-<li>Mapper中的业务逻辑写在map()方法中</li>
-<li>Mapper的输出数据是KV对的形式（KV的类型可自定义）</li>
-</ul>
-</li>
-<li><p>Reducer阶段</p>
-<ul>
-<li>用户自定义的Reducer要继承自己的父类</li>
-<li>Reducer的输入数据类型对应Mapper的输出数据类型，也是KV</li>
-<li>Reducer的业务逻辑写在reduce()方法中</li>
-<li>Reducetask进程对每一组相同k的&lt;k,v&gt;组调用一次reduce()方法</li>
-</ul>
-</li>
-<li><p>Driver阶段</p>
-</li>
-</ul>
-<p>整个程序需要一个Drvier来进行提交，提交的是一个描述了各种必要信息的job对象</p>
-<blockquote>
-<p>其实吧我们真实开发也不会说去写mr 但是还是建议大家把最简单的wordcount做了。</p>
-</blockquote>
-<h2 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h2><h3 id="Yarn-概述"><a href="#Yarn-概述" class="headerlink" title="Yarn 概述"></a>Yarn 概述</h3><p>Yarn 是一个资源调度平台，负责为运算程序提供服务器运算资源，相当于一个分布式<br>的操作系统平台，而 MapReduce 等运算程序则相当于运行于操作系统之上的应用程序。</p>
-<h3 id="Yarn-基本架构"><a href="#Yarn-基本架构" class="headerlink" title="Yarn 基本架构"></a>Yarn 基本架构</h3><p>YARN 主要由 ResourceManager、NodeManager、ApplicationMaster 和 Container 等组件<br>构成<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c85d606218e477bbfa8cdcdb7022af4~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="Yarn-工作机制"><a href="#Yarn-工作机制" class="headerlink" title="Yarn 工作机制"></a>Yarn 工作机制</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac47a79a89a142e3b7fe9a09df062d77~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li>Mr 程序提交到客户端所在的节点。</li>
-<li>Yarnrunner 向 Resourcemanager 申请一个 Application。 </li>
-<li>rm 将该应用程序的资源路径返回给 yarnrunner。 </li>
-<li>该程序将运行所需资源提交到 HDFS 上。 </li>
-<li>程序资源提交完毕后，申请运行 mrAppMaster。 </li>
-<li>RM 将用户的请求初始化成一个 task。 </li>
-<li>其中一个 NodeManager 领取到 task 任务。</li>
-<li>该 NodeManager 创建容器 Container，并产生 MRAppmaster。 </li>
-<li>Container 从 HDFS 上拷贝资源到本地。 </li>
-<li>MRAppmaster 向 RM 申请运行 maptask 资源。</li>
-<li>RM 将运行 maptask 任务分配给另外两个 NodeManager，另两个 NodeManager 分别领取任务并创建容器。</li>
-<li>MR 向两个接收到任务的 NodeManager 发送程序启动脚本，这两个 NodeManager分别启动 maptask，maptask 对数据分区排序。</li>
-<li>MrAppMaster 等待所有 maptask 运行完毕后，向 RM 申请容器，运行 reduce task。 </li>
-<li>reduce task 向 maptask 获取相应分区的数据。</li>
-<li>程序运行完毕后，MR 会向 RM 申请注销自己。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
