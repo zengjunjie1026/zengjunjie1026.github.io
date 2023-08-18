@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,404 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/mongodb-%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/mongodb-%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">mongodb 分布式安装</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-16 17:59:17" itemprop="dateCreated datePublished" datetime="2023-08-16T17:59:17+08:00">2023-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 11:41:33" itemprop="dateModified" datetime="2023-08-17T11:41:33+08:00">2023-08-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考搭建文档<a target="_blank" rel="noopener" href="https://blog.csdn.net/msh6453/article/details/131161845">https://blog.csdn.net/msh6453/article/details/131161845</a></p>
+<p>前言<br>官方文档：<a target="_blank" rel="noopener" href="https://www.mongodb.com/docs/%EF%BC%88%E5%8F%AF%E4%BB%A5%E5%8F%82%E8%80%83%EF%BC%89">https://www.mongodb.com/docs/（可以参考）</a></p>
+<h2 id="一，安装说明"><a href="#一，安装说明" class="headerlink" title="一，安装说明"></a>一，安装说明</h2><p>1.1环境说明<br>1、首先确定部署的环境，确定下服务器的端口，一般默认是22的端口；<br>2、操作系统Centos7.9；<br>3、 数据库mongodb-linux-x86_64-rhel70-4.4.22。<br>mongodb版本4.4.22</p>
+<p><img src="/image-1.png" alt="Alt text"></p>
+<p>mongos，数据库集群请求的入口，所有的请求都通过mongos进行协调，不需要在应用程序添加一个路由选择器，mongos自己就是一个请求分发中心，它负责把对应的数据请求请求转发到对应的shard服务器上。在生产环境通常有多mongos作为请求的入口，防止其中一个挂掉所有的mongodb请求都没有办法操作。</p>
+<p>config server，顾名思义为配置服务器，存储所有数据库元信息（路由、分片）的配置。mongos本身没有物理存储分片服务器和数据路由信息，只是缓存在内存里，配置服务器则实际存储这些数据。mongos第一次启动或者关掉重启就会从 config server 加载配置信息，以后如果配置服务器信息变化会通知到所有的 mongos 更新自己的状态，这样 mongos 就能继续准确路由。在生产环境通常有多个 config server 配置服务器，因为它存储了分片路由的元数据，防止数据丢失！</p>
+<p>shard，分片（sharding）是指将数据库拆分，将其分散在不同的机器上的过程。将数据分散到不同的机器上，不需要功能强大的服务器就可以存储更多的数据和处理更大的负载。基本思想就是将集合切成小块，这些块分散到若干片里，每个片只负责总数据的一部分，最后通过一个均衡器来对各个分片进行均衡（数据迁移）。</p>
+<p>replica set，中文翻译副本集，其实就是shard的备份，防止shard挂掉之后数据丢失。复制提供了数据的冗余备份，并在多个服务器上存储数据副本，提高了数据的可用性， 并可以保证数据的安全性。</p>
+<p>仲裁者（Arbiter），是复制集中的一个MongoDB实例，它并不保存数据。仲裁节点使用最小的资源并且不要求硬件设备，不能将Arbiter部署在同一个数据集节点中，可以部署在其他应用服务器或者监视服务器中，也可部署在单独的虚拟机中。为了确保复制集中有奇数的投票成员（包括primary），需要添加仲裁节点做为投票，否则primary不能运行时不会自动切换primary。</p>
+<p>简单了解之后，我们可以这样总结一下，应用请求mongos来操作mongodb的增删改查，配置服务器存储数据库元信息，并且和mongos做同步，数据最终存入在shard（分片）上，为了防止数据丢失同步在副本集中存储了一份，仲裁在数据存储到分片的时候决定存储到哪个节点。</p>
+<table>
+<thead>
+<tr>
+<th>服务器</th>
+<th>ceph-node-1</th>
+<th>ceph-node-2</th>
+<th>ceph-node-3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ip</td>
+<td>10.30.0.48</td>
+<td>10.30.0.49</td>
+<td>10.30.0.50</td>
+</tr>
+<tr>
+<td>server-route</td>
+<td>mongos</td>
+<td>mongos</td>
+<td>mongos</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>config server</td>
+<td>config server</td>
+<td>config server</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>shard server1 主节点</td>
+<td>shard server1 副节点</td>
+<td>shard server1 仲裁</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>shard server2 仲裁</td>
+<td>shard server2 主节点</td>
+<td>shard server2 副节点</td>
+</tr>
+<tr>
+<td>server-config</td>
+<td>shard server3 副节点</td>
+<td>shard server3 仲裁</td>
+<td>shard server3 主节点</td>
+</tr>
+</tbody></table>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/conf</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/server</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/mongos/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/config/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/config/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard1/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard1/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard2/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard2/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard3/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/mongo/MongoDB/shard3/log</span><br><span class="line"></span><br><span class="line">wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.22.tgz</span><br><span class="line">tar -xvzf mongodb-linux-x86_64-rhel70-4.4.22.tgz -C /opt/mongo/MongoDB/server/</span><br><span class="line"><span class="built_in">mv</span> /opt/mongo/MongoDB/server/mongodb-linux-x86_64-rhel70-4.4.22 /opt/mongo/MongoDB/server/mongodb</span><br><span class="line"></span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="built_in">export</span> MONGODB_HOME=/opt/mongo/MongoDB/server/mongodb</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$MONGODB_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">:wq!</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line">vim /opt/mongo/MongoDB/conf/config.conf </span><br><span class="line">vim /opt/mongo/MongoDB/conf/shard1.conf</span><br><span class="line">vim /opt/mongo/MongoDB/conf/shard2.conf</span><br><span class="line">vim /opt/mongo/MongoDB/conf/shard3.conf</span><br><span class="line">vim /opt/mongo/MongoDB/conf/mongos.conf</span><br></pre></td></tr></table></figure>
+
+<p>配置文件如mongo&#x2F;conf 下面<br>注意安装的时候不要设置最后的安全密钥，待完毕后添加</p>
+<p>启动服务顺序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /opt/mongo/MongoDB/conf/config.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard1.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard2.conf</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard3.conf</span><br><span class="line">mongos -f /opt/mongo/MongoDB/conf/mongos.conf</span><br></pre></td></tr></table></figure>
+
+
+
+<p>随便登入一台</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:21000</span><br><span class="line">use admin</span><br><span class="line">config = &#123;_id : &quot;config&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:21000&quot; &#125;,</span><br><span class="line">&#123;_id : 1, host : &quot;10.30.0.49:21000&quot; &#125;,&#123;_id : 2, host : &quot;10.30.0.50:21000&quot; &#125;]&#125;</span><br><span class="line">rs.initiate(config)</span><br></pre></td></tr></table></figure>
+
+
+<p>同理 server sharded1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:27001</span><br><span class="line">use admin</span><br><span class="line">config = &#123; _id : &quot;shard1&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:27001&quot; ,priority: 2 &#125;,&#123;_id : 1, host : &quot;10.30.0.49:27001&quot; ,priority: 1 &#125;,&#123;_id : 2, host : &quot;10.30.0.50:27001&quot;,arbiterOnly: true&#125;]&#125;</span><br><span class="line">//(“priority”优先级，数字越大，优先等级越高；“arbiterOnly”冲裁节点；冲裁节点根据优先等级判断哪个节点作为主节点)</span><br><span class="line">rs.initiate(config)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:27002</span><br><span class="line">server shard2</span><br><span class="line">use admin</span><br><span class="line">config = &#123; _id : <span class="string">&quot;shard2&quot;</span>,members : [&#123;_id : 0, host : <span class="string">&quot;10.30.0.48:27002&quot;</span> ,arbiterOnly: <span class="literal">true</span> &#125;,</span><br><span class="line">&#123;_id : 1, host : <span class="string">&quot;10.30.0.49:27002&quot;</span> ,priority: 2 &#125;,&#123;_id : 2, host : <span class="string">&quot;10.30.0.50:27002&quot;</span>,priority: 1&#125;]&#125;</span><br><span class="line">rs.initiate(config)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>server shard3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mongo 10.30.0.48:27003</span><br><span class="line">use admin</span><br><span class="line">config = &#123; _id : &quot;shard3&quot;,members : [&#123;_id : 0, host : &quot;10.30.0.48:27003&quot; ,priority: 1 &#125;,</span><br><span class="line"></span><br><span class="line">&#123;_id : 1, host : &quot;10.30.0.49:27003&quot; ,arbiterOnly: true &#125;,&#123;_id : 2, host : &quot;10.30.0.50:27003&quot;,priority: 2&#125;]&#125;</span><br><span class="line"></span><br><span class="line">rs.initiate(config)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>添加分片服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">sh.addShard(<span class="string">&quot;shard1/10.30.0.48:27001,10.30.0.49:27001,10.30.0.50:27001&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.addShard(<span class="string">&quot;shard2/10.30.0.48:27002,10.30.0.49:27002,10.30.0.50:27002&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.addShard(<span class="string">&quot;shard3/10.30.0.48:27003,10.30.0.49:27003,10.30.0.50:27003&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.status()</span><br></pre></td></tr></table></figure>
+
+
+<p>创建用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">执行命令： mongo -port 20000</span><br><span class="line">执行命令： use admin//这个条件是必须的</span><br><span class="line">执行命令：db.createUser(</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">        user:<span class="string">&quot;ml_grp&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="built_in">pwd</span>:<span class="string">&quot;ml&amp;dl#mongodb&quot;</span>,</span><br><span class="line"></span><br><span class="line">        roles:[&#123;role:<span class="string">&quot;root&quot;</span>,db:<span class="string">&quot;admin&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>use admin<br>执行命令：db.auth(‘ml_grp’,’passwd’)<br>执行命令：db.runCommand( { enablesharding :”zjxndc”});&#x2F;&#x2F;为zjxndc开启分片功能<br>执行命令：db.runCommand( { shardcollection : “zjxndc.measureHisvalues”,key : {_id: 1} } )&#x2F;</p>
+<p>use config<br>db.settings.save({“_id”:”chunksize”,”value”:1})<br>use zjxndc<br>d、执行命令：for (var i &#x3D; 1; i &lt;&#x3D; 100000; i++){</p>
+<p>db.measureHisvalues.insert({“_id”:i,”test1”:”testval1”+i});</p>
+<p>}</p>
+<p><img src="/1408af41c022dc62726ecf884c95ff0a.png" alt="enable partition"><br><img src="/image.png" alt="查看是否分区成功"></p>
+<h3 id="配置安全"><a href="#配置安全" class="headerlink" title="配置安全"></a>配置安全</h3><h4 id="4-1-安全验证设置用户"><a href="#4-1-安全验证设置用户" class="headerlink" title="4.1 安全验证设置用户"></a>4.1 安全验证设置用户</h4><p>1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。<br>a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix&#x2F;linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)</p>
+<p>执行命令：openssl rand -base64 756 &gt; &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;生成密钥</p>
+<p>执行命令：chmod 400 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;赋予权限</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;">&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file root@:10.30.0.49 &#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.56服务器上</p>
+<p>创建用户成功后，关闭所有的节点（三台机都需要操作）</p>
+<p>执行命令：按照先后顺序来处理关闭，mongos&gt;config&gt;shadr3&gt;shadr2&gt;shadr1</p>
+<p>&#x2F;&#x2F;注意的是每一个服务的关闭都需要在三台机上关闭，在关闭其他服务。例如关闭shadr3服务，先关闭0.54服务器上的shadr3服务，其次0.55服务器上的shadr3服务，再是0.56服务器上的shadr3服务；然后在关闭shadr2服务，也是按照这个顺序处理。（这个地方主要新手操作避免出错）</p>
+<p>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard1.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard2.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/shard3.conf --shutdown</span><br><span class="line">mongod -f /opt/mongo/MongoDB/conf/config.conf --shutdown</span><br><span class="line">mongo 10.30.0.48:20000//mongos需要这样关闭，用上面的命令有问题。</span><br><span class="line"></span><br><span class="line">use admin</span><br><span class="line">db.auth(<span class="string">&#x27;ml_grp&#x27;</span>,<span class="string">&#x27;passwd&#x27;</span>)</span><br><span class="line">db.shutdownServer()</span><br></pre></td></tr></table></figure>
+
+<p>3、配置testKeyFile.file，依次在每台机器上的mongos.conf、config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。<br>a、先是config.conf、shard1.conf、shard2.conf、shard3.conf的配置和开启授权验证。（三台机器的这些文件都需要添加）<br>在conf这几个文件的的最后添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  keyFile: /opt/mongo/MongoDB/testKeyFile.file</span><br><span class="line">  authorization: enabled</span><br></pre></td></tr></table></figure>
+<p>b、然后在三台机器的mongos.conf配置文件中最后添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  keyFile: /opt/mongo/MongoDB/testKeyFile.file</span><br></pre></td></tr></table></figure>
+<p>&#x2F;&#x2F;这里就说明了testKeyFile.file最好在每台机器放在一个位置，为了后面复制粘贴处理</p>
+<p>&#x2F;&#x2F;解释说明： mongos比mongod少了authorization：enabled的配置。原因是，副本集加分片的安全认证需要配置两方面的，副本集各个节点之间使用内部身份验证，用于内部各个mongo实例的通信，只有相同keyfile才能相互访问。所以都要开启keyFile: &#x2F;data&#x2F;mongodb&#x2F;testKeyFile.file</p>
+<pre><code>然而对于所有的mongod，才是真正的保存数据的分片。mongos只做路由，不保存数据。所以所有的mongod开启访问数据的授权authorization:enabled。这样用户只有账号密码正确才能访问到数据
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/fedora-k8s-%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/fedora-k8s-%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">fedora k8s 安装</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-16 17:58:56" itemprop="dateCreated datePublished" datetime="2023-08-16T17:58:56+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/spark-group-by-%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">spark group by 操作</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-16 17:54:33 / 修改时间：21:23:26" itemprop="dateCreated datePublished" datetime="2023-08-16T17:54:33+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>scala-spark-dataframe—groupby基本操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[andrew@hadoop102 bin]$ ./spark-shell</span><br><span class="line">2022-05-07 20:35:13,392 WARN util.NativeCodeLoader: Unable to load native-hadoop library <span class="keyword">for</span> your platform... using builtin-java classes <span class="built_in">where</span> applicable</span><br><span class="line">Setting default <span class="built_in">log</span> level to <span class="string">&quot;WARN&quot;</span>.</span><br><span class="line">To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</span><br><span class="line">Spark context Web UI available at http://hadoop102:4040</span><br><span class="line">Spark context available as <span class="string">&#x27;sc&#x27;</span> (master = <span class="built_in">local</span>[*], app <span class="built_in">id</span> = local-1651926921962).</span><br><span class="line">Spark session available as <span class="string">&#x27;spark&#x27;</span>.</span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  <span class="string">&#x27;_/</span></span><br><span class="line"><span class="string">   /___/ .__/\_,_/_/ /_/\_\   version 3.0.0</span></span><br><span class="line"><span class="string">      /_/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Using Scala version 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_212)</span></span><br><span class="line"><span class="string">Type in expressions to have them evaluated.</span></span><br><span class="line"><span class="string">Type :help for more information.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; val df = spark.createDataset(Seq(</span></span><br><span class="line"><span class="string">     |   (&quot;aaa&quot;,1,2),(&quot;bbb&quot;,3,4),(&quot;ccc&quot;,3,5),(&quot;bbb&quot;,4, 6))   ).toDF(&quot;key1&quot;,&quot;key2&quot;,&quot;key3&quot;)</span></span><br><span class="line"><span class="string">df: org.apache.spark.sql.DataFrame = [key1: string, key2: int ... 1 more field]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.show()</span></span><br><span class="line"><span class="string">+----+----+----+</span></span><br><span class="line"><span class="string">|key1|key2|key3|</span></span><br><span class="line"><span class="string">+----+----+----+</span></span><br><span class="line"><span class="string">| aaa|   1|   2|</span></span><br><span class="line"><span class="string">| bbb|   3|   4|</span></span><br><span class="line"><span class="string">| ccc|   3|   5|</span></span><br><span class="line"><span class="string">| bbb|   4|   6|</span></span><br><span class="line"><span class="string">+----+----+----+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.printSchema()</span></span><br><span class="line"><span class="string">root</span></span><br><span class="line"><span class="string"> |-- key1: string (nullable = true)</span></span><br><span class="line"><span class="string"> |-- key2: integer (nullable = false)</span></span><br><span class="line"><span class="string"> |-- key3: integer (nullable = false)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).count.show</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string">|key1|count|</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string">| ccc|    1|</span></span><br><span class="line"><span class="string">| aaa|    1|</span></span><br><span class="line"><span class="string">| bbb|    2|</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.select(&quot;key1&quot;).distinct.show</span></span><br><span class="line"><span class="string">+----+</span></span><br><span class="line"><span class="string">|key1|</span></span><br><span class="line"><span class="string">+----+</span></span><br><span class="line"><span class="string">| ccc|</span></span><br><span class="line"><span class="string">| aaa|</span></span><br><span class="line"><span class="string">| bbb|</span></span><br><span class="line"><span class="string">+----+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.select(&quot;key1&quot;).distinct.count</span></span><br><span class="line"><span class="string">res4: Long = 3</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; f.groupBy(&quot;key1&quot;).count.sort(&quot;key1&quot;).show</span></span><br><span class="line"><span class="string">&lt;console&gt;:24: error: not found: value f</span></span><br><span class="line"><span class="string">       f.groupBy(&quot;key1&quot;).count.sort(&quot;key1&quot;).show</span></span><br><span class="line"><span class="string">       ^</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).count.sort(&quot;key1&quot;).show</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string">|key1|count|</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string">| aaa|    1|</span></span><br><span class="line"><span class="string">| bbb|    2|</span></span><br><span class="line"><span class="string">| ccc|    1|</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).count.sort($&quot;count&quot;.desc).show</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string">|key1|count|</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string">| bbb|    2|</span></span><br><span class="line"><span class="string">| ccc|    1|</span></span><br><span class="line"><span class="string">| aaa|    1|</span></span><br><span class="line"><span class="string">+----+-----+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).count.withColumnRenamed(&quot;count&quot;, &quot;cnt&quot;).sort($&quot;cnt&quot;.desc).show</span></span><br><span class="line"><span class="string">+----+---+</span></span><br><span class="line"><span class="string">|key1|cnt|</span></span><br><span class="line"><span class="string">+----+---+</span></span><br><span class="line"><span class="string">| bbb|  2|</span></span><br><span class="line"><span class="string">| aaa|  1|</span></span><br><span class="line"><span class="string">| ccc|  1|</span></span><br><span class="line"><span class="string">+----+---+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).agg(count(&quot;key1&quot;).as(&quot;cnt&quot;)).show</span></span><br><span class="line"><span class="string">+----+---+</span></span><br><span class="line"><span class="string">|key1|cnt|</span></span><br><span class="line"><span class="string">+----+---+</span></span><br><span class="line"><span class="string">| ccc|  1|</span></span><br><span class="line"><span class="string">| aaa|  1|</span></span><br><span class="line"><span class="string">| bbb|  2|</span></span><br><span class="line"><span class="string">+----+---+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt;  df.groupBy(&quot;key1&quot;).agg(count(&quot;key1&quot;), max(&quot;key2&quot;), avg(&quot;key3&quot;)).show</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string">|key1|count(key1)|max(key2)|avg(key3)|</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string">| ccc|          1|        3|      5.0|</span></span><br><span class="line"><span class="string">| aaa|          1|        1|      2.0|</span></span><br><span class="line"><span class="string">| bbb|          2|        4|      5.0|</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; f.groupBy(&quot;key1&quot;)</span></span><br><span class="line"><span class="string">&lt;console&gt;:24: error: not found: value f</span></span><br><span class="line"><span class="string">       f.groupBy(&quot;key1&quot;)</span></span><br><span class="line"><span class="string">       ^</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt;        df.groupBy(&quot;key1&quot;).agg(&quot;key1&quot;-&gt;&quot;count&quot;, &quot;key2&quot;-&gt;&quot;max&quot;, &quot;key3&quot;-&gt;&quot;avg&quot;).show</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string">|key1|count(key1)|max(key2)|avg(key3)|</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string">| ccc|          1|        3|      5.0|</span></span><br><span class="line"><span class="string">| aaa|          1|        1|      2.0|</span></span><br><span class="line"><span class="string">| bbb|          2|        4|      5.0|</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).agg(Map((&quot;key1&quot;,&quot;count&quot;), (&quot;key2&quot;,&quot;max&quot;), (&quot;key3&quot;,&quot;avg&quot;))).show</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string">|key1|count(key1)|max(key2)|avg(key3)|</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string">| ccc|          1|        3|      5.0|</span></span><br><span class="line"><span class="string">| aaa|          1|        1|      2.0|</span></span><br><span class="line"><span class="string">| bbb|          2|        4|      5.0|</span></span><br><span class="line"><span class="string">+----+-----------+---------+---------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt; df.groupBy(&quot;key1&quot;).agg(count(&quot;key1&quot;).as(&quot;cnt&quot;), max(&quot;key2&quot;).as(&quot;max_key2&quot;), avg(&quot;key3&quot;).as(&quot;avg_key3&quot;)).sort($&quot;cnt&quot;,$&quot;max_key2&quot;.desc).show</span></span><br><span class="line"><span class="string">+----+---+--------+--------+</span></span><br><span class="line"><span class="string">|key1|cnt|max_key2|avg_key3|</span></span><br><span class="line"><span class="string">+----+---+--------+--------+</span></span><br><span class="line"><span class="string">| ccc|  1|       3|     5.0|</span></span><br><span class="line"><span class="string">| aaa|  1|       1|     2.0|</span></span><br><span class="line"><span class="string">| bbb|  2|       4|     5.0|</span></span><br><span class="line"><span class="string">+----+---+--------+--------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">package groupby</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">import org.apache.spark.SparkConf</span></span><br><span class="line"><span class="string">import org.apache.spark.sql.SparkSession</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">object demos &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  def main(args: Array[String]): Unit = &#123;</span></span><br><span class="line"><span class="string">    val conf = new SparkConf().setAppName(&quot;LzSparkDatasetExamples&quot;).setMaster(&quot;local[*]&quot;)</span></span><br><span class="line"><span class="string">    val sparkSession = SparkSession.builder().enableHiveSupport().config(conf).getOrCreate()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">//    //LOGGER.info(&quot;-------- this is info --------&quot;)</span></span><br><span class="line"><span class="string">    import sparkSession.implicits._</span></span><br><span class="line"><span class="string">    val df = sparkSession.createDataset(Seq(</span></span><br><span class="line"><span class="string">      (&quot;aaa&quot;, 1, 2),</span></span><br><span class="line"><span class="string">      (&quot;bbb&quot;, 3, 4),</span></span><br><span class="line"><span class="string">      (&quot;ccc&quot;, 3, 5),</span></span><br><span class="line"><span class="string">      (&quot;bbb&quot;, 4, 6)</span></span><br><span class="line"><span class="string">    )).toDF(&quot;key1&quot;, &quot;key2&quot;, &quot;key3&quot;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    import org.apache.spark.sql.functions._</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.groupBy(\&quot;key1\&quot;).count().show()-----------&quot;)</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).count().show()</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.select(\&quot;key1\&quot;).distinct().show()-----------&quot;)</span></span><br><span class="line"><span class="string">    df.select(&quot;key1&quot;).distinct().show()</span></span><br><span class="line"><span class="string">    val key1Count = df.select(&quot;key1&quot;).distinct().count()</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.select(\&quot;key1\&quot;).distinct().count()-----------&quot; +key1Count)</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.groupBy(\&quot;key1\&quot;).count().sort(\&quot;key1\&quot;).show()-----------&quot;)</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).count().sort(&quot;key1&quot;).show()</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.groupBy(\&quot;key1\&quot;).count().sort($\&quot;key1\&quot;.desc).show()-----------&quot;)</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).count().sort($&quot;key1&quot;.desc).show()</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.groupBy(\&quot;key1\&quot;).count.withColumnRenamed(\&quot;count\&quot;, \&quot;cnt\&quot;).sort($\&quot;cnt\&quot;.desc).show-----------&quot;)</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).count</span></span><br><span class="line"><span class="string">      .withColumnRenamed(&quot;count&quot;, &quot;cnt&quot;).sort($&quot;cnt&quot;.desc).show()</span></span><br><span class="line"><span class="string">    //LOGGER.info(&quot;--------df.groupBy(\&quot;key1\&quot;).agg(count(\&quot;key1\&quot;).as(\&quot;cnt\&quot;)).show-----------&quot;)</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).agg(count(&quot;key1&quot;).as(&quot;cnt&quot;)).show()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    // 使用agg聚合函数</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).agg(count(&quot;key1&quot;), max(&quot;key2&quot;), avg(&quot;key3&quot;)).show</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).agg(&quot;key1&quot;-&gt;&quot;count&quot;, &quot;key2&quot;-&gt;&quot;max&quot;, &quot;key3&quot;-&gt;&quot;avg&quot;).show()</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).agg(Map((&quot;key1&quot;,&quot;count&quot;), (&quot;key2&quot;,&quot;max&quot;), (&quot;key3&quot;,&quot;avg&quot;))).show()</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;).agg((&quot;key1&quot;,&quot;count&quot;), (&quot;key2&quot;,&quot;max&quot;), (&quot;key3&quot;,&quot;avg&quot;)).show</span></span><br><span class="line"><span class="string">    df.groupBy(&quot;key1&quot;)</span></span><br><span class="line"><span class="string">      .agg(count(&quot;key1&quot;).as(&quot;cnt&quot;), max(&quot;key2&quot;).as(&quot;max_key2&quot;), avg(&quot;key3&quot;).as(&quot;avg_key3&quot;))</span></span><br><span class="line"><span class="string">      .sort($&quot;cnt&quot;,$&quot;max_key2&quot;.desc).show</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/spark-null-%E5%80%BC%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">spark null 值处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-16 17:50:24" itemprop="dateCreated datePublished" datetime="2023-08-16T17:50:24+08:00">2023-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-18 10:16:05" itemprop="dateModified" datetime="2023-08-18T10:16:05+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -327,602 +725,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/08/18/gitlab-ci-runners/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/18/gitlab-ci-runners/" class="post-title-link" itemprop="url">gitlab_ci runners</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-08-18 18:01:14" itemprop="dateCreated datePublished" datetime="2022-08-18T18:01:14+08:00">2022-08-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 10:16:27" itemprop="dateModified" datetime="2023-08-18T10:16:27+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/06/17/hdfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/17/hdfs/" class="post-title-link" itemprop="url">hdfs</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-17 21:13:45" itemprop="dateCreated datePublished" datetime="2022-06-17T21:13:45+08:00">2022-06-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:27:42" itemprop="dateModified" datetime="2023-08-16T21:27:42+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h2><h3 id="HDFS产生背景"><a href="#HDFS产生背景" class="headerlink" title="HDFS产生背景"></a>HDFS产生背景</h3><p>随着数据量越来越大，在一个操作系统管辖的范围内存不下了，那么就分配到更多的操作系统管理的磁盘中，但是不方便管理和维护，迫切需要一种<br>系统来管理多台机器上的文件，这就是分布式文件管理系统。HDFS只是分布式文件管理系统中的一种。</p>
-<h3 id="HDFS概念"><a href="#HDFS概念" class="headerlink" title="HDFS概念"></a>HDFS概念</h3><p>HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有<br>各自的角色。HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用</p>
-<h3 id="HDFS优缺点"><a href="#HDFS优缺点" class="headerlink" title="HDFS优缺点"></a>HDFS优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
-<li><p>高容错性</p>
-<ul>
-<li>数据自动保存多个副本。它通过增加副本的形式，提高容错性；</li>
-<li>某一个副本丢失以后，它可以自动恢复</li>
-</ul>
-</li>
-<li><p>适合大数据处理</p>
-<ul>
-<li>数据规模：能够处理数据规模达到GB、TB、甚至PB级别的数据；</li>
-<li>文件规模：能够处理百万规模以上的文件数量，数量相当之大。</li>
-</ul>
-</li>
-<li><p>流式数据访问，它能保证数据的一致性。</p>
-</li>
-<li><p>可构建在廉价机器上，通过多副本机制，提高可靠性。</p>
-</li>
-</ul>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
-<li>不适合低延时数据访问，比如毫秒级的存储数据，是做不到的。</li>
-<li>无法高效的对大量小文件进行存储。<ul>
-<li>存储大量小文件的话，它会占用NameNode大量的内存来存储文件、目录和块信息。这样是不可取的，因为NameNode的内存总是有限的；</li>
-<li>小文件存储的寻址时间会超过读取时间，它违反了HDFS的设计目标。</li>
-</ul>
-</li>
-<li>并发写入、文件随机修改。<ul>
-<li>一个文件只能有一个写，不允许多个线程同时写；</li>
-<li>仅支持数据append（追加），不支持文件的随机修改。</li>
-</ul>
-</li>
-</ul>
-<h3 id="HDFS组成架构"><a href="#HDFS组成架构" class="headerlink" title="HDFS组成架构"></a>HDFS组成架构</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9fb5b498df7b444087880236c63cdc3d~tplv-k3u1fbpfcp-watermark.image"></p>
-<p>这种架构主要由四个部分组成，分别为HDFS Client、NameNode、DataNode和Secondary NameNode。下面我们分别介绍这四个组成部分。</p>
-<ul>
-<li><p>Client：就是客户端。</p>
-<ul>
-<li>文件切分。文件上传HDFS的时候，Client将文件切分成一个一个的Block，然后进行存储；</li>
-<li>与NameNode交互，获取文件的位置信息；</li>
-<li>与DataNode交互，读取或者写入数据；</li>
-<li>Client提供一些命令来管理HDFS，比如启动或者关闭HDFS；</li>
-<li>Client可以通过一些命令来访问HDFS；</li>
-</ul>
-</li>
-<li><p>NameNode：就是Master，它是一个主管、管理者。</p>
-<ul>
-<li>管理HDFS的名称空间；</li>
-<li>管理数据块（Block）映射信息；</li>
-<li>配置副本策略；<br>- 处理客户端读写请求。</li>
-</ul>
-</li>
-<li><p>DataNode：就是Slave。NameNode下达命令，DataNode执行实际的操作。</p>
-<ul>
-<li>存储实际的数据块</li>
-<li>执行数据块的读&#x2F;写操作。</li>
-</ul>
-</li>
-<li><p>Secondary NameNode：并非NameNode的热备。当NameNode挂掉的时候，它并不能马上替换NameNode并提供服务。</p>
-<ul>
-<li>辅助NameNode，分担其工作量；</li>
-<li>定期合并Fsimage和Edits，并推送给NameNode；</li>
-<li>在紧急情况下，可辅助恢复NameNode。</li>
-</ul>
-</li>
-</ul>
-<h3 id="HDFS文件块大小"><a href="#HDFS文件块大小" class="headerlink" title="HDFS文件块大小"></a>HDFS文件块大小</h3><p>HDFS中的文件在物理上是分块存储（block），块的大小可以通过配置参数( dfs.blocksize)来规定，默认大小在hadoop2.x<br>版本中是128M，老版本中是64M。HDFS的块比磁盘的块大，其目的是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的<br>时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。如果寻址时间约为<br>10ms，而传输速率为100MB&#x2F;s，为了使寻址时间仅占传输时间的1%，我们要将块大小设置约为100MB。默认的块大小128MB。块的大小：<br>10ms<em>100</em>100M&#x2F;s &#x3D; 100M</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/32ad8b86eab94a68b65c10857a3c31eb~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS写数据流程"><a href="#HDFS写数据流程" class="headerlink" title="HDFS写数据流程"></a>HDFS写数据流程</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c6014ed71d4c4d57ae45c7c958e02e7c~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li>客户端通过Distributed FileSystem模块向NameNode请求上传文件，NameNode检查目标文件是否已存在，父目录是否存在。</li>
-<li>NameNode返回是否可以上传。</li>
-<li>客户端请求第一个block上传到哪几个datanode服务器上。</li>
-<li>NameNode返回3个datanode节点，分别为dn1、dn2、dn3。</li>
-<li>客户端通过FSDataOutputStream模块请求dn1上传数据，dn1收到请求会继续调用dn2，然后dn2调用dn3，将这个通信管道建立完成。</li>
-<li>dn1、dn2、dn3逐级应答客户端。</li>
-<li>客户端开始往dn1上传第一个block（先从磁盘读取数据放到一个本地内存缓存），以packet为单位，dn1收到一个packet就会传给dn2，<br>dn传给dn3；dn1每传一个packet会放入一个应答队列等待应答。</li>
-<li>当一个block传输完成之后，客户端再次请求NameNode上传第二个block的服务器。（重复执行3-7步）。</li>
-</ul>
-<h3 id="网络拓扑概念"><a href="#网络拓扑概念" class="headerlink" title="网络拓扑概念"></a>网络拓扑概念</h3><p>在本地网络中，两个节点被称为“彼此近邻”是什么意思？在海量数据处理中，其主要限制因素是节点之间数据的传输速率——带宽很稀缺。<br>这里的想法是将两个节点间的带宽作为距离的衡量标准。</p>
-<p>节点距离：两个节点到达最近的共同祖先的距离总和。<br><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c5daea537fea42d7bc72fca6edc765c6~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS读数据流程"><a href="#HDFS读数据流程" class="headerlink" title="HDFS读数据流程"></a>HDFS读数据流程</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b7689706f7194aafa32acdd07b9df0da~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li>客户端通过Distributed FileSystem向NameNode请求下载文件，NameNode通过查询元数据，找到文件块所在的DataNode地址。</li>
-<li>挑选一台DataNode（就近原则，然后随机）服务器，请求读取数据。</li>
-<li>DataNode开始传输数据给客户端（从磁盘里面读取数据输入流，以packet为单位来做校验）。</li>
-<li>客户端以packet为单位接收，先在本地缓存，然后写入目标文件。</li>
-</ul>
-<h2 id="MapReduce入门"><a href="#MapReduce入门" class="headerlink" title="MapReduce入门"></a>MapReduce入门</h2><h3 id="MapReduce定义"><a href="#MapReduce定义" class="headerlink" title="MapReduce定义"></a>MapReduce定义</h3><p>Mapreduce是一个分布式运算程序的编程框架，是用户开发“基于hadoop的数据分析应用”的核心框架。Mapreduce核心功能是将用户编写的<br>业务逻辑代码和自带默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上。</p>
-<h3 id="MapReduce优缺点"><a href="#MapReduce优缺点" class="headerlink" title="MapReduce优缺点"></a>MapReduce优缺点</h3><ul>
-<li><p>优点</p>
-<ul>
-<li>MapReduce易于编程。它简单的实现一些接口，就可以完成一个分布式程序，这个分布式程序可以分布到大量廉价的PC机器上运行。<br>也就是说你写一个分布式程序，跟写一个简单的串行程序是一模一样的。就是因为这个特点使得MapReduce编程变得非常流行。</li>
-<li>良好的扩展性。当你的计算资源不能得到满足的时候，你可以通过简单的增加机器来扩展它的计算能力。</li>
-<li>高容错性。MapReduce设计的初衷就是使程序能够部署在廉价的PC机器上，这就要求它具有很高的容错性。比如其中一台机器挂了，<br>它可以把上面的计算任务转移到另外一个节点上运行，不至于这个任务运行失败，而且这个过程不需要人工参与，而完全是由Hadoop内部完成的。</li>
-<li>适合PB级以上海量数据的离线处理。这里加红字体离线处理，说明它适合离线处理而不适合在线处理。比如像毫秒级别的返回一个结果，<br>MapReduce很难做到。</li>
-</ul>
-</li>
-<li><p>缺点 MapReduce不擅长做实时计算、流式计算、DAG（有向图）计算。</p>
-<ul>
-<li>实时计算。MapReduce无法像Mysql一样，在毫秒或者秒级内返回结果。</li>
-<li>流式计算。流式计算的输入数据是动态的，而MapReduce的输入数据集是静态的，不能动态变化。这是因为MapReduce自身的设计特点决定-<br>据源必须是静态的。</li>
-<li>DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，<br>而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。</li>
-</ul>
-<h3 id="MapReduce核心思想"><a href="#MapReduce核心思想" class="headerlink" title="MapReduce核心思想"></a>MapReduce核心思想</h3><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/591d6d1a27e243f7bf5be80ff9904e1b~tplv-k3u1fbpfcp-watermark.image"></p>
-</li>
-<li><p>分布式的运算程序往往需要分成至少2个阶段。</p>
-</li>
-<li><p>第一个阶段的maptask并发实例，完全并行运行，互不相干。</p>
-</li>
-<li><p>第二个阶段的reduce task并发实例互不相干，但是他们的数据依赖于上一个阶段的所有maptask并发实例的输出。</p>
-</li>
-<li><p>MapReduce编程模型只能包含一个map阶段和一个reduce阶段，如果用户的业务逻辑非常复杂，那就只能多个mapreduce程序，串行运行。</p>
-</li>
-</ul>
-<h3 id="MapReduce进程"><a href="#MapReduce进程" class="headerlink" title="MapReduce进程"></a>MapReduce进程</h3><p>一个完整的mapreduce程序在分布式运行时有三类实例进程：</p>
-<ul>
-<li>MrAppMaster：负责整个程序的过程调度及状态协调。</li>
-<li>MapTask：负责map阶段的整个数据处理流程。</li>
-<li>ReduceTask：负责reduce阶段的整个数据处理流程。</li>
-</ul>
-<h3 id="MapReduce编程规范"><a href="#MapReduce编程规范" class="headerlink" title="MapReduce编程规范"></a>MapReduce编程规范</h3><p>用户编写的程序分成三个部分：Mapper、Reducer和Driver。</p>
-<ul>
-<li><p>Mapper阶段</p>
-<ul>
-<li>用户自定义的Mapper要继承自己的父类</li>
-<li>Mapper的输入数据是KV对的形式（KV的类型可自定义）</li>
-<li>Mapper中的业务逻辑写在map()方法中</li>
-<li>Mapper的输出数据是KV对的形式（KV的类型可自定义）</li>
-</ul>
-</li>
-<li><p>Reducer阶段</p>
-<ul>
-<li>用户自定义的Reducer要继承自己的父类</li>
-<li>Reducer的输入数据类型对应Mapper的输出数据类型，也是KV</li>
-<li>Reducer的业务逻辑写在reduce()方法中</li>
-<li>Reducetask进程对每一组相同k的&lt;k,v&gt;组调用一次reduce()方法</li>
-</ul>
-</li>
-<li><p>Driver阶段</p>
-</li>
-</ul>
-<p>整个程序需要一个Drvier来进行提交，提交的是一个描述了各种必要信息的job对象</p>
-<blockquote>
-<p>其实吧我们真实开发也不会说去写mr 但是还是建议大家把最简单的wordcount做了。</p>
-</blockquote>
-<h2 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h2><h3 id="Yarn-概述"><a href="#Yarn-概述" class="headerlink" title="Yarn 概述"></a>Yarn 概述</h3><p>Yarn 是一个资源调度平台，负责为运算程序提供服务器运算资源，相当于一个分布式<br>的操作系统平台，而 MapReduce 等运算程序则相当于运行于操作系统之上的应用程序。</p>
-<h3 id="Yarn-基本架构"><a href="#Yarn-基本架构" class="headerlink" title="Yarn 基本架构"></a>Yarn 基本架构</h3><p>YARN 主要由 ResourceManager、NodeManager、ApplicationMaster 和 Container 等组件<br>构成<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c85d606218e477bbfa8cdcdb7022af4~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="Yarn-工作机制"><a href="#Yarn-工作机制" class="headerlink" title="Yarn 工作机制"></a>Yarn 工作机制</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac47a79a89a142e3b7fe9a09df062d77~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li>Mr 程序提交到客户端所在的节点。</li>
-<li>Yarnrunner 向 Resourcemanager 申请一个 Application。 </li>
-<li>rm 将该应用程序的资源路径返回给 yarnrunner。 </li>
-<li>该程序将运行所需资源提交到 HDFS 上。 </li>
-<li>程序资源提交完毕后，申请运行 mrAppMaster。 </li>
-<li>RM 将用户的请求初始化成一个 task。 </li>
-<li>其中一个 NodeManager 领取到 task 任务。</li>
-<li>该 NodeManager 创建容器 Container，并产生 MRAppmaster。 </li>
-<li>Container 从 HDFS 上拷贝资源到本地。 </li>
-<li>MRAppmaster 向 RM 申请运行 maptask 资源。</li>
-<li>RM 将运行 maptask 任务分配给另外两个 NodeManager，另两个 NodeManager 分别领取任务并创建容器。</li>
-<li>MR 向两个接收到任务的 NodeManager 发送程序启动脚本，这两个 NodeManager分别启动 maptask，maptask 对数据分区排序。</li>
-<li>MrAppMaster 等待所有 maptask 运行完毕后，向 RM 申请容器，运行 reduce task。 </li>
-<li>reduce task 向 maptask 获取相应分区的数据。</li>
-<li>程序运行完毕后，MR 会向 RM 申请注销自己。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/06/16/hive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/16/hive/" class="post-title-link" itemprop="url">hive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-16 21:17:46" itemprop="dateCreated datePublished" datetime="2022-06-16T21:17:46+08:00">2022-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 14:21:02" itemprop="dateModified" datetime="2023-08-18T14:21:02+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="Hive安装"><a href="#Hive安装" class="headerlink" title="Hive安装"></a>Hive安装</h4><h5 id="2-1-Hive-安装地址"><a href="#2-1-Hive-安装地址" class="headerlink" title="2.1 Hive 安装地址"></a>2.1 Hive 安装地址</h5><p>1)Hive 官网地址 <a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a><br>2)文档查看地址 <a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</a><br>3)下载地址 <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/hive/">http://archive.apache.org/dist/hive/</a><br>4)github 地址 <a target="_blank" rel="noopener" href="https://github.com/apache/hive">https://github.com/apache/hive</a></p>
-<h5 id="2-2Hive-安装部署-2-2-1-安装-Hive"><a href="#2-2Hive-安装部署-2-2-1-安装-Hive" class="headerlink" title="2.2Hive 安装部署 2.2.1 安装 Hive"></a>2.2Hive 安装部署 2.2.1 安装 Hive</h5><p>1)把 apache-hive-3.1.2-bin.tar.gz 上传到 linux 的&#x2F;opt&#x2F;software 目录下<br>2)解压 apache-hive-3.1.2-bin.tar.gz 到&#x2F;opt&#x2F;module&#x2F;目录下面<br>3)修改 apache-hive-3.1.2-bin.tar.gz 的名称为 hive<br>4)修改&#x2F;etc&#x2F;profile.d&#x2F;my_env.sh，添加环境变量<br>    [andrw@hadoop101 software]$ sudo vim &#x2F;etc&#x2F;profile.d&#x2F;my_env.sh<br>5)添加内容<br>6)解决日志 Jar 包冲突<br>7)初始化元数据库<br>    [andrw@hadoop101 hive]$ bin&#x2F;schematool -dbType derby -initSchema<br>2.2.2 启动并使用 Hive 1)启动 Hive<br>    [andrw@hadoop101 hive]$ bin&#x2F;hive<br>2)使用 Hive<br>3)在 CRT 窗口中开启另一个窗口开启 Hive，在&#x2F;tmp&#x2F;andrw 目录下监控 hive.log 文件<br>    [andrw@hadoop101 software]$ tar -zxvf &#x2F;opt&#x2F;software&#x2F;apache-hive-3.1.2-bin.tar.gz -C &#x2F;opt&#x2F;module&#x2F;<br>    [andrw@hadoop101 software]$ mv &#x2F;opt&#x2F;module&#x2F;apache-hive-3.1.2-bin&#x2F; &#x2F;opt&#x2F;module&#x2F;hive  </p>
-<p>#HIVE_HOME</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HIVE_HOME=/opt/module/hive  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HIVE_HOME</span>/bin  </span><br><span class="line">[andrw@hadoop101 software]$ <span class="built_in">mv</span> <span class="variable">$HIVE_HOME</span>/lib/log4j-slf4j-impl-2.10.0.jar <span class="variable">$HIVE_HOME</span>/lib/log4j-slf4j-impl-2.10.0.bak  </span><br><span class="line">hive&gt; show databases;  </span><br><span class="line">hive&gt; show tables;  </span><br><span class="line">hive&gt; create table <span class="built_in">test</span>(<span class="built_in">id</span> int);  </span><br><span class="line">hive&gt; insert into <span class="built_in">test</span> values(1);  </span><br><span class="line">hive&gt; <span class="keyword">select</span> * from <span class="built_in">test</span>;  </span><br><span class="line">Caused by: ERROR XSDB6: Another instance of Derby may have already booted  </span><br><span class="line">the database /opt/module/hive/metastore_db.at  </span><br><span class="line">org.apache.derby.iapi.error.StandardException.newException(Unknown  </span><br><span class="line">Source)  </span><br><span class="line">       at  </span><br><span class="line">org.apache.derby.iapi.error.StandardException.newException(Unknown  </span><br><span class="line">Source) at  </span><br><span class="line">org.apache.derby.impl.store.raw.data.BaseDataFileFactory.privGetJBMSLockO  </span><br><span class="line">nDB(Unknown Source)  </span><br><span class="line">       at  </span><br><span class="line">org.apache.derby.impl.store.raw.data.BaseDataFileFactory.run(Unknown  </span><br><span class="line">Source)  </span><br></pre></td></tr></table></figure>
-<p>原因在于 Hive 默认使用的元数据库为 derby，开启 Hive 之后就会占用元数据库，且不与 其他客户端共享数据，所以我们需要将 Hive 的元数据地址改为 MySQL。</p>
-<p>2.4 Hive 元数据配置到 MySQL 2.4.1 拷贝驱动<br>将 MySQL 的 JDBC 驱动拷贝到 Hive 的 lib 目录下<br>2.4.2 配置 Metastore 到 MySQL<br>1)在$HIVE_HOME&#x2F;conf 目录下新建 hive-site.xml 文件<br>    [andrew@hadoop101 software]$ vim $HIVE_HOME&#x2F;conf&#x2F;hive-site.xml<br>添加如下内容<br>   [andrew@hadoop101 software]$ cp &#x2F;opt&#x2F;software&#x2F;mysql-connector-java-5.1.37.jar $HIVE_HOME&#x2F;lib  </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/xsl&quot;</span> href=<span class="string">&quot;configuration.xsl&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 URL --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://hadoop101:3306/metastore?useSSL=false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 Driver--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 username--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 password --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Hive 元数据存储版本的验证 --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.schema.verification<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--元数据存储授权--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.event.db.notification.api.auth<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Hive 默认在 HDFS 的工作目录 --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/user/hive/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2)登陆 MySQL  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[andrew@hadoop101 software]$ mysql -uroot -p000000 </span><br></pre></td></tr></table></figure>
-<p>3)新建 Hive 元数据库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database metastore chartset utf8mb4;</span><br><span class="line">mysql&gt; quit;</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>初始化 Hive 元数据库<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -initSchema -dbType mysql -verbose</span><br></pre></td></tr></table></figure>
-2.4.3 再次启动 Hive</li>
-</ol>
-<p>1)启动 Hive</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; show databases;</span><br><span class="line">hive&gt; show tables;</span><br><span class="line">hive&gt; create table <span class="built_in">test</span> (<span class="built_in">id</span> int);</span><br><span class="line">hive&gt; insert into <span class="built_in">test</span> values(1);</span><br><span class="line">hive&gt; <span class="keyword">select</span> * from <span class="built_in">test</span>;</span><br></pre></td></tr></table></figure>
-
-<p>2.5 使用元数据服务的方式访问 Hive </p>
-<p>1)在 hive-site.xml 文件中添加如下配置信息</p>
-<!-- 指定存储元数据要连接的地址 -->
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.uris<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>thrift://hadoop101:9083<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2)启动 metastore</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[andrew@hadoop101 hive]$ hive --service metastore </span><br><span class="line">2020-04-24 16:58:08: Starting Hive Metastore Server </span><br></pre></td></tr></table></figure>
-<p> 注意: 启动后窗口不能再操作，需打开一个新的 shell 窗口做别的操作</p>
-<p>3)启动 hive</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[andrew@hadoop101 hive]$ bin/hive</span><br></pre></td></tr></table></figure>
-
-<p>2.6 使用 JDBC 方式访问 Hive<br>1)在 hive-site.xml 文件中添加如下配置信息</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- 指定 hiveserver2 连接的 host --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.bind.host<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop101<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定 hiveserver2 连接的端口号 --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>10000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2)启动 hiveserver2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive --service hiveserver2</span><br></pre></td></tr></table></figure>
-
-<p>3)启动 beeline 客户端(需要多等待一会)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beeline -u jdbc:hive2://hadoop101:10000 -n andrew</span><br></pre></td></tr></table></figure>
-<p>4)看到如下界面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Connecting to jdbc:hive2://hadoop101:10000</span><br><span class="line">Connected to: Apache Hive (version 3.1.2)</span><br><span class="line">Driver: Hive JDBC (version 3.1.2)</span><br><span class="line">Transaction isolation: TRANSACTION_REPEATABLE_READ</span><br><span class="line">Beeline version 3.1.2 by Apache Hive</span><br><span class="line">0: jdbc:hive2://hadoop101:10000&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> hive --service metastore 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="built_in">nohup</span> hive --service hiveserver2 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>打印当前数据库名和表头</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.header<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.current.db<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看当前设置<br>hive&gt;set;</p>
-<p>comment 中文乱码</p>
-<p>①修改表字段注解和表注解<br>alter table COLUMNS_V2 modify column COMMENT varchar(256) character set utf8;<br>alter table TABLE_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>② 修改分区字段注解：<br>alter table PARTITION_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>alter table PARTITION_KEYS modify column PKEY_COMMENT varchar(4000) character set utf8;<br>③修改索引注解：<br>alter table INDEX_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;  </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/01/16/hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/16/hadoop/" class="post-title-link" itemprop="url">hadoop</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-16 21:14:23" itemprop="dateCreated datePublished" datetime="2022-01-16T21:14:23+08:00">2022-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:12" itemprop="dateModified" datetime="2023-08-16T21:29:12+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="大数据概念"><a href="#大数据概念" class="headerlink" title="大数据概念"></a>大数据概念</h2><p>大数据（big data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、<br>洞察发现力和流程优化能力的海量、高增长率和多样化的信息资产。</p>
-<blockquote>
-<p>主要解决，海量数据的存储和海量数据的分析计算问题。</p>
-</blockquote>
-<h2 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h2><p>当然，目前这个生态是越来越大了，但是它的本质还是在二个方面 计算 和 存储</p>
-<h3 id="开源生态"><a href="#开源生态" class="headerlink" title="开源生态"></a>开源生态</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5f63ebfc9e784f7690d0ed92f290e7bb~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li><p>Sqoop：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如：MySQL ,<br>Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-</li>
-<li><p>Flume：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统，Flume支持在日志系统中定制各类数据发送方，<br>用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-</li>
-<li><p>Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，有如下特性：</p>
-<ul>
-<li>通过O(1)的磁盘数据结构提供消息的持久化，这种结构对于即使数以TB的消息存储也能够保持长时间的稳定性能。</li>
-<li>高吞吐量：即使是非常普通的硬件Kafka也可以支持每秒数百万的消息。</li>
-<li>支持通过Kafka服务器和消费机集群来分区消息。</li>
-<li>支持Hadoop并行数据加载。</li>
-</ul>
-</li>
-<li><p>Storm：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。这是管理队列及工作者集群的另一种方式。<br>Storm也可被用于“连续计算”（continuous computation），对数据流做连续查询，在计算时就将结果以流的形式输出给用户。</p>
-</li>
-<li><p>Spark：Spark是当前最流行的开源大数据内存计算框架。可以基于Hadoop上存储的大数据进行计算。</p>
-</li>
-<li><p>Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-</li>
-<li><p>Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-</li>
-<li><p>Hive：hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce<br>任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-</li>
-<li><p>Mahout:Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。<br>聚集：收集文件并进行相关文件分组。分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标签的文档进行正确的归类。频繁项集挖掘：将一组项分组，<br>并识别哪些个别项会经常一起出现。</p>
-</li>
-<li><p>ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。它是一个针对大型分布式系统的可靠协调系统，提供的功能包括：配置维护、名字服务、分布式同步、<br>组服务等。ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</p>
-</li>
-</ul>
-<h3 id="阿里云MaxCompute"><a href="#阿里云MaxCompute" class="headerlink" title="阿里云MaxCompute"></a>阿里云MaxCompute</h3><p>MaxCompute（大数据计算服务）是是一种快速、完全托管的TB&#x2F;PB级数据仓库解决方案。MaxCompute主要用于实时性要求不高的、批量结构化数据的存储和计算。<br>并可提供大数据分析建模服务。其特点如下： </p>
-<ul>
-<li>采用分布式架构高效处理海量数据</li>
-<li>基于表的数据存储</li>
-<li>于SQL的数据处理</li>
-<li>支持多用户协同分析数据，多种权限管理方式，具有灵活的数据访问控制策略</li>
-<li>兼容Hive</li>
-</ul>
-<p>MaxCompute架构<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/521857b4c5af453e8967446f719eee2c~tplv-k3u1fbpfcp-watermark.image"></p>
-<p>MaxCompute功能</p>
-<ul>
-<li>数据存储</li>
-</ul>
-<p>适用于TB以上规模的存储及计算需求，最大可达EB级别。数据分布式存储，多副本冗余，数据存储对外仅开放表的操作接口，不提供文件系统访问接口。表数据列式存储，<br>默认高度压缩，后续将提供兼容ORC的Ali-ORC存储格式。<br>支持外表，将存储在OSS对象存储、OTS表格存储的数据映射为二维表。<br>支持Partition、Bucket的分区、分桶存储。<br>底层是盘古文件系统（不是HDFS）。<br>使用时，存储与计算解耦，不需要仅仅为了存储而扩大不必要的计算资源。</p>
-<ul>
-<li>数据通道<br>TUNNEL：提供高并发的离线数据上传下载服务。支持每天TB&#x2F;PB级别的数据导入导出。适合于全量数据或历史数据的批量导入。</li>
-</ul>
-<p>DataHub：针对实时数据上传的场景，具有延迟低、使用方便的特点，适用于增量数据的导入。Datahub还支持多种数据传输插件，包括Logstash、Flume、Fluentd、<br>Sqoop等。同时支持日志服务Log Service中的日志数据的一键投递至MaxCompute，进而利用大数据开发套件进行日志分析和挖掘。</p>
-<ul>
-<li>多种计算模型<br>SQL：以二维表的形式存储数据，支持多种数据类型，MaxCompute以二维表的形式存储数据，对外提供了SQL查询功能。不支持事务、索引及Update&#x2F;Delete等操作，<br>SQL语法与Oracle，MySQL等有一定差别。无法在毫秒级别返回结果。</li>
-</ul>
-<p>MapReduce：支持MapReduce java编程接口（提供优化增强的MaxCompute MapReduce，也提供高度兼容Hadoop的MapReduce版本）。不暴露文件系统，<br>输入输出都是表。通过MaxCompute客户端工具、Dataworks提交作业。</p>
-<p>Graph：是一套面向迭代的图计算处理框架。图计算作业使用图进行建模，图由点（Vertex）和边（Edge）组成，点和边包含权值（Value）。通过迭代对图进行编辑、<br>演化，最终求解出结果，典型应用：PageRank、单源最短距离算法 、K-均值聚类算法等。</p>
-<ul>
-<li>Spark</li>
-</ul>
-<p>MaxCompute提供了Spark on MaxCompute的解决方案，在统一的计算资源和数据集权限体系之上，提供Spark计算框架，支持用户以熟悉的开发使用方式提交运行<br>Spark作业。</p>
-<ul>
-<li>交互式分析(Lightning)<br>MaxCompute产品的交互式查询服务。兼容PostgreSQL协议的JDBC&#x2F;ODBC接口。支持主流BI及SQL客户端工具的连接访问，如Tableau、帆软BI、Navicat、SQL<br>Workbench&#x2F;J等。</li>
-</ul>
-<h2 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h2><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，海量数据的存储和海量数据的分析计算问题。</li>
-<li>广义上来说，HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
-</ul>
-<h2 id="Hadoop的组成"><a href="#Hadoop的组成" class="headerlink" title="Hadoop的组成"></a>Hadoop的组成</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94def613dbab4f819ff61a0802b4a5d2~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h3><ul>
-<li>NameNode（nn）：存储文件的元数据，如文件名，文件目录结构，文件属性（生成时间、副本数、文件权限），以及每个文件的块列表和块所在的DataNode等。</li>
-<li>DataNode(dn)：在本地文件系统存储文件块数据，以及块数据的校验和。</li>
-<li>Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</li>
-</ul>
-<h3 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e22495656df4cb1b6bbf187dac7b733~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h3><p>MapReduce将计算过程分为两个阶段：Map和Reduce</p>
-<ul>
-<li>Map阶段并行处理输入数据</li>
-<li>Reduce阶段对Map结果进行汇总</li>
-</ul>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2fe4c16a0a4b4ea3b04b80c2318513cb~tplv-k3u1fbpfcp-watermark.image"></p>
-<h2 id="Hadoop分布式搭建"><a href="#Hadoop分布式搭建" class="headerlink" title="Hadoop分布式搭建"></a>Hadoop分布式搭建</h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

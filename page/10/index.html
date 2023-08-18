@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,730 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2021/08/16/k8s%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/16/k8s%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s安装</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-16 18:01:24" itemprop="dateCreated datePublished" datetime="2021-08-16T18:01:24+08:00">2021-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-18 14:21:16" itemprop="dateModified" datetime="2023-08-18T14:21:16+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>k8s-安装<br>Kubernetes是什么？<br>Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。 通过Kubernetes你可以：</p>
+<p>快速部署应用<br>快速扩展应用<br>无缝对接新的应用功能<br>节省资源，优化硬件资源的使用<br>Kubernetes 特点<br>可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）<br>可扩展: 模块化, 插件化, 可挂载, 可组合<br>自动化: 自动部署，自动重启，自动复制，自动伸缩&#x2F;扩展<br>使用Kubernetes能做什么？<br>多个进程（作为容器运行）协同工作。（Pod）<br>存储系统挂载<br>Distributing secrets<br>应用健康检测<br>应用实例的复制<br>Pod自动伸缩&#x2F;扩展<br>Naming and discovering<br>负载均衡<br>滚动更新<br>资源监控<br>日志访问<br>调试应用程序<br>提供认证和授权<br>Kubernetes 组件<br>K8s是由许多个的组件组成的 分为Master组件和节点（Node）组件</p>
+<p>Master组件<br>Master组件提供集群的管理控制中心。 Master组件可以在集群中任何节点上运行。但是为了简单起见，通常在一台VM&#x2F;机器上启动所有Master组件，并且不会在此VM&#x2F;机器上运行用户容器。</p>
+<p>kube-apiserver<br>kube-apiserver用于暴露Kubernetes API。任何的资源请求&#x2F;调用操作都是通过kube-apiserver提供的接口进行。请参阅构建高可用群集。</p>
+<p>ETCD<br>etcd是Kubernetes提供默认的存储系统，保存所有集群数据，使用时需要为etcd数据提供备份计划。</p>
+<p>kube-controller-manager<br>kube-controller-manager运行管理控制器，它们是集群中处理常规任务的后台线程。逻辑上，每个控制器是一个单独的进程，但为了降低复杂性，它们都被编译成单个二进制文件，并在单个进程中运行。</p>
+<p>kube-scheduler<br>kube-scheduler 监视新创建没有分配到Node的Pod，为Pod选择一个Node。</p>
+<p>节点（Node）组件<br>节点组件运行在Node，提供Kubernetes运行时环境，以及维护Pod。</p>
+<p>kubelet<br>kubelet是主要的节点代理，它会监视已分配给节点的pod，具体功能：</p>
+<p>安装Pod所需的volume。<br>下载Pod的Secrets。<br>Pod中运行的 docker（或experimentally，rkt）容器。<br>定期执行容器健康检查。<br>Reports the status of the pod back to the rest of the system, by creating a mirror pod if necessary.<br>Reports the status of the node back to the rest of the system.<br>kube-proxy<br>kube-proxy通过在主机上维护网络规则并执行连接转发来实现Kubernetes服务抽象。</p>
+<p>Kubernetes 安装前的准备<br>概述<br>本次安装采用 Ubuntu Server X64 16.04 LTS 版本安装 kubernetes 集群环境，集群节点为 1 主 2 从模式，此次对虚拟机会有些基本要求，如下：</p>
+<p>OS：Ubuntu Server X64 18.04 LTS（16.04 版本步骤相同，再之前则不同）<br>CPU：最低要求，1 CPU 2 核<br>内存：最低要求，2GB<br>磁盘：最低要求，20GB<br>创建三台虚拟机，分别命名如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ubuntu Server 18.04 X64 Kubernetes Master</span><br><span class="line">Ubuntu Server 18.04 X64 Kubernetes Slave1</span><br><span class="line">Ubuntu Server 18.04 X64 Kubernetes Slave2</span><br></pre></td></tr></table></figure>
+<p>对虚拟机系统的配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">关闭交换空间：sudo swapoff -a</span><br><span class="line">避免开机启动交换空间：注释 /etc/fstab 中的 swap</span><br><span class="line">关闭防火墙：ufw <span class="built_in">disable</span></span><br><span class="line">使用 APT 安装 Docker</span><br><span class="line">安装</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新软件源  </span></span><br><span class="line">sudo apt-get update  </span><br><span class="line"><span class="comment"># 安装所需依赖</span></span><br><span class="line">sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line"><span class="comment"># 安装 GPG 证书</span></span><br><span class="line">curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line"><span class="comment"># 新增软件源信息</span></span><br><span class="line">sudo add-apt-repository <span class="string">&quot;deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="subst">$(lsb_release -cs)</span> stable&quot;</span></span><br><span class="line"><span class="comment"># 再次更新软件源</span></span><br><span class="line">sudo apt-get -y update</span><br><span class="line"><span class="comment"># 安装 Docker CE 版</span></span><br><span class="line">sudo apt-get -y install docker-ce  </span><br></pre></td></tr></table></figure>
+<p>验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br><span class="line">Client:</span><br><span class="line"> Version:           18.09.6</span><br><span class="line"> API version:       1.39</span><br><span class="line"> Go version:        go1.10.8</span><br><span class="line"> Git commit:        481bc77</span><br><span class="line"> Built:             Sat May  4 02:35:57 2019</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Experimental:      <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          18.09.6</span><br><span class="line">  API version:      1.39 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.10.8</span><br><span class="line">  Git commit:       481bc77</span><br><span class="line">  Built:            Sat May  4 01:59:36 2019</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>配置加速器<br>对于使用 systemd 的系统，请在 &#x2F;etc&#x2F;docker&#x2F;daemon.json 中写入如下内容（如果文件不存在请新建该文件）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;https://registry.docker-cn.com&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>验证加速器是否配置成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br><span class="line">docker info</span><br></pre></td></tr></table></figure>
+<h1 id="出现如下语句即表示配置成功"><a href="#出现如下语句即表示配置成功" class="headerlink" title="出现如下语句即表示配置成功"></a>出现如下语句即表示配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Registry Mirrors:</span><br><span class="line"> https://registry.docker-cn.com/</span><br></pre></td></tr></table></figure>
+<p>修改主机名</p>
+<p>在同一局域网中主机名不应该相同，所以我们需要做修改，直接修改 &#x2F;etc&#x2F;hostname 里的名称即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim  /etc/hostname  </span><br><span class="line"><span class="comment">#kubernetes-master</span></span><br></pre></td></tr></table></figure>
+<p>安装 kubeadm<br>kubeadm 是 kubernetes 的集群安装工具，能够快速安装 kubernetes 集群。</p>
+<p>配置软件源</p>
+<p>安装系统工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install -y apt-transport-https</span><br><span class="line"><span class="comment"># 安装 GPG 证书</span></span><br><span class="line">curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -</span><br><span class="line"><span class="comment"># 写入软件源；注意：我们用系统代号为 bionic，但目前阿里云不支持，所以沿用 16.04 的 xenial</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt;/etc/apt/sources.list.d/kubernetes.list</span></span><br><span class="line"><span class="string">&gt; deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main</span></span><br><span class="line"><span class="string">&gt; EOF</span></span><br></pre></td></tr></table></figure>
+<p>安装 kubeadm，kubelet，kubectl<br>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update  </span><br><span class="line">apt-get install -y kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure>
+<p>安装过程如下，注意 kubeadm 的版本号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree       </span><br><span class="line">Reading state information... Done</span><br><span class="line">The following additional packages will be installed:</span><br><span class="line">  conntrack cri-tools kubernetes-cni socat</span><br><span class="line">The following NEW packages will be installed:</span><br><span class="line">  conntrack cri-tools kubeadm kubectl kubelet kubernetes-cni socat</span><br><span class="line">0 upgraded, 7 newly installed, 0 to remove and 96 not upgraded.</span><br><span class="line">Need to get 50.6 MB of archives.</span><br><span class="line">After this operation, 290 MB of additional disk space will be used.</span><br><span class="line">Get:1 http://mirrors.aliyun.com/ubuntu bionic/main amd64 conntrack amd64 1:1.4.4+snapshot20161117-6ubuntu2 [30.6 kB]</span><br><span class="line">Get:2 http://mirrors.aliyun.com/ubuntu bionic/main amd64 socat amd64 1.7.3.2-2ubuntu2 [342 kB]</span><br><span class="line">Get:3 https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial/main amd64 cri-tools amd64 1.12.0-00 [5,343 kB]</span><br><span class="line">Get:4 https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial/main amd64 kubernetes-cni amd64 0.7.5-00 [6,473 kB]</span><br><span class="line">Get:5 https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial/main amd64 kubelet amd64 1.14.1-00 [21.5 MB]</span><br><span class="line">Get:6 https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial/main amd64 kubectl amd64 1.14.1-00 [8,806 kB]</span><br><span class="line">Get:7 https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial/main amd64 kubeadm amd64 1.14.1-00 [8,150 kB]</span><br><span class="line">Fetched 50.6 MB <span class="keyword">in</span> 5s (9,912 kB/s) </span><br><span class="line">Selecting previously unselected package conntrack.</span><br><span class="line">(Reading database ... 67205 files and directories currently installed.)</span><br><span class="line">Preparing to unpack .../0-conntrack_1%3a1.4.4+snapshot20161117-6ubuntu2_amd64.deb ...</span><br><span class="line">Unpacking conntrack (1:1.4.4+snapshot20161117-6ubuntu2) ...</span><br><span class="line">Selecting previously unselected package cri-tools.</span><br><span class="line">Preparing to unpack .../1-cri-tools_1.12.0-00_amd64.deb ...</span><br><span class="line">Unpacking cri-tools (1.12.0-00) ...</span><br><span class="line">Selecting previously unselected package kubernetes-cni.</span><br><span class="line">Preparing to unpack .../2-kubernetes-cni_0.7.5-00_amd64.deb ...</span><br><span class="line">Unpacking kubernetes-cni (0.7.5-00) ...</span><br><span class="line">Selecting previously unselected package socat.</span><br><span class="line">Preparing to unpack .../3-socat_1.7.3.2-2ubuntu2_amd64.deb ...</span><br><span class="line">Unpacking socat (1.7.3.2-2ubuntu2) ...</span><br><span class="line">Selecting previously unselected package kubelet.</span><br><span class="line">Preparing to unpack .../4-kubelet_1.14.1-00_amd64.deb ...</span><br><span class="line">Unpacking kubelet (1.14.1-00) ...</span><br><span class="line">Selecting previously unselected package kubectl.</span><br><span class="line">Preparing to unpack .../5-kubectl_1.14.1-00_amd64.deb ...</span><br><span class="line">Unpacking kubectl (1.14.1-00) ...</span><br><span class="line">Selecting previously unselected package kubeadm.</span><br><span class="line">Preparing to unpack .../6-kubeadm_1.14.1-00_amd64.deb ...</span><br><span class="line">Unpacking kubeadm (1.14.1-00) ...</span><br><span class="line">Setting up conntrack (1:1.4.4+snapshot20161117-6ubuntu2) ...</span><br><span class="line">Setting up kubernetes-cni (0.7.5-00) ...</span><br><span class="line">Setting up cri-tools (1.12.0-00) ...</span><br><span class="line">Setting up socat (1.7.3.2-2ubuntu2) ...</span><br><span class="line">Setting up kubelet (1.14.1-00) ...</span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/kubelet.service → /lib/systemd/system/kubelet.service.</span><br><span class="line">Setting up kubectl (1.14.1-00) ...</span><br><span class="line">Processing triggers <span class="keyword">for</span> man-db (2.8.3-2ubuntu0.1) ...</span><br><span class="line"><span class="comment"># 注意这里的版本号，我们使用的是 kubernetes v1.14.1</span></span><br><span class="line">Setting up kubeadm (1.14.1-00) ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置 kubelet 自启动，并启动 kubelet</span></span><br><span class="line">systemctl <span class="built_in">enable</span> kubelet &amp;&amp; systemctl start kubelet</span><br><span class="line">kubeadm：用于初始化 Kubernetes 集群</span><br><span class="line">kubectl：Kubernetes 的命令行工具，主要作用是部署和管理应用，查看各种资源，创建，删除和更新组件</span><br><span class="line">kubelet：主要负责启动 Pod 和容器</span><br><span class="line">配置 kubeadm</span><br><span class="line">安装 kubernetes 主要是安装它的各个镜像，而 kubeadm 已经为我们集成好了运行 kubernetes 所需的基本镜像。但由于国内的网络原因，在搭建环境时，无法拉取到这些镜像。此时我们只需要修改为阿里云提供的镜像服务即可解决该问题</span><br></pre></td></tr></table></figure>
+<p>创建并修改配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm config <span class="built_in">print</span> init-defaults --kubeconfig ClusterConfiguration &gt; kubeadm.yml</span><br></pre></td></tr></table></figure>
+<p>修改配置内容# 修改配置为如下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: kubeadm.k8s.io/v1beta1</span><br><span class="line">bootstrapTokens:</span><br><span class="line">- <span class="built_in">groups</span>:</span><br><span class="line">  - system:bootstrappers:kubeadm:default-node-token</span><br><span class="line">  token: abcdef.0123456789abcdef</span><br><span class="line">  ttl: 24h0m0s</span><br><span class="line">  usages:</span><br><span class="line">  - signing</span><br><span class="line">  - authentication</span><br><span class="line">kind: InitConfiguration</span><br><span class="line">localAPIEndpoint:</span><br><span class="line">  <span class="comment"># 修改为主节点 IP</span></span><br><span class="line">  advertiseAddress: 192.168.141.130</span><br><span class="line">  bindPort: 6443</span><br><span class="line">nodeRegistration:</span><br><span class="line">  criSocket: /var/run/dockershim.sock</span><br><span class="line">  name: kubernetes-master</span><br><span class="line">  taints:</span><br><span class="line">  - effect: NoSchedule</span><br><span class="line">    key: node-role.kubernetes.io/master</span><br><span class="line">---</span><br><span class="line">apiServer:</span><br><span class="line">  timeoutForControlPlane: 4m0s</span><br><span class="line">apiVersion: kubeadm.k8s.io/v1beta1</span><br><span class="line">certificatesDir: /etc/kubernetes/pki</span><br><span class="line">clusterName: kubernetes</span><br><span class="line">controlPlaneEndpoint: <span class="string">&quot;&quot;</span></span><br><span class="line">controllerManager: &#123;&#125;</span><br><span class="line">dns:</span><br><span class="line">  <span class="built_in">type</span>: CoreDNS</span><br><span class="line">etcd:</span><br><span class="line">  <span class="built_in">local</span>:</span><br><span class="line">    dataDir: /var/lib/etcd</span><br><span class="line"><span class="comment"># 国内不能访问 Google，修改为阿里云</span></span><br><span class="line">imageRepository: registry.aliyuncs.com/google_containers</span><br><span class="line">kind: ClusterConfiguration</span><br><span class="line"><span class="comment"># 修改版本号</span></span><br><span class="line">kubernetesVersion: v1.17.0</span><br><span class="line">networking:</span><br><span class="line">  dnsDomain: cluster.local</span><br><span class="line">  <span class="comment"># 配置成 Calico 的默认网段</span></span><br><span class="line">  podSubnet: <span class="string">&quot;192.168.0.0/16&quot;</span></span><br><span class="line">  serviceSubnet: 10.96.0.0/12</span><br><span class="line">scheduler: &#123;&#125;</span><br><span class="line">---</span><br><span class="line"><span class="comment"># 开启 IPVS 模式</span></span><br><span class="line">apiVersion: kubeproxy.config.k8s.io/v1alpha1</span><br><span class="line">kind: KubeProxyConfiguration</span><br><span class="line">featureGates:</span><br><span class="line">  SupportIPVSProxyMode: <span class="literal">true</span></span><br><span class="line">mode: ipvs</span><br></pre></td></tr></table></figure>
+<p>查看和拉取镜像</p>
+<h1 id="查看所需镜像列表"><a href="#查看所需镜像列表" class="headerlink" title="查看所需镜像列表"></a>查看所需镜像列表</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubeadm config images list --config kubeadm.yml</span><br><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">kubeadm config images pull --config kubeadm.yml</span><br></pre></td></tr></table></figure>
+<p>安装 kubernetes 主节点<br>执行以下命令初始化主节点，该命令指定了初始化时需要使用的配置文件，其中添加 –upload-certs 参数可以在后续执行加入节点时自动分发证书文件。追加的 tee kubeadm-init.log 用以输出日志。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --config=kubeadm.yml --experimental-upload-certs | <span class="built_in">tee</span> kubeadm-init.log</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#your configuration file uses a deprecated API spec: &quot;kubeadm.k8s.io/v1beta1&quot;. Please use &#x27;kubeadm config migrate --old-config old.yaml --new-config new.yaml&#x27;, which will write the new, similar spec using a newer API version.</span></span><br><span class="line">W0106 17:26:39.941946   25748 common.go:77] your configuration file uses a deprecated API spec: <span class="string">&quot;kubeadm.k8s.io/v1beta1&quot;</span>. Please use <span class="string">&#x27;kubeadm config migrate --old-config old.yaml --new-config new.yaml&#x27;</span>, <span class="built_in">which</span> will write the new, similar spec using a newer API version.</span><br><span class="line">W0106 17:26:39.944487   25748 validation.go:28] Cannot validate kube-proxy config - no validator is available</span><br><span class="line">W0106 17:26:39.944533   25748 validation.go:28] Cannot validate kubelet config - no validator is available</span><br><span class="line">[init] Using Kubernetes version: v1.17.0</span><br><span class="line">[preflight] Running pre-flight checks</span><br><span class="line">	[WARNING IsDockerSystemdCheck]: detected <span class="string">&quot;cgroupfs&quot;</span> as the Docker cgroup driver. The recommended driver is <span class="string">&quot;systemd&quot;</span>. Please follow the guide at https://kubernetes.io/docs/setup/cri/</span><br><span class="line">[preflight] Pulling images required <span class="keyword">for</span> setting up a Kubernetes cluster</span><br><span class="line">[preflight] This might take a minute or two, depending on the speed of your internet connection</span><br><span class="line">[preflight] You can also perform this action <span class="keyword">in</span> beforehand using <span class="string">&#x27;kubeadm config images pull&#x27;</span></span><br><span class="line">[kubelet-start] Writing kubelet environment file with flags to file <span class="string">&quot;/var/lib/kubelet/kubeadm-flags.env&quot;</span></span><br><span class="line">[kubelet-start] Writing kubelet configuration to file <span class="string">&quot;/var/lib/kubelet/config.yaml&quot;</span></span><br><span class="line">[kubelet-start] Starting the kubelet</span><br><span class="line">[certs] Using certificateDir folder <span class="string">&quot;/etc/kubernetes/pki&quot;</span></span><br><span class="line">[certs] Generating <span class="string">&quot;ca&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;apiserver&quot;</span> certificate and key</span><br><span class="line">[certs] apiserver serving cert is signed <span class="keyword">for</span> DNS names [kubernetes-master kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.62.159]</span><br><span class="line">[certs] Generating <span class="string">&quot;apiserver-kubelet-client&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;front-proxy-ca&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;front-proxy-client&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;etcd/ca&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;etcd/server&quot;</span> certificate and key</span><br><span class="line">[certs] etcd/server serving cert is signed <span class="keyword">for</span> DNS names [kubernetes-master localhost] and IPs [192.168.62.159 127.0.0.1 ::1]</span><br><span class="line">[certs] Generating <span class="string">&quot;etcd/peer&quot;</span> certificate and key</span><br><span class="line">[certs] etcd/peer serving cert is signed <span class="keyword">for</span> DNS names [kubernetes-master localhost] and IPs [192.168.62.159 127.0.0.1 ::1]</span><br><span class="line">[certs] Generating <span class="string">&quot;etcd/healthcheck-client&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;apiserver-etcd-client&quot;</span> certificate and key</span><br><span class="line">[certs] Generating <span class="string">&quot;sa&quot;</span> key and public key</span><br><span class="line">[kubeconfig] Using kubeconfig folder <span class="string">&quot;/etc/kubernetes&quot;</span></span><br><span class="line">[kubeconfig] Writing <span class="string">&quot;admin.conf&quot;</span> kubeconfig file</span><br><span class="line">[kubeconfig] Writing <span class="string">&quot;kubelet.conf&quot;</span> kubeconfig file</span><br><span class="line">[kubeconfig] Writing <span class="string">&quot;controller-manager.conf&quot;</span> kubeconfig file</span><br><span class="line">[kubeconfig] Writing <span class="string">&quot;scheduler.conf&quot;</span> kubeconfig file</span><br><span class="line">[control-plane] Using manifest folder <span class="string">&quot;/etc/kubernetes/manifests&quot;</span></span><br><span class="line">[control-plane] Creating static Pod manifest <span class="keyword">for</span> <span class="string">&quot;kube-apiserver&quot;</span></span><br><span class="line">W0106 17:26:44.531537   25748 manifests.go:214] the default kube-apiserver authorization-mode is <span class="string">&quot;Node,RBAC&quot;</span>; using <span class="string">&quot;Node,RBAC&quot;</span></span><br><span class="line">[control-plane] Creating static Pod manifest <span class="keyword">for</span> <span class="string">&quot;kube-controller-manager&quot;</span></span><br><span class="line">W0106 17:26:44.532749   25748 manifests.go:214] the default kube-apiserver authorization-mode is <span class="string">&quot;Node,RBAC&quot;</span>; using <span class="string">&quot;Node,RBAC&quot;</span></span><br><span class="line">[control-plane] Creating static Pod manifest <span class="keyword">for</span> <span class="string">&quot;kube-scheduler&quot;</span></span><br><span class="line">[etcd] Creating static Pod manifest <span class="keyword">for</span> <span class="built_in">local</span> etcd <span class="keyword">in</span> <span class="string">&quot;/etc/kubernetes/manifests&quot;</span></span><br><span class="line">[wait-control-plane] Waiting <span class="keyword">for</span> the kubelet to boot up the control plane as static Pods from directory <span class="string">&quot;/etc/kubernetes/manifests&quot;</span>. This can take up to 4m0s</span><br><span class="line">[apiclient] All control plane components are healthy after 24.504808 seconds</span><br><span class="line">[upload-config] Storing the configuration used <span class="keyword">in</span> ConfigMap <span class="string">&quot;kubeadm-config&quot;</span> <span class="keyword">in</span> the <span class="string">&quot;kube-system&quot;</span> Namespace</span><br><span class="line">[kubelet] Creating a ConfigMap <span class="string">&quot;kubelet-config-1.17&quot;</span> <span class="keyword">in</span> namespace kube-system with the configuration <span class="keyword">for</span> the kubelets <span class="keyword">in</span> the cluster</span><br><span class="line">[upload-certs] Storing the certificates <span class="keyword">in</span> Secret <span class="string">&quot;kubeadm-certs&quot;</span> <span class="keyword">in</span> the <span class="string">&quot;kube-system&quot;</span> Namespace</span><br><span class="line">[upload-certs] Using certificate key:</span><br><span class="line">781e69718ac47389e4e65f025cb9cb842ae621f495323b08f8c3cc5fe69c5a82</span><br><span class="line">[mark-control-plane] Marking the node kubernetes-master as control-plane by adding the label <span class="string">&quot;node-role.kubernetes.io/master=&#x27;&#x27;&quot;</span></span><br><span class="line">[mark-control-plane] Marking the node kubernetes-master as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]</span><br><span class="line">[bootstrap-token] Using token: abcdef.0123456789abcdef</span><br><span class="line">[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs <span class="keyword">in</span> order <span class="keyword">for</span> nodes to get long term certificate credentials</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow certificate rotation <span class="keyword">for</span> all node client certificates <span class="keyword">in</span> the cluster</span><br><span class="line">[bootstrap-token] Creating the <span class="string">&quot;cluster-info&quot;</span> ConfigMap <span class="keyword">in</span> the <span class="string">&quot;kube-public&quot;</span> namespace</span><br><span class="line">[kubelet-finalize] Updating <span class="string">&quot;/etc/kubernetes/kubelet.conf&quot;</span> to point to a rotatable kubelet client certificate and key</span><br><span class="line">[addons] Applied essential addon: CoreDNS</span><br><span class="line">[addons] Applied essential addon: kube-proxy</span><br><span class="line"></span><br><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  <span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">  sudo <span class="built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">  sudo <span class="built_in">chown</span> $(<span class="built_in">id</span> -u):$(<span class="built_in">id</span> -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run <span class="string">&quot;kubectl apply -f [podnetwork].yaml&quot;</span> with one of the options listed at:</span><br><span class="line">  https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br></pre></td></tr></table></figure>
+<p>Then you can join any number of worker nodes by running the following on each as root:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.62.159:6443 --token abcdef.0123456789abcdef \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:7237dd082021214d77c1d99f0cdc2a1a110c33ba94c5e2df699ea3cebbab1ea4 </span><br></pre></td></tr></table></figure>
+<p>注意：如果安装 kubernetes 版本和下载的镜像版本不统一则会出现 timed out waiting for the condition 错误。中途失败或是想修改配置可以使用 kubeadm reset 命令重置配置，再做初始化操作即可。</p>
+<p>配置 kubectl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo <span class="built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo <span class="built_in">chown</span> $(<span class="built_in">id</span> -u):$(<span class="built_in">id</span> -g) <span class="variable">$HOME</span>/.kube/config(非root才做)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get node</span><br></pre></td></tr></table></figure>
+<p>至此主节点配置完成</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init 的执行过程</span><br><span class="line">init：指定版本进行初始化操作</span><br><span class="line">preflight：初始化前的检查和下载所需要的 Docker 镜像文件</span><br><span class="line">kubelet-start：生成 kubelet 的配置文件 var/lib/kubelet/config.yaml，没有这个文件 kubelet 无法启动，所以初始化之前的 - kubelet 实际上启动不会成功</span><br><span class="line">certificates：生成 Kubernetes 使用的证书，存放在 /etc/kubernetes/pki 目录中</span><br><span class="line">kubeconfig：生成 KubeConfig 文件，存放在 /etc/kubernetes 目录中，组件之间通信需要使用对应文件</span><br><span class="line">control-plane：使用 /etc/kubernetes/manifest 目录下的 YAML 文件，安装 Master 组件</span><br><span class="line">etcd：使用 /etc/kubernetes/manifest/etcd.yaml 安装 Etcd 服务</span><br><span class="line">wait-control-plane：等待 control-plan 部署的 Master 组件启动</span><br><span class="line">apiclient：检查 Master 组件服务状态。</span><br><span class="line">uploadconfig：更新配置</span><br><span class="line">kubelet：使用 configMap 配置 kubelet</span><br><span class="line">patchnode：更新 CNI 信息到 Node 上，通过注释的方式记录</span><br><span class="line">mark-control-plane：为当前节点打标签，打了角色 Master，和不可调度标签，这样默认就不会使用 Master 节点来运行 Pod</span><br><span class="line">bootstrap-token：生成 token 记录下来，后边使用 kubeadm <span class="built_in">join</span> 往集群中添加节点时会用到</span><br><span class="line">addons：安装附加组件 CoreDNS 和 kube-proxy</span><br></pre></td></tr></table></figure>
+<p>使用 kubeadm 配置 slave 节点<br>将 slave 节点加入到集群中很简单，只需要在 slave 服务器上安装 kubeadm，kubectl，kubelet 三个工具，然后使用 kubeadm join 命令加入即可。准备工作如下：</p>
+<p>修改主机名<br>配置软件源<br>安装三个工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.62.159:6443 --token abcdef.0123456789abcdef   --discovery-token-ca-cert-hash sha256:7237dd082021214d77c1d99f0cdc2a1a110c33ba94c5e2df699ea3cebbab1ea4 </span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>token<br>可以通过安装 master 时的日志查看 token 信息<br>可以通过 kubeadm token list 命令打印出 token 信息<br>如果 token 过期，可以使用 kubeadm token create 命令创建新的 token<br>discovery-token-ca-cert-hash<br>可以通过安装 master 时的日志查看 sha256 信息<br>可以通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -pubkey -<span class="keyword">in</span> /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null | openssl dgst -sha256 -hex | sed <span class="string">&#x27;s/^.* //&#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>命令查看 sha256 信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br><span class="line">kubectl get pod -n kube-system -o wide</span><br></pre></td></tr></table></figure>
+<p>配置网络<br>容器网络是容器选择连接到其他容器、主机和外部网络的机制。容器的 runtime 提供了各种网络模式，每种模式都会产生不同的体验。例如，Docker 默认情况下可以为容器配置以下网络：</p>
+<p>none： 将容器添加到一个容器专门的网络堆栈中，没有对外连接。<br>host： 将容器添加到主机的网络堆栈中，没有隔离。<br>default bridge： 默认网络模式。每个容器可以通过 IP 地址相互连接。<br>自定义网桥： 用户定义的网桥，具有更多的灵活性、隔离性和其他便利功能。</p>
+<p>什么是 CNI<br>CNI(Container Network Interface) 是一个标准的，通用的接口。在容器平台，Docker，Kubernetes，Mesos 容器网络解决方案 flannel，calico，weave。只要提供一个标准的接口，就能为同样满足该协议的所有容器平台提供网络功能，而 CNI 正是这样的一个标准接口协议。</p>
+<p>Kubernetes 中的 CNI 插件<br>CNI 的初衷是创建一个框架，用于在配置或销毁容器时动态配置适当的网络配置和资源。插件负责为接口配置和管理 IP 地址，并且通常提供与 IP 管理、每个容器的 IP 分配、以及多主机连接相关的功能。容器运行时会调用网络插件，从而在容器启动时分配 IP 地址并配置网络，并在删除容器时再次调用它以清理这些资源。</p>
+<p>运行时或协调器决定了容器应该加入哪个网络以及它需要调用哪个插件。然后，插件会将接口添加到容器网络命名空间中，作为一个 veth 对的一侧。接着，它会在主机上进行更改，包括将 veth 的其他部分连接到网桥。再之后，它会通过调用单独的 IPAM（IP地址管理）插件来分配 IP 地址并设置路由。</p>
+<p>在 Kubernetes 中，kubelet 可以在适当的时间调用它找到的插件，为通过 kubelet 启动的 pod进行自动的网络配置。</p>
+<p>Kubernetes 中可选的 CNI 插件如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Flannel</span><br><span class="line">Calico</span><br><span class="line">Canal</span><br><span class="line">Weave-</span><br></pre></td></tr></table></figure>
+<p>什么是 Calico<br>Calico 为容器和虚拟机提供了安全的网络连接解决方案，并经过了大规模生产验证（在公有云和跨数千个集群节点中），可与 Kubernetes，OpenShift，Docker，Mesos，DC &#x2F; OS 和 OpenStack 集成。</p>
+<p>Calico 还提供网络安全规则的动态实施。使用 Calico 的简单策略语言，您可以实现对容器，虚拟机工作负载和裸机主机端点之间通信的细粒度控制。</p>
+<p>安装网络插件 Calico<br>参考官方文档安装：<a target="_blank" rel="noopener" href="https://docs.projectcalico.org/v3.7/getting-started/kubernetes/">https://docs.projectcalico.org/v3.7/getting-started/kubernetes/</a></p>
+<p>在 Master 节点操作即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml</span><br></pre></td></tr></table></figure>
+<p>安装时显示如下输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">configmap/calico-config created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/ipamblocks.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/blockaffinities.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/ipamhandles.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/ipamconfigs.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/bgppeers.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org created</span><br><span class="line">customresourcedefinition.apiextensions.k8s.io/networksets.crd.projectcalico.org created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/calico-kube-controllers created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/calico-kube-controllers created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/calico-node created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/calico-node created</span><br><span class="line">daemonset.extensions/calico-node created</span><br><span class="line">serviceaccount/calico-node created</span><br><span class="line">deployment.extensions/calico-kube-controllers created</span><br><span class="line">```serviceaccount/calico-kube-controllers created</span><br></pre></td></tr></table></figure>
+<h3 id="确认安装是否成功"><a href="#确认安装是否成功" class="headerlink" title="确认安装是否成功"></a>确认安装是否成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch kubectl get pods --all-namespaces</span><br></pre></td></tr></table></figure>
+<p>需要等待所有状态为 Running，注意时间可能较久，3 - 5 分钟的样子</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">2.0s: kubectl get pods –all-namespaces kubernetes-master: Fri May 10 18:16:51 2019</span><br><span class="line">NAMESPACE NAME READY STATUS RESTARTS AGE</span><br><span class="line">kube-system calico-kube-controllers-8646dd497f-g2lln 1/1 Running 0 50m</span><br><span class="line">kube-system calico-node-8jrtp 1/1 Running 0 50m</span><br><span class="line">kube-system coredns-8686dcc4fd-mhwfn 1/1 Running 0 51m</span><br><span class="line">kube-system coredns-8686dcc4fd-xsxwk 1/1 Running 0 51m</span><br><span class="line">kube-system etcd-kubernetes-master 1/1 Running 0 50m</span><br><span class="line">kube-system kube-apiserver-kubernetes-master 1/1 Running 0 51m</span><br><span class="line">kube-system kube-controller-manager-kubernetes-master 1/1 Running 0 51m</span><br><span class="line">kube-system kube-proxy-p8mdw 1/1 Running 0 51m</span><br><span class="line">kube-system kube-scheduler-kubernetes-master</span><br></pre></td></tr></table></figure>
+
+<p>解决 ImagePullBackOff<br>在使用 watch kubectl get pods –all-namespaces 命令观察 Pods 状态时如果出现 ImagePullBackOff 无法 Running 的情况，请尝试使用如下步骤处理：</p>
+<p>Master 中删除 Nodes：kubectl delete nodes<br>Slave 中重置配置：kubeadm reset<br>Slave 重启计算机：reboot<br>Slave 重新加入集群：kubeadm join<br>完成搭建</p>
+<p>检查组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kubectl get cs</span><br><span class="line">输出如下</span><br><span class="line">NAME STATUS MESSAGE ERROR</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">调度服务，主要作用是将 POD 调度到 Node</span><br><span class="line">scheduler Healthy ok</span><br><span class="line"></span><br><span class="line">自动化修复服务，主要作用是 Node 宕机后自动修复 Node 回到正常的工作状态</span><br><span class="line">controller-manager Healthy ok</span><br><span class="line"></span><br><span class="line">服务注册与发现</span><br><span class="line">etcd-0 Healthy &#123;“health”:”<span class="literal">true</span>”&#125;</span><br><span class="line">检查 Master 状态</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl cluster-info</span><br><span class="line"><span class="comment">#输出如下</span></span><br><span class="line">Kubernetes master is running at https://192.168.62.159:6443</span><br><span class="line">KubeDNS is running at https://192.168.62.159:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</span><br><span class="line">To further debug and diagnose cluster problems, use ‘kubectl cluster-info dump’.</span><br></pre></td></tr></table></figure>
+<p>运行第一个容器实例</p>
+<p>使用 kubectl 命令创建两个监听 80 端口的 Nginx Pod（Kubernetes 运行容器的最小单元）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl run nginx --image=nginx --replicas=2 --port=80</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed <span class="keyword">in</span> a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.</span><br><span class="line">deployment.apps/nginx created</span><br></pre></td></tr></table></figure>
+<p>查看全部 Pods 的状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nginx-5578584966-f7vl5   0/1     ContainerCreating   0          55s</span><br><span class="line">nginx-5578584966-p9s24   0/1     ContainerCreating   0          55s</span><br><span class="line">nginx-5578584966-f7vl5   1/1     Running   0          18m</span><br><span class="line">nginx-5578584966-p9s24   1/1     Running   0          18m</span><br><span class="line">查看已部署的服务</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">kubectl get deployment</span><br><span class="line">输出如下</span><br><span class="line">NAME READY UP-TO-DATE AVAILABLE AGE</span><br><span class="line">nginx 2/2 2 2 91m</span><br></pre></td></tr></table></figure>
+<p>映射服务，让用户可以访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment nginx –port=80 –<span class="built_in">type</span>=LoadBalancer</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service/nginx exposed</span><br></pre></td></tr></table></figure>
+<p>查看已发布的服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services</span><br><span class="line">NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE</span><br><span class="line">kubernetes ClusterIP 10.96.0.1 443/TCP 21h</span><br><span class="line">nginx LoadBalancer 10.96.133.79 80:31091/TCP 13m</span><br></pre></td></tr></table></figure>
+<p>查看服务详情</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe service nginx</span><br><span class="line"></span><br><span class="line">Name: nginx</span><br><span class="line">Namespace: default</span><br><span class="line">Labels: run=nginx</span><br><span class="line">Annotations:</span><br><span class="line">Selector: run=nginx</span><br><span class="line">Type: LoadBalancer</span><br><span class="line">IP: 10.96.133.79</span><br><span class="line">Port: 80/TCP</span><br><span class="line">TargetPort: 80/TCP</span><br><span class="line">NodePort: 31091/TCP</span><br><span class="line">Endpoints: 192.168.17.1:80,192.168.8.130:80</span><br><span class="line">Session Affinity: None</span><br><span class="line">External Traffic Policy: Cluster</span><br><span class="line">Events:</span><br></pre></td></tr></table></figure>
+<p>验证是否成功 通过浏览器访问 Master 服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.62.159:30830/</span><br></pre></td></tr></table></figure>
+<p>停止服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployment nginx</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deployment.extensions “nginx” deleted</span><br><span class="line">kubectl delete service nginx</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service “nginx” deleted</span><br></pre></td></tr></table></figure>
+<p>结尾<br>目前是已经把K8s集群搭建完成了 并且我们用它部署了nginx,先到这里把</p>
+<p>节点： Kubernetes 集群中的服务器<br>集群： Kubernetes 管理的一组服务器集合<br>边界路由器： 为局域网和 Internet 路由数据包的路由器，执行防火墙保护局域网络<br>集群网络： 遵循 Kubernetes 网络模型实现集群内的通信的具体实现，比如 Flannel 和 Calico<br>服务： Kubernetes 的服务 (Service) 是使用标签选择器标识的一组 Pod Service (Deployment)。<br>除非另有说明，否则服务的虚拟 IP 仅可在集群内部访问<br>内部访问方式 ClusterIP<br>ClusterIP 服务是 Kubernetes 的默认服务。它给你一个集群内的服务，集群内的其它应用都可以访问该服务。集群外部无法访问它。在某些场景下我们可以使用 Kubernetes 的 Proxy 模式来访问服务，比如调试服务时</p>
+<p>这种访问方式，只能是在Service的内部访问。</p>
+<p>三种外部访问方式<br>NodePort<br>NodePort 服务是引导外部流量到你的服务的最原始方式。NodePort，正如这个名字所示，在所有节点（虚拟机）上开放一个特定端口，任何发送到该端口的流量都被转发到对应服务。</p>
+<p>NodePort 服务特征如下：</p>
+<p>每个端口只能是一种服务<br>端口范围只能是 30000-32767（可调）<br>不在 YAML 配置文件中指定则会分配一个默认端口 </p>
+<p>建议： 不要在生产环境中使用这种方式暴露服务，大多数时候我们应该让 Kubernetes 来选择端口<br>它这种模式就是我们第一次部署的那种模式，每个Node节点都可以通过这个ip+端口来访问这个服务</p>
+<h3 id="LoadBalancer"><a href="#LoadBalancer" class="headerlink" title="LoadBalancer"></a>LoadBalancer</h3><p>LoadBalancer 服务是暴露服务到 Internet 的标准方式。所有通往你指定的端口的流量都会被转发到对应的服务。它没有过滤条件，没有路由等。这意味着你几乎可以发送任何种类的流量到该服务，像 HTTP，TCP，UDP，WebSocket，gRPC 或其它任意种类。</p>
+<p>Ingress<br>Ingress 事实上不是一种服务类型。相反，它处于多个服务的前端，扮演着 “智能路由” 或者集群入口的角色。你可以用 Ingress 来做许多不同的事情，各种不同类型的 Ingress 控制器也有不同的能力。它允许你基于路径或者子域名来路由流量到后端服务。</p>
+<p>Ingress 可能是暴露服务的最强大方式，但同时也是最复杂的。Ingress 控制器有各种类型，包括 Google Cloud Load Balancer， Nginx，Contour，Istio，等等。它还有各种插件，比如 cert-manager (它可以为你的服务自动提供 SSL 证书)&#x2F;</p>
+<p>如果你想要使用同一个 IP 暴露多个服务，这些服务都是使用相同的七层协议（典型如 HTTP），你还可以获取各种开箱即用的特性（比如 SSL、认证、路由等等）</p>
+<h3 id="什么是-Ingress"><a href="#什么是-Ingress" class="headerlink" title="什么是 Ingress"></a>什么是 Ingress</h3><p>通常情况下，Service 和 Pod 的 IP 仅可在集群内部访问。集群外部的请求需要通过负载均衡转发到 Service 在 Node 上暴露的 NodePort 上，然后再由 kube-proxy 通过边缘路由器 (edge router) 将其转发给相关的 Pod 或者丢弃。而 Ingress 就是为进入集群的请求提供路由规则的集合</p>
+<p>Ingress 可以给 Service 提供集群外部访问的 URL、负载均衡、SSL 终止、HTTP 路由等。为了配置这些 Ingress 规则，集群管理员需要部署一个 Ingress Controller，它监听 Ingress 和 Service 的变化，并根据规则配置负载均衡并提供访问入口</p>
+<p>使用 Nginx Ingress Controller<br>本次实践的主要目的就是将入口统一，不再通过 LoadBalancer 等方式将端口暴露出来，而是使用 Ingress 提供的反向代理负载均衡功能作为我们的唯一入口。通过以下步骤操作仔细体会。</p>
+<h3 id="部署-Tomcat"><a href="#部署-Tomcat" class="headerlink" title="部署 Tomcat"></a>部署 Tomcat</h3><p>部署 Tomcat 但仅允许在内网访问，我们要通过 Ingress 提供的反向代理功能路由到 Tomcat 之上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">apiVersion:  apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: tomcat-app</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: tomcat</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: tomcat</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: tomcat</span><br><span class="line">        image: tomcat</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: tomcat-http</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">    - port: 8080</span><br><span class="line">      targetPort: 8080</span><br><span class="line">  <span class="comment"># ClusterIP, NodePort, LoadBalancer</span></span><br><span class="line">  <span class="built_in">type</span>: ClusterIP</span><br><span class="line">  selector:</span><br><span class="line">    app: tomcat</span><br></pre></td></tr></table></figure>
+<p>安装 Nginx Ingress Controller<br>Ingress Controller 有许多种，我们选择最熟悉的 Nginx 来处理请求，其它可以参考官方文档</p>
+<p>下载 Nginx Ingress Controller 配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml</span><br></pre></td></tr></table></figure>
+<p>修改配置文件，找到配置如下位置 (搜索 serviceAccountName) 在下面增加一句 hostNetwork: true</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-ingress-controller</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ingress-nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/name:</span> <span class="string">ingress-nginx</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/part-of:</span> <span class="string">ingress-nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment"># 可以部署多个实例</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app.kubernetes.io/name:</span> <span class="string">ingress-nginx</span></span><br><span class="line">      <span class="attr">app.kubernetes.io/part-of:</span> <span class="string">ingress-nginx</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app.kubernetes.io/name:</span> <span class="string">ingress-nginx</span></span><br><span class="line">        <span class="attr">app.kubernetes.io/part-of:</span> <span class="string">ingress-nginx</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">prometheus.io/port:</span> <span class="string">&quot;10254&quot;</span></span><br><span class="line">        <span class="attr">prometheus.io/scrape:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">serviceAccountName:</span> <span class="string">nginx-ingress-serviceaccount</span></span><br><span class="line">      <span class="comment"># 增加 hostNetwork: true，意思是开启主机网络模式，暴露 Nginx 服务端口 80</span></span><br><span class="line">      <span class="attr">hostNetwork:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx-ingress-controller</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.24.1</span></span><br><span class="line">          <span class="attr">args:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">/nginx-ingress-controller</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--configmap=$(POD_NAMESPACE)/nginx-configuration</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--udp-services-configmap=$(POD_NAMESPACE)/udp-services</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--publish-service=$(POD_NAMESPACE)/ingress-nginx</span></span><br><span class="line"><span class="string">//</span> <span class="string">以下代码省略...</span></span><br></pre></td></tr></table></figure>
+<h3 id="部署-Ingress"><a href="#部署-Ingress" class="headerlink" title="部署 Ingress"></a>部署 Ingress</h3><p>Ingress 翻译过来是入口的意思，说白了就是个 API 网关（想想 Zuul 和 Spring Cloud Gateway）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-web</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="comment"># 指定 Ingress Controller 的类型</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">    <span class="comment"># 指定我们的 rules 的 path 可以使用正则表达式</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/use-regex:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="comment"># 连接超时时间，默认为 5s</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/proxy-connect-timeout:</span> <span class="string">&quot;600&quot;</span></span><br><span class="line">    <span class="comment"># 后端服务器回转数据超时时间，默认为 60s</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/proxy-send-timeout:</span> <span class="string">&quot;600&quot;</span></span><br><span class="line">    <span class="comment"># 后端服务器响应超时时间，默认为 60s</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/proxy-read-timeout:</span> <span class="string">&quot;600&quot;</span></span><br><span class="line">    <span class="comment"># 客户端上传文件，最大大小，默认为 20m</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/proxy-body-size:</span> <span class="string">&quot;10m&quot;</span></span><br><span class="line">    <span class="comment"># URL 重写</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment"># 路由规则</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="comment"># 主机名，只能是域名，修改为你自己的</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">k8s.test.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="comment"># 后台部署的 Service Name，与上面部署的 Tomcat 对应</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">tomcat-http</span></span><br><span class="line">          <span class="comment"># 后台部署的 Service Port，与上面部署的 Tomcat 对应</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">8080</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>验证是否成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployment</span><br></pre></td></tr></table></figure>
+<h1 id="输出如下"><a href="#输出如下" class="headerlink" title="输出如下"></a>输出如下</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NAME         READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">tomcat-app   2/2     2            2           88m</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get service</span><br></pre></td></tr></table></figure>
+<h1 id="输出如下-1"><a href="#输出如下-1" class="headerlink" title="输出如下"></a>输出如下</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE</span><br><span class="line">kubernetes    ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP    2d5h</span><br><span class="line">tomcat-http   ClusterIP   10.97.222.179   &lt;none&gt;        8080/TCP   89m</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="查看-Nginx-Ingress-Controller"><a href="#查看-Nginx-Ingress-Controller" class="headerlink" title="查看 Nginx Ingress Controller"></a>查看 Nginx Ingress Controller</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n ingress-nginx -o wide</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出如下，注意下面的 IP 地址，就是我们实际访问地址</span></span><br><span class="line">NAME                                        READY   STATUS    RESTARTS   AGE   IP                NODE                 NOMINATED NODE   READINESS GATES</span><br><span class="line">nginx-ingress-controller-76f9fddcf8-vzkm5   1/1     Running   0          61m   192.168.141.160   kubernetes-node-01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">kubectl get ingress</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下</span></span><br><span class="line">NAME        HOSTS          ADDRESS   PORTS   AGE</span><br><span class="line">nginx-web   k8s.test.com             80      61m</span><br></pre></td></tr></table></figure>
+<p>测试访问<br>成功代理到 Tomcat 即表示成功</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2020/08/16/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/08/16/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94/" class="post-title-link" itemprop="url">图数据库对比</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-16 21:19:30" itemprop="dateCreated datePublished" datetime="2020-08-16T21:19:30+08:00">2020-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-18 15:41:29" itemprop="dateModified" datetime="2023-08-18T15:41:29+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><span class="post-count">&lt;%&#x3D; wordcount(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; min2read(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; totalcount(site) %&gt;</span></p>
+<h4 id="图数据库的对比"><a href="#图数据库的对比" class="headerlink" title="图数据库的对比"></a>图数据库的对比</h4><table>
+<thead>
+<tr>
+<th>图数据库</th>
+<th>是否分布式</th>
+<th>开发语言</th>
+<th>支持的节点数量</th>
+<th>原生图存储</th>
+<th align="left">multi_model</th>
+<th>查询语言</th>
+<th>支持开发的语言</th>
+<th>开发公司</th>
+<th>落地的公司</th>
+<th>是否开源</th>
+<th>使用场景</th>
+<th>开源地址</th>
+<th>文档地址</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>neo4j</td>
+<td>社区单机版&#x2F;商业是伪分布式</td>
+<td>java</td>
+<td>百亿</td>
+<td>是</td>
+<td align="left">否</td>
+<td>cypher</td>
+<td>java&#x2F;python</td>
+<td>neo4j</td>
+<td>使用非常广泛</td>
+<td>否</td>
+<td>OLAP</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nebula graph</td>
+<td>分布式</td>
+<td>java</td>
+<td>千亿个</td>
+<td>是</td>
+<td align="left">否</td>
+<td>nsql</td>
+<td>java</td>
+<td></td>
+<td>京东 &#x2F;360&#x2F;携程&#x2F;oppo&#x2F;各种银行</td>
+<td></td>
+<td>OLAP</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/vesoft-inc/nebula-graph">https://github.com/vesoft-inc/nebula-graph</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ultipa</td>
+<td>分布式</td>
+<td></td>
+<td></td>
+<td>是</td>
+<td align="left">否</td>
+<td></td>
+<td></td>
+<td>北京同心尚科技发展有限公司</td>
+<td>金融行业</td>
+<td>否</td>
+<td>HTAP</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>janusgraph</td>
+<td>分布式</td>
+<td>java</td>
+<td></td>
+<td>否</td>
+<td align="left">是</td>
+<td>gremlin</td>
+<td>java</td>
+<td>The Linux Foundation</td>
+<td>apache顶级项目</td>
+<td>是</td>
+<td>OLAP</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/JanusGraph/janusgraph">https://github.com/JanusGraph/janusgraph</a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.janusgraph.org/">https://docs.janusgraph.org/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>hugegraph</td>
+<td>分布式</td>
+<td>java</td>
+<td></td>
+<td>否</td>
+<td align="left">是</td>
+<td>gremlin</td>
+<td>java</td>
+<td>百度</td>
+<td>百度</td>
+<td>是</td>
+<td>OLAP</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hugegraph/hugegraph">https://github.com/hugegraph/hugegraph</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tugraph</td>
+<td>分布式</td>
+<td>C++</td>
+<td></td>
+<td>是</td>
+<td align="left">否</td>
+<td>cypher</td>
+<td>C++</td>
+<td>费马科技</td>
+<td>京东金融、  搜狗 、国家电网</td>
+<td>否</td>
+<td>OLAP</td>
+<td>wget <a target="_blank" rel="noopener" href="https://fma-ai.cn/download/lgraph_latest.tar">https://fma-ai.cn/download/lgraph_latest.tar</a></td>
+<td><a target="_blank" rel="noopener" href="https://fma-ai.cn/help/">https://fma-ai.cn/help/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>tigergraph</td>
+<td>单机开发&#x2F;商业是分布式</td>
+<td>C++</td>
+<td>万亿</td>
+<td>是</td>
+<td align="left">否</td>
+<td>GSQL</td>
+<td></td>
+<td>tighergraph</td>
+<td>国家电网、国有银行</td>
+<td>否</td>
+<td>OLTP</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://www.tigergraph.com.cn/">https://www.tigergraph.com.cn/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>geagraph</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>否</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="JanusGraph"><a href="#JanusGraph" class="headerlink" title="JanusGraph"></a>JanusGraph</h4><p>JanusGraph是一个可扩展的图数据库，可以把包含数千亿个顶点和边的图存储在多机集群上。它支持事务，支持数千用户实时、并发访问存储在其中的图。</p>
+<p>anusGraph是2016年12月27日从Titan fork出来的一个分支<br>(1)分布式部署，因此，支持集群。<br>(2)可以存储大图，比如包含数千亿Vertices和edges的图。<br>(3)支持数千用户实时、并发访问。（并发访问肯定是实时的，这个唉，没必要强调好像）<br>(4)集群节点可以线性扩展，以支持更大的图和更多的并发访问用户。（Elastic and linear scalability for a growing data and user base）<br>(5)数据分布式存储，并且每一份数据都有多个副本，因此，有更好的计算性能和容错性。（Data distribution and replication for performance and fault tolerance）<br>(6)支持在多个数据中心做高可用，支持热备份。（Elastic and linear scalability for a growing data and user base）<br>(7)支持各种后端存储系统，目前标准支持以下四种，当然也可以增加第三方的存储系统：<br>Apache Cassandra®<br>Apache HBase®<br>Google Cloud Bigtable<br>Oracle BerkeleyDB<br>(8)通过集成大数据平台，比如Apache Spark、Apache Giraph、Apache Hadoop等，支持全局图数据分析、报表、ETL<br>(9)支持geo（Gene Expression Omnibus，基因数据分析）、numeric range（这个的含义不清楚）<br>(10)集成ElasticSearch、Apache Solr、Apache Lucene等系统后，可以支持全文搜索。<br>(11) 原生集成Apache TinkerPop图技术栈，包括Gremlin graph query language、Gremlin graph server、Gremin applications。<br>(12)开源，基于Apache 2 Licence。<br>(13)通过使用以下系统可以可视化存储在JanusGraph中的图数据：<br>Cytoscape<br>Gephi plugin for Apache TinkerPop<br>Graphexp<br>KeyLines by Cambridge Intelligence<br>Linkurious</p>
+<p><img src="https://images2018.cnblogs.com/blog/513451/201805/513451-20180531112615520-1894246489.png" alt="avatar"></p>
+<p>java语言开发，不支持python语言</p>
+<ol>
+<li><strong>性能</strong> 要求图查询及图分析算法的执行快，涉及到底层存储结构，原生图存储基于点和边，计算中不需要过多的逻辑和物理层转换。原生图存储(neo4j&#x2F;tigergraph)胜</li>
+<li><strong>容量</strong> 大数据时代可获取的数据越来越多，单机的容量有限。原生图存储如何实现分布式存储是困难所在。TigerGraph自称是原生并行图；neo4j支持数据的高可用HA集群，但非分布式存储;JanusGraph利用HBase等NoSQL作为后端存储，在存储层面算是分布式的，容量可以很大。百度基于JanusGraph开源了HugeGraph，增加了很多特性，提高了易用性及性能，增加了一些图分析算法。</li>
+<li><strong>查询能力</strong> 图数据库要具备点关系的查询能力，必不可少的如两点间所有路径，最短路径，多度查询等，这个一般都具备，差异主要是性能，普通图数据库查询3度及以上通常性能就很低了，而实际经常需要查询6度的关系，tigergraph自己的测试报告性能是很强劲的针对twitter的大图数据库，只有tigergraph完成了6度关系查询</li>
+<li><strong>图分析计算能力</strong> 图数据库如果仅具备存储及查询能力，则还需要依赖外部的GraphX等计算引擎才能完成一些图算法分析，这样即在数据传输，又在图表达上存在转换浪费。TigerGraph可以通过GSQL实现类存储过程式的算法封装，且已实现了很多图算法<a href="https://link.zhihu.com/?target=https://www.tigergraph.com.cn/tigergraph%E5%BC%80%E6%BA%90%E5%8D%81%E5%A4%A7%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%97%E6%B3%95%E5%BA%93/">https://www.tigergraph.com.cn/tigergraph开源十大图数据库算法库/</a></li>
+</ol>
+<p>百度基于JanusGraph开源了HugeGraph，增加了很多特性，提高了易用性及性能，增加了一些图分析算法。</p>
+<p><strong>JanusGraph&#x2F;HugeGraph</strong>是开源的，Apache协议，开放性最好</p>
+<p><strong>neo4j</strong>社区版开源，非商用免费，商业版支持HA集群，并不是完全分布式，使用最广最流行</p>
+<p><strong>TigerGraph</strong>将普通数据库归为第一第二代，自己为第三代，“TigerGraph是非常完备和优化的图数据库平台，支持大规模图存储以及大规模图的运行处理，具有非常强大的查询语言和算法库”。TigerGraph没有开源，<strong>开发者版支持单机单用户单图非商业免费，不支持DynamicSchemaChange等</strong>，图创建好之后也能通过界面手工去修改或添加，除非DropAll。TG的GSQL是类sql的语言，表达能力挺强，其将编写的query直接安装发布为restapi的形式让我感到很惊艳。目前TigerGraph的生态不是很全，编程api等能力也有一定限制，但值得尝试</p>
+<p><img src="https://pic3.zhimg.com/v2-5abbeda0fb296d05d1516fcda2d3592e_r.jpg" alt="preview"></p>
+<p>![image-20211109160429069](&#x2F;Users&#x2F;andrew&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20211109160429069.png)</p>
+<p>geagraph 阿里联合清华发布，没有开源</p>
+<p><img src="https://pic2.zhimg.com/v2-2ce2bd623678dd5dbd42933d49b2d321_r.jpg" alt="preview"></p>
+<p>janusgraph</p>
+<p><img src="https://img-blog.csdnimg.cn/20190123101621250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pZQzg4ODg4,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>tugraph</p>
+<p><img src="https://fma-ai.cn/cover/%E6%88%AA%E5%B1%8F2020-07-09%20%E4%B8%8B%E5%8D%881-1594348883927.png" alt="img"></p>
+<p>cypher 语法，没有开源，估计是neo4j套皮</p>
+<p><img src="https://pic4.zhimg.com/v2-88a8c5a05d2fe6e93d44ddd937a7cc98_r.jpg" alt="preview"></p>
+<p>tigergraph</p>
+<p>![image-20211111104734637](&#x2F;Users&#x2F;andrew&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20211111104734637.png)</p>
+<p><img src="https://img2018.cnblogs.com/blog/847408/201901/847408-20190118192620943-2101126015.png" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2020/03/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/03/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/" class="post-title-link" itemprop="url">linux硬盘格式化与挂载</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-16 18:01:58" itemprop="dateCreated datePublished" datetime="2020-03-16T18:01:58+08:00">2020-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 11:35:41" itemprop="dateModified" datetime="2023-08-17T11:35:41+08:00">2023-08-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gdisk</span><br><span class="line">fdisk /dev/sdb</span><br><span class="line">m</span><br><span class="line">g</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="built_in">mkdir</span> /data</span><br><span class="line">mounr /dev/sdb /data</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2019/08/16/spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/16/spark/" class="post-title-link" itemprop="url">spark</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-08-16 21:40:18" itemprop="dateCreated datePublished" datetime="2019-08-16T21:40:18+08:00">2019-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-16 21:40:36" itemprop="dateModified" datetime="2023-08-16T21:40:36+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h1><nav>
+<a href="#一简介">一、简介</a><br/>
+<a href="#二特点">二、特点</a><br/>
+<a href="#三集群架构">三、集群架构</a><br/>
+<a href="#四核心组件">四、核心组件</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-Spark--SQL">3.1 Spark  SQL</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-Spark-Streaming">3.2 Spark Streaming</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-MLlib">3.3 MLlib</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-Graphx">3.4 Graphx</a><br/>
+<a href="#">  </a><br/>
+</nav>
+
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Spark 于 2009 年诞生于加州大学伯克利分校 AMPLab，2013 年被捐赠给 Apache 软件基金会，2014 年 2 月成为 Apache 的顶级项目。相对于 MapReduce 的批处理计算，Spark 可以带来上百倍的性能提升，因此它成为继 MapReduce 之后，最为广泛使用的分布式计算框架。</p>
+<h2 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h2><p>Apache Spark 具有以下特点：</p>
+<ul>
+<li>使用先进的 DAG 调度程序，查询优化器和物理执行引擎，以实现性能上的保证；</li>
+<li>多语言支持，目前支持的有 Java，Scala，Python 和 R；</li>
+<li>提供了 80 多个高级 API，可以轻松地构建应用程序；</li>
+<li>支持批处理，流处理和复杂的业务分析；</li>
+<li>丰富的类库支持：包括 SQL，MLlib，GraphX 和 Spark Streaming 等库，并且可以将它们无缝地进行组合；  </li>
+<li>丰富的部署模式：支持本地模式和自带的集群模式，也支持在 Hadoop，Mesos，Kubernetes 上运行；</li>
+<li>多数据源支持：支持访问 HDFS，Alluxio，Cassandra，HBase，Hive 以及数百个其他数据源中的数据。</li>
+</ul>
+<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/future-of-spark.png"/> </div>
+
+<h2 id="三、集群架构"><a href="#三、集群架构" class="headerlink" title="三、集群架构"></a>三、集群架构</h2><table>
+<thead>
+<tr>
+<th>Term（术语）</th>
+<th>Meaning（含义）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Application</td>
+<td>Spark 应用程序，由集群上的一个 Driver 节点和多个 Executor 节点组成。</td>
+</tr>
+<tr>
+<td>Driver program</td>
+<td>主运用程序，该进程运行应用的 main() 方法并且创建  SparkContext</td>
+</tr>
+<tr>
+<td>Cluster manager</td>
+<td>集群资源管理器（例如，Standlone Manager，Mesos，YARN）</td>
+</tr>
+<tr>
+<td>Worker node</td>
+<td>执行计算任务的工作节点</td>
+</tr>
+<tr>
+<td>Executor</td>
+<td>位于工作节点上的应用进程，负责执行计算任务并且将输出数据保存到内存或者磁盘中</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>被发送到 Executor 中的工作单元</td>
+</tr>
+</tbody></table>
+<div align="center"> <img src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-集群模式.png"/> </div>
+
+<p><strong>执行过程</strong>：</p>
+<ol>
+<li>用户程序创建 SparkContext 后，它会连接到集群资源管理器，集群资源管理器会为用户程序分配计算资源，并启动 Executor；</li>
+<li>Driver 将计算程序划分为不同的执行阶段和多个 Task，之后将 Task 发送给 Executor；</li>
+<li>Executor 负责执行 Task，并将执行状态汇报给 Driver，同时也会将当前节点资源的使用情况汇报给集群资源管理器。</li>
+</ol>
+<h2 id="四、核心组件"><a href="#四、核心组件" class="headerlink" title="四、核心组件"></a>四、核心组件</h2><p>Spark 基于 Spark Core 扩展了四个核心组件，分别用于满足不同领域的计算需求。</p>
+<div align="center"> <img  width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-stack.png"/> </div>
+
+<h3 id="3-1-Spark-SQL"><a href="#3-1-Spark-SQL" class="headerlink" title="3.1 Spark  SQL"></a>3.1 Spark  SQL</h3><p>Spark SQL 主要用于结构化数据的处理。其具有以下特点：</p>
+<ul>
+<li>能够将 SQL 查询与 Spark 程序无缝混合，允许您使用 SQL 或 DataFrame API 对结构化数据进行查询；</li>
+<li>支持多种数据源，包括 Hive，Avro，Parquet，ORC，JSON 和 JDBC；</li>
+<li>支持 HiveQL 语法以及用户自定义函数 (UDF)，允许你访问现有的 Hive 仓库；</li>
+<li>支持标准的 JDBC 和 ODBC 连接；</li>
+<li>支持优化器，列式存储和代码生成等特性，以提高查询效率。</li>
+</ul>
+<h3 id="3-2-Spark-Streaming"><a href="#3-2-Spark-Streaming" class="headerlink" title="3.2 Spark Streaming"></a>3.2 Spark Streaming</h3><p>Spark Streaming 主要用于快速构建可扩展，高吞吐量，高容错的流处理程序。支持从 HDFS，Flume，Kafka，Twitter 和 ZeroMQ 读取数据，并进行处理。</p>
+<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-arch.png"/> </div>
+
+<p> Spark Streaming 的本质是微批处理，它将数据流进行极小粒度的拆分，拆分为多个批处理，从而达到接近于流处理的效果。</p>
+<div align="center"> <img width="600px"   src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-flow.png"/> </div>
+
+
+
+<h3 id="3-3-MLlib"><a href="#3-3-MLlib" class="headerlink" title="3.3 MLlib"></a>3.3 MLlib</h3><p>MLlib 是 Spark 的机器学习库。其设计目标是使得机器学习变得简单且可扩展。它提供了以下工具：</p>
+<ul>
+<li><strong>常见的机器学习算法</strong>：如分类，回归，聚类和协同过滤；</li>
+<li><strong>特征化</strong>：特征提取，转换，降维和选择；</li>
+<li><strong>管道</strong>：用于构建，评估和调整 ML 管道的工具；</li>
+<li><strong>持久性</strong>：保存和加载算法，模型，管道数据；</li>
+<li><strong>实用工具</strong>：线性代数，统计，数据处理等。</li>
+</ul>
+<h3 id="3-4-Graphx"><a href="#3-4-Graphx" class="headerlink" title="3.4 Graphx"></a>3.4 Graphx</h3><p>GraphX 是 Spark 中用于图形计算和图形并行计算的新组件。在高层次上，GraphX 通过引入一个新的图形抽象来扩展 RDD(一种具有附加到每个顶点和边缘的属性的定向多重图形)。为了支持图计算，GraphX 提供了一组基本运算符（如： subgraph，joinVertices 和 aggregateMessages）以及优化后的 Pregel API。此外，GraphX 还包括越来越多的图形算法和构建器，以简化图形分析任务。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -251,404 +975,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2019/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">docker基本操作</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-08-16 18:02:32" itemprop="dateCreated datePublished" datetime="2019-08-16T18:02:32+08:00">2019-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 14:30:52" itemprop="dateModified" datetime="2023-08-18T14:30:52+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2018/08/16/hexo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/08/16/hexo/" class="post-title-link" itemprop="url">hexo</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-08-16 22:03:01" itemprop="dateCreated datePublished" datetime="2018-08-16T22:03:01+08:00">2018-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 14:30:44" itemprop="dateModified" datetime="2023-08-18T14:30:44+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>1、安装node.js</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://nodejs.org/zh-cn/</span><br><span class="line">安装：https://blog.csdn.net/qq_40712862/article/details/120231621</span><br><span class="line"></span><br><span class="line">node -v判断是否安装成功</span><br></pre></td></tr></table></figure>
-<p>下载慢解决方法:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">更换淘宝镜像下载源：npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line">或国内的npm镜像命令：npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-<p>安装指定版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装：https://blog.csdn.net/weixin_44198965/article/details/124140283</span><br><span class="line">版本：https://nodejs.org/download/release/v15.7.0/</span><br></pre></td></tr></table></figure>
-<p>2、注册github<br><a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></p>
-<p>3、安装hexo<br>新建文件夹，打开cmd，输入命令npm install hexo-cli -g<br>hexo -v出现版本号即安装成功<br>如果卸载hexo</p>
-<p>安装成功后可在C:\Users\Administrator\AppData\Roaming文件夹下看到npm文件夹<br>卸载命令：卸载成功后npm文件夹会消失npm uninstall hexo-cli -g<br>安装指定版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看版本hexo --version</span><br><span class="line">安装 Hexo 指定版本npm i hexo@4.2.1 --save</span><br></pre></td></tr></table></figure>
-<p>4、生成本地静态网页</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo init 博客名称初始化</span><br><span class="line"><span class="built_in">cd</span> 博客名称进入文件夹，npm install安装依赖</span><br><span class="line">hexo g生成静态网页</span><br><span class="line">hexo s打开本地预览</span><br><span class="line">hexo clean，清除缓存文件 db.json 和已生成的静态文件在 ./public/文件夹下</span><br></pre></td></tr></table></figure>
-<p>5、上传github<br>创建仓库create repository<br>填写仓库名称需要和gihub账号一致，勾选Add a README file，点击创建<br>进入仓库点击settings-&gt;Pages，找到Github Page<br>Branch分支改成main或master<br>6、安装git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://git-scm.com/</span><br></pre></td></tr></table></figure>
-<p>配置ssh密钥</p>
-<p>鼠标右键打开Git Bash Here窗口，执行ssh-keygen<br>然后打开此电脑–&gt;C盘–&gt;用户–&gt;Administrator–&gt;.ssh(文件夹)–&gt;用记事本打开 id_rsa.pub 文件，全选复制<br>或者：打开Git Bash Here窗口输入cat ~&#x2F;.ssh&#x2F;id_rsa.pub输出SSH Key，然后复制<br>打开注册的github，进入设置–&gt;SSH公钥–&gt;在公钥区粘贴刚才复制的公钥，点击确定输入github登陆密码进行验证即可<br>克隆github项目到本地</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">git init初始化本地仓库，后会在本地文件夹下生成一个 .git 文件夹</span><br><span class="line">开始克隆：git <span class="built_in">clone</span> 仓库地址</span><br><span class="line">git的推送操作</span><br><span class="line"></span><br><span class="line">git status 查看当前状态。</span><br><span class="line">git add 文件名表示将某个文件添加至暂存区。</span><br><span class="line">git add .表示将所有(进行修改的)文件添加至暂存区。</span><br><span class="line">git commit -m “xxx” xxx表示自己对本次提交所进行的备注或者标注。</span><br><span class="line">git remote add origin SSH链接 表示建立本地库与想要操作的远程仓库的联系。</span><br><span class="line">git push -u origin master 表示实现由本地库向远程仓库的推送。</span><br><span class="line"></span><br><span class="line">git的拉取操作</span><br><span class="line"></span><br><span class="line">git pull origin master 表示将远程仓库的内容文件同步更新拉取到本地库。</span><br></pre></td></tr></table></figure>
-<p>问题<br>如果执行git push origin master报错:The project you were looking for could not be found，则通过(管理员运行)git config –system –unset credential.helper清除账户信息并且在windows凭证里添加账户信息</p>
-<p>7、连接github，git config配置用户账户:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
-<p>将username和email换成github的用户名和邮箱<br>–global 表示全局的，即当前用户都有效，该配置会出现在 <del>&#x2F;.gitconfig 文件中，</del>表示当前用户的目录，比如：C:\Users\username.gitconfig</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你GitHub账号的邮箱&quot;</span>来生成SSH Key，中途按3次回车</span><br></pre></td></tr></table></figure>
-<p>8、hexo 关联github<br>打开hexo文件夹里面的_config.yml文件，这是hexo的配置文件修改：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">      <span class="built_in">type</span>: git</span><br><span class="line">      repo: ssh://git@github.com/github账号名称/github账号名称.github.io.git</span><br><span class="line">      branch: master</span><br></pre></td></tr></table></figure>
-<p>然后在cmd上输入npm install hexo-deployer-git –save安装GitHub推送插件<br>安装好了以后再输入hexo g生成静态网页，再输入hexo d上传到GitHub就可以了<br>9、hexo 主题</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://hexo.io/themes/</span><br></pre></td></tr></table></figure>
-<p>比如安装主题next：npm install hexo-theme-next</p>
-<p>10、hexo 配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration Hexo配置文件</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网站信息</span></span><br><span class="line"><span class="comment">#标题</span></span><br><span class="line">title: 学志の博客</span><br><span class="line"><span class="comment">#副标题</span></span><br><span class="line">subtitle: 记录学习的技能和遇到的问题</span><br><span class="line"><span class="comment">#网站描述</span></span><br><span class="line">description: 做自己爱做的事，爱自己在做的事！</span><br><span class="line"><span class="comment">#作者昵称</span></span><br><span class="line">author: 张学志</span><br><span class="line"><span class="comment">#网站语言，默认英语，设置简体汉语</span></span><br><span class="line">language: zh-Hans</span><br><span class="line"></span><br><span class="line"><span class="comment">#时区，默认电脑时区</span></span><br><span class="line"><span class="comment">#timezone: </span></span><br><span class="line">timezone: Asia/Shanghai</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网址设置</span></span><br><span class="line"><span class="comment">#如果网站是放在子目录中，将url设置成&#x27;http://yoursite.com/child&#x27;，将root设置成&#x27;/child/&#x27;</span></span><br><span class="line"><span class="comment">## If your site is put in a subdirectory, set url as &#x27;http://yoursite.com/child&#x27; and root as &#x27;/child/&#x27;</span></span><br><span class="line"><span class="comment">#网址</span></span><br><span class="line">url: http://zhangxuezhi.com</span><br><span class="line"><span class="comment">#网站根目录。如果网站是放在子目录中，将root设置成&#x27;子目录名&#x27;</span></span><br><span class="line">root: /</span><br><span class="line"><span class="comment">#文章链接地址格式 。即文章存放的目录。</span></span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录设置</span></span><br><span class="line"><span class="comment">#资源文件夹，放在里面的文件会上传到github中</span></span><br><span class="line">source_dir: <span class="built_in">source</span></span><br><span class="line"><span class="comment">#公共文件夹，存放生成的静态文件</span></span><br><span class="line">public_dir: public</span><br><span class="line"><span class="comment">#标签文件夹，默认是tags。实际存放在source/tags中。</span></span><br><span class="line">tag_dir: tags</span><br><span class="line">rss_dir: rss</span><br><span class="line"><span class="comment">#档案文件夹，默认是archives。</span></span><br><span class="line">archive_dir: archives</span><br><span class="line"><span class="comment">#分类文件夹，默认是categories。实际存放在source/categories中。</span></span><br><span class="line">category_dir: categories</span><br><span class="line"><span class="comment">#代码文件夹，默认是downloads/code</span></span><br><span class="line">code_dir: downloads/code</span><br><span class="line"><span class="comment">#国际化文件夹，默认跟language相同</span></span><br><span class="line">i18n_dir: :lang</span><br><span class="line"><span class="comment">#不需要渲染的文件夹或文件夹,放在[]中</span></span><br><span class="line"><span class="comment"># 这两个文件是百度和google的站长验证文件，不能渲染，否则会改变内容，不能验证过</span></span><br><span class="line">skip_render: [baidu_verify_R9MZjdMkXT.html, google0f8fac7da2b48ef8.html, README.md, 模板.md]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写作选项</span></span><br><span class="line"><span class="comment"># 新建博文（帖子）的默认名称</span></span><br><span class="line"><span class="comment"># File name of new posts</span></span><br><span class="line">new_post_name: :title.md </span><br><span class="line"><span class="comment">#默认布局模板是post，而不是draft和page</span></span><br><span class="line">default_layout: post</span><br><span class="line"><span class="comment">#是否将标题转换成标题形式（首字母大写）</span></span><br><span class="line">titlecase: <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></span><br><span class="line"><span class="comment">#在新标签页面中打开网页</span></span><br><span class="line">external_link: <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></span><br><span class="line">filename_case: 0</span><br><span class="line"><span class="comment">#是否渲染草稿</span></span><br><span class="line">render_drafts: <span class="literal">false</span></span><br><span class="line"><span class="comment">#启动 Asset 文件夹</span></span><br><span class="line">post_asset_folder: <span class="literal">false</span></span><br><span class="line"><span class="comment">#把链接改为与根目录的相对位址</span></span><br><span class="line">relative_link: <span class="literal">false</span></span><br><span class="line"><span class="comment">#显示未来的文章</span></span><br><span class="line">future: <span class="literal">true</span></span><br><span class="line"><span class="comment">#代码块的设置</span></span><br><span class="line">highlight:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span>          <span class="comment">#  使用代码高亮</span></span><br><span class="line">  line_number: <span class="literal">true</span> <span class="comment"># 显示行号</span></span><br><span class="line">  auto_detect: <span class="literal">true</span>  <span class="comment"># 自动检测语言</span></span><br><span class="line">  tab_replace:</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 分类和标签</span></span><br><span class="line"><span class="comment"># 默认分类</span></span><br><span class="line">default_category: uncategorized</span><br><span class="line"><span class="comment">#分类别名</span></span><br><span class="line">category_map:</span><br><span class="line"><span class="comment">#标签别名</span></span><br><span class="line">tag_map:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日期和时间格式</span></span><br><span class="line"><span class="comment">#Hexo 使用 Moment.js 来解析和显示时间。</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line">date_format: YYYY-MM-DD</span><br><span class="line">time_format: HH:mm:ss</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分页配置</span></span><br><span class="line"><span class="comment"># ---------------下面选项需要对应插件的支持---------------</span></span><br><span class="line"><span class="comment"># npm install hexo-generator-index --save</span></span><br><span class="line"><span class="comment"># npm install hexo-generator-archive --save</span></span><br><span class="line"><span class="comment"># npm install hexo-generator-category --save</span></span><br><span class="line"><span class="comment"># npm install hexo-generator-tag --save</span></span><br><span class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="comment">#每页显示的文章量 </span></span><br><span class="line"><span class="comment">#per_page: 20</span></span><br><span class="line"><span class="comment">#首页的分页设置</span></span><br><span class="line">index_generator:</span><br><span class="line">  per_page: 5</span><br><span class="line"><span class="comment">#归档页的分页设置</span></span><br><span class="line">archive_generator:</span><br><span class="line">  per_page: 30</span><br><span class="line">  yearly: <span class="literal">true</span></span><br><span class="line">  monthly: <span class="literal">true</span></span><br><span class="line"><span class="comment">#标签页的分页设置</span></span><br><span class="line">tag_generator:</span><br><span class="line">  per_page: 20</span><br><span class="line"></span><br><span class="line"><span class="comment">#分页路径，在public中可以看到</span></span><br><span class="line"><span class="comment">#pagination_dir: page</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions 拓展插件配置</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line">plugins: </span><br><span class="line">baidusitemap: </span><br><span class="line">  path: baidusitemap.xml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置RSS</span></span><br><span class="line">feed: </span><br><span class="line">  <span class="comment">#feed 类型 (atom/rss2)</span></span><br><span class="line">  <span class="built_in">type</span>: atom   </span><br><span class="line">  <span class="comment">#rss 路径</span></span><br><span class="line">  path: atom.xml  </span><br><span class="line">  <span class="comment">#在 rss 中最多生成的文章数(0显示所有)</span></span><br><span class="line">  <span class="built_in">limit</span>: 0</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 自定义站点内容搜索</span></span><br><span class="line"><span class="comment"># 需要先安装插件：</span></span><br><span class="line"><span class="comment"># npm install hexo-generator-search --save</span></span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  <span class="comment"># 如只想索引文章，可设置为post</span></span><br><span class="line">  field: all </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 主题配置</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="comment">#theme: false #禁用主题</span></span><br><span class="line"><span class="comment">#theme: landscape</span></span><br><span class="line">theme: next</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署配置</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  <span class="comment">#repo: https://github.com/xuezhisd/xuezhisd.github.io.git</span></span><br><span class="line">  repo: </span><br><span class="line">    <span class="comment"># 部署到github</span></span><br><span class="line">    github: git@github.com:xuezhisd/xuezhisd.github.io.git,master</span><br><span class="line">    <span class="comment"># 部署到coding.net。取消注释，可同时部署</span></span><br><span class="line">    <span class="comment">#coding: git@git.coding.net:xuezhisd/blog.git,coding-pages</span></span><br><span class="line">  <span class="comment">#type: baidu_url_submitter</span></span><br></pre></td></tr></table></figure>
-
-<p>11、 新增菜单栏选项<br>添加新页面：hexo new page “xx”<br>在主题配置文件的menu中加上该页面<br>在zh-CN.yml文件中加上中文意思<br>12、图片处理<br>配置文件中的post_asset_folder改成true<br>安装依赖npm install hexo-asset-image –save<br>放到该文件夹下，按照md格式输入(文件名称&#x2F;图片名.jpg)<br>13、搜索</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-安装依赖 npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>站点配置文件的扩展下添加</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> search:</span><br><span class="line">      path: search.xml</span><br><span class="line">      field: post</span><br><span class="line">      format: html</span><br><span class="line">      <span class="built_in">limit</span>: 10000</span><br><span class="line"></span><br><span class="line">主题配置文件下，local_search改成<span class="literal">true</span>即可</span><br><span class="line">local_search:</span><br><span class="line">      <span class="built_in">enable</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>14、新建文章<br>hexo new 文章名称<br>存储在&#x2F;source&#x2F;_posts下<br>hexo 插件<br>插件汇总：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43701912/article/details/107310923">https://blog.csdn.net/qq_43701912/article/details/107310923</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2018/08/16/nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/08/16/nginx/" class="post-title-link" itemprop="url">nginx</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-08-16 21:49:18" itemprop="dateCreated datePublished" datetime="2018-08-16T21:49:18+08:00">2018-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-17 11:36:42" itemprop="dateModified" datetime="2023-08-17T11:36:42+08:00">2023-08-17</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">loguru elasticsearch kibana 日志处理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-05-16 18:00:53" itemprop="dateCreated datePublished" datetime="2018-05-16T18:00:53+08:00">2018-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 12:49:14" itemprop="dateModified" datetime="2023-08-18T12:49:14+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="日志的重要性"><a href="#日志的重要性" class="headerlink" title="日志的重要性"></a>日志的重要性</h3><p>常见日志记录方式</p>
-<h4 id="一、print"><a href="#一、print" class="headerlink" title="一、print()"></a>一、print()</h4><h4 id="二、自写模板"><a href="#二、自写模板" class="headerlink" title="二、自写模板"></a>二、自写模板</h4><h4 id="三、Logging"><a href="#三、Logging" class="headerlink" title="三、Logging"></a>三、Logging</h4><h5 id="更优雅的解决方案：Loguru"><a href="#更优雅的解决方案：Loguru" class="headerlink" title="更优雅的解决方案：Loguru"></a>更优雅的解决方案：Loguru</h5><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>开箱即用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add() / remove()</span><br><span class="line">完整参数</span><br><span class="line">rotation 日志文件分隔</span><br><span class="line">retention 日志保留时间</span><br><span class="line">compression 日志压缩格式</span><br><span class="line">字符串格式化</span><br><span class="line">异常追溯</span><br></pre></td></tr></table></figure>
-
-<h3 id="日志的重要性-1"><a href="#日志的重要性-1" class="headerlink" title="日志的重要性"></a>日志的重要性</h3><p>日志的作用非常重要，日志可以记录用户的操作、程序的异常，还可以为数据分析提供依据，日志的存在意义就是为了能够在程序在运行过程中记录错误，方便维护和调试，能够快速定位出错的地方，减少维护成本。每个程序员都应该知道，不是为了记录日志而记录日志，日志也不是随意记的。要实现能够只通过日志文件还原整个程序执行的过程，达到能透明地看到程序里执行情况，每个线程、每个过程到底执行到哪的目的。日志就像飞机的黑匣子一样，应当能够复原异常的整个现场乃至细节！</p>
-<h3 id="常见日志记录方式"><a href="#常见日志记录方式" class="headerlink" title="常见日志记录方式"></a>常见日志记录方式</h3><h4 id="一、print-1"><a href="#一、print-1" class="headerlink" title="一、print()"></a>一、print()</h4><p>最常见的是把输出函数 print() 当作日志记录的方式，直接打印各种提示信息，常见于个人练习项目里，通常是懒得单独配置日志，而且项目太小不需要日志信息，不需要上线，不需要持续运行，完整的项目不推荐直接打印日志信息，现实中也几乎没有人这么做。</p>
-<h4 id="二、自写模板-1"><a href="#二、自写模板-1" class="headerlink" title="二、自写模板"></a>二、自写模板</h4><p>我们可以在不少小项目里面看到作者自己写了一个日志模板，通常利用 print() 或者 sys.stdout 稍微封装一下即可实现简单的日志输出，这里的 sys.stdout 是 Python 中的标准输出流，print() 函数是对 sys.stdout 的高级封装，当我们在 Python 中打印对象调用 print(obj) 时候，事实上是调用了 sys.stdout.write(obj+’\n’)，print() 将内容打印到了控制台，然后追加了一个换行符 \n。</p>
-<p>自写日志模板适合比较小的项目，可以按照自己的喜好编写模板，不需要太多复杂配置，方便快捷，但是这种记录日志的方式并不是很规范，有可能你自己觉得阅读体验不错，但是别人在接触你的项目的时候往往需要花费一定的时间去学习日志的逻辑、格式、输出方式等，比较大的项目同样不推荐这种方法。</p>
-<p>一个简单的自写日志模板举例：</p>
-<p>日志模板 log.py：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getnowtime</span>():</span><br><span class="line">    <span class="keyword">return</span> datetime.datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_log</span>(<span class="params">content, level, *args</span>):</span><br><span class="line">    sys.stdout.write(<span class="string">&quot;%s - %s - %s\n&quot;</span> % (getnowtime(), level, content))</span><br><span class="line">    <span class="keyword">for</span> arg <span class="keyword">in</span> args:</span><br><span class="line">        sys.stdout.write(<span class="string">&quot;%s\n&quot;</span> % arg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">debug</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;DEBUG&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">info</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;INFO&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">warn</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;WARN&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;ERROR&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exception</span>(<span class="params">content</span>):</span><br><span class="line">    sys.stdout.write(<span class="string">&quot;%s - %s\n&quot;</span> % (getnowtime(), content))</span><br><span class="line">    traceback.print_exc(file=sys.stdout)</span><br></pre></td></tr></table></figure>
-<p>调用日志模块：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;This is log info!&quot;</span>)</span><br><span class="line">log.warn(<span class="string">&quot;This is log warn!&quot;</span>)</span><br><span class="line">log.error(<span class="string">&quot;This is log error!&quot;</span>)</span><br><span class="line">log.debug(<span class="string">&quot;This is log debug!&quot;</span>)</span><br><span class="line"></span><br><span class="line">people_info = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Bob&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">20</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> error:</span><br><span class="line">    log.exception(error)</span><br><span class="line">日志输出：</span><br><span class="line"></span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - INFO - This <span class="keyword">is</span> log info!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - WARN - This <span class="keyword">is</span> log warn!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - ERROR - This <span class="keyword">is</span> log error!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - DEBUG - This <span class="keyword">is</span> log debug!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - <span class="string">&#x27;gender&#x27;</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;D:/python3Project/test.py&quot;</span>, line <span class="number">18</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">KeyError: <span class="string">&#x27;gender&#x27;</span></span><br></pre></td></tr></table></figure>
-<h4 id="三、Logging-1"><a href="#三、Logging-1" class="headerlink" title="三、Logging"></a>三、Logging</h4><p>在一个完整的项目中，大多数人都会引入专门的日志记录库，而 Python 自带的标准库 logging 就是专门为日志记录而生的，logging 模块定义的函数和类为应用程序和库的开发实现了一个灵活的事件日志系统。由标准库模块提供日志记录 API 的关键好处是所有 Python 模块都可以使用这个日志记录功能。所以，你的应用日志可以将你自己的日志信息与来自第三方模块的信息整合起来。</p>
-<p>logging 模块虽然强大，但是其配置也是比较繁琐的，在大型项目中通常需要单独初始化日志、配置日志格式等等，我在日常使用中通常都会对 logging 做如下的封装写法，使日志可以按天保存，保留15天的日志，可以配置是否输出到控制台和文件，如下所示：</p>
-<h1 id="实现按天分割保留日志"><a href="#实现按天分割保留日志" class="headerlink" title="实现按天分割保留日志"></a>实现按天分割保留日志</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> logging <span class="keyword">import</span> handlers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PARENT_DIR = os.path.split(os.path.realpath(__file__))[<span class="number">0</span>]  <span class="comment"># 父目录</span></span><br><span class="line">LOGGING_DIR = os.path.join(PARENT_DIR, <span class="string">&quot;log&quot;</span>)              <span class="comment"># 日志目录</span></span><br><span class="line">LOGGING_NAME = <span class="string">&quot;test&quot;</span>                                      <span class="comment"># 日志文件名</span></span><br><span class="line"></span><br><span class="line">LOGGING_TO_FILE = <span class="literal">True</span>                                     <span class="comment"># 日志输出文件</span></span><br><span class="line">LOGGING_TO_CONSOLE = <span class="literal">True</span>                                  <span class="comment"># 日志输出到控制台</span></span><br><span class="line"></span><br><span class="line">LOGGING_WHEN = <span class="string">&#x27;D&#x27;</span>                                         <span class="comment"># 日志文件切分维度</span></span><br><span class="line">LOGGING_INTERVAL = <span class="number">1</span>                                       <span class="comment"># 间隔少个 when 后，自动重建文件</span></span><br><span class="line">LOGGING_BACKUP_COUNT = <span class="number">15</span>                                  <span class="comment"># 日志保留个数，0 保留所有日志</span></span><br><span class="line">LOGGING_LEVEL = logging.DEBUG                              <span class="comment"># 日志等级</span></span><br><span class="line">LOGGING_suffix = <span class="string">&quot;%Y.%m.%d.log&quot;</span>                            <span class="comment"># 旧日志文件名</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志输出格式</span></span><br><span class="line">LOGGING_FORMATTER = <span class="string">&quot;%(levelname)s - %(asctime)s - process:%(process)d - %(filename)s - %(name)s - line:%(lineno)d - %(module)s - %(message)s&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">logging_init</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(LOGGING_DIR):</span><br><span class="line">        os.makedirs(LOGGING_DIR)</span><br><span class="line">    logger = logging.getLogger()</span><br><span class="line">    logger.setLevel(LOGGING_LEVEL)</span><br><span class="line">    formatter = logging.Formatter(LOGGING_FORMATTER)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> LOGGING_TO_FILE:</span><br><span class="line">        file_handler = handlers.TimedRotatingFileHandler(filename=os.path.join(LOGGING_DIR, LOGGING_NAME), when=LOGGING_WHEN, interval=LOGGING_INTERVAL, backupCount=LOGGING_BACKUP_COUNT)</span><br><span class="line">        file_handler.suffix = LOGGING_suffix</span><br><span class="line">        file_handler.setFormatter(formatter)</span><br><span class="line">        logger.addHandler(file_handler)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> LOGGING_TO_CONSOLE:</span><br><span class="line">        stream_handler = logging.StreamHandler(sys.stderr)</span><br><span class="line">        stream_handler.setFormatter(formatter)</span><br><span class="line">        logger.addHandler(stream_handler)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">logging_test</span>():</span><br><span class="line">    logging.info(<span class="string">&quot;This is log info!&quot;</span>)</span><br><span class="line">    logging.warning(<span class="string">&quot;This is log warn!&quot;</span>)</span><br><span class="line">    logging.error(<span class="string">&quot;This is log error!&quot;</span>)</span><br><span class="line">    logging.debug(<span class="string">&quot;This is log debug!&quot;</span>)</span><br><span class="line">    people_info = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Bob&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">20</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> error:</span><br><span class="line">        logging.exception(error)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    logging_init()</span><br><span class="line">    logging_test()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出日志：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INFO - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">103</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">52</span> - test - This <span class="keyword">is</span> log info!</span><br><span class="line">WARNING - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">53</span> - test - This <span class="keyword">is</span> log warn!</span><br><span class="line">ERROR - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">54</span> - test - This <span class="keyword">is</span> log error!</span><br><span class="line">DEBUG - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">55</span> - test - This <span class="keyword">is</span> log debug!</span><br><span class="line">ERROR - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">61</span> - test - <span class="string">&#x27;gender&#x27;</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;D:/python3Project/test.py&quot;</span>, line <span class="number">59</span>, <span class="keyword">in</span> logging_test</span><br><span class="line">    gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">KeyError: <span class="string">&#x27;gender&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-<p>当然，如果你不需要很复杂的功能，希望简洁一点，仅仅需要在控制台输出一下日志的话，也可以只进行简单的配置：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(level=logging.DEBUG, <span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#x27;</span>)</span><br><span class="line">logging.getLogger()</span><br></pre></td></tr></table></figure>
-<p>更优雅的解决方案：Loguru<br>对于 logging 模块，即便是简单的使用，也需要自己定义格式，这里介绍一个更加优雅、高效、简洁的第三方模块：loguru，官方的介绍是：Loguru is a library which aims to bring enjoyable logging in Python. Loguru 旨在为 Python 带来愉快的日志记录。这里引用官方的一个 GIF 来快速演示其功能：</p>
-<h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><p>Loguru 仅支持 Python 3.5 及以上的版本，使用 pip 安装即可：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install loguru</span><br></pre></td></tr></table></figure>
-<p>开箱即用<br>Loguru 的主要概念是只有一个：logger</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">logger.info(<span class="string">&quot;This is log info!&quot;</span>)</span><br><span class="line">logger.warning(<span class="string">&quot;This is log warn!&quot;</span>)</span><br><span class="line">logger.error(<span class="string">&quot;This is log error!&quot;</span>)</span><br><span class="line">logger.debug(<span class="string">&quot;This is log debug!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>控制台输出：</p>
-<p>03.png</p>
-<p>可以看到不需要手动设置，Loguru 会提前配置一些基础信息，自动输出时间、日志级别、模块名、行号等信息，而且根据等级的不同，还自动设置了不同的颜色，方便观察，真正做到了开箱即用！</p>
-<p>add() &#x2F; remove()<br>如果想自定义日志级别，自定义日志格式，保存日志到文件该怎么办？与 logging 模块不同，不需要 Handler，不需要 Formatter，只需要一个 add() 函数就可以了，例如我们想把日志储存到文件：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;test.log&#x27;</span>)</span><br><span class="line">logger.debug(<span class="string">&#x27;this is a debug&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>我们不需要像 logging 模块一样再声明一个 FileHandler 了，就一行 add() 语句搞定，运行之后会发现目录下 test.log 里面同样出现了刚刚控制台输出的 debug 信息。</p>
-<p>与 add() 语句相反，remove() 语句可以删除我们添加的配置：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">log_file = logger.add(<span class="string">&#x27;test.log&#x27;</span>)</span><br><span class="line">logger.debug(<span class="string">&#x27;This is log debug!&#x27;</span>)</span><br><span class="line">logger.remove(log_file)</span><br><span class="line">logger.debug(<span class="string">&#x27;This is another log debug!&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>此时控制台会输出两条 debug 信息：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">13</span>:<span class="number">53</span>:<span class="number">36.610</span> | DEBUG    | __main__:&lt;module&gt;:<span class="number">86</span> - This <span class="keyword">is</span> log debug!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">13</span>:<span class="number">53</span>:<span class="number">36.611</span> | DEBUG    | __main__:&lt;module&gt;:<span class="number">88</span> - This <span class="keyword">is</span> another log debug!</span><br></pre></td></tr></table></figure>
-<p>而 test.log 日志文件里面只有一条 debug 信息，原因就在于我们在第二条 debug 语句之前使用了 remove() 语句。</p>
-<p>完整参数<br>Loguru 对输出到文件的配置有非常强大的支持，比如支持输出到多个文件，分级别分别输出，过大创建新文件，过久自动删除等等。 下面我们来详细看一下 add() 语句的详细参数：</p>
-<p>基本语法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add(sink, *, level=<span class="string">&#x27;DEBUG&#x27;</span>, <span class="built_in">format</span>=<span class="string">&#x27;&lt;green&gt;&#123;time:YYYY-MM-DD HH:mm:ss.SSS&#125;&lt;/green&gt; | &lt;level&gt;&#123;level: &lt;8&#125;&lt;/level&gt; | &lt;cyan&gt;&#123;name&#125;&lt;/cyan&gt;:&lt;cyan&gt;&#123;function&#125;&lt;/cyan&gt;:&lt;cyan&gt;&#123;line&#125;&lt;/cyan&gt; - &lt;level&gt;&#123;message&#125;&lt;/level&gt;&#x27;</span>, <span class="built_in">filter</span>=<span class="literal">None</span>, colorize=<span class="literal">None</span>, serialize=<span class="literal">False</span>, backtrace=<span class="literal">True</span>, diagnose=<span class="literal">True</span>, enqueue=<span class="literal">False</span>, catch=<span class="literal">True</span>, **kwargs)</span><br></pre></td></tr></table></figure>
-<h5 id="基本参数释义："><a href="#基本参数释义：" class="headerlink" title="基本参数释义："></a>基本参数释义：</h5><p>sink：可以是一个 file 对象，例如 sys.stderr 或 open(‘file.log’, ‘w’)，也可以是 str 字符串或者 pathlib.Path 对象，即文件路径，也可以是一个方法，可以自行定义输出实现，也可以是一个 logging 模块的 Handler，比如 FileHandler、StreamHandler 等，还可以是 coroutine function，即一个返回协程对象的函数等。<br>level：日志输出和保存级别。<br>format：日志格式模板。<br>filter：一个可选的指令，用于决定每个记录的消息是否应该发送到 sink。<br>colorize：格式化消息中包含的颜色标记是否应转换为用于终端着色的 ansi 代码，或以其他方式剥离。 如果没有，则根据 sink 是否为 tty（电传打字机缩写） 自动做出选择。<br>serialize：在发送到 sink 之前，是否应首先将记录的消息转换为 JSON 字符串。<br>backtrace：格式化的异常跟踪是否应该向上扩展，超出捕获点，以显示生成错误的完整堆栈跟踪。<br>diagnose：异常跟踪是否应显示变量值以简化调试。建议在生产环境中设置 False，避免泄露敏感数据。<br>enqueue：要记录的消息是否应在到达 sink 之前首先通过多进程安全队列，这在通过多个进程记录到文件时很有用，这样做的好处还在于使日志记录调用是非阻塞的。<br>catch：是否应自动捕获 sink 处理日志消息时发生的错误，如果为 True，则会在 sys.stderr 上显示异常消息，但该异常不会传播到 sink，从而防止应用程序崩溃。<br>**kwargs：仅对配置协程或文件接收器有效的附加参数（见下文）。<br>当且仅当 sink 是协程函数时，以下参数适用：</p>
-<p>loop：将在其中调度和执行异步日志记录任务的事件循环。如果为 None，将使用 asyncio.get_event_loop() 返回的循环。<br>当且仅当 sink 是文件路径时，以下参数适用：</p>
-<p>rotation：一种条件，指示何时应关闭当前记录的文件并开始新的文件。<br>**retention **：过滤旧文件的指令，在循环或程序结束期间会删除旧文件。<br>compression：日志文件在关闭时应转换为的压缩或存档格式。<br>delay：是在配置 sink 后立即创建文件，还是延迟到第一条记录的消息时再创建。默认为 False。<br>mode：内置 open() 函数的打开模式，默认为 a（以追加模式打开文件）。<br>buffering：内置 open() 函数的缓冲策略，默认为1（行缓冲文件）。<br>encoding：内置 open() 函数的文件编码，如果 None，则默认为 locale.getpreferredencoding()。<br>**kwargs：其他传递给内置 open() 函数的参数。<br>这么多参数可以见识到 add() 函数的强大之处，仅仅一个函数就能实现 logging 模块的诸多功能，接下来介绍几个比较常用的方法。</p>
-<p>rotation 日志文件分隔</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">add() 函数的 rotation 参数，可以实现按照固定时间创建新的日志文件，比如设置每天 <span class="number">0</span> 点新创建一个 log 文件：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, rotation=<span class="string">&#x27;00:00&#x27;</span>)</span><br><span class="line">设置超过 <span class="number">500</span> MB 新创建一个 log 文件：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, rotation=<span class="string">&quot;500 MB&quot;</span>)</span><br><span class="line">设置每隔一个周新创建一个 log 文件：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, rotation=<span class="string">&#x27;1 week&#x27;</span>)</span><br><span class="line">retention 日志保留时间</span><br><span class="line">add() 函数的 retention 参数，可以设置日志的最长保留时间，比如设置日志文件最长保留 <span class="number">15</span> 天：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, retention=<span class="string">&#x27;15 days&#x27;</span>)</span><br><span class="line">设置日志文件最多保留 <span class="number">10</span> 个：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, retention=<span class="number">10</span>)</span><br><span class="line">也可以是一个 datetime.timedelta 对象，比如设置日志文件最多保留 <span class="number">5</span> 个小时：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, retention=datetime.timedelta(hours=<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-<p>compression 日志压缩格式<br>add() 函数的 compression 参数，可以配置日志文件的压缩格式，这样可以更加节省存储空间，比如设置使用 zip 文件格式保存：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, compression=<span class="string">&#x27;zip&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>其格式支持：gz、bz2、xz、lzma、tar、tar.gz、tar.bz2、tar.xz</p>
-<p>字符串格式化<br>Loguru 在输出 log 的时候还提供了非常友好的字符串格式化功能，相当于 str.format()：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger.info(<span class="string">&#x27;If you are using Python &#123;&#125;, prefer &#123;feature&#125; of course!&#x27;</span>, <span class="number">3.6</span>, feature=<span class="string">&#x27;f-strings&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">14</span>:<span class="number">59</span>:<span class="number">06.412</span> | INFO     | __main__:&lt;module&gt;:<span class="number">3</span> - If you are using Python <span class="number">3.6</span>, prefer f-strings of course!</span><br></pre></td></tr></table></figure>
-<p>异常追溯<br>在 Loguru 里可以直接使用它提供的装饰器就可以直接进行异常捕获，而且得到的日志是无比详细的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@logger.catch</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">x, y, z</span>):</span><br><span class="line">    <span class="comment"># An error? It&#x27;s caught anyway!</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (x + y + z)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">my_function(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<p>日志输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">15</span>:04:<span class="number">51.675</span> | ERROR    | __main__:&lt;module&gt;:<span class="number">10</span> - An error has been caught <span class="keyword">in</span> function <span class="string">&#x27;&lt;module&gt;&#x27;</span>, process <span class="string">&#x27;MainProcess&#x27;</span> (<span class="number">30456</span>), thread <span class="string">&#x27;MainThread&#x27;</span> (<span class="number">26268</span>):</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"></span><br><span class="line">&gt; File <span class="string">&quot;D:/python3Project\test.py&quot;</span>, line <span class="number">10</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    my_function(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    └ &lt;function my_function at <span class="number">0x014CDFA8</span>&gt;</span><br><span class="line"></span><br><span class="line">  File <span class="string">&quot;D:/python3Project\test.py&quot;</span>, line <span class="number">7</span>, <span class="keyword">in</span> my_function</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (x + y + z)</span><br><span class="line">                │   │   └ <span class="number">0</span></span><br><span class="line">                │   └ <span class="number">0</span></span><br><span class="line">                └ <span class="number">0</span></span><br><span class="line"></span><br><span class="line">ZeroDivisionError: division by zero</span><br></pre></td></tr></table></figure>
-<p>在控制台的输出是这样的：</p>
-<p>相比 Logging，Loguru 无论是在配置方面、日志输出样式还是异常追踪，都远优于 Logging，使用 Loguru 无疑能提升开发人员效率。本文仅介绍了一些常用的方法，想要详细了解可参考 Loguru 官方文档或关注 Loguru GitHub。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
