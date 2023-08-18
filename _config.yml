@@ -173,4 +173,4 @@ backup:
   message: Back up my https://zengjunjie1026.github.io/ blog
   repository:
     origin: git@github.com:zengjunjie1026/zengjunjie.github.io.git,main
-    gitlab: git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.git,master
+    gitlab: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.git,master
