@@ -1561,7 +1561,18 @@
   <entry>
     <title>ssh反向代理</title>
     <url>/2023/08/16/ssh%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="SSH-命令端口转发（Port-Forward）"><a href="#SSH-命令端口转发（Port-Forward）" class="headerlink" title="SSH 命令端口转发（Port Forward）"></a>SSH 命令端口转发（Port Forward）</h3><p>远程转发到本地端口 -L （端口转发）<br>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -N -f -L lhost:lport:rhost:rport ruser@rhost</span><br><span class="line"></span><br><span class="line"><span class="comment"># </span></span><br></pre></td></tr></table></figure>
+<p>访问本地127.0.0.1:8443即可访问<a href="http://www.google.com:443/">www.google.com:443</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -N -f -L [lhost:]8443:www.google.com:443 root@1.1.1.1</span><br></pre></td></tr></table></figure>
+<p>本地转发到远程端口 -R （内网穿透）<br>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -N -f -R rhost:rport:lhost:lport ruser@rhost</span><br></pre></td></tr></table></figure>
+<p>访问1.1.1.1:443即可访问本地127.0.0.1:8443</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -N -f -R [rhost:]443:localhost:8443 root@1.1.1.1</span><br></pre></td></tr></table></figure>
+<p>Socks 转发 -D<br>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -N -f -D lhost:lport ruser@rhost</span><br></pre></td></tr></table></figure>
+<p>通过ssh建立Socks通道，本地proxychains配置127.0.0.1:8080即可转发到1.1.1.1</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -N -f -D [lhost:]8080 root@1.1.1.1</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>server,内网穿透</tag>
       </tags>
@@ -1579,7 +1590,13 @@
   <entry>
     <title>zerotier</title>
     <url>/2023/08/16/zerotier/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="zerotier"><a href="#zerotier" class="headerlink" title="zerotier"></a>zerotier</h3><p>zerotier是一个异地组网实现方案，个人尤其是小公司（设备数量50以下）虚拟组网的最简单实现放完，异地访问家里的nas，数据库，远程桌面等，具有简单和安全的特性。</p>
+<p>我是在openwrt软路由上发现这个内置的组建，尝试了一下发现特别简单，按照官网给的文档，可以在5分钟之内组建自己的专属局域网，实现家里的nas当远程网盘。数据共享，不需要DDNS动态域名解析，也无需借助公网ip，活着VPS进行frp反向代理实现内网穿透。</p>
+<p>在官网注册登入之后新建虚拟网络，一个id可以支持50台设备</p>
+]]></content>
+      <tags>
+        <tag>server,内网穿透</tag>
+      </tags>
   </entry>
   <entry>
     <title>万兆光</title>
@@ -1696,6 +1713,21 @@
     <content><![CDATA[<h3 id="查找大文件"><a href="#查找大文件" class="headerlink" title="查找大文件"></a>查找大文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -print0 | xargs -0 <span class="built_in">du</span> -h | <span class="built_in">sort</span> -rh | <span class="built_in">head</span> -n 10</span><br></pre></td></tr></table></figure>
 
 <h3 id="精确查找"><a href="#精确查找" class="headerlink" title="精确查找"></a>精确查找</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -name <span class="string">&quot;*.conf&quot;</span> | xargs grep -ri <span class="string">&quot;10.0.0.74&quot;</span> -i</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>centos设置static ip</title>
+    <url>/2023/08/18/centos%E8%AE%BE%E7%BD%AEstatic-ip/</url>
+    <content><![CDATA[<p>archlinux设置固定ip</p>
+<p>cd   &#x2F;etc&#x2F;netctl&#x2F;</p>
+<p>Ip adds 查看网卡id</p>
+<p>vim 网卡id</p>
+<p>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;”static”         # 使用静态IP地址，默认为dhcp<br>IPADDR&#x3D;”192.168.28.5”   # 设置的静态IP地址<br>NETMASK&#x3D;”255.255.255.0”    # 子网掩码<br>GATEWAY&#x3D;”192.168.28.1”    # 网关地址<br>DNS1&#x3D;”192.168.28.1”       # DNS服务器<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;fb16fac1-9eca-4962-9e2f-a0587174b47c<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes</p>
+<p>如果是centos7设置固定ip<br>cd &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts</p>
+<p>查看网卡id</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    <span class="built_in">link</span>/ether 08:00:27:59:05:17 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.28.5/24 brd 192.168.28.255 scope global noprefixroute enp0s8</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::750c:27c1:a8c4:bcc8/64 scope <span class="built_in">link</span> noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+<p>   enp0s8<br>vim ifcfg-enp0s8<br>添加上诉配置文件，修改相应的NAME IPADDR</p>
+<p>保存后重启电脑</p>
+]]></content>
   </entry>
   <entry>
     <title>ceph安装以及测试</title>
