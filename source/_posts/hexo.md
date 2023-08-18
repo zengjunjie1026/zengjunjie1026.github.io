@@ -1,7 +1,7 @@
 ---
 title: hexo
 date: 2018-08-16 22:03:01
-tags:
+tags: server
 ---
 
 1、安装node.js

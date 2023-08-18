@@ -1,7 +1,7 @@
 ---
 title: nfs centos
 date: 2023-08-17 11:38:04
-tags:
+tags: server
 ---
 
 ```bash
