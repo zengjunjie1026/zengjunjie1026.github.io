@@ -172,5 +172,5 @@ backup:
   theme: next
   message: Back up my https://zengjunjie1026.github.io/ blog
   repository:
-    github: git@github.com:zengjunjie1026/zengjunjie.github.io.git,main
-    # coding: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.git,master
+    # github: git@github.com:zengjunjie1026/zengjunjie.github.io.git,main
+    coding: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.git,master
