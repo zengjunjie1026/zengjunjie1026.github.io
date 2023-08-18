@@ -327,6 +327,9 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出如下，注意下面的 IP 地址，就是我们实际访问地址</span></span><br><span class="line">NAME                                        READY   STATUS    RESTARTS   AGE   IP                NODE                 NOMINATED NODE   READINESS GATES</span><br><span class="line">nginx-ingress-controller-76f9fddcf8-vzkm5   1/1     Running   0          61m   192.168.141.160   kubernetes-node-01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">kubectl get ingress</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下</span></span><br><span class="line">NAME        HOSTS          ADDRESS   PORTS   AGE</span><br><span class="line">nginx-web   k8s.test.com             80      61m</span><br></pre></td></tr></table></figure>
 <p>测试访问<br>成功代理到 Tomcat 即表示成功</p>
 ]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>kubeflow基础搭建</title>
@@ -532,6 +535,9 @@
     <title>redis分布式安装</title>
     <url>/2023/08/16/redis%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>群晖变身airdrop</title>
@@ -1220,6 +1226,9 @@
 <p>comment 中文乱码</p>
 <p>①修改表字段注解和表注解<br>alter table COLUMNS_V2 modify column COMMENT varchar(256) character set utf8;<br>alter table TABLE_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>② 修改分区字段注解：<br>alter table PARTITION_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>alter table PARTITION_KEYS modify column PKEY_COMMENT varchar(4000) character set utf8;<br>③修改索引注解：<br>alter table INDEX_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;  </p>
 ]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>图数据库对比</title>
@@ -1571,6 +1580,9 @@
     <title>chatgpt</title>
     <url>/2023/08/16/chatgpt/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>code server</title>
@@ -1592,6 +1604,9 @@
     <title>frp</title>
     <url>/2023/08/16/frp/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>jupyter notebook</title>
@@ -1760,6 +1775,9 @@
 <p>If you already have Miniconda or Anaconda installed, and you just want to upgrade, you should not use the installer. Just use conda update.</p>
 <p>For instance:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ conda update conda</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>airtag</title>
@@ -1825,6 +1843,9 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
 <p>jack    2020-01-01      10      661.0   176.0   10.0    10.0    10.0    56.0    176.0<br>jack    2020-01-05      46      661.0   176.0   56.0    56.0    56.0    111.0   166.0<br>jack    2020-01-08      55      661.0   176.0   111.0   111.0   101.0   124.0   120.0<br>jack    2020-02-03      23      661.0   176.0   134.0   134.0   78.0    120.0   65.0<br>jack    2020-04-06      42      661.0   176.0   176.0   176.0   65.0    65.0    42.0<br>mart    2020-04-08      62      661.0   299.0   62.0    62.0    62.0    130.0   299.0<br>mart    2020-04-09      68      661.0   299.0   130.0   130.0   130.0   205.0   237.0<br>mart    2020-04-11      75      661.0   299.0   205.0   205.0   143.0   237.0   169.0<br>mart    2020-04-13      94      661.0   299.0   299.0   299.0   169.0   169.0   94.0<br>neil    2020-05-10      12      661.0   92.0    12.0    12.0    12.0    92.0    92.0<br>neil    2020-06-12      80      661.0   92.0    92.0    92.0    92.0    92.0    80.0<br>tony    2020-01-02      15      661.0   94.0    15.0    15.0    15.0    44.0    94.0<br>tony    2020-01-04      29      661.0   94.0    44.0    44.0    44.0    94.0    79.0<br>tony    2020-01-07      50      661.0   94.0    94.0    94.0    79.0    79.0    50.0<br>Time taken: 91.905 seconds, Fetched: 14 row(s) </p>
 <p>SELECT name,<br>       orderdate,<br>       cost, –当前window内，当前行的前一行到后一行 金额总和<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate DESC ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS precedingFollow, –当前window内，当前行到最后行的金额总和<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate DESC ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS currentFollow, –当前window内，按照时间进行排序<br> row_number() OVER(PARTITION BY name<br>                   ORDER BY orderdate DESC) AS rank,–用户上次购买的时间<br> lag(orderdate,1,’查无结果’) over(PARTITION BY name<br>                              ORDER BY orderdate) AS lastTime,–用户下一次购买的时间<br> lead(orderdate,1,’查无结果’) over(PARTITION BY name<br>                               ORDER BY orderdate)AS nextTime,–用户上次购物金额<br> lag(cost,1,’查无结果’)over(PARTITION BY name<br>                        ORDER BY orderdate) AS lastCost,–用户下次购物金额<br> lead(cost,1,’查无结果’) OVER (PARTITION BY name<br>                           ORDER BY orderdate) AS nextCost,–用户上一次+这次的购物金额<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS lastCurrentCost,–用户每月购物金额<br> sum(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY month(orderdate)) AS monthCost,–用户当月单词消费最大值<br> max(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY orderdate) AS monthMaxCost,–用户当月单词消费最小值<br> min(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY orderdate) as monthMinCost<br>FROM TEST.COSTITEM</p>
 ]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>ceph安装以及测试</title>
