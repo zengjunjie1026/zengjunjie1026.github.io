@@ -1511,7 +1511,18 @@
   <entry>
     <title>code server</title>
     <url>/2023/08/16/code-server/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h4 id="云端vscode"><a href="#云端vscode" class="headerlink" title="云端vscode"></a>云端vscode</h4><p>云端vscode的概念就是在浏览器中有和本地一样体验的vscode环境。在以下这个网站中，官方已经有实现在浏览器中的实现。</p>
+<h4 id="installation"><a href="#installation" class="headerlink" title="installation"></a>installation</h4><p><a href="https://github.com/coder/code-server/releases">https://github.com/coder/code-server/releases</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## https://github.com/coder/code-server/releases</span></span><br><span class="line">curl -fOL  sudo dpkg -i code-server_4.3.0_amd64.deb</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now code-server@root</span><br><span class="line"><span class="comment"># Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.config/code-server/config.yaml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/../img/codeserver.png" alt="code"></p>
+<p>启动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 类似jupyter notebook</span></span><br><span class="line">code-server</span><br><span class="line"></span><br><span class="line">(base) [zengjunjie@gpu009 ~]$ </span><br><span class="line">(base) [zengjunjie@gpu009 ~]$ code-server</span><br><span class="line">[2023-08-18T02:26:50.960Z] info  code-server 4.14.1 5c199629305a0b935b4388b7db549f77eae82b5a</span><br><span class="line">[2023-08-18T02:26:50.961Z] info  Using user-data-dir ~/.local/share/code-server</span><br><span class="line">[2023-08-18T02:26:50.975Z] info  Using config file ~/.config/code-server/config.yaml</span><br><span class="line">[2023-08-18T02:26:50.975Z] info  HTTP server listening on http://0.0.0.0:8081/</span><br><span class="line">[2023-08-18T02:26:50.975Z] info    - Authentication is enabled</span><br><span class="line">[2023-08-18T02:26:50.975Z] info      - Using password from ~/.config/code-server/config.yaml</span><br><span class="line">[2023-08-18T02:26:50.975Z] info    - Not serving HTTPS</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>frp</title>
