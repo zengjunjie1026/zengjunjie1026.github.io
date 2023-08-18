@@ -164,13 +164,13 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
       type: git
-      repo: ssh://git@github.com/zengjunjie1026/zengjunjie.github.io.git
-      branch: main
+      repo:  git@github.com:zengjunjie1026/zengjunjie1026.github.io.git
+      branch: master
 
 backup:
   type: git
-  theme: material-x-1.2.1
-  message: Back up my www.itrhx.com blog
+  theme: next
+  message: Back up my https://zengjunjie1026.github.io/ blog
   repository:
-    github: git@github.com:zengjunjie1026/zengjunjie.github.io.git,backup
+    github: git@github.com:zengjunjie1026/zengjunjie.github.io.git,main
     # coding: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.git,master
