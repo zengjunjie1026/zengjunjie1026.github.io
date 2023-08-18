@@ -1565,6 +1565,9 @@
     <title>万兆光</title>
     <url>/2023/08/16/%E4%B8%87%E5%85%86%E5%85%89/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>服务器折腾</tag>
+      </tags>
   </entry>
   <entry>
     <title>组建双3090炼丹炉</title>
@@ -1575,11 +1578,21 @@
     <title>黑群晖</title>
     <url>/2023/08/16/%E9%BB%91%E7%BE%A4%E6%99%96/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>服务器折腾</tag>
+      </tags>
   </entry>
   <entry>
     <title>黑苹果</title>
     <url>/2023/08/16/%E9%BB%91%E8%8B%B9%E6%9E%9C/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>intel 10600k<br>microstar Z490 unify itx主板<br>阿斯加特 32G DDR4<br>1TB 阿斯加特 ssd<br>500G 西数SN750 ssd<br>GPU 5700XT<br>机箱 乔思伯V8<br>电源 全汉ms600w sfx小电源  </p>
+<h3 id="成品"><a href="#成品" class="headerlink" title="成品"></a>成品</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) andrew@255imac:~<span class="comment">#neofetch</span></span><br><span class="line">                    <span class="string">&#x27;c.          andrew@imac </span></span><br><span class="line"><span class="string">                 ,xNMM.          ----------- </span></span><br><span class="line"><span class="string">               .OMMMMo           OS: macOS 13.5 22G5038d x86_64 </span></span><br><span class="line"><span class="string">               OMMM0,            Host: Hackintosh (SMBIOS: iMac20,2) </span></span><br><span class="line"><span class="string">     .;loddo:&#x27;</span> loolloddol;.      Kernel: 22.6.0 </span><br><span class="line">   cKMMMMMMMMMMNWMMMMMMMMMM0:    Uptime: 8 days, 28 mins </span><br><span class="line"> .KMMMMMMMMMMMMMMMMMMMMMMMWd.    Packages: 62 (brew) </span><br><span class="line"> XMMMMMMMMMMMMMMMMMMMMMMMX.      Shell: zsh 5.9 </span><br><span class="line">;MMMMMMMMMMMMMMMMMMMMMMMM:       Resolution: 1920x1200@2x </span><br><span class="line">:MMMMMMMMMMMMMMMMMMMMMMMM:       DE: Aqua </span><br><span class="line">.MMMMMMMMMMMMMMMMMMMMMMMMX.      WM: Quartz Compositor </span><br><span class="line"> kMMMMMMMMMMMMMMMMMMMMMMMMWd.    WM Theme: Blue (Light) </span><br><span class="line"> .XMMMMMMMMMMMMMMMMMMMMMMMMMMk   Terminal: Apple_Terminal </span><br><span class="line">  .XMMMMMMMMMMMMMMMMMMMMMMMMK.   Terminal Font: Monaco </span><br><span class="line">    kMMMMMMMMMMMMMMMMMMMMMMd     CPU: Intel i5-10600K (12) @ 4.10GHz </span><br><span class="line">     ;KMMMMMMMWXXWMMMMMMMk.      GPU: AMD Radeon RX 460/560 </span><br><span class="line">       .cooc,.    .,coo:.        Memory: 36909MiB / 65536MiB </span><br><span class="line"></span><br><span class="line">                                                         </span><br><span class="line">                                        </span><br></pre></td></tr></table></figure>
+<p><img src="/../img/hackintosh.png" alt="hackintosh"></p>
+<h2 id="参考EFI"><a href="#参考EFI" class="headerlink" title="参考EFI"></a>参考EFI</h2><p><a href="https://github.com/wjz304/Hackintosh-EFI-MSI-Z490i-Unify">https://github.com/wjz304/Hackintosh-EFI-MSI-Z490i-Unify</a></p>
+]]></content>
+      <tags>
+        <tag>服务器折腾</tag>
+      </tags>
   </entry>
   <entry>
     <title>hexo</title>
