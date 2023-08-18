@@ -17,7 +17,7 @@ description: 做自己爱做的事，爱自己在做的事！
 #作者昵称
 author: andrew
 #网站语言，默认英语，设置简体汉语
-language: zh-CN
+language: zh-Hans
 
 #时区，默认电脑时区
 #timezone: 
@@ -164,12 +164,13 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
       type: git
-      repo: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git
-      branch: master
+      repo: ssh://git@github.com/zengjunjie1026/zengjunjie.github.io.git
+      branch: main
 
 backup:
-    type: git
-    theme: coney,landscape,next
-    repository:
-       github: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git,main
-       gitcafe: git@github.com:zengjunjie1026/zengjunjie1026.github.io.git,backup
+  type: git
+  theme: material-x-1.2.1
+  message: Back up my www.itrhx.com blog
+  repository:
+    github: git@github.com:zengjunjie1026/zengjunjie.github.io.git,backup
+    coding: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.gitmaster
