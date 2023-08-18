@@ -1,7 +1,7 @@
 ---
 title: conda
 date: 2023-08-17 16:14:50
-tags:
+tags: server
 ---
 
 ![image](../img/IMG_20180806_121455.jpg)

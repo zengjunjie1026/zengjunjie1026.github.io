@@ -1,7 +1,7 @@
 ---
 title: hive窗口函数
 date: 2023-08-18 11:31:29
-tags:
+tags: server
 ---
 
 

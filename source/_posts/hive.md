@@ -1,7 +1,7 @@
 ---
 title: hive
 date: 2022-06-16 21:17:46
-tags:
+tags: server
 ---
 
 #### Hive安装 
