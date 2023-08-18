@@ -1562,6 +1562,9 @@
     <title>ssh反向代理</title>
     <url>/2023/08/16/ssh%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>server,内网穿透</tag>
+      </tags>
   </entry>
   <entry>
     <title>stable diffusion</title>
@@ -1686,6 +1689,13 @@
       <tags>
         <tag>日常</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>linux 查找trick</title>
+    <url>/2023/08/18/linux-%E6%9F%A5%E6%89%BEtrick/</url>
+    <content><![CDATA[<h3 id="查找大文件"><a href="#查找大文件" class="headerlink" title="查找大文件"></a>查找大文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -print0 | xargs -0 <span class="built_in">du</span> -h | <span class="built_in">sort</span> -rh | <span class="built_in">head</span> -n 10</span><br></pre></td></tr></table></figure>
+
+<h3 id="精确查找"><a href="#精确查找" class="headerlink" title="精确查找"></a>精确查找</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -name <span class="string">&quot;*.conf&quot;</span> | xargs grep -ri <span class="string">&quot;10.0.0.74&quot;</span> -i</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>ceph安装以及测试</title>
