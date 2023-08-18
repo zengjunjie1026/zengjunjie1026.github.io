@@ -173,4 +173,4 @@ backup:
   message: Back up my www.itrhx.com blog
   repository:
     github: git@github.com:zengjunjie1026/zengjunjie.github.io.git,backup
-    coding: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.gitmaster
+    # coding: ssh://git@andrewandbecky.top:30001/zengjunjie1026/zengjunjie.github.io.git,master
