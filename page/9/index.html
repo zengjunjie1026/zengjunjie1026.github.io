@@ -146,284 +146,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/06/16/hive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/16/hive/" class="post-title-link" itemprop="url">hive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-16 21:17:46" itemprop="dateCreated datePublished" datetime="2022-06-16T21:17:46+08:00">2022-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 14:21:02" itemprop="dateModified" datetime="2023-08-18T14:21:02+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="Hive安装"><a href="#Hive安装" class="headerlink" title="Hive安装"></a>Hive安装</h4><h5 id="2-1-Hive-安装地址"><a href="#2-1-Hive-安装地址" class="headerlink" title="2.1 Hive 安装地址"></a>2.1 Hive 安装地址</h5><p>1)Hive 官网地址 <a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a><br>2)文档查看地址 <a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</a><br>3)下载地址 <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/hive/">http://archive.apache.org/dist/hive/</a><br>4)github 地址 <a target="_blank" rel="noopener" href="https://github.com/apache/hive">https://github.com/apache/hive</a></p>
-<h5 id="2-2Hive-安装部署-2-2-1-安装-Hive"><a href="#2-2Hive-安装部署-2-2-1-安装-Hive" class="headerlink" title="2.2Hive 安装部署 2.2.1 安装 Hive"></a>2.2Hive 安装部署 2.2.1 安装 Hive</h5><p>1)把 apache-hive-3.1.2-bin.tar.gz 上传到 linux 的&#x2F;opt&#x2F;software 目录下<br>2)解压 apache-hive-3.1.2-bin.tar.gz 到&#x2F;opt&#x2F;module&#x2F;目录下面<br>3)修改 apache-hive-3.1.2-bin.tar.gz 的名称为 hive<br>4)修改&#x2F;etc&#x2F;profile.d&#x2F;my_env.sh，添加环境变量<br>    [andrw@hadoop101 software]$ sudo vim &#x2F;etc&#x2F;profile.d&#x2F;my_env.sh<br>5)添加内容<br>6)解决日志 Jar 包冲突<br>7)初始化元数据库<br>    [andrw@hadoop101 hive]$ bin&#x2F;schematool -dbType derby -initSchema<br>2.2.2 启动并使用 Hive 1)启动 Hive<br>    [andrw@hadoop101 hive]$ bin&#x2F;hive<br>2)使用 Hive<br>3)在 CRT 窗口中开启另一个窗口开启 Hive，在&#x2F;tmp&#x2F;andrw 目录下监控 hive.log 文件<br>    [andrw@hadoop101 software]$ tar -zxvf &#x2F;opt&#x2F;software&#x2F;apache-hive-3.1.2-bin.tar.gz -C &#x2F;opt&#x2F;module&#x2F;<br>    [andrw@hadoop101 software]$ mv &#x2F;opt&#x2F;module&#x2F;apache-hive-3.1.2-bin&#x2F; &#x2F;opt&#x2F;module&#x2F;hive  </p>
-<p>#HIVE_HOME</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HIVE_HOME=/opt/module/hive  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HIVE_HOME</span>/bin  </span><br><span class="line">[andrw@hadoop101 software]$ <span class="built_in">mv</span> <span class="variable">$HIVE_HOME</span>/lib/log4j-slf4j-impl-2.10.0.jar <span class="variable">$HIVE_HOME</span>/lib/log4j-slf4j-impl-2.10.0.bak  </span><br><span class="line">hive&gt; show databases;  </span><br><span class="line">hive&gt; show tables;  </span><br><span class="line">hive&gt; create table <span class="built_in">test</span>(<span class="built_in">id</span> int);  </span><br><span class="line">hive&gt; insert into <span class="built_in">test</span> values(1);  </span><br><span class="line">hive&gt; <span class="keyword">select</span> * from <span class="built_in">test</span>;  </span><br><span class="line">Caused by: ERROR XSDB6: Another instance of Derby may have already booted  </span><br><span class="line">the database /opt/module/hive/metastore_db.at  </span><br><span class="line">org.apache.derby.iapi.error.StandardException.newException(Unknown  </span><br><span class="line">Source)  </span><br><span class="line">       at  </span><br><span class="line">org.apache.derby.iapi.error.StandardException.newException(Unknown  </span><br><span class="line">Source) at  </span><br><span class="line">org.apache.derby.impl.store.raw.data.BaseDataFileFactory.privGetJBMSLockO  </span><br><span class="line">nDB(Unknown Source)  </span><br><span class="line">       at  </span><br><span class="line">org.apache.derby.impl.store.raw.data.BaseDataFileFactory.run(Unknown  </span><br><span class="line">Source)  </span><br></pre></td></tr></table></figure>
-<p>原因在于 Hive 默认使用的元数据库为 derby，开启 Hive 之后就会占用元数据库，且不与 其他客户端共享数据，所以我们需要将 Hive 的元数据地址改为 MySQL。</p>
-<p>2.4 Hive 元数据配置到 MySQL 2.4.1 拷贝驱动<br>将 MySQL 的 JDBC 驱动拷贝到 Hive 的 lib 目录下<br>2.4.2 配置 Metastore 到 MySQL<br>1)在$HIVE_HOME&#x2F;conf 目录下新建 hive-site.xml 文件<br>    [andrew@hadoop101 software]$ vim $HIVE_HOME&#x2F;conf&#x2F;hive-site.xml<br>添加如下内容<br>   [andrew@hadoop101 software]$ cp &#x2F;opt&#x2F;software&#x2F;mysql-connector-java-5.1.37.jar $HIVE_HOME&#x2F;lib  </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/xsl&quot;</span> href=<span class="string">&quot;configuration.xsl&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 URL --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://hadoop101:3306/metastore?useSSL=false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 Driver--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 username--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- jdbc 连接的 password --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Hive 元数据存储版本的验证 --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.schema.verification<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--元数据存储授权--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.event.db.notification.api.auth<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Hive 默认在 HDFS 的工作目录 --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/user/hive/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2)登陆 MySQL  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[andrew@hadoop101 software]$ mysql -uroot -p000000 </span><br></pre></td></tr></table></figure>
-<p>3)新建 Hive 元数据库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database metastore chartset utf8mb4;</span><br><span class="line">mysql&gt; quit;</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>初始化 Hive 元数据库<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -initSchema -dbType mysql -verbose</span><br></pre></td></tr></table></figure>
-2.4.3 再次启动 Hive</li>
-</ol>
-<p>1)启动 Hive</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; show databases;</span><br><span class="line">hive&gt; show tables;</span><br><span class="line">hive&gt; create table <span class="built_in">test</span> (<span class="built_in">id</span> int);</span><br><span class="line">hive&gt; insert into <span class="built_in">test</span> values(1);</span><br><span class="line">hive&gt; <span class="keyword">select</span> * from <span class="built_in">test</span>;</span><br></pre></td></tr></table></figure>
-
-<p>2.5 使用元数据服务的方式访问 Hive </p>
-<p>1)在 hive-site.xml 文件中添加如下配置信息</p>
-<!-- 指定存储元数据要连接的地址 -->
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.uris<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>thrift://hadoop101:9083<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2)启动 metastore</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[andrew@hadoop101 hive]$ hive --service metastore </span><br><span class="line">2020-04-24 16:58:08: Starting Hive Metastore Server </span><br></pre></td></tr></table></figure>
-<p> 注意: 启动后窗口不能再操作，需打开一个新的 shell 窗口做别的操作</p>
-<p>3)启动 hive</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[andrew@hadoop101 hive]$ bin/hive</span><br></pre></td></tr></table></figure>
-
-<p>2.6 使用 JDBC 方式访问 Hive<br>1)在 hive-site.xml 文件中添加如下配置信息</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- 指定 hiveserver2 连接的 host --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.bind.host<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop101<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定 hiveserver2 连接的端口号 --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>10000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2)启动 hiveserver2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive --service hiveserver2</span><br></pre></td></tr></table></figure>
-
-<p>3)启动 beeline 客户端(需要多等待一会)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beeline -u jdbc:hive2://hadoop101:10000 -n andrew</span><br></pre></td></tr></table></figure>
-<p>4)看到如下界面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Connecting to jdbc:hive2://hadoop101:10000</span><br><span class="line">Connected to: Apache Hive (version 3.1.2)</span><br><span class="line">Driver: Hive JDBC (version 3.1.2)</span><br><span class="line">Transaction isolation: TRANSACTION_REPEATABLE_READ</span><br><span class="line">Beeline version 3.1.2 by Apache Hive</span><br><span class="line">0: jdbc:hive2://hadoop101:10000&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> hive --service metastore 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="built_in">nohup</span> hive --service hiveserver2 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>打印当前数据库名和表头</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.header<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.current.db<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看当前设置<br>hive&gt;set;</p>
-<p>comment 中文乱码</p>
-<p>①修改表字段注解和表注解<br>alter table COLUMNS_V2 modify column COMMENT varchar(256) character set utf8;<br>alter table TABLE_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>② 修改分区字段注解：<br>alter table PARTITION_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;<br>alter table PARTITION_KEYS modify column PKEY_COMMENT varchar(4000) character set utf8;<br>③修改索引注解：<br>alter table INDEX_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;  </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2022/01/16/hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/16/hadoop/" class="post-title-link" itemprop="url">hadoop</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-16 21:14:23" itemprop="dateCreated datePublished" datetime="2022-01-16T21:14:23+08:00">2022-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-16 21:29:12" itemprop="dateModified" datetime="2023-08-16T21:29:12+08:00">2023-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="大数据概念"><a href="#大数据概念" class="headerlink" title="大数据概念"></a>大数据概念</h2><p>大数据（big data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、<br>洞察发现力和流程优化能力的海量、高增长率和多样化的信息资产。</p>
-<blockquote>
-<p>主要解决，海量数据的存储和海量数据的分析计算问题。</p>
-</blockquote>
-<h2 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h2><p>当然，目前这个生态是越来越大了，但是它的本质还是在二个方面 计算 和 存储</p>
-<h3 id="开源生态"><a href="#开源生态" class="headerlink" title="开源生态"></a>开源生态</h3><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5f63ebfc9e784f7690d0ed92f290e7bb~tplv-k3u1fbpfcp-watermark.image"></p>
-<ul>
-<li><p>Sqoop：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如：MySQL ,<br>Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-</li>
-<li><p>Flume：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统，Flume支持在日志系统中定制各类数据发送方，<br>用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-</li>
-<li><p>Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，有如下特性：</p>
-<ul>
-<li>通过O(1)的磁盘数据结构提供消息的持久化，这种结构对于即使数以TB的消息存储也能够保持长时间的稳定性能。</li>
-<li>高吞吐量：即使是非常普通的硬件Kafka也可以支持每秒数百万的消息。</li>
-<li>支持通过Kafka服务器和消费机集群来分区消息。</li>
-<li>支持Hadoop并行数据加载。</li>
-</ul>
-</li>
-<li><p>Storm：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。这是管理队列及工作者集群的另一种方式。<br>Storm也可被用于“连续计算”（continuous computation），对数据流做连续查询，在计算时就将结果以流的形式输出给用户。</p>
-</li>
-<li><p>Spark：Spark是当前最流行的开源大数据内存计算框架。可以基于Hadoop上存储的大数据进行计算。</p>
-</li>
-<li><p>Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-</li>
-<li><p>Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-</li>
-<li><p>Hive：hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce<br>任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-</li>
-<li><p>Mahout:Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。<br>聚集：收集文件并进行相关文件分组。分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标签的文档进行正确的归类。频繁项集挖掘：将一组项分组，<br>并识别哪些个别项会经常一起出现。</p>
-</li>
-<li><p>ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。它是一个针对大型分布式系统的可靠协调系统，提供的功能包括：配置维护、名字服务、分布式同步、<br>组服务等。ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</p>
-</li>
-</ul>
-<h3 id="阿里云MaxCompute"><a href="#阿里云MaxCompute" class="headerlink" title="阿里云MaxCompute"></a>阿里云MaxCompute</h3><p>MaxCompute（大数据计算服务）是是一种快速、完全托管的TB&#x2F;PB级数据仓库解决方案。MaxCompute主要用于实时性要求不高的、批量结构化数据的存储和计算。<br>并可提供大数据分析建模服务。其特点如下： </p>
-<ul>
-<li>采用分布式架构高效处理海量数据</li>
-<li>基于表的数据存储</li>
-<li>于SQL的数据处理</li>
-<li>支持多用户协同分析数据，多种权限管理方式，具有灵活的数据访问控制策略</li>
-<li>兼容Hive</li>
-</ul>
-<p>MaxCompute架构<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/521857b4c5af453e8967446f719eee2c~tplv-k3u1fbpfcp-watermark.image"></p>
-<p>MaxCompute功能</p>
-<ul>
-<li>数据存储</li>
-</ul>
-<p>适用于TB以上规模的存储及计算需求，最大可达EB级别。数据分布式存储，多副本冗余，数据存储对外仅开放表的操作接口，不提供文件系统访问接口。表数据列式存储，<br>默认高度压缩，后续将提供兼容ORC的Ali-ORC存储格式。<br>支持外表，将存储在OSS对象存储、OTS表格存储的数据映射为二维表。<br>支持Partition、Bucket的分区、分桶存储。<br>底层是盘古文件系统（不是HDFS）。<br>使用时，存储与计算解耦，不需要仅仅为了存储而扩大不必要的计算资源。</p>
-<ul>
-<li>数据通道<br>TUNNEL：提供高并发的离线数据上传下载服务。支持每天TB&#x2F;PB级别的数据导入导出。适合于全量数据或历史数据的批量导入。</li>
-</ul>
-<p>DataHub：针对实时数据上传的场景，具有延迟低、使用方便的特点，适用于增量数据的导入。Datahub还支持多种数据传输插件，包括Logstash、Flume、Fluentd、<br>Sqoop等。同时支持日志服务Log Service中的日志数据的一键投递至MaxCompute，进而利用大数据开发套件进行日志分析和挖掘。</p>
-<ul>
-<li>多种计算模型<br>SQL：以二维表的形式存储数据，支持多种数据类型，MaxCompute以二维表的形式存储数据，对外提供了SQL查询功能。不支持事务、索引及Update&#x2F;Delete等操作，<br>SQL语法与Oracle，MySQL等有一定差别。无法在毫秒级别返回结果。</li>
-</ul>
-<p>MapReduce：支持MapReduce java编程接口（提供优化增强的MaxCompute MapReduce，也提供高度兼容Hadoop的MapReduce版本）。不暴露文件系统，<br>输入输出都是表。通过MaxCompute客户端工具、Dataworks提交作业。</p>
-<p>Graph：是一套面向迭代的图计算处理框架。图计算作业使用图进行建模，图由点（Vertex）和边（Edge）组成，点和边包含权值（Value）。通过迭代对图进行编辑、<br>演化，最终求解出结果，典型应用：PageRank、单源最短距离算法 、K-均值聚类算法等。</p>
-<ul>
-<li>Spark</li>
-</ul>
-<p>MaxCompute提供了Spark on MaxCompute的解决方案，在统一的计算资源和数据集权限体系之上，提供Spark计算框架，支持用户以熟悉的开发使用方式提交运行<br>Spark作业。</p>
-<ul>
-<li>交互式分析(Lightning)<br>MaxCompute产品的交互式查询服务。兼容PostgreSQL协议的JDBC&#x2F;ODBC接口。支持主流BI及SQL客户端工具的连接访问，如Tableau、帆软BI、Navicat、SQL<br>Workbench&#x2F;J等。</li>
-</ul>
-<h2 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h2><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，海量数据的存储和海量数据的分析计算问题。</li>
-<li>广义上来说，HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
-</ul>
-<h2 id="Hadoop的组成"><a href="#Hadoop的组成" class="headerlink" title="Hadoop的组成"></a>Hadoop的组成</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94def613dbab4f819ff61a0802b4a5d2~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h3><ul>
-<li>NameNode（nn）：存储文件的元数据，如文件名，文件目录结构，文件属性（生成时间、副本数、文件权限），以及每个文件的块列表和块所在的DataNode等。</li>
-<li>DataNode(dn)：在本地文件系统存储文件块数据，以及块数据的校验和。</li>
-<li>Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</li>
-</ul>
-<h3 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h3><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e22495656df4cb1b6bbf187dac7b733~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h3><p>MapReduce将计算过程分为两个阶段：Map和Reduce</p>
-<ul>
-<li>Map阶段并行处理输入数据</li>
-<li>Reduce阶段对Map结果进行汇总</li>
-</ul>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2fe4c16a0a4b4ea3b04b80c2318513cb~tplv-k3u1fbpfcp-watermark.image"></p>
-<h2 id="Hadoop分布式搭建"><a href="#Hadoop分布式搭建" class="headerlink" title="Hadoop分布式搭建"></a>Hadoop分布式搭建</h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2021/08/16/hbase%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -735,6 +457,266 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2020/08/16/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/08/16/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94/" class="post-title-link" itemprop="url">图数据库对比</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-16 21:19:30" itemprop="dateCreated datePublished" datetime="2020-08-16T21:19:30+08:00">2020-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-18 15:41:29" itemprop="dateModified" datetime="2023-08-18T15:41:29+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><span class="post-count">&lt;%&#x3D; wordcount(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; min2read(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; totalcount(site) %&gt;</span></p>
+<h4 id="图数据库的对比"><a href="#图数据库的对比" class="headerlink" title="图数据库的对比"></a>图数据库的对比</h4><table>
+<thead>
+<tr>
+<th>图数据库</th>
+<th>是否分布式</th>
+<th>开发语言</th>
+<th>支持的节点数量</th>
+<th>原生图存储</th>
+<th align="left">multi_model</th>
+<th>查询语言</th>
+<th>支持开发的语言</th>
+<th>开发公司</th>
+<th>落地的公司</th>
+<th>是否开源</th>
+<th>使用场景</th>
+<th>开源地址</th>
+<th>文档地址</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>neo4j</td>
+<td>社区单机版&#x2F;商业是伪分布式</td>
+<td>java</td>
+<td>百亿</td>
+<td>是</td>
+<td align="left">否</td>
+<td>cypher</td>
+<td>java&#x2F;python</td>
+<td>neo4j</td>
+<td>使用非常广泛</td>
+<td>否</td>
+<td>OLAP</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nebula graph</td>
+<td>分布式</td>
+<td>java</td>
+<td>千亿个</td>
+<td>是</td>
+<td align="left">否</td>
+<td>nsql</td>
+<td>java</td>
+<td></td>
+<td>京东 &#x2F;360&#x2F;携程&#x2F;oppo&#x2F;各种银行</td>
+<td></td>
+<td>OLAP</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/vesoft-inc/nebula-graph">https://github.com/vesoft-inc/nebula-graph</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ultipa</td>
+<td>分布式</td>
+<td></td>
+<td></td>
+<td>是</td>
+<td align="left">否</td>
+<td></td>
+<td></td>
+<td>北京同心尚科技发展有限公司</td>
+<td>金融行业</td>
+<td>否</td>
+<td>HTAP</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>janusgraph</td>
+<td>分布式</td>
+<td>java</td>
+<td></td>
+<td>否</td>
+<td align="left">是</td>
+<td>gremlin</td>
+<td>java</td>
+<td>The Linux Foundation</td>
+<td>apache顶级项目</td>
+<td>是</td>
+<td>OLAP</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/JanusGraph/janusgraph">https://github.com/JanusGraph/janusgraph</a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.janusgraph.org/">https://docs.janusgraph.org/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>hugegraph</td>
+<td>分布式</td>
+<td>java</td>
+<td></td>
+<td>否</td>
+<td align="left">是</td>
+<td>gremlin</td>
+<td>java</td>
+<td>百度</td>
+<td>百度</td>
+<td>是</td>
+<td>OLAP</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hugegraph/hugegraph">https://github.com/hugegraph/hugegraph</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tugraph</td>
+<td>分布式</td>
+<td>C++</td>
+<td></td>
+<td>是</td>
+<td align="left">否</td>
+<td>cypher</td>
+<td>C++</td>
+<td>费马科技</td>
+<td>京东金融、  搜狗 、国家电网</td>
+<td>否</td>
+<td>OLAP</td>
+<td>wget <a target="_blank" rel="noopener" href="https://fma-ai.cn/download/lgraph_latest.tar">https://fma-ai.cn/download/lgraph_latest.tar</a></td>
+<td><a target="_blank" rel="noopener" href="https://fma-ai.cn/help/">https://fma-ai.cn/help/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>tigergraph</td>
+<td>单机开发&#x2F;商业是分布式</td>
+<td>C++</td>
+<td>万亿</td>
+<td>是</td>
+<td align="left">否</td>
+<td>GSQL</td>
+<td></td>
+<td>tighergraph</td>
+<td>国家电网、国有银行</td>
+<td>否</td>
+<td>OLTP</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://www.tigergraph.com.cn/">https://www.tigergraph.com.cn/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>geagraph</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>否</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="JanusGraph"><a href="#JanusGraph" class="headerlink" title="JanusGraph"></a>JanusGraph</h4><p>JanusGraph是一个可扩展的图数据库，可以把包含数千亿个顶点和边的图存储在多机集群上。它支持事务，支持数千用户实时、并发访问存储在其中的图。</p>
+<p>anusGraph是2016年12月27日从Titan fork出来的一个分支<br>(1)分布式部署，因此，支持集群。<br>(2)可以存储大图，比如包含数千亿Vertices和edges的图。<br>(3)支持数千用户实时、并发访问。（并发访问肯定是实时的，这个唉，没必要强调好像）<br>(4)集群节点可以线性扩展，以支持更大的图和更多的并发访问用户。（Elastic and linear scalability for a growing data and user base）<br>(5)数据分布式存储，并且每一份数据都有多个副本，因此，有更好的计算性能和容错性。（Data distribution and replication for performance and fault tolerance）<br>(6)支持在多个数据中心做高可用，支持热备份。（Elastic and linear scalability for a growing data and user base）<br>(7)支持各种后端存储系统，目前标准支持以下四种，当然也可以增加第三方的存储系统：<br>Apache Cassandra®<br>Apache HBase®<br>Google Cloud Bigtable<br>Oracle BerkeleyDB<br>(8)通过集成大数据平台，比如Apache Spark、Apache Giraph、Apache Hadoop等，支持全局图数据分析、报表、ETL<br>(9)支持geo（Gene Expression Omnibus，基因数据分析）、numeric range（这个的含义不清楚）<br>(10)集成ElasticSearch、Apache Solr、Apache Lucene等系统后，可以支持全文搜索。<br>(11) 原生集成Apache TinkerPop图技术栈，包括Gremlin graph query language、Gremlin graph server、Gremin applications。<br>(12)开源，基于Apache 2 Licence。<br>(13)通过使用以下系统可以可视化存储在JanusGraph中的图数据：<br>Cytoscape<br>Gephi plugin for Apache TinkerPop<br>Graphexp<br>KeyLines by Cambridge Intelligence<br>Linkurious</p>
+<p><img src="https://images2018.cnblogs.com/blog/513451/201805/513451-20180531112615520-1894246489.png" alt="avatar"></p>
+<p>java语言开发，不支持python语言</p>
+<ol>
+<li><strong>性能</strong> 要求图查询及图分析算法的执行快，涉及到底层存储结构，原生图存储基于点和边，计算中不需要过多的逻辑和物理层转换。原生图存储(neo4j&#x2F;tigergraph)胜</li>
+<li><strong>容量</strong> 大数据时代可获取的数据越来越多，单机的容量有限。原生图存储如何实现分布式存储是困难所在。TigerGraph自称是原生并行图；neo4j支持数据的高可用HA集群，但非分布式存储;JanusGraph利用HBase等NoSQL作为后端存储，在存储层面算是分布式的，容量可以很大。百度基于JanusGraph开源了HugeGraph，增加了很多特性，提高了易用性及性能，增加了一些图分析算法。</li>
+<li><strong>查询能力</strong> 图数据库要具备点关系的查询能力，必不可少的如两点间所有路径，最短路径，多度查询等，这个一般都具备，差异主要是性能，普通图数据库查询3度及以上通常性能就很低了，而实际经常需要查询6度的关系，tigergraph自己的测试报告性能是很强劲的针对twitter的大图数据库，只有tigergraph完成了6度关系查询</li>
+<li><strong>图分析计算能力</strong> 图数据库如果仅具备存储及查询能力，则还需要依赖外部的GraphX等计算引擎才能完成一些图算法分析，这样即在数据传输，又在图表达上存在转换浪费。TigerGraph可以通过GSQL实现类存储过程式的算法封装，且已实现了很多图算法<a href="https://link.zhihu.com/?target=https://www.tigergraph.com.cn/tigergraph%E5%BC%80%E6%BA%90%E5%8D%81%E5%A4%A7%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%97%E6%B3%95%E5%BA%93/">https://www.tigergraph.com.cn/tigergraph开源十大图数据库算法库/</a></li>
+</ol>
+<p>百度基于JanusGraph开源了HugeGraph，增加了很多特性，提高了易用性及性能，增加了一些图分析算法。</p>
+<p><strong>JanusGraph&#x2F;HugeGraph</strong>是开源的，Apache协议，开放性最好</p>
+<p><strong>neo4j</strong>社区版开源，非商用免费，商业版支持HA集群，并不是完全分布式，使用最广最流行</p>
+<p><strong>TigerGraph</strong>将普通数据库归为第一第二代，自己为第三代，“TigerGraph是非常完备和优化的图数据库平台，支持大规模图存储以及大规模图的运行处理，具有非常强大的查询语言和算法库”。TigerGraph没有开源，<strong>开发者版支持单机单用户单图非商业免费，不支持DynamicSchemaChange等</strong>，图创建好之后也能通过界面手工去修改或添加，除非DropAll。TG的GSQL是类sql的语言，表达能力挺强，其将编写的query直接安装发布为restapi的形式让我感到很惊艳。目前TigerGraph的生态不是很全，编程api等能力也有一定限制，但值得尝试</p>
+<p><img src="https://pic3.zhimg.com/v2-5abbeda0fb296d05d1516fcda2d3592e_r.jpg" alt="preview"></p>
+<p>![image-20211109160429069](&#x2F;Users&#x2F;andrew&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20211109160429069.png)</p>
+<p>geagraph 阿里联合清华发布，没有开源</p>
+<p><img src="https://pic2.zhimg.com/v2-2ce2bd623678dd5dbd42933d49b2d321_r.jpg" alt="preview"></p>
+<p>janusgraph</p>
+<p><img src="https://img-blog.csdnimg.cn/20190123101621250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pZQzg4ODg4,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>tugraph</p>
+<p><img src="https://fma-ai.cn/cover/%E6%88%AA%E5%B1%8F2020-07-09%20%E4%B8%8B%E5%8D%881-1594348883927.png" alt="img"></p>
+<p>cypher 语法，没有开源，估计是neo4j套皮</p>
+<p><img src="https://pic4.zhimg.com/v2-88a8c5a05d2fe6e93d44ddd937a7cc98_r.jpg" alt="preview"></p>
+<p>tigergraph</p>
+<p>![image-20211111104734637](&#x2F;Users&#x2F;andrew&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20211111104734637.png)</p>
+<p><img src="https://img2018.cnblogs.com/blog/847408/201901/847408-20190118192620943-2101126015.png" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2020/03/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -787,6 +769,174 @@
           <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gdisk</span><br><span class="line">fdisk /dev/sdb</span><br><span class="line">m</span><br><span class="line">g</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="built_in">mkdir</span> /data</span><br><span class="line">mounr /dev/sdb /data</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2019/08/16/spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/16/spark/" class="post-title-link" itemprop="url">spark</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-08-16 21:40:18" itemprop="dateCreated datePublished" datetime="2019-08-16T21:40:18+08:00">2019-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-16 21:40:36" itemprop="dateModified" datetime="2023-08-16T21:40:36+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h1><nav>
+<a href="#一简介">一、简介</a><br/>
+<a href="#二特点">二、特点</a><br/>
+<a href="#三集群架构">三、集群架构</a><br/>
+<a href="#四核心组件">四、核心组件</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-Spark--SQL">3.1 Spark  SQL</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-Spark-Streaming">3.2 Spark Streaming</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-MLlib">3.3 MLlib</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-Graphx">3.4 Graphx</a><br/>
+<a href="#">  </a><br/>
+</nav>
+
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Spark 于 2009 年诞生于加州大学伯克利分校 AMPLab，2013 年被捐赠给 Apache 软件基金会，2014 年 2 月成为 Apache 的顶级项目。相对于 MapReduce 的批处理计算，Spark 可以带来上百倍的性能提升，因此它成为继 MapReduce 之后，最为广泛使用的分布式计算框架。</p>
+<h2 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h2><p>Apache Spark 具有以下特点：</p>
+<ul>
+<li>使用先进的 DAG 调度程序，查询优化器和物理执行引擎，以实现性能上的保证；</li>
+<li>多语言支持，目前支持的有 Java，Scala，Python 和 R；</li>
+<li>提供了 80 多个高级 API，可以轻松地构建应用程序；</li>
+<li>支持批处理，流处理和复杂的业务分析；</li>
+<li>丰富的类库支持：包括 SQL，MLlib，GraphX 和 Spark Streaming 等库，并且可以将它们无缝地进行组合；  </li>
+<li>丰富的部署模式：支持本地模式和自带的集群模式，也支持在 Hadoop，Mesos，Kubernetes 上运行；</li>
+<li>多数据源支持：支持访问 HDFS，Alluxio，Cassandra，HBase，Hive 以及数百个其他数据源中的数据。</li>
+</ul>
+<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/future-of-spark.png"/> </div>
+
+<h2 id="三、集群架构"><a href="#三、集群架构" class="headerlink" title="三、集群架构"></a>三、集群架构</h2><table>
+<thead>
+<tr>
+<th>Term（术语）</th>
+<th>Meaning（含义）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Application</td>
+<td>Spark 应用程序，由集群上的一个 Driver 节点和多个 Executor 节点组成。</td>
+</tr>
+<tr>
+<td>Driver program</td>
+<td>主运用程序，该进程运行应用的 main() 方法并且创建  SparkContext</td>
+</tr>
+<tr>
+<td>Cluster manager</td>
+<td>集群资源管理器（例如，Standlone Manager，Mesos，YARN）</td>
+</tr>
+<tr>
+<td>Worker node</td>
+<td>执行计算任务的工作节点</td>
+</tr>
+<tr>
+<td>Executor</td>
+<td>位于工作节点上的应用进程，负责执行计算任务并且将输出数据保存到内存或者磁盘中</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>被发送到 Executor 中的工作单元</td>
+</tr>
+</tbody></table>
+<div align="center"> <img src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-集群模式.png"/> </div>
+
+<p><strong>执行过程</strong>：</p>
+<ol>
+<li>用户程序创建 SparkContext 后，它会连接到集群资源管理器，集群资源管理器会为用户程序分配计算资源，并启动 Executor；</li>
+<li>Driver 将计算程序划分为不同的执行阶段和多个 Task，之后将 Task 发送给 Executor；</li>
+<li>Executor 负责执行 Task，并将执行状态汇报给 Driver，同时也会将当前节点资源的使用情况汇报给集群资源管理器。</li>
+</ol>
+<h2 id="四、核心组件"><a href="#四、核心组件" class="headerlink" title="四、核心组件"></a>四、核心组件</h2><p>Spark 基于 Spark Core 扩展了四个核心组件，分别用于满足不同领域的计算需求。</p>
+<div align="center"> <img  width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-stack.png"/> </div>
+
+<h3 id="3-1-Spark-SQL"><a href="#3-1-Spark-SQL" class="headerlink" title="3.1 Spark  SQL"></a>3.1 Spark  SQL</h3><p>Spark SQL 主要用于结构化数据的处理。其具有以下特点：</p>
+<ul>
+<li>能够将 SQL 查询与 Spark 程序无缝混合，允许您使用 SQL 或 DataFrame API 对结构化数据进行查询；</li>
+<li>支持多种数据源，包括 Hive，Avro，Parquet，ORC，JSON 和 JDBC；</li>
+<li>支持 HiveQL 语法以及用户自定义函数 (UDF)，允许你访问现有的 Hive 仓库；</li>
+<li>支持标准的 JDBC 和 ODBC 连接；</li>
+<li>支持优化器，列式存储和代码生成等特性，以提高查询效率。</li>
+</ul>
+<h3 id="3-2-Spark-Streaming"><a href="#3-2-Spark-Streaming" class="headerlink" title="3.2 Spark Streaming"></a>3.2 Spark Streaming</h3><p>Spark Streaming 主要用于快速构建可扩展，高吞吐量，高容错的流处理程序。支持从 HDFS，Flume，Kafka，Twitter 和 ZeroMQ 读取数据，并进行处理。</p>
+<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-arch.png"/> </div>
+
+<p> Spark Streaming 的本质是微批处理，它将数据流进行极小粒度的拆分，拆分为多个批处理，从而达到接近于流处理的效果。</p>
+<div align="center"> <img width="600px"   src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-flow.png"/> </div>
+
+
+
+<h3 id="3-3-MLlib"><a href="#3-3-MLlib" class="headerlink" title="3.3 MLlib"></a>3.3 MLlib</h3><p>MLlib 是 Spark 的机器学习库。其设计目标是使得机器学习变得简单且可扩展。它提供了以下工具：</p>
+<ul>
+<li><strong>常见的机器学习算法</strong>：如分类，回归，聚类和协同过滤；</li>
+<li><strong>特征化</strong>：特征提取，转换，降维和选择；</li>
+<li><strong>管道</strong>：用于构建，评估和调整 ML 管道的工具；</li>
+<li><strong>持久性</strong>：保存和加载算法，模型，管道数据；</li>
+<li><strong>实用工具</strong>：线性代数，统计，数据处理等。</li>
+</ul>
+<h3 id="3-4-Graphx"><a href="#3-4-Graphx" class="headerlink" title="3.4 Graphx"></a>3.4 Graphx</h3><p>GraphX 是 Spark 中用于图形计算和图形并行计算的新组件。在高层次上，GraphX 通过引入一个新的图形抽象来扩展 RDD(一种具有附加到每个顶点和边缘的属性的定向多重图形)。为了支持图计算，GraphX 提供了一组基本运算符（如： subgraph，joinVertices 和 aggregateMessages）以及优化后的 Pregel API。此外，GraphX 还包括越来越多的图形算法和构建器，以简化图形分析任务。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
       
     </div>
 

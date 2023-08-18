@@ -133,8 +133,11 @@
   </entry>
   <entry>
     <title>docker基本操作</title>
-    <url>/2023/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+    <url>/2019/08/16/docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>elasticsearch分布式安装</title>
@@ -1232,8 +1235,9 @@
   </entry>
   <entry>
     <title>图数据库对比</title>
-    <url>/2023/08/16/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94/</url>
-    <content><![CDATA[<h4 id="图数据库的对比"><a href="#图数据库的对比" class="headerlink" title="图数据库的对比"></a>图数据库的对比</h4><table>
+    <url>/2020/08/16/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94/</url>
+    <content><![CDATA[<p><span class="post-count">&lt;%&#x3D; wordcount(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; min2read(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; totalcount(site) %&gt;</span></p>
+<h4 id="图数据库的对比"><a href="#图数据库的对比" class="headerlink" title="图数据库的对比"></a>图数据库的对比</h4><table>
 <thead>
 <tr>
 <th>图数据库</th>
@@ -1749,16 +1753,23 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> search:</span><br><span class="line">      path: search.xml</span><br><span class="line">      field: post</span><br><span class="line">      format: html</span><br><span class="line">      <span class="built_in">limit</span>: 10000</span><br><span class="line"></span><br><span class="line">主题配置文件下，local_search改成<span class="literal">true</span>即可</span><br><span class="line">local_search:</span><br><span class="line">      <span class="built_in">enable</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>14、新建文章<br>hexo new 文章名称<br>存储在&#x2F;source&#x2F;_posts下<br>hexo 插件<br>插件汇总：<a href="https://blog.csdn.net/qq_43701912/article/details/107310923">https://blog.csdn.net/qq_43701912/article/details/107310923</a></p>
 ]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>nfs centos</title>
     <url>/2023/08/17/nfs-centos/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@frps.cn ~]<span class="comment"># yum install -y nfs-utils rpcbind</span></span><br><span class="line"></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start nfs</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable nfs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#首先检查nfs挂载目录是否正常</span></span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e localhost</span></span><br><span class="line">Export list <span class="keyword">for</span> localhost:</span><br><span class="line">/volume1/nfs01 *</span><br><span class="line"></span><br><span class="line"><span class="comment">#先在客户端创建数据目录（挂载点位置）</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mkdir -p /data1/k8s/</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mount -t nfs 10.4.82.118:/volume1/nfs01 /data1/k8s</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#现在进行挂载 分别是ip:nfs目录  节点存储目录</span></span><br><span class="line"></span><br><span class="line">挂在完成后我们使用<span class="built_in">df</span> -h 就可以看到挂载点</span><br><span class="line">[root@所有节点 ~]<span class="comment"># df -h|grep 10.4.82.135</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>conda</title>
     <url>/2023/08/17/conda/</url>
-    <content><![CDATA[<p><img src="/../img/IMG_20180806_121455.jpg" alt="image"></p>
+    <content><![CDATA[<p><span class="post-count">&lt;%&#x3D; wordcount(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; min2read(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; totalcount(site) %&gt;</span></p>
+<p><img src="/../img/IMG_20180806_121455.jpg" alt="image"></p>
 <h2 id="Miniconda"><a href="#Miniconda" class="headerlink" title="Miniconda"></a>Miniconda</h2><p>Miniconda is a free minimal installer for conda. It is a small, bootstrap version of Anaconda that includes only conda, Python, the packages they depend on, and a small number of other useful packages, including pip, zlib and a few others. Use the conda install command to install 720+ additional conda packages from the Anaconda repository.</p>
 <p>See if Miniconda is right for you.</p>
 <h2 id="System-requirements"><a href="#System-requirements" class="headerlink" title="System requirements"></a>System requirements</h2><p>License: Free use and redistribution under the terms of the EULA for Miniconda.<br>Operating system: Windows 10 or newer, 64-bit macOS 10.13+, or Linux, including Ubuntu, RedHat, CentOS 7+, and others.<br>If your operating system is older than what is currently supported, you can find older versions of the Miniconda installers in our archive that might work for you.<br>System architecture: Windows- 64-bit x86, 32-bit x86; macOS- 64-bit x86 &amp; Apple M1 (ARM64); Linux- 64-bit x86, 64-bit aarch64 (AWS Graviton2), 64-bit IBM Power8&#x2F;Power9, s390x (Linux on IBM Z &amp; LinuxONE).<br>The linux-aarch64 Miniconda installer requires glibc &gt;&#x3D;2.26 and thus will not work with CentOS 7, Ubuntu 16.04, or Debian 9 (“stretch”).<br>Minimum 400 MB disk space to download and install.<br>On Windows, macOS, and Linux, it is best to install Miniconda for the local user, which does not require administrator permissions and is the most robust type of installation. However, if you need to, you can install Miniconda system wide, which does require administrator permissions.</p>
