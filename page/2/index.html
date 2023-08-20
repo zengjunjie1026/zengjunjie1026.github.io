@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,74 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/pymongo%E5%88%86%E7%89%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/18/pymongo%E5%88%86%E7%89%87/" class="post-title-link" itemprop="url">pymongo分片</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-18 17:28:46" itemprop="dateCreated datePublished" datetime="2023-08-18T17:28:46+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -429,85 +497,6 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
 <h2 id="5-Secondary-NameNode了解吗，它的工作机制是怎样的"><a href="#5-Secondary-NameNode了解吗，它的工作机制是怎样的" class="headerlink" title="5. Secondary NameNode了解吗，它的工作机制是怎样的"></a>5. Secondary NameNode了解吗，它的工作机制是怎样的</h2><p>Secondary NameNode 是合并NameNode的edit logs到fsimage文件中；<br>它的具体工作机制：<br>（1）Secondary NameNode询问NameNode是否需要checkpoint。直接带回NameNode是否检查结果<br>（2）Secondary NameNode请求执行checkpoint<br>（3）NameNode滚动正在写的edits日志<br>（4）将滚动前的编辑日志和镜像文件拷贝到Secondary NameNode<br>（5）Secondary NameNode加载编辑日志和镜像文件到内存，并合并<br>（6）生成新的镜像文件fsimage.chkpoint<br>（7）拷贝fsimage.chkpoint到NameNode<br>（8）NameNode将fsimage.chkpoint重新命名成fsimage<br>所以如果NameNode中的元数据丢失，是可以从Secondary NameNode恢复一部分元数据信息的，但不是全部，因为NameNode正在写的edits日志还没有拷贝到Secondary NameNode，这部分恢复不了</p>
 <h2 id="6-Secondary-NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全"><a href="#6-Secondary-NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全" class="headerlink" title="6. Secondary NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全"></a>6. Secondary NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全</h2><h2 id="8-在NameNode-HA中，会出现脑裂问题吗？怎么解决脑裂"><a href="#8-在NameNode-HA中，会出现脑裂问题吗？怎么解决脑裂" class="headerlink" title="8. 在NameNode HA中，会出现脑裂问题吗？怎么解决脑裂"></a>8. 在NameNode HA中，会出现脑裂问题吗？怎么解决脑裂</h2><h2 id="9-小文件过多会有什么危害-如何避免"><a href="#9-小文件过多会有什么危害-如何避免" class="headerlink" title="9. 小文件过多会有什么危害,如何避免"></a>9. 小文件过多会有什么危害,如何避免</h2><h2 id="10-请说下HDFS的组织架构"><a href="#10-请说下HDFS的组织架构" class="headerlink" title="10. 请说下HDFS的组织架构"></a>10. 请说下HDFS的组织架构</h2><h2 id="11-请说下MR中Map-Task的工作机制"><a href="#11-请说下MR中Map-Task的工作机制" class="headerlink" title="11. 请说下MR中Map Task的工作机制"></a>11. 请说下MR中Map Task的工作机制</h2><h2 id="12-请说下MR中Reduce-Task的工作机制"><a href="#12-请说下MR中Reduce-Task的工作机制" class="headerlink" title="12. 请说下MR中Reduce Task的工作机制"></a>12. 请说下MR中Reduce Task的工作机制</h2><p>##13. 请说下MR中shuffle阶段 </p>
 <h2 id="14-shuffle阶段的数据压缩机制了解吗-15-在写MR时，什么情况下可以使用规约-16-yarn-集群的架构和工作原理知道多少-17-yarn-的任务提交流程是怎样的-18-yarn-的资源调度三种模型了解吗"><a href="#14-shuffle阶段的数据压缩机制了解吗-15-在写MR时，什么情况下可以使用规约-16-yarn-集群的架构和工作原理知道多少-17-yarn-的任务提交流程是怎样的-18-yarn-的资源调度三种模型了解吗" class="headerlink" title="14. shuffle阶段的数据压缩机制了解吗 15. 在写MR时，什么情况下可以使用规约 16. yarn 集群的架构和工作原理知道多少 17. yarn 的任务提交流程是怎样的 18. yarn 的资源调度三种模型了解吗"></a>14. shuffle阶段的数据压缩机制了解吗 15. 在写MR时，什么情况下可以使用规约 16. yarn 集群的架构和工作原理知道多少 17. yarn 的任务提交流程是怎样的 18. yarn 的资源调度三种模型了解吗</h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/centos%E8%AE%BE%E7%BD%AEstatic-ip/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/18/centos%E8%AE%BE%E7%BD%AEstatic-ip/" class="post-title-link" itemprop="url">centos设置static ip</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-08-18 11:29:45 / 修改时间：11:30:11" itemprop="dateCreated datePublished" datetime="2023-08-18T11:29:45+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>archlinux设置固定ip</p>
-<p>cd   &#x2F;etc&#x2F;netctl&#x2F;</p>
-<p>Ip adds 查看网卡id</p>
-<p>vim 网卡id</p>
-<p>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;”static”         # 使用静态IP地址，默认为dhcp<br>IPADDR&#x3D;”192.168.28.5”   # 设置的静态IP地址<br>NETMASK&#x3D;”255.255.255.0”    # 子网掩码<br>GATEWAY&#x3D;”192.168.28.1”    # 网关地址<br>DNS1&#x3D;”192.168.28.1”       # DNS服务器<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;fb16fac1-9eca-4962-9e2f-a0587174b47c<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes</p>
-<p>如果是centos7设置固定ip<br>cd &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts</p>
-<p>查看网卡id</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    <span class="built_in">link</span>/ether 08:00:27:59:05:17 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.28.5/24 brd 192.168.28.255 scope global noprefixroute enp0s8</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::750c:27c1:a8c4:bcc8/64 scope <span class="built_in">link</span> noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
-<p>   enp0s8<br>vim ifcfg-enp0s8<br>添加上诉配置文件，修改相应的NAME IPADDR</p>
-<p>保存后重启电脑</p>
-
       
     </div>
 

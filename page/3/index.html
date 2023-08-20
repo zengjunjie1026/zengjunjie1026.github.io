@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,85 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/centos%E8%AE%BE%E7%BD%AEstatic-ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/18/centos%E8%AE%BE%E7%BD%AEstatic-ip/" class="post-title-link" itemprop="url">centos设置static ip</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-18 11:29:45 / 修改时间：11:30:11" itemprop="dateCreated datePublished" datetime="2023-08-18T11:29:45+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>archlinux设置固定ip</p>
+<p>cd   &#x2F;etc&#x2F;netctl&#x2F;</p>
+<p>Ip adds 查看网卡id</p>
+<p>vim 网卡id</p>
+<p>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;”static”         # 使用静态IP地址，默认为dhcp<br>IPADDR&#x3D;”192.168.28.5”   # 设置的静态IP地址<br>NETMASK&#x3D;”255.255.255.0”    # 子网掩码<br>GATEWAY&#x3D;”192.168.28.1”    # 网关地址<br>DNS1&#x3D;”192.168.28.1”       # DNS服务器<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;fb16fac1-9eca-4962-9e2f-a0587174b47c<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes</p>
+<p>如果是centos7设置固定ip<br>cd &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts</p>
+<p>查看网卡id</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    <span class="built_in">link</span>/ether 08:00:27:59:05:17 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.28.5/24 brd 192.168.28.255 scope global noprefixroute enp0s8</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::750c:27c1:a8c4:bcc8/64 scope <span class="built_in">link</span> noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+<p>   enp0s8<br>vim ifcfg-enp0s8<br>添加上诉配置文件，修改相应的NAME IPADDR</p>
+<p>保存后重启电脑</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -430,90 +509,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@frps.cn ~]<span class="comment"># yum install -y nfs-utils rpcbind</span></span><br><span class="line"></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable rpcbind</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl start nfs</span></span><br><span class="line">[root@frps.cn ~]<span class="comment"># systemctl enable nfs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#首先检查nfs挂载目录是否正常</span></span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e localhost</span></span><br><span class="line">Export list <span class="keyword">for</span> localhost:</span><br><span class="line">/volume1/nfs01 *</span><br><span class="line"></span><br><span class="line"><span class="comment">#先在客户端创建数据目录（挂载点位置）</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mkdir -p /data1/k8s/</span></span><br><span class="line">[root@所有节点 ~]<span class="comment"># mount -t nfs 10.4.82.118:/volume1/nfs01 /data1/k8s</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#现在进行挂载 分别是ip:nfs目录  节点存储目录</span></span><br><span class="line"></span><br><span class="line">挂在完成后我们使用<span class="built_in">df</span> -h 就可以看到挂载点</span><br><span class="line">[root@所有节点 ~]<span class="comment"># df -h|grep 10.4.82.135</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/16/mysql/" class="post-title-link" itemprop="url">mysql</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-16 21:49:26" itemprop="dateCreated datePublished" datetime="2023-08-16T21:49:26+08:00">2023-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-17 11:43:53" itemprop="dateModified" datetime="2023-08-17T11:43:53+08:00">2023-08-17</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Archlinux-安装mysql；"><a href="#Archlinux-安装mysql；" class="headerlink" title="Archlinux  安装mysql；"></a>Archlinux  安装mysql；</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Paceman -S mariadb</span><br><span class="line">sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql</span><br><span class="line"></span><br><span class="line">Two all-privilege accounts were created.</span><br><span class="line">One is root@localhost, it has no password, but you need to</span><br><span class="line">be system <span class="string">&#x27;root&#x27;</span> user to connect. Use, <span class="keyword">for</span> example, sudo mysql</span><br><span class="line">The second is mysql@localhost, it has no password either, but</span><br><span class="line">you need to be the system <span class="string">&#x27;mysql&#x27;</span> user to connect.</span><br><span class="line">After connecting you can <span class="built_in">set</span> the password, <span class="keyword">if</span> you would need to be</span><br><span class="line">able to connect as any of these <span class="built_in">users</span> with a password and without sudo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Sudo systemctl stop mariadb;</span><br><span class="line">mysqld_safe --skip-grant-tables &amp;</span><br><span class="line"></span><br><span class="line">Mysql;</span><br><span class="line">Use mysql;</span><br><span class="line">Delete from user <span class="built_in">where</span> user=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@<span class="string">&#x27;localhost&#x27;</span>=password(<span class="string">&#x27;redhat&#x27;</span>);</span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> mysql@‘ocalhost<span class="string">&#x27;=password(&#x27;</span>redhat<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">grant all privileges on *.* to username@&#x27;</span>%<span class="string">&#x27; identified by &#x27;</span>pass<span class="string">&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Exit</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> UPDATE mysql.user SET authentication_string = PASSWORD(&quot;pass&quot;), plugin = &#x27;</span>mysql_native_password<span class="string">&#x27; WHERE User = &#x27;</span>root<span class="string">&#x27; AND Host = &#x27;</span>localhost<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="centos-linux安装MySQL"><a href="#centos-linux安装MySQL" class="headerlink" title="centos linux安装MySQL"></a>centos linux安装MySQL</h2><p>优先去yum源中去找<br>&#96;&#96;&#96;bash&#96;<br>yum search mysql-community-server<br>yum search mysql-server<br>&#96;&#96;<br>去官网下载mysql:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https://dev.mysql.com/downloads/mysql/</span><br><span class="line">Select Operating System:</span><br><span class="line">Red Hat Enterprise Linux / Oracle Linux</span><br><span class="line">Select OS Version:</span><br><span class="line">Red Hat Enterprise Linux7 /Oracle Linux7 (x86,64-bit)</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">需要下载的安装包：</span><br><span class="line">- [x] mysql-community-libs</span><br><span class="line">- [x] mysql-community-common</span><br><span class="line">- [x] mysql-community-client</span><br><span class="line">- [x] mysql-community-server</span><br></pre></td></tr></table></figure>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mariadb-libs 被 mysql-community-libs-8.0.32-1.el7.x86_64 取代</span><br><span class="line">rpm -e mariadb-libs —nodeps 卸载一个软件包</span><br><span class="line"></span><br><span class="line">rpm -ivh mysql-community-common-8.0.32-1.el7.x86_64.rpm </span><br><span class="line">rpm -ivh mysql-community-client-plugins-8.0.32-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-8.0.32-1.el7.x86_64.rpm </span><br><span class="line">rpm -ivh mysql-community-client-8.0.32-1.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">yum install net-tools</span><br><span class="line">yum install -y perl-Module-Install.noarch</span><br><span class="line"></span><br><span class="line">rpm -ivh mysql-community-icu-data-files-8.0.32-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-server-8.0.32-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<h3 id="启动mysql"><a href="#启动mysql" class="headerlink" title="启动mysql:"></a>启动mysql:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize初始化</span><br><span class="line"><span class="built_in">cd</span> /var/lib <span class="built_in">chown</span> mysql:mysql mysql -R  修改mysql数据文件的拥有者</span><br><span class="line">systemctl start mysqld.service 启动mysql</span><br><span class="line"> systemctl status  mysqld.service 查看mysql的启动状态.     systemctl status firewalld.service查看防火墙的启动状态</span><br><span class="line"> systemctl start  mysqld.service	手动启动mysql		       systemctl stop firewalld.service 关闭防火墙</span><br><span class="line">临时密码：e_z(hG9M=ZfD </span><br><span class="line">修改密码：alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified by <span class="string">&#x27;pass&#x27;</span></span><br><span class="line">quit:退出mysql</span><br><span class="line">systemctl <span class="built_in">enable</span> mysqld.service将mysql设置为随机启动</span><br><span class="line">systemctl <span class="built_in">disable</span> mysqld.service 将mysql设置为不随机启动</span><br></pre></td></tr></table></figure>
       
     </div>
 

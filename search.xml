@@ -1675,7 +1675,17 @@
   <entry>
     <title>stable diffusion</title>
     <url>/2023/08/16/stable-diffusion/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>ubuntu supervisor进程管理<br>Supervisor 是一个用 Python 写的进程管理工具，可以很方便的对进程进行启动、停止、重启等操作。</p>
+<p>安装命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install supervisor</span><br></pre></td></tr></table></figure>
+<p>安装成功后，会在&#x2F;etc&#x2F;supervisor目录下，生成supervisord.conf配置文件。</p>
+<p>你也可以使用echo_supervisord_conf &gt; supervisord.conf命令，生成默认的配置文件（不建议，内容比较多）。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[unix_http_server]</span><br><span class="line">file=/var/supervisor/supervisor.sock   ;UNIX socket 文件，supervisorctl 会使用</span><br><span class="line">;<span class="built_in">chmod</span>=0700                 ;socket文件的mode，默认是0700</span><br><span class="line">;<span class="built_in">chown</span>=nobody:nogroup       ;socket文件的owner，格式：uid:gid</span><br><span class="line"></span><br><span class="line">;[inet_http_server]         ;HTTP服务器，提供web管理界面</span><br><span class="line">;port=127.0.0.1:9001        ;Web管理后台运行的IP和端口，如果开放到公网，需要注意</span><br><span class="line">安全性</span><br><span class="line">;username=andrew             ;登录管理后台的用户名</span><br><span class="line">;password=python             ;登录管理后台的密码</span><br><span class="line"></span><br><span class="line">[supervisord]</span><br><span class="line">logfile=/Users/andrew/logs/supervisord.log ;日志文件，默认是 <span class="variable">$CWD</span>/supervisord.log</span><br><span class="line">logfile_maxbytes=50MB        ;日志文件大小，超出会rotate，默认 50MB，如果设成0，</span><br><span class="line">表示不限制大小</span><br><span class="line">logfile_backups=10           ;日志文件保留备份数量默认10，设为0表示不备份</span><br><span class="line">loglevel=info                ;日志级别，默认info，其它: debug,warn,trace</span><br><span class="line">pidfile=/var/supervisor/supervisord.pid ;pid 文件</span><br><span class="line">nodaemon=<span class="literal">false</span>               ;是否在前台启动，默认是<span class="literal">false</span>，即以 daemon 的方式启&gt;动</span><br><span class="line">minfds=1024                  ;可以打开的文件描述符的最小值，默认 1024</span><br><span class="line">minprocs=200                 ;可以打开的进程数的最小值，默认 200</span><br></pre></td></tr></table></figure>
+<p>进程配置会读取&#x2F;etc&#x2F;supervisor&#x2F;conf.d目录下的*.conf配置文件，我们在此目录下创建一个hwapp.conf进程配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[program:frpc-proxys]</span><br><span class="line">directory = /Users/andrew/frp_0.30.0_darwin_amd64</span><br><span class="line"><span class="built_in">command</span> = /Users/andrew/frp_0.30.0_darwin_amd64/frpc -c /Users/andrew/frp_0.30.0_darwin_amd64/frpc-aliyun-5900.ini</span><br><span class="line">autostart = True</span><br><span class="line">autorestart = True</span><br><span class="line">user = andrew</span><br><span class="line">startsecs=3</span><br><span class="line">stderr_logfile=/Users/andrew/logs/frpc-err.log</span><br><span class="line">stdout_logfile=/Users/andrew/logs/frpc.log</span><br><span class="line">stdout_logfile_maxbytes=200MB</span><br></pre></td></tr></table></figure>
+<p>设置开机自启和启动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> supervisord</span><br><span class="line">sudo systemctl start supervisord</span><br></pre></td></tr></table></figure>
+]]></content>
   </entry>
   <entry>
     <title>vscode</title>
@@ -1932,6 +1942,11 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.merge.mapredfiles=<span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
 <h3 id="7Hive开启本地模式"><a href="#7Hive开启本地模式" class="headerlink" title="7Hive开启本地模式"></a>7Hive开启本地模式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.exec.mode.local.auto=<span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
 <h3 id="8查询打印表头"><a href="#8查询打印表头" class="headerlink" title="8查询打印表头"></a>8查询打印表头</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.cli.print.header=<span class="literal">true</span>;</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>supervisor</title>
+    <url>/2023/08/20/supervisor/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>ceph安装以及测试</title>
