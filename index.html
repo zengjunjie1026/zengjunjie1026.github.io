@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,143 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/20/hive-elasticsearch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/20/hive-elasticsearch/" class="post-title-link" itemprop="url">hive elasticsearch</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-20 09:09:15 / 修改时间：09:09:46" itemprop="dateCreated datePublished" datetime="2023-08-20T09:09:15+08:00">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="需要同步的elastic表"><a href="#需要同步的elastic表" class="headerlink" title="需要同步的elastic表"></a>需要同步的elastic表</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line">add jar hdfs:///elasticsearch-jars/elasticsearch-hadoop-hive-8.1.1.jar;</span><br><span class="line">-- create database ods_beike;</span><br><span class="line">CREATE EXTERNAL TABLE ods_beike.ershoufang_detail_from_es(</span><br><span class="line"></span><br><span class="line">house_url string comment &#x27;house url&#x27;,</span><br><span class="line">house_id string comment &#x27;house id&#x27;,</span><br><span class="line">title string comment &#x27;标题&#x27;,</span><br><span class="line">unit string comment &#x27;&#x27;,</span><br><span class="line">main_info string comment &#x27;厅房&#x27;,</span><br><span class="line">type_main string comment &#x27;direction&#x27;,</span><br><span class="line">type_sub string comment  &#x27;&#x27;,</span><br><span class="line">district_detail string comment  &#x27;&#x27;,</span><br><span class="line">districr_url  string comment  &#x27;小区url&#x27;,</span><br><span class="line">district_detail_url string comment  &#x27;&#x27;,</span><br><span class="line">communityname string comment  &#x27;小区信息&#x27;,</span><br><span class="line">communityurl string  comment &#x27;小区url&#x27;,</span><br><span class="line">district string comment &#x27;区或者县&#x27;,</span><br><span class="line">area string comment &#x27;房子面积&#x27;,</span><br><span class="line">year string comment &#x27;建成年份&#x27;,</span><br><span class="line">fetch_time timestamp,</span><br><span class="line">fundamental_values</span><br><span class="line">    struct&lt;</span><br><span class="line">  house_con : string,</span><br><span class="line">       house_floor:string,</span><br><span class="line">     house_area:string,</span><br><span class="line">        house_struct:string,</span><br><span class="line">       house_contruct_type:string,</span><br><span class="line">       house_direction:string,</span><br><span class="line">       house_construction:string,</span><br><span class="line">        house_detraction:string,</span><br><span class="line">       elevtor_percent:string,</span><br><span class="line">      warn_type:string,</span><br><span class="line">       has_elevtor:string,</span><br><span class="line">       gas_price:string,</span><br><span class="line">        bighouse_type:string,</span><br><span class="line">    userful_area:string,</span><br><span class="line">        water_type:string,</span><br><span class="line">        power_type:string,</span><br><span class="line">        rent_area:string</span><br><span class="line"></span><br><span class="line">    &gt;,</span><br><span class="line"></span><br><span class="line">sells_values  struct&lt;</span><br><span class="line">up_time: string ,--comment &#x27;挂牌时间&#x27;,</span><br><span class="line">sell_type: string, --comment  --&quot;交易权属&quot;,</span><br><span class="line"> last_sell: string, --comment --&quot;上次交易&quot;,</span><br><span class="line"> house_type :string, --comment -- &quot;房屋用途&quot;,</span><br><span class="line">house_age :string, --comment  --&quot;房屋年限&quot;: ,</span><br><span class="line"> property_type: string ,--comment  ,--&quot;产权所属&quot;,</span><br><span class="line"> mostage_type: string ,--comment  ,--&quot;抵押信息&quot;,</span><br><span class="line"> house_paper: string ,--comment ,-- &quot;房本备件&quot; ,</span><br><span class="line"> house_validation_code :string ,--comment  &quot;房源核验码&quot;,</span><br><span class="line">house_validation_code2: string ,-- comment  &#x27;房源核验统一编码&#x27; ,</span><br><span class="line">house_validation_code3 :string ,--comment  &#x27;房管局核验码&#x27; ,</span><br><span class="line"> house_code: string, --comment  &#x27;房源编码&#x27;,</span><br><span class="line"> code4: string,-- comment , --&quot;房源核验编码&quot;,</span><br><span class="line">code5: string --comment --comment &#x27;房协编码&#x27;</span><br><span class="line">&gt;</span><br><span class="line">)</span><br><span class="line">STORED BY &#x27;org.elasticsearch.hadoop.hive.EsStorageHandler&#x27;</span><br><span class="line">TBLPROPERTIES(</span><br><span class="line">    &#x27;es.resource&#x27; = &#x27;beike_ershoufang_details_english/doc&#x27;,</span><br><span class="line">    &#x27;es.nodes&#x27; = &#x27;http://10.147.20.10&#x27;,</span><br><span class="line">    &#x27;es.port&#x27;=&#x27;9200&#x27;,</span><br><span class="line">    &#x27;es.index.auto.create&#x27;=&#x27;false&#x27;,</span><br><span class="line">    &#x27;es.read.metadata&#x27;=&#x27;true&#x27;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 目的表</span><br><span class="line">add jar hdfs:///elasticsearch-jars/elasticsearch-hadoop-hive-8.1.1.jar;</span><br><span class="line">-- create database ods_beike;</span><br><span class="line">CREATE EXTERNAL TABLE ods_beike.ershoufang_detail_from_es2(</span><br><span class="line"></span><br><span class="line">house_url string comment &#x27;house url&#x27;,</span><br><span class="line">house_id string comment &#x27;house id&#x27;,</span><br><span class="line">title string comment &#x27;标题&#x27;,</span><br><span class="line">unit string comment &#x27;&#x27;,</span><br><span class="line">main_info string comment &#x27;厅房&#x27;,</span><br><span class="line">type_main string comment &#x27;direction&#x27;,</span><br><span class="line">type_sub string comment  &#x27;&#x27;,</span><br><span class="line">district_detail string comment  &#x27;&#x27;,</span><br><span class="line">districr_url  string comment  &#x27;小区url&#x27;,</span><br><span class="line">district_detail_url string comment  &#x27;&#x27;,</span><br><span class="line">communityname string comment  &#x27;小区信息&#x27;,</span><br><span class="line">communityurl string  comment &#x27;小区url&#x27;,</span><br><span class="line">district string comment &#x27;区或者县&#x27;,</span><br><span class="line">area string comment &#x27;房子面积&#x27;,</span><br><span class="line">year string comment &#x27;建成年份&#x27;,</span><br><span class="line">fetch_time timestamp,</span><br><span class="line">fundamental_values</span><br><span class="line">    struct&lt;</span><br><span class="line">  house_con : string,</span><br><span class="line">       house_floor:string,</span><br><span class="line">     house_area:string,</span><br><span class="line">        house_struct:string,</span><br><span class="line">       house_contruct_type:string,</span><br><span class="line">       house_direction:string,</span><br><span class="line">       house_construction:string,</span><br><span class="line">        house_detraction:string,</span><br><span class="line">       elevtor_percent:string,</span><br><span class="line">      warn_type:string,</span><br><span class="line">       has_elevtor:string,</span><br><span class="line">       gas_price:string,</span><br><span class="line">        bighouse_type:string,</span><br><span class="line">    userful_area:string,</span><br><span class="line">        water_type:string,</span><br><span class="line">        power_type:string,</span><br><span class="line">        rent_area:string</span><br><span class="line"></span><br><span class="line">    &gt;,</span><br><span class="line"></span><br><span class="line">sells_values  struct&lt;</span><br><span class="line">up_time: string ,--comment &#x27;挂牌时间&#x27;,</span><br><span class="line">sell_type: string, --comment  --&quot;交易权属&quot;,</span><br><span class="line"> last_sell: string, --comment --&quot;上次交易&quot;,</span><br><span class="line"> house_type :string, --comment -- &quot;房屋用途&quot;,</span><br><span class="line">house_age :string, --comment  --&quot;房屋年限&quot;: ,</span><br><span class="line"> property_type: string ,--comment  ,--&quot;产权所属&quot;,</span><br><span class="line"> mostage_type: string ,--comment  ,--&quot;抵押信息&quot;,</span><br><span class="line"> house_paper: string ,--comment ,-- &quot;房本备件&quot; ,</span><br><span class="line"> house_validation_code :string ,--comment  &quot;房源核验码&quot;,</span><br><span class="line">house_validation_code2: string ,-- comment  &#x27;房源核验统一编码&#x27; ,</span><br><span class="line">house_validation_code3 :string ,--comment  &#x27;房管局核验码&#x27; ,</span><br><span class="line"> house_code: string, --comment  &#x27;房源编码&#x27;,</span><br><span class="line"> code4: string,-- comment , --&quot;房源核验编码&quot;,</span><br><span class="line">code5: string --comment --comment &#x27;房协编码&#x27;</span><br><span class="line">&gt;</span><br><span class="line">)</span><br><span class="line">STORED BY &#x27;org.elasticsearch.hadoop.hive.EsStorageHandler&#x27;</span><br><span class="line">TBLPROPERTIES(</span><br><span class="line">    &#x27;es.resource&#x27; = &#x27;beike_ershoufang_details_english/doc&#x27;,</span><br><span class="line">    &#x27;es.nodes&#x27; = &#x27;http://10.147.20.96&#x27;,</span><br><span class="line">    &#x27;es.port&#x27;=&#x27;9200&#x27;,</span><br><span class="line">    &#x27;es.index.auto.create&#x27;=&#x27;false&#x27;,</span><br><span class="line">    &#x27;es.read.metadata&#x27;=&#x27;true&#x27;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 同步</span><br><span class="line"></span><br><span class="line">select count(*) from  ods_beike.ershoufang_detail_from_es2;</span><br><span class="line">desc ods_beike.ershoufang_detail_from_es2;</span><br><span class="line"></span><br><span class="line">insert into table ods_beike.ershoufang_detail_from_es2</span><br><span class="line">select * from ods_beike.ershoufang_detail_from_es;</span><br><span class="line"></span><br><span class="line">select count(*) from  ods_beike.ershoufang_detail_from_es2;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/deeplearning-sklearn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/18/deeplearning-sklearn/" class="post-title-link" itemprop="url">deeplearning/sklearn</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-18 17:32:55" itemprop="dateCreated datePublished" datetime="2023-08-18T17:32:55+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -347,164 +484,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/hive%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/18/hive%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="post-title-link" itemprop="url">hive中文乱码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-08-18 17:25:57 / 修改时间：17:26:42" itemprop="dateCreated datePublished" datetime="2023-08-18T17:25:57+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在metastroe</p>
-<p>（1）修改表字段注解和表注解</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table COLUMNS_V2 modify column COMMENT varchar(256) character <span class="built_in">set</span> utf8;</span><br><span class="line">alter table TABLE_PARAMS modify column PARAM_VALUE varchar(4000) character <span class="built_in">set</span> utf8;</span><br></pre></td></tr></table></figure>
-<p>（2）修改分区字段注解</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table PARTITION_PARAMS modify column PARAM_VALUE varchar(4000) character <span class="built_in">set</span> utf8 ;</span><br><span class="line">alter table PARTITION_KEYS modify column PKEY_COMMENT varchar(4000) character <span class="built_in">set</span> utf8;</span><br></pre></td></tr></table></figure>
-<p>（3）修改索引注解</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table INDEX_PARAMS modify column PARAM_VALUE varchar(4000) character <span class="built_in">set</span> utf8;</span><br></pre></td></tr></table></figure>
-<p>修改hive-site.xml配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;jdbc:mysql://IP:3306/db_name?createDatabaseIfNotExist=<span class="literal">true</span>&amp;amp;useUnicode=<span class="literal">true</span>&amp;characterEncoding=UTF-8&lt;/value&gt;</span><br><span class="line">    &lt;description&gt;JDBC connect string <span class="keyword">for</span> a JDBC metastore&lt;/description&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/18/hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">hive窗口函数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-08-18 11:31:29 / 修改时间：14:21:09" itemprop="dateCreated datePublished" datetime="2023-08-18T11:31:29+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>CREATE TABLE tmp.COSTITEM<br>( NAME STRING,<br>ORDERDATE DATE,<br>COST STRING);</p>
-<p>– 数据加<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-01-01’,’10’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘tony’,’2020-01-02’,’15’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-02-03’,’23’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘tony’,’2020-01-04’,’29’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-01-05’,’46’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-04-06’,’42’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘tony’,’2020-01-07’,’50’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-01-08’,’55’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-08’,’62’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-09’,’68’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘neil’,’2020-05-10’,’12’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-11’,’75’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘neil’,’2020-06-12’,’80’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-13’,’94’);</p>
-<p>SELECT<br>    name,<br>    orderdate,<br>    cost,<br>    sum(cost) OVER() as sample1,   – 所有行相加 ok<br>    sum(cost) over(PARTITION BY name) as sample2,  – 按name分组，组内数据求和 ok<br>    sum(cost) OVER(PARTITION BY name ORDER BY orderdate) as sample3,   – 按name分组，时间排序，组内数据逐个相加 ok<br>    sum(cost) OVER(PARTITION BY name ORDER BY orderdate ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as sample4,   – 组内由起点到当前行的聚合<br>    sum(cost) OVER(PARTITION BY name ORDER BY orderdate ROWS BETWEEN 1 PRECEDING and CURRENT ROW) as sample5,   – 组内当前行和前面一行做聚合</p>
-<pre><code>sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) as sample6,   -- 组内当前行和前一行和后一行聚合
-
-sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and UNBOUNDED FOLLOWING) as sample7    -- 组内当前行和后面所有行
-</code></pre>
-<p>FROM<br>    TEST.COSTITEM </p>
-<p>jack    2020-01-01      10      661.0   176.0   10.0    10.0    10.0    56.0    176.0<br>jack    2020-01-05      46      661.0   176.0   56.0    56.0    56.0    111.0   166.0<br>jack    2020-01-08      55      661.0   176.0   111.0   111.0   101.0   124.0   120.0<br>jack    2020-02-03      23      661.0   176.0   134.0   134.0   78.0    120.0   65.0<br>jack    2020-04-06      42      661.0   176.0   176.0   176.0   65.0    65.0    42.0<br>mart    2020-04-08      62      661.0   299.0   62.0    62.0    62.0    130.0   299.0<br>mart    2020-04-09      68      661.0   299.0   130.0   130.0   130.0   205.0   237.0<br>mart    2020-04-11      75      661.0   299.0   205.0   205.0   143.0   237.0   169.0<br>mart    2020-04-13      94      661.0   299.0   299.0   299.0   169.0   169.0   94.0<br>neil    2020-05-10      12      661.0   92.0    12.0    12.0    12.0    92.0    92.0<br>neil    2020-06-12      80      661.0   92.0    92.0    92.0    92.0    92.0    80.0<br>tony    2020-01-02      15      661.0   94.0    15.0    15.0    15.0    44.0    94.0<br>tony    2020-01-04      29      661.0   94.0    44.0    44.0    44.0    94.0    79.0<br>tony    2020-01-07      50      661.0   94.0    94.0    94.0    79.0    79.0    50.0<br>Time taken: 91.905 seconds, Fetched: 14 row(s) </p>
-<p>SELECT name,<br>       orderdate,<br>       cost, –当前window内，当前行的前一行到后一行 金额总和<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate DESC ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS precedingFollow, –当前window内，当前行到最后行的金额总和<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate DESC ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS currentFollow, –当前window内，按照时间进行排序<br> row_number() OVER(PARTITION BY name<br>                   ORDER BY orderdate DESC) AS rank,–用户上次购买的时间<br> lag(orderdate,1,’查无结果’) over(PARTITION BY name<br>                              ORDER BY orderdate) AS lastTime,–用户下一次购买的时间<br> lead(orderdate,1,’查无结果’) over(PARTITION BY name<br>                               ORDER BY orderdate)AS nextTime,–用户上次购物金额<br> lag(cost,1,’查无结果’)over(PARTITION BY name<br>                        ORDER BY orderdate) AS lastCost,–用户下次购物金额<br> lead(cost,1,’查无结果’) OVER (PARTITION BY name<br>                           ORDER BY orderdate) AS nextCost,–用户上一次+这次的购物金额<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS lastCurrentCost,–用户每月购物金额<br> sum(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY month(orderdate)) AS monthCost,–用户当月单词消费最大值<br> max(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY orderdate) AS monthMaxCost,–用户当月单词消费最小值<br> min(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY orderdate) as monthMinCost<br>FROM TEST.COSTITEM</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
