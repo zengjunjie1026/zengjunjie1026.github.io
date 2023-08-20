@@ -1,7 +1,7 @@
 ---
 title: hdfs
 date: 2022-06-17 21:13:45
-tags:
+tags: server
 ---
 
 ## HDFS概述

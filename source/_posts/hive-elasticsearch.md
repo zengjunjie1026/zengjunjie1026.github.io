@@ -1,7 +1,7 @@
 ---
 title: hive elasticsearch
 date: 2023-08-20 09:09:15
-tags:
+tags: server
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 title: hadoop安装
 date: 2023-08-16 18:01:31
-tags:
+tags: server
 ---
 
 Hadoop 下载地址:https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/

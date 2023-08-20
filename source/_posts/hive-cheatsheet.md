@@ -1,7 +1,7 @@
 ---
 title: hive cheatsheet
 date: 2023-08-20 09:24:12
-tags:
+tags: server
 ---
 
 ### 1. Hive导出到.csv文件
