@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,85 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/18/hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">hive窗口函数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-18 11:31:29 / 修改时间：14:21:09" itemprop="dateCreated datePublished" datetime="2023-08-18T11:31:29+08:00">2023-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>CREATE TABLE tmp.COSTITEM<br>( NAME STRING,<br>ORDERDATE DATE,<br>COST STRING);</p>
+<p>– 数据加<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-01-01’,’10’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘tony’,’2020-01-02’,’15’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-02-03’,’23’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘tony’,’2020-01-04’,’29’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-01-05’,’46’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-04-06’,’42’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘tony’,’2020-01-07’,’50’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘jack’,’2020-01-08’,’55’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-08’,’62’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-09’,’68’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘neil’,’2020-05-10’,’12’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-11’,’75’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘neil’,’2020-06-12’,’80’);<br>INSERT INTO  tmp.COSTITEM  VALUES (‘mart’,’2020-04-13’,’94’);</p>
+<p>SELECT<br>    name,<br>    orderdate,<br>    cost,<br>    sum(cost) OVER() as sample1,   – 所有行相加 ok<br>    sum(cost) over(PARTITION BY name) as sample2,  – 按name分组，组内数据求和 ok<br>    sum(cost) OVER(PARTITION BY name ORDER BY orderdate) as sample3,   – 按name分组，时间排序，组内数据逐个相加 ok<br>    sum(cost) OVER(PARTITION BY name ORDER BY orderdate ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as sample4,   – 组内由起点到当前行的聚合<br>    sum(cost) OVER(PARTITION BY name ORDER BY orderdate ROWS BETWEEN 1 PRECEDING and CURRENT ROW) as sample5,   – 组内当前行和前面一行做聚合</p>
+<pre><code>sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) as sample6,   -- 组内当前行和前一行和后一行聚合
+
+sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and UNBOUNDED FOLLOWING) as sample7    -- 组内当前行和后面所有行
+</code></pre>
+<p>FROM<br>    TEST.COSTITEM </p>
+<p>jack    2020-01-01      10      661.0   176.0   10.0    10.0    10.0    56.0    176.0<br>jack    2020-01-05      46      661.0   176.0   56.0    56.0    56.0    111.0   166.0<br>jack    2020-01-08      55      661.0   176.0   111.0   111.0   101.0   124.0   120.0<br>jack    2020-02-03      23      661.0   176.0   134.0   134.0   78.0    120.0   65.0<br>jack    2020-04-06      42      661.0   176.0   176.0   176.0   65.0    65.0    42.0<br>mart    2020-04-08      62      661.0   299.0   62.0    62.0    62.0    130.0   299.0<br>mart    2020-04-09      68      661.0   299.0   130.0   130.0   130.0   205.0   237.0<br>mart    2020-04-11      75      661.0   299.0   205.0   205.0   143.0   237.0   169.0<br>mart    2020-04-13      94      661.0   299.0   299.0   299.0   169.0   169.0   94.0<br>neil    2020-05-10      12      661.0   92.0    12.0    12.0    12.0    92.0    92.0<br>neil    2020-06-12      80      661.0   92.0    92.0    92.0    92.0    92.0    80.0<br>tony    2020-01-02      15      661.0   94.0    15.0    15.0    15.0    44.0    94.0<br>tony    2020-01-04      29      661.0   94.0    44.0    44.0    44.0    94.0    79.0<br>tony    2020-01-07      50      661.0   94.0    94.0    94.0    79.0    79.0    50.0<br>Time taken: 91.905 seconds, Fetched: 14 row(s) </p>
+<p>SELECT name,<br>       orderdate,<br>       cost, –当前window内，当前行的前一行到后一行 金额总和<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate DESC ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS precedingFollow, –当前window内，当前行到最后行的金额总和<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate DESC ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS currentFollow, –当前window内，按照时间进行排序<br> row_number() OVER(PARTITION BY name<br>                   ORDER BY orderdate DESC) AS rank,–用户上次购买的时间<br> lag(orderdate,1,’查无结果’) over(PARTITION BY name<br>                              ORDER BY orderdate) AS lastTime,–用户下一次购买的时间<br> lead(orderdate,1,’查无结果’) over(PARTITION BY name<br>                               ORDER BY orderdate)AS nextTime,–用户上次购物金额<br> lag(cost,1,’查无结果’)over(PARTITION BY name<br>                        ORDER BY orderdate) AS lastCost,–用户下次购物金额<br> lead(cost,1,’查无结果’) OVER (PARTITION BY name<br>                           ORDER BY orderdate) AS nextCost,–用户上一次+这次的购物金额<br> sum(cast(cost AS INT)) over(PARTITION BY name<br>                             ORDER BY orderdate ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS lastCurrentCost,–用户每月购物金额<br> sum(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY month(orderdate)) AS monthCost,–用户当月单词消费最大值<br> max(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY orderdate) AS monthMaxCost,–用户当月单词消费最小值<br> min(cast(cost AS INT)) over(PARTITION BY name,month(orderdate)<br>                             ORDER BY orderdate) as monthMinCost<br>FROM TEST.COSTITEM</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -424,98 +503,6 @@
           <p><img src="/../img/airtag.png" alt="airtag"></p>
 <p>淘宝廉价airtag，28一个，给自行车🚴贴上</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/17/conda/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/17/conda/" class="post-title-link" itemprop="url">conda</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-17 16:14:50" itemprop="dateCreated datePublished" datetime="2023-08-17T16:14:50+08:00">2023-08-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 15:41:41" itemprop="dateModified" datetime="2023-08-18T15:41:41+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><span class="post-count">&lt;%&#x3D; wordcount(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; min2read(post.content) %&gt;</span><br><span class="post-count">&lt;%&#x3D; totalcount(site) %&gt;</span></p>
-<p><img src="/../img/IMG_20180806_121455.jpg" alt="image"></p>
-<h2 id="Miniconda"><a href="#Miniconda" class="headerlink" title="Miniconda"></a>Miniconda</h2><p>Miniconda is a free minimal installer for conda. It is a small, bootstrap version of Anaconda that includes only conda, Python, the packages they depend on, and a small number of other useful packages, including pip, zlib and a few others. Use the conda install command to install 720+ additional conda packages from the Anaconda repository.</p>
-<p>See if Miniconda is right for you.</p>
-<h2 id="System-requirements"><a href="#System-requirements" class="headerlink" title="System requirements"></a>System requirements</h2><p>License: Free use and redistribution under the terms of the EULA for Miniconda.<br>Operating system: Windows 10 or newer, 64-bit macOS 10.13+, or Linux, including Ubuntu, RedHat, CentOS 7+, and others.<br>If your operating system is older than what is currently supported, you can find older versions of the Miniconda installers in our archive that might work for you.<br>System architecture: Windows- 64-bit x86, 32-bit x86; macOS- 64-bit x86 &amp; Apple M1 (ARM64); Linux- 64-bit x86, 64-bit aarch64 (AWS Graviton2), 64-bit IBM Power8&#x2F;Power9, s390x (Linux on IBM Z &amp; LinuxONE).<br>The linux-aarch64 Miniconda installer requires glibc &gt;&#x3D;2.26 and thus will not work with CentOS 7, Ubuntu 16.04, or Debian 9 (“stretch”).<br>Minimum 400 MB disk space to download and install.<br>On Windows, macOS, and Linux, it is best to install Miniconda for the local user, which does not require administrator permissions and is the most robust type of installation. However, if you need to, you can install Miniconda system wide, which does require administrator permissions.</p>
-<h2 id="Installing"><a href="#Installing" class="headerlink" title="Installing"></a>Installing</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.anaconda.com/miniconda/Miniconda3-py310_23.5.2-0-Linux-x86_64.sh</span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/module</span><br><span class="line">bash Miniconda3-py310_23.5.2-0-Linux-x86_64.sh -b -p /opt/module/miniconda3/</span><br><span class="line">/opt/module/miniconda3/bin/conda init</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda install numpy</span><br></pre></td></tr></table></figure>
-<p>…</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n py3k anaconda python=3</span><br></pre></td></tr></table></figure>
-<p>…<br>There are two variants of the installer: Miniconda is Python 2 based and Miniconda3 is Python 3 based. Note that the choice of which Miniconda is installed only affects the root environment. Regardless of which version of Miniconda you install, you can still install both Python 2.x and Python 3.x environments.</p>
-<p>The other difference is that the Python 3 version of Miniconda will default to Python 3 when creating new environments and building packages. So for instance, the behavior of:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n myenv python</span><br></pre></td></tr></table></figure>
-<p>will be to install Python 2.7 with the Python 2 Miniconda and to install Python 3.10 with the Python 3 Miniconda. You can override the default by explicitly setting python&#x3D;2 or python&#x3D;3. It also determines the default value of CONDA_PY when using conda build.</p>
-<p>Note</p>
-<p>If you already have Miniconda or Anaconda installed, and you just want to upgrade, you should not use the installer. Just use conda update.</p>
-<p>For instance:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda update conda</span><br></pre></td></tr></table></figure>
       
     </div>
 
