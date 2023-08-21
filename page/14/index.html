@@ -19,28 +19,25 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="日志的重要性常见日志记录方式 一、print()二、自写模板三、Logging更优雅的解决方案：Loguru安装开箱即用 1234567add() &#x2F; remove()完整参数rotation 日志文件分隔retention 日志保留时间compression 日志压缩格式字符串格式化异常追溯  日志的重要性日志的作用非常重要，日志可以记录用户的操作、程序的异常，还可以为数据分析提供依据，日志的存">
-<meta property="og:type" content="article">
-<meta property="og:title" content="loguru elasticsearch kibana 日志处理">
-<meta property="og:url" content="https://zengjunjie1026.github.io/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/index.html">
+    <meta name="description" content="做自己爱做的事，爱自己在做的事！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分子美食家的博客">
+<meta property="og:url" content="https://zengjunjie1026.github.io/page/14/index.html">
 <meta property="og:site_name" content="分子美食家的博客">
-<meta property="og:description" content="日志的重要性常见日志记录方式 一、print()二、自写模板三、Logging更优雅的解决方案：Loguru安装开箱即用 1234567add() &#x2F; remove()完整参数rotation 日志文件分隔retention 日志保留时间compression 日志压缩格式字符串格式化异常追溯  日志的重要性日志的作用非常重要，日志可以记录用户的操作、程序的异常，还可以为数据分析提供依据，日志的存">
+<meta property="og:description" content="做自己爱做的事，爱自己在做的事！">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2018-05-16T10:00:53.000Z">
-<meta property="article:modified_time" content="2023-08-18T04:49:14.172Z">
 <meta property="article:author" content="andrew">
-<meta property="article:tag" content="server">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://zengjunjie1026.github.io/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/">
+<link rel="canonical" href="https://zengjunjie1026.github.io/page/14/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/","path":"2018/05/16/loguru-elasticsearch-kibana-日志处理/","title":"loguru elasticsearch kibana 日志处理"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/14/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>loguru elasticsearch kibana 日志处理 | 分子美食家的博客</title>
+<title>分子美食家的博客</title>
   
 
 
@@ -70,7 +67,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">分子美食家的博客</p>
+      <h1 class="site-title">分子美食家的博客</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">记录学习的技能和遇到的问题</p>
@@ -93,7 +90,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -106,7 +103,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">日志的重要性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81print"><span class="nav-number">1.1.</span> <span class="nav-text">一、print()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%87%AA%E5%86%99%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.</span> <span class="nav-text">二、自写模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81Logging"><span class="nav-number">1.3.</span> <span class="nav-text">三、Logging</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9B%B4%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9ALoguru"><span class="nav-number">1.3.1.</span> <span class="nav-text">更优雅的解决方案：Loguru</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7-1"><span class="nav-number">2.</span> <span class="nav-text">日志的重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">常见日志记录方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81print-1"><span class="nav-number">3.1.</span> <span class="nav-text">一、print()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%87%AA%E5%86%99%E6%A8%A1%E6%9D%BF-1"><span class="nav-number">3.2.</span> <span class="nav-text">二、自写模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81Logging-1"><span class="nav-number">3.3.</span> <span class="nav-text">三、Logging</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%8C%89%E5%A4%A9%E5%88%86%E5%89%B2%E4%BF%9D%E7%95%99%E6%97%A5%E5%BF%97"><span class="nav-number"></span> <span class="nav-text">实现按天分割保留日志</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-1"><span class="nav-number">0.0.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8F%82%E6%95%B0%E9%87%8A%E4%B9%89%EF%BC%9A"><span class="nav-number">0.0.2.</span> <span class="nav-text">基本参数释义：</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -140,17 +136,16 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner index posts-expand">
 
-
-  
+    
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -164,13 +159,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="loguru elasticsearch kibana 日志处理 | 分子美食家的博客">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          loguru elasticsearch kibana 日志处理
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">loguru elasticsearch kibana 日志处理</a>
+        </h2>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -199,7 +194,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h3 id="日志的重要性"><a href="#日志的重要性" class="headerlink" title="日志的重要性"></a>日志的重要性</h3><p>常见日志记录方式</p>
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="日志的重要性"><a href="#日志的重要性" class="headerlink" title="日志的重要性"></a>日志的重要性</h3><p>常见日志记录方式</p>
 <h4 id="一、print"><a href="#一、print" class="headerlink" title="一、print()"></a>一、print()</h4><h4 id="二、自写模板"><a href="#二、自写模板" class="headerlink" title="二、自写模板"></a>二、自写模板</h4><h4 id="三、Logging"><a href="#三、Logging" class="headerlink" title="三、Logging"></a>三、Logging</h4><h5 id="更优雅的解决方案：Loguru"><a href="#更优雅的解决方案：Loguru" class="headerlink" title="更优雅的解决方案：Loguru"></a>更优雅的解决方案：Loguru</h5><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>开箱即用</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add() / remove()</span><br><span class="line">完整参数</span><br><span class="line">rotation 日志文件分隔</span><br><span class="line">retention 日志保留时间</span><br><span class="line">compression 日志压缩格式</span><br><span class="line">字符串格式化</span><br><span class="line">异常追溯</span><br></pre></td></tr></table></figure>
 
@@ -261,6 +257,7 @@
 <p>在控制台的输出是这样的：</p>
 <p>相比 Logging，Loguru 无论是在配置方面、日志输出样式还是异常追踪，都远优于 Logging，使用 Loguru 无疑能提升开发人员效率。本文仅介绍了一些常用的方法，想要详细了解可参考 Loguru 官方文档或关注 Loguru GitHub。</p>
 
+      
     </div>
 
     
@@ -268,21 +265,8 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/server/" rel="tag"># server</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-            </div>
-            <div class="post-nav-item">
-                <a href="/2018/08/16/nginx/" rel="next" title="nginx">
-                  nginx <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
+        <div class="post-eof"></div>
+      
     </footer>
   </article>
 </div>
@@ -290,7 +274,9 @@
 
 
 
-
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
+  </nav>
 
 </div>
   </main>

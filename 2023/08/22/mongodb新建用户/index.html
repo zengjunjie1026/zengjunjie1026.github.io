@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="123456db.createUser(&amp;#123;     user: &quot;admin&quot;,     pwd: &quot;---------&quot;,     roles: [ &amp;#123; role: &quot;root&quot;, db: &quot;admin&quot; &amp;#125; ],     mechanisms : [&quot;SCRAM-SHA-1&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb新建用户">
+<meta property="og:url" content="https://zengjunjie1026.github.io/2023/08/22/mongodb%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/index.html">
+<meta property="og:site_name" content="分子美食家的博客">
+<meta property="og:description" content="123456db.createUser(&amp;#123;     user: &quot;admin&quot;,     pwd: &quot;---------&quot;,     roles: [ &amp;#123; role: &quot;root&quot;, db: &quot;admin&quot; &amp;#125; ],     mechanisms : [&quot;SCRAM-SHA-1&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-21T23:27:40.000Z">
+<meta property="article:modified_time" content="2023-08-21T23:40:12.168Z">
+<meta property="article:author" content="andrew">
+<meta property="article:tag" content="server">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zengjunjie1026.github.io/2023/08/22/mongodb%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2023/08/22/mongodb%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/","path":"2023/08/22/mongodb新建用户/","title":"mongodb新建用户"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>mongodb新建用户 | 分子美食家的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">分子美食家的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录学习的技能和遇到的问题</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-number">2.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B7%A5%E7%A8%8Bjdbc%E8%BF%9E%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">客户端工程jdbc连接字符串示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%B4%A6%E5%8F%B7%E5%88%9B%E5%BB%BA%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">关于账号创建的注意事项：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">andrew</p>
+  <div class="site-description" itemprop="description">做自己爱做的事，爱自己在做的事！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/22/mongodb%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="mongodb新建用户 | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mongodb新建用户
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-22 07:27:40 / 修改时间：07:40:12" itemprop="dateCreated datePublished" datetime="2023-08-22T07:27:40+08:00">2023-08-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.createUser(&#123; </span><br><span class="line">    user: <span class="string">&quot;admin&quot;</span>, </span><br><span class="line">    <span class="built_in">pwd</span>: <span class="string">&quot;---------&quot;</span>, </span><br><span class="line">    roles: [ &#123; role: <span class="string">&quot;root&quot;</span>, db: <span class="string">&quot;admin&quot;</span> &#125; ], </span><br><span class="line">    mechanisms : [<span class="string">&quot;SCRAM-SHA-1&quot;</span>] </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<ol>
+<li>登录数据库</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/path/mongo  <span class="attribute">--host</span>=172.16.218.27 <span class="attribute">--port</span>=27017 -u username  -p <span class="string">&#x27;XXX&#x27;</span>  <span class="attribute">--authenticationDatabase</span>=admin</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li>查看 admin库表</li>
+</ol>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; use <span class="keyword">admin</span></span><br><span class="line">&gt; <span class="keyword">show</span> <span class="keyword">tables</span></span><br><span class="line"></span><br><span class="line">&gt; <span class="keyword">show</span> <span class="keyword">tables</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">system</span>.users</span><br><span class="line"><span class="keyword">system</span>.<span class="keyword">version</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>查看各表数据</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; db<span class="selector-class">.system</span><span class="selector-class">.version</span><span class="selector-class">.find</span>()<span class="selector-class">.pretty</span>()</span><br><span class="line">&#123; <span class="string">&quot;_id&quot;</span> : <span class="string">&quot;featureCompatibilityVersion&quot;</span>, <span class="string">&quot;version&quot;</span> : <span class="string">&quot;3.4&quot;</span> &#125;</span><br><span class="line">&#123; <span class="string">&quot;_id&quot;</span> : <span class="string">&quot;authSchema&quot;</span>, <span class="string">&quot;currentVersion&quot;</span> : <span class="number">5</span> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.system.users.find().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">&quot;_id&quot;</span> : <span class="string">&quot;admin.superUser&quot;</span>,</span><br><span class="line">        <span class="string">&quot;user&quot;</span> : <span class="string">&quot;superUser&quot;</span>,</span><br><span class="line">        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">        <span class="string">&quot;credentials&quot;</span> : &#123;</span><br><span class="line">                <span class="string">&quot;SCRAM-SHA-1&quot;</span> : &#123;</span><br><span class="line">                        <span class="string">&quot;iterationCount&quot;</span> : <span class="number">10000</span>,</span><br><span class="line">                        <span class="string">&quot;salt&quot;</span> : <span class="string">&quot;dBhasH+fHybp6BKy5sPJFw==&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;storedKey&quot;</span> : <span class="string">&quot;6yQsEZsAt4PH6OO/jKMqLiIHTqg=&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;serverKey&quot;</span> : <span class="string">&quot;6GDMJwJCZ833kP/jCdj0VKOd+k0=&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;roles&quot;</span> : [</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;root&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;admin&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">&quot;_id&quot;</span> : <span class="string">&quot;testDB01.testUser01&quot;</span>,</span><br><span class="line">        <span class="string">&quot;user&quot;</span> : <span class="string">&quot;testUser01&quot;</span>,</span><br><span class="line">        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB01&quot;</span>,</span><br><span class="line">        <span class="string">&quot;credentials&quot;</span> : &#123;</span><br><span class="line">                <span class="string">&quot;SCRAM-SHA-1&quot;</span> : &#123;</span><br><span class="line">                        <span class="string">&quot;iterationCount&quot;</span> : <span class="number">10000</span>,</span><br><span class="line">                        <span class="string">&quot;salt&quot;</span> : <span class="string">&quot;Tu2bpckgHjP17nOc+s2fGA==&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;storedKey&quot;</span> : <span class="string">&quot;LO+Tc7U6tz54e2NCsKM0O9+Z/uo=&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;serverKey&quot;</span> : <span class="string">&quot;cXYjU54vGoLQ58ZpeWXzZ7ZeVgI=&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;roles&quot;</span> : [</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;readWrite&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB01&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;dbAdmin&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB01&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdmin&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB01&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">&quot;_id&quot;</span> : <span class="string">&quot;testDB02.testUser02&quot;</span>,</span><br><span class="line">        <span class="string">&quot;user&quot;</span> : <span class="string">&quot;testUser02&quot;</span>,</span><br><span class="line">        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB02&quot;</span>,</span><br><span class="line">        <span class="string">&quot;credentials&quot;</span> : &#123;</span><br><span class="line">                <span class="string">&quot;SCRAM-SHA-1&quot;</span> : &#123;</span><br><span class="line">                        <span class="string">&quot;iterationCount&quot;</span> : <span class="number">10000</span>,</span><br><span class="line">                        <span class="string">&quot;salt&quot;</span> : <span class="string">&quot;a4PwETCeMojRGv3mNp5OsQ==&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;storedKey&quot;</span> : <span class="string">&quot;xajSCeYddSMHn+Dtr3/+OzghGw8=&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;serverKey&quot;</span> : <span class="string">&quot;J3WrHUIrxDgl0OfWw5kpXcthw/o=&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;roles&quot;</span> : [</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;readWrite&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB02&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;dbAdmin&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB02&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdmin&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB02&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">use</span> testDB</span><br><span class="line">&gt; <span class="keyword">db</span>.createUser(</span><br><span class="line">&#123;</span><br><span class="line">   user : <span class="string">&quot;testUser&quot;</span>,</span><br><span class="line">   <span class="keyword">pwd</span> : <span class="string">&quot;Mongo@123&quot;</span>,</span><br><span class="line">   roles: [ &#123; role : <span class="string">&quot;readWrite&quot;</span>, <span class="keyword">db</span> : <span class="string">&quot;testDB&quot;</span> &#125; ,</span><br><span class="line">            &#123; role : <span class="string">&quot;dbAdmin&quot;</span>, <span class="keyword">db</span> : <span class="string">&quot;testDB&quot;</span> &#125; ,</span><br><span class="line">            &#123; role : <span class="string">&quot;userAdmin&quot;</span>, <span class="keyword">db</span> : <span class="string">&quot;testDB&quot;</span> &#125;  </span><br><span class="line">          ]</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; <span class="keyword">db</span>.system.users.find().pretty()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">&quot;_id&quot;</span> : <span class="string">&quot;testDB.testUser&quot;</span>,</span><br><span class="line">        <span class="string">&quot;user&quot;</span> : <span class="string">&quot;testUser&quot;</span>,</span><br><span class="line">        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB&quot;</span>,</span><br><span class="line">        <span class="string">&quot;credentials&quot;</span> : &#123;</span><br><span class="line">                <span class="string">&quot;SCRAM-SHA-1&quot;</span> : &#123;</span><br><span class="line">                        <span class="string">&quot;iterationCount&quot;</span> : 10000,</span><br><span class="line">                        <span class="string">&quot;salt&quot;</span> : <span class="string">&quot;a4PwETCeMojRGv3mNp5OsQ==&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;storedKey&quot;</span> : <span class="string">&quot;xajSCeYddSMHn+Dtr3/+OzghGw8=&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;serverKey&quot;</span> : <span class="string">&quot;J3WrHUIrxDgl0OfWw5kpXcthw/o=&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;roles&quot;</span> : [</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;readWrite&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;dbAdmin&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdmin&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;db&quot;</span> : <span class="string">&quot;testDB&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> 注： 在 testDB库创建，只对 testDB有读、写和管理权限，在testDB认证鉴权</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&gt; use <span class="keyword">admin</span></span><br><span class="line">&gt; db.createUser(</span><br><span class="line"> &#123;</span><br><span class="line">    <span class="keyword">user</span> : &quot;testUser&quot;,</span><br><span class="line">    pwd : &quot;Mongo@123&quot;,</span><br><span class="line">    roles: [ &#123; <span class="keyword">role</span> : &quot;readWrite&quot;, db : &quot;testDB&quot; &#125; ,</span><br><span class="line">             &#123; <span class="keyword">role</span> : &quot;dbAdmin&quot;, db : &quot;testDB&quot; &#125; ,</span><br><span class="line">             &#123; <span class="keyword">role</span> : &quot;userAdmin&quot;, db : &quot;testDB&quot; &#125;</span><br><span class="line">           ]</span><br><span class="line">    &#125;</span><br><span class="line"> )</span><br><span class="line">Successfully added <span class="keyword">user</span>: &#123;</span><br><span class="line">        &quot;user&quot; : &quot;testUser&quot;,</span><br><span class="line">        &quot;roles&quot; : [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;role&quot; : &quot;readWrite&quot;,</span><br><span class="line">                        &quot;db&quot; : &quot;testDB&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;role&quot; : &quot;dbAdmin&quot;,</span><br><span class="line">                        &quot;db&quot; : &quot;testDB&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;role&quot; : &quot;userAdmin&quot;,</span><br><span class="line">                        &quot;db&quot; : &quot;testDB&quot;</span><br><span class="line">                &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; db.<span class="keyword">system</span>.users.find().pretty()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : &quot;admin.testUser&quot;,</span><br><span class="line">        &quot;user&quot; : &quot;testUser&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;admin&quot;,</span><br><span class="line">        &quot;credentials&quot; : &#123;</span><br><span class="line">                &quot;SCRAM-SHA-1&quot; : &#123;</span><br><span class="line">                        &quot;iterationCount&quot; : <span class="number">10000</span>,</span><br><span class="line">                        &quot;salt&quot; : &quot;IzZhDiGBM7fvZ09Y99qY1Q==&quot;,</span><br><span class="line">                        &quot;storedKey&quot; : &quot;qbEWrB1xrV939z4vCxULiw7W2e4=&quot;,</span><br><span class="line">                        &quot;serverKey&quot; : &quot;vPZg8qrTGjnIHKouxf048Ci3Z/0=&quot;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;roles&quot; : [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;role&quot; : &quot;readWrite&quot;,</span><br><span class="line">                        &quot;db&quot; : &quot;testDB&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;role&quot; : &quot;dbAdmin&quot;,</span><br><span class="line">                        &quot;db&quot; : &quot;testDB&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;role&quot; : &quot;userAdmin&quot;,</span><br><span class="line">                        &quot;db&quot; : &quot;testDB&quot;</span><br><span class="line">                &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">注： 在 <span class="keyword">admin</span>库创建，只对 testDB有读、写和管理权限，在<span class="keyword">admin</span>认证鉴权</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改用户密码"><a href="#修改用户密码" class="headerlink" title="修改用户密码"></a>修改用户密码</h3><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/path/mongo  --host=172.16.218.27 --port=27017 -u username  -p &#x27;XXX&#x27;  --authenticationDatabase=admin</span><br><span class="line"></span><br><span class="line"># testDB.testUser</span><br><span class="line"><span class="meta prompt_">&gt;</span> <span class="language-javascript"> use testDB</span></span><br><span class="line"><span class="meta prompt_">&gt;</span> <span class="language-javascript"> db.<span class="title function_">changeUserPassword</span>(<span class="string">&#x27;testUser&#x27;</span>,<span class="string">&#x27;newPasswd&#x27;</span>))<span class="string">&quot;</span></span></span><br><span class="line"></span><br><span class="line"># admin.testUser</span><br><span class="line"><span class="meta prompt_">&gt;</span> <span class="language-javascript"><span class="string"> use admin</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span> <span class="language-javascript"><span class="string"> db.changeUserPassword(&#x27;testUser&#x27;,&#x27;newPasswd&#x27;))&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># testDB.testUser</span></span><br><span class="line"></span><br><span class="line">/path/mongo  <span class="attribute">--host</span>=172.16.218.27 <span class="attribute">--port</span>=27017 -u username  -p <span class="string">&#x27;XXX&#x27;</span>  <span class="attribute">--authenticationDatabase</span>=admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过用户所在库删除</span></span><br><span class="line">&gt;  use testDB</span><br><span class="line">&gt;  db.dropUser(<span class="string">&quot;testUser&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过admin库删除</span></span><br><span class="line">&gt;  use admin</span><br><span class="line">&gt; db.system.users.<span class="built_in">remove</span>(&#123;<span class="string">&quot;_id&quot;</span>:<span class="string">&quot;testDB.testUser&quot;</span>&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="客户端工程jdbc连接字符串示例"><a href="#客户端工程jdbc连接字符串示例" class="headerlink" title="客户端工程jdbc连接字符串示例"></a>客户端工程jdbc连接字符串示例</h3><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># authSource=testDB</span></span><br><span class="line">spring.data.mongodb.uri=mongodb://$&#123;<span class="attribute">username&#125;</span>:$&#123;password&#125;@xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span>:27017,xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span>:27017,xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span>:27017/testDB?authSource=testDB&amp;authMechanism=SCRAM-SHA-1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># authSource=admin</span></span><br><span class="line">spring.data.mongodb.uri=mongodb://$&#123;<span class="attribute">username&#125;</span>:$&#123;password&#125;@xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span>:27017,xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span>:27017,xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span>:27017/testDB?authSource=admin&amp;authMechanism=SCRAM-SHA-1</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于账号创建的注意事项："><a href="#关于账号创建的注意事项：" class="headerlink" title="关于账号创建的注意事项："></a>关于账号创建的注意事项：</h3><ol>
+<li><p>第一步新建一个超管账号 superUser(示例)，授予 mongoDB root 角色权限，密码跟其他账号都不一样</p>
+</li>
+<li><p>为各业务库创建业务账号，尽量统一一个模块一个用户名&#x2F;密码，不同模块用户名&#x2F;密码不同</p>
+</li>
+<li><p>mongoDB的用户名是跟库走的  db.user ，在哪个库创建的用户就走哪个库做认证，要么统一走各自业务库创建、授权、认证鉴权，要么统一通过admin库</p>
+</li>
+<li><p>superUser(示例) 只能走admin做认证鉴权，是数据库的超级管理员</p>
+</li>
+<li><p>修改用户和删除用户等，和创建用户一样，需要切换到数据库管理员的身份, 也就是需要先切换到admin库完成认证,，才能进行后面的操作. </p>
+</li>
+<li><p>删除用户可以在 admin 库删除，但是修改密码只能创建用户的对应库，用户是跟着库走的</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/server/" rel="tag"># server</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/21/linux-dd/" rel="prev" title="linux dd">
+                  <i class="fa fa-angle-left"></i> linux dd
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">andrew</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
