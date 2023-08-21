@@ -4,10 +4,6 @@ date: 2023-08-17 16:14:50
 tags: server
 ---
 
-<span class="post-count"><%= wordcount(post.content) %></span>
-<span class="post-count"><%= min2read(post.content) %></span>
-<span class="post-count"><%= totalcount(site) %></span>
-
 ![image](../img/IMG_20180806_121455.jpg)
 
 ## Miniconda
