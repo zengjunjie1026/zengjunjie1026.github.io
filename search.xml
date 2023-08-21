@@ -518,7 +518,7 @@
 
 
 <p>创建用户</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">执行命令： mongo -port 20000</span><br><span class="line">执行命令： use admin//这个条件是必须的</span><br><span class="line">执行命令：db.createUser(</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">        user:<span class="string">&quot;ml_grp&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="built_in">pwd</span>:<span class="string">&quot;ml&amp;dl#mongodb&quot;</span>,</span><br><span class="line"></span><br><span class="line">        roles:[&#123;role:<span class="string">&quot;root&quot;</span>,db:<span class="string">&quot;admin&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">执行命令： mongo -port 20000</span><br><span class="line">执行命令： use admin//这个条件是必须的</span><br><span class="line">执行命令：db.createUser(</span><br><span class="line">  &#123;     user:<span class="string">&quot;ml_grp&quot;</span>,</span><br><span class="line">        <span class="built_in">pwd</span>:<span class="string">&quot;passwd&quot;</span>,</span><br><span class="line">        roles:[&#123;role:<span class="string">&quot;root&quot;</span>,db:<span class="string">&quot;admin&quot;</span>&#125;]</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <p>use admin<br>执行命令：db.auth(‘ml_grp’,’passwd’)<br>执行命令：db.runCommand( { enablesharding :”zjxndc”});&#x2F;&#x2F;为zjxndc开启分片功能<br>执行命令：db.runCommand( { shardcollection : “zjxndc.measureHisvalues”,key : {_id: 1} } )&#x2F;</p>
 <p>use config<br>db.settings.save({“_id”:”chunksize”,”value”:1})<br>use zjxndc<br>d、执行命令：for (var i &#x3D; 1; i &lt;&#x3D; 100000; i++){</p>
@@ -528,7 +528,7 @@
 <h3 id="配置安全"><a href="#配置安全" class="headerlink" title="配置安全"></a>配置安全</h3><h4 id="4-1-安全验证设置用户"><a href="#4-1-安全验证设置用户" class="headerlink" title="4.1 安全验证设置用户"></a>4.1 安全验证设置用户</h4><p>1、副本集和共享集群的各个节点成员之间使用内部身份验证，可以使用密钥文件或x.509证书。密钥文件比较简单，官方推荐如果是测试环境可以使用密钥文件，但是正是环境，官方推荐x.509证书。原理就是，集群中每一个实例彼此连接的时候都检验彼此使用的证书的内容是否相同。只有证书相同的实例彼此才可以访问。使用客户端连接到mongodb集群时，开启访问授权。对于集群外部的访问。如通过可视化客户端，或者通过代码连接的时候，需要开启授权。<br>a、生成密钥文件，在keyfile身份验证中，副本集中的每个mongod实例都使用keyfile的内容作为共享密码，只有具有正确密钥文件的mongod或者mongos实例可以连接到副本集。密钥文件的内容必须在6到1024个字符之间，并且在unix&#x2F;linux系统中文件所有者必须有对文件至少有读的权限。可以用任何方式生成密钥文件例如：(任意一台机器即可)</p>
 <p>执行命令：openssl rand -base64 756 &gt; &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;生成密钥</p>
 <p>执行命令：chmod 400 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file &#x2F;&#x2F;赋予权限</p>
-<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;">&#114;&#x6f;&#111;&#x74;&#64;&#49;&#48;&#x2e;&#x33;&#x30;&#x2e;&#x30;&#x2e;&#x34;&#x39;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
+<p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file <a href="mailto:&#114;&#x6f;&#111;&#x74;&#64;&#x31;&#x30;&#x2e;&#x33;&#48;&#x2e;&#48;&#x2e;&#x34;&#x39;">&#114;&#x6f;&#111;&#x74;&#64;&#x31;&#x30;&#x2e;&#x33;&#48;&#x2e;&#48;&#x2e;&#x34;&#x39;</a>:&#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.55服务器上（“-P22”是端口，根据实际情况来）</p>
 <p>执行命令：scp -P22 &#x2F;opt&#x2F;mongo&#x2F;MongoDB&#x2F;testKeyFile.file root@:10.30.0.49 &#x2F;opt&#x2F;mongo&#x2F;MongoDB &#x2F;&#x2F;拷贝至其他0.56服务器上</p>
 <p>创建用户成功后，关闭所有的节点（三台机都需要操作）</p>
 <p>执行命令：按照先后顺序来处理关闭，mongos&gt;config&gt;shadr3&gt;shadr2&gt;shadr1</p>
@@ -1752,7 +1752,7 @@
 <p><img src="/../img/vscode_5.png" alt="图片"></p>
 <h3 id="5-连接输入密码"><a href="#5-连接输入密码" class="headerlink" title="5.连接输入密码"></a>5.连接输入密码</h3><p><img src="/../img/vscode_6.png" alt="图片"></p>
 <p><img src="/../img/vscode_7.png" alt="图片"></p>
-<h3 id="6-可选配置免密码登陆"><a href="#6-可选配置免密码登陆" class="headerlink" title="6.可选配置免密码登陆"></a>6.可选配置免密码登陆</h3><p>macos&#x2F;linux 机器<br>设置ssh key<br>[图片]<br>ssh-copy-id上传你的ssh public key到server<br><img src="/../img/vscode_9.png" alt="图片"><br>免密设置成功</p>
+<h3 id="6-可选配置免密码登陆"><a href="#6-可选配置免密码登陆" class="headerlink" title="6.可选配置免密码登陆"></a>6.可选配置免密码登陆</h3><p>macos&#x2F;linux 机器<br>设置ssh key<br><img src="/../img/vscode_8.png" alt="图片"><br>ssh-copy-id上传你的ssh public key到server<br><img src="/../img/vscode_9.png" alt="图片"><br>免密设置成功</p>
 <p>windows平台<br><img src="/../img/vscode_10.png" alt="图片"><br>type %USERPROFILE%.ssh\id_rsa.pub | ssh username@server_ip -p port “cat &gt;&gt; .ssh&#x2F;authorized_keys”</p>
 <p><img src="/../img/vscode_11.png" alt="图片"><br>可以删除%USERPROFILE%如果你在windows的家目录下面<br>输入密码就可以达到和linux的ssh-copy-id一样的功能</p>
 ]]></content>
