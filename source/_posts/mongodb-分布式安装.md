@@ -149,17 +149,10 @@ sh.status()
 执行命令： mongo -port 20000
 执行命令： use admin//这个条件是必须的
 执行命令：db.createUser(
-
-  {
-
-        user:"ml_grp",
-
-        pwd:"ml&dl#mongodb",
-
+  {     user:"ml_grp",
+        pwd:"passwd",
         roles:[{role:"root",db:"admin"}]
-
     }
-
 )
 ```
 
