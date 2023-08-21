@@ -1752,9 +1752,9 @@
 <p><img src="/../img/vscode_5.png" alt="图片"></p>
 <h3 id="5-连接输入密码"><a href="#5-连接输入密码" class="headerlink" title="5.连接输入密码"></a>5.连接输入密码</h3><p><img src="/../img/vscode_6.png" alt="图片"></p>
 <p><img src="/../img/vscode_7.png" alt="图片"></p>
-<h3 id="6-可选配置免密码登陆"><a href="#6-可选配置免密码登陆" class="headerlink" title="6.可选配置免密码登陆"></a>6.可选配置免密码登陆</h3><p>macos&#x2F;linux 机器<br>设置ssh key<br><img src="/../img/vscode_8.png" alt="图片"><br>ssh-copy-id上传你的ssh public key到server<br><img src="/../img/vscode_9.png" alt="图片"><br>免密设置成功</p>
+<h3 id="6-可选配置免密码登陆"><a href="#6-可选配置免密码登陆" class="headerlink" title="6.可选配置免密码登陆"></a>6.可选配置免密码登陆</h3><p>macos&#x2F;linux 机器<br>设置ssh key<br>[图片]<br>ssh-copy-id上传你的ssh public key到server<br><img src="/../img/vscode_9.png" alt="图片"><br>免密设置成功</p>
 <p>windows平台<br><img src="/../img/vscode_10.png" alt="图片"><br>type %USERPROFILE%.ssh\id_rsa.pub | ssh username@server_ip -p port “cat &gt;&gt; .ssh&#x2F;authorized_keys”</p>
-<p><img src="/../img/vscode_11.png" alt="图片"><br>可以删除%USERPROFILE%如果你在windows的家目录下面<br>输入密码就可以达到和linux的ssh-copy-id一样的功能<br>7.安装jupyter notebook环境<br>由于服务器设置没有独立的ip地址，暂时只能用vscode的jupyter notebook，也可以使用端口转发功能映射服务器的8888端口到本地<br><img src="/../img/vscode_12.png" alt="图片"><br><img src="/../img/vscode_13.png" alt="图片"><br>直接打开notebook文件即可<br><img src="/../img/vscode_14.png" alt="图片"><br>可能需要安装python的插件<br><img src="/../img/vscode_15.png" alt="图片"><br>安装即可<br><img src="/../img/vscode_15.png" alt="图片"><br>选择python环境<br><img src="/../img/vscode_16.png" alt="图片"><br>在vscode使用jupyter notebook<br><img src="/../img/vscode_17.png" alt="图片"></p>
+<p><img src="/../img/vscode_11.png" alt="图片"><br>可以删除%USERPROFILE%如果你在windows的家目录下面<br>输入密码就可以达到和linux的ssh-copy-id一样的功能</p>
 ]]></content>
   </entry>
   <entry>
