@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,116 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/%E7%BE%A4%E6%99%96%E5%8F%98%E8%BA%ABairdrop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/16/%E7%BE%A4%E6%99%96%E5%8F%98%E8%BA%ABairdrop/" class="post-title-link" itemprop="url">群晖变身airdrop</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-16 21:09:19 / 修改时间：21:09:33" itemprop="dateCreated datePublished" datetime="2023-08-16T21:09:19+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>把群晖 NAS 变成「时间返回舱」，轻松搞定 Time Machine 无线备份</p>
+<p>2018年11月18日</p>
+<p>相比 Windows 自带的系统还原功能，macOS 有着更加完善的备份还原机制：通过内置的 Time Machine，我们可以方便地进行整机备份，在关键时候成为系统以及重要资料一颗「后悔药」。</p>
+<p>当然，如果需要使用 Time Machine 功能备份，苹果官方提供了两种方式，无论哪一种方式，你都需要外置的存储来解决：一种是准备一个较合适容量的移动硬盘，如果你正好有一个闲置不用的移动硬盘，拿出来做专门的 Mac 的 Time Machine 备份倒是不错，只不过就会比较麻烦——每一次备份都需要插入移动硬盘。</p>
+<p>还有一种是使用网络存储器，比如说苹果官方的高存储容量 AirPort Time Capsule（时间返回舱），设置一次就可以轻松完成自动备份工作，但其售价高昂不说，现在也已经全面在苹果在线商店下架，显然无论是从经济角度还是便利性角度而言，以上两个方案似乎都并不合适。</p>
+<p>其实，如果你恰好有一台群晖 NAS ，就可以将其轻松打造成一个稳定可靠的「时间返回舱」，而该功能从入门级的 J 系列就已经默认搭载，换句话说，你几乎没有什么额外成本就可以拥有和 AirPort Time Capsule 近乎一样的功能，那么如何使用 Time Machine 将 Mac 文件备份至群晖呢？</p>
+<h2 id="如何让群晖-NAS-支持-Time-Machine-功能？"><a href="#如何让群晖-NAS-支持-Time-Machine-功能？" class="headerlink" title="如何让群晖 NAS 支持 Time Machine 功能？"></a>如何让群晖 NAS 支持 Time Machine 功能？</h2><p>要想让群晖支持 Time Machine ，还需要对群晖进行一番设置，首先我们使用管理员账号登录群晖的 DSM 系统1 ，首先来创建一个共享文件夹，专门用来存放 Time Machine 的备份数据：</p>
+<p>登录到 DSM 之后，点击「控制面板 - 共享文件夹」，点击「创建」来添加共享文件夹。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/ac135adbe134d0703a7acac6bbc4a04c.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>然后输入共享文件夹的名字2 ，然后选择一个所在位置（单盘 NAS 选择默认）：</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/7992d79626fd2f571cae842bde49b2c1.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>后面一步就是是否需要加密，因为我是本地家庭环境使用，为了减少一些不必要的麻烦直接跳过，如果你是在公司中来操作则建议设置加密，然后点击下一步。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/940f3d290ab4cb4f91a7e6ee58d08d49.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>后面是为共享文件夹配置高级功能，这里我就直接跳过，然后确认设置下面选择应用。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/57993635211b319945fe96921a7ef000.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>最后会弹出读取权限的设置，这里面默认应该只有管理员（当前你登录的账户）读写权限，这里默认不修改，点击确定生成分享文件夹。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/a715c3349fbeca61d476e5050bb05bcf.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>现在你应该可以看到名为 Time Machine Folder 新共享文件夹了，下面进入到下一步，为这个文件夹配可访问的账号。</p>
+<h2 id="在-NAS-中为-Time-Machine-创建管理用户"><a href="#在-NAS-中为-Time-Machine-创建管理用户" class="headerlink" title="在 NAS 中为 Time Machine 创建管理用户"></a>在 NAS 中为 Time Machine 创建管理用户</h2><p>Time Machine Folder 这个文件夹显然应该只需要有一个专门操作的账户来操作，使用管理员账号操作并不安全，因此在这里我们需要给 Time Machine 创建管理用户并为其配备的对应配额限制。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/86234695bbbb0758f2aa1d1567eca86b.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>首先，还是通过群晖的管理员账户登录 DSM ，在「控制面板 - 用户」中，点击「创建用户」，输入用户名3 并设置一个复杂密码，然后点下一步，在群组中保持默认再点下一步。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/9b3e81fc108b528526b47257a8c8e7a5.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>在文件夹的权限分配这个设置页中，找到之前设置的共享文件夹「Time Machine Folder」，<strong>勾选中「读写」权限（一定要做），</strong>然后点击下一步，在用户配合设置页面中，选择存储配额。</p>
+<p>这一步需要注意的是，为了避免 Time Machine 备份占用你全部的存储空间，建议设置在一个额定的空间范围内，比如我的 MacBook Pro 是 128GB 的存储，而我的群晖 NAS 的存储「空间 1」剩余 2.0 TB ，因此从使用权衡来看，选择 200GB 完全是绰绰有余，制定好之后选择下一步。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/85d0d591291cf483391f7ad169493d12.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>后续两个设置中都默认不选，直接点下一步，最后点击到应用后完成用户「Time Machine User」的新建，最后你在「控制面板 - 用户」中应该可以看到这个新建的用户了。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/cf650e3ab4e93f9bb7ec52c84e61124b.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>p.s.  如果你是在企业生产环境中，可以通过生成配对的「共享文件夹」+「对应的用户」来创建多个 Time Machine 备份空间，这样可以为多台 Mac 设备开启单独的备份，管理也更方便。</p>
+<h2 id="在-NAS-中开启相关文件服务"><a href="#在-NAS-中开启相关文件服务" class="headerlink" title="在 NAS 中开启相关文件服务"></a>在 NAS 中开启相关文件服务</h2><p>前面共享文件夹和相关的访问用户已经设置完毕，那么接下来就是对相关的文件夹进行一系列的设置。首先在群晖的「控制面板 - 文件服务」设置中，找到 <strong>SMB&#x2F;AFP&#x2F;NFS</strong> 选项卡，然后点击勾选 启用 SMB 服务以及 AFP 服务。注意下方生成的访问地址，例如我这里生成的 SMB 访问地址：<code>smb://DS215J</code>。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/9a0808946eb2a9d0c1e4cebe4919a8bb.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>然后切换到高级设置中，在 Bonjour 中勾选「启用 Bonjour 服务发现」，以及下方的「启用通过 SMB 进行 Bonjour Time Machine 播送」和「启用通过 AFP 进行 Bonjour Time Machine 播送」，然后点击下方的设置 Time machine 文件夹，选择之前我们建立的 「Time Machine Folder」共享文件夹点击确定即可。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/dbf8339cefcd9273213e57735e8c8d4d.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>p.s. 如果你的环境中，Mac 设备的系统版本在 10.12 以上，那么只需要启用 SMB 相关服务即可，可以不用勾选 AFP 服务。</p>
+<p>至此，在群晖上的相关设置就全部完成了，换言之，这时候的群晖已经脱胎换骨成为一台「时间返回舱」了。</p>
+<h2 id="让-Mac-的-Time-Machine-备份至-NAS"><a href="#让-Mac-的-Time-Machine-备份至-NAS" class="headerlink" title="让 Mac 的 Time Machine 备份至 NAS"></a>让 Mac 的 Time Machine 备份至 NAS</h2><p>接下来的步骤就是在 Mac 上设置时间机器，然后将备份目的地改成刚才设置好的群晖，首先在我们需要可以让 Mac 访问群晖中的备份文件夹。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/c67463c703df1874de7c6318052b2430.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>打开访达，在菜单中点击「前往 - 连接服务器」，然后输入 NAS 的 smb 地址，例如我这里的 <code>smb://DS215J</code>，然后点击链接，在输入之前设置的账户名和密码之后，在弹出的文件夹中，选择时间机器的备份文件夹，之后点击好完成装载。</p>
+<p><img src="https://cdn.sspai.com/2018/11/18/1f1c1dea15242ee5d673acbdbc7e7429.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="img"></p>
+<p>接下来从 Dock 栏中打开「系统偏好设置」，在「时间机器」中选择「备份磁盘」，然后选择之前链接的群晖对应的文件夹，然后点击使用磁盘。</p>
+<p>这时候还有可能会要求输入之前在群晖中创建的账户和密码，然后点击链接，然后时间机器会自动绑定群晖设置到了备份目的磁盘，然后到这里你的时间机器就算是真正意义上的设置好了，如果不出意外的话就会自动开始进行备份工作。</p>
+<p>通过一连串的操作之后，你的群晖可以轻松化身为一台「廉价版 AirPort Time Capsule」，为你的 Mac 设备保驾护航，而无论是性价比上还是便利性上都可以称作是 Mac 时间机器的最佳解决方案，如果你恰好有一台 Mac 和群晖设备，不妨试试这个方案来打造一个最廉价的时间机器备份方案。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -426,93 +536,6 @@
     
     <div class="post-body" itemprop="articleBody">
           
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/16/redis%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/16/redis%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">redis分布式安装</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-16 17:59:33" itemprop="dateCreated datePublished" datetime="2023-08-16T17:59:33+08:00">2023-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 17:25:20" itemprop="dateModified" datetime="2023-08-18T17:25:20+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>python 操作redis</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"></span><br><span class="line"><span class="comment">#   连接redis</span></span><br><span class="line"><span class="comment">#   几个常用默认参数：</span></span><br><span class="line"><span class="comment">#   host=&#x27;localhost&#x27;, port=6379, db=0, decode_responses=False, password=None</span></span><br><span class="line">pool = redis.ConnectionPool(host=<span class="string">&#x27;ip-address&#x27;</span>, port=<span class="number">6379</span>, decode_responses=<span class="literal">True</span>,db=<span class="number">1</span>,password=<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---redis</span></span><br></pre></td></tr></table></figure>
-
-
-<p>字符串</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">r = redis.Redis(connection_pool=pool)</span><br><span class="line"><span class="comment">#   增加数据：set key value（如果key存在，则修改为新的value）</span></span><br><span class="line"><span class="built_in">print</span>(r.<span class="built_in">set</span>(<span class="string">&#x27;str_type&#x27;</span>, <span class="string">&#x27;str_value&#x27;</span>))  <span class="comment"># 打印True</span></span><br><span class="line"><span class="comment">#   追加数据：append key value</span></span><br><span class="line"><span class="built_in">print</span>(r.append(<span class="string">&#x27;str_type&#x27;</span>, <span class="string">&#x27;_new&#x27;</span>))  <span class="comment"># 打印13，字符长度</span></span><br><span class="line"><span class="comment">#   查看数据：get key</span></span><br><span class="line"><span class="built_in">print</span>(r.get(<span class="string">&#x27;str_type&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-<p>数组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#   在插入数据时，如果该键并不存在，Redis将为该键创建一个</span></span><br><span class="line"><span class="comment">#   在末尾添加数据（列表右边）</span></span><br><span class="line">r.rpush(<span class="string">&#x27;list_type&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;xy&#x27;</span>, <span class="string">&#x27;li_val_end&#x27;</span>)</span><br><span class="line"><span class="comment">#   在头部添加数据（列表左边）</span></span><br><span class="line">r.lpush(<span class="string">&#x27;list_type&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;xy&#x27;</span>, <span class="string">&#x27;li_val_start&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#   查看数据</span></span><br><span class="line"><span class="comment">#   数据为：[&#x27;li_val_start&#x27;, &#x27;xy&#x27;, &#x27;1&#x27;, &#x27;2&#x27;, &#x27;xy&#x27;, &#x27;li_val_end&#x27;]</span></span><br><span class="line"><span class="comment">#   下标范围：lrange key start stop</span></span><br><span class="line"><span class="built_in">print</span>(r.lrange(<span class="string">&#x27;list_type&#x27;</span>, <span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line"><span class="comment">#   指定下标：lindex key index</span></span><br><span class="line"><span class="built_in">print</span>(r.lindex(<span class="string">&#x27;list_type&#x27;</span>, -<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#   删除数据</span></span><br><span class="line"><span class="comment">#   从末尾删除（列表右边）：rpop key</span></span><br><span class="line"><span class="built_in">print</span>(r.rpop(<span class="string">&#x27;list_type&#x27;</span>))  <span class="comment"># 打印删除的值</span></span><br><span class="line"><span class="comment">#   从头部删除（列表左边）：lpop key</span></span><br><span class="line"><span class="built_in">print</span>(r.lpop(<span class="string">&#x27;list_type&#x27;</span>))  <span class="comment"># 打印删除的值</span></span><br><span class="line"><span class="comment">#   指定值删除：lrem key count(可以存在多个重复的值，指定value删除的次数) value</span></span><br><span class="line"><span class="built_in">print</span>(r.lrem(<span class="string">&#x27;list_type&#x27;</span>, <span class="number">2</span>, <span class="string">&#x27;xy&#x27;</span>))  <span class="comment"># 打印成功删除的个数</span></span><br></pre></td></tr></table></figure>
-<p>字典类型</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#   hash类型的值是一个键值对集合，如：h_test : &#123; field1:value1, field2:value2,...&#125;</span></span><br><span class="line"><span class="comment">#   添加数据：hset key field value</span></span><br><span class="line"><span class="built_in">print</span>(r.hset(<span class="string">&#x27;hash_type&#x27;</span>, <span class="string">&#x27;filed&#x27;</span>, <span class="string">&#x27;value&#x27;</span>))  <span class="comment"># 打印成功添加数据的条数</span></span><br><span class="line"><span class="comment">#   查看域值：hget key field</span></span><br><span class="line"><span class="built_in">print</span>(r.hget(<span class="string">&#x27;hash_type&#x27;</span>, <span class="string">&#x27;filed&#x27;</span>))</span><br><span class="line"><span class="comment">#   查看所有的field：hkeys key</span></span><br><span class="line"><span class="built_in">print</span>(r.hkeys(<span class="string">&#x27;hash_type&#x27;</span>))</span><br><span class="line"><span class="comment">#   查看所有的value：hvals key</span></span><br><span class="line"><span class="built_in">print</span>(r.hvals(<span class="string">&#x27;hash_type&#x27;</span>))</span><br><span class="line"><span class="comment">#   查看所有的键值对：hgetall key</span></span><br><span class="line"><span class="built_in">print</span>(r.hgetall(<span class="string">&#x27;hash_type&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-<h1 id="python-zset"><a href="#python-zset" class="headerlink" title="python zset"></a>python zset</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">conn=redis.StrictRedis(host=<span class="string">&#x27;192.168.80.41&#x27;</span>,port=<span class="number">6379</span>,db=<span class="number">0</span>)</span><br><span class="line">conn.zadd(<span class="string">&#x27;znames&#x27;</span>,<span class="number">100</span>,<span class="string">&#x27;jiang&#x27;</span>)</span><br><span class="line">conn.zadd(<span class="string">&#x27;znames&#x27;</span>,<span class="number">20</span>,<span class="string">&#x27;wolson&#x27;</span>)</span><br><span class="line">    <span class="comment">#向有顺集合中增加一个元素jiang、它的分值为100</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(conn.zscore(<span class="string">&#x27;znames&#x27;</span>,<span class="string">&#x27;jiang&#x27;</span>))</span><br><span class="line">    <span class="comment">#获取jiang这个元素的分值</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(conn.zrange(<span class="string">&#x27;znames&#x27;</span>,<span class="number">0</span>,-<span class="number">1</span>,desc=<span class="literal">True</span>,withscores=<span class="literal">True</span>))</span><br><span class="line">    <span class="comment">#获取集合中指定序列内的元素</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(conn.zrangebyscore(<span class="string">&#x27;znames&#x27;</span>,<span class="number">80</span>,<span class="number">100</span>))</span><br><span class="line">    <span class="comment">#获取指定分数范围内的元素</span></span><br><span class="line"></span><br><span class="line">newScore=conn.zincrby(<span class="string">&#x27;znames&#x27;</span>,<span class="string">&#x27;wolson&#x27;</span>,<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(newScore)</span><br><span class="line"><span class="built_in">print</span>(conn.zscore(<span class="string">&#x27;znames&#x27;</span>,<span class="string">&#x27;wolson&#x27;</span>))</span><br><span class="line">    <span class="comment">#增加指定元素的分值</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(conn.zcard(<span class="string">&#x27;znames&#x27;</span>))</span><br><span class="line">    <span class="comment">#获取集合中的元素数</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(conn.zcount(<span class="string">&#x27;znames&#x27;</span>,<span class="number">90</span>,<span class="number">101</span>))</span><br><span class="line">    <span class="comment">#获取分数范围内的元素数量</span></span><br><span class="line"></span><br><span class="line">conn.zrem(<span class="string">&#x27;znames&#x27;</span>,<span class="string">&#x27;wolson&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(conn.zrange(<span class="string">&#x27;znames&#x27;</span>,<span class="number">0</span>,-<span class="number">1</span>))</span><br><span class="line">    <span class="comment">#删除集合中指定元素</span></span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 
