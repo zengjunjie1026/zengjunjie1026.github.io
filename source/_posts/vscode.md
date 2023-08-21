@@ -36,17 +36,3 @@ type %USERPROFILE%.ssh\id_rsa.pub | ssh username@server_ip -p port "cat >> .ssh/
 ![图片](../img/vscode_11.png)
 可以删除%USERPROFILE%如果你在windows的家目录下面
 输入密码就可以达到和linux的ssh-copy-id一样的功能
-7.安装jupyter notebook环境
-由于服务器设置没有独立的ip地址，暂时只能用vscode的jupyter notebook，也可以使用端口转发功能映射服务器的8888端口到本地
-![图片](../img/vscode_12.png)
-![图片](../img/vscode_13.png)
-直接打开notebook文件即可
-![图片](../img/vscode_14.png)
-可能需要安装python的插件
-![图片](../img/vscode_15.png)
-安装即可
-![图片](../img/vscode_15.png)
-选择python环境
-![图片](../img/vscode_16.png)
-在vscode使用jupyter notebook
-![图片](../img/vscode_17.png)
