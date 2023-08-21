@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="vimvim是一个常用的文本编辑工具，在远程服务器中更改系统配置中经常使用。 基础vim的模式Vim一般分为三种不同的模式，普通模式( normal mode )、编辑模式和命令模式. 普通模式( normal mode )使用vim打开文件则进入普通模式。在普通模式下可通过按键 h、j、k、l来控制光标的移动，通过 x、d(delete) 、 y(yank) 、p(put)等按键可对文本进行操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim 技巧">
+<meta property="og:url" content="https://zengjunjie1026.github.io/2023/08/21/vim-%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="分子美食家的博客">
+<meta property="og:description" content="vimvim是一个常用的文本编辑工具，在远程服务器中更改系统配置中经常使用。 基础vim的模式Vim一般分为三种不同的模式，普通模式( normal mode )、编辑模式和命令模式. 普通模式( normal mode )使用vim打开文件则进入普通模式。在普通模式下可通过按键 h、j、k、l来控制光标的移动，通过 x、d(delete) 、 y(yank) 、p(put)等按键可对文本进行操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-21T09:38:14.000Z">
+<meta property="article:modified_time" content="2023-08-21T09:38:27.432Z">
+<meta property="article:author" content="andrew">
+<meta property="article:tag" content="server">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zengjunjie1026.github.io/2023/08/21/vim-%E6%8A%80%E5%B7%A7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2023/08/21/vim-%E6%8A%80%E5%B7%A7/","path":"2023/08/21/vim-技巧/","title":"vim 技巧"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vim 技巧 | 分子美食家的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">分子美食家的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录学习的技能和遇到的问题</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim"><span class="nav-number">1.</span> <span class="nav-text">vim</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E6%A8%A1%E5%BC%8F-normal-mode"><span class="nav-number">1.1.</span> <span class="nav-text">普通模式( normal mode )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">编辑模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">命令模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">进入编辑模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">删除操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E4%B8%8E%E7%B2%98%E8%B4%B4"><span class="nav-number">4.</span> <span class="nav-text">复制与粘贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E8%B7%B3%E8%BD%AC"><span class="nav-number">5.</span> <span class="nav-text">行跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%A4%E9%94%80"><span class="nav-number">6.</span> <span class="nav-text">撤销</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">7.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2"><span class="nav-number">8.</span> <span class="nav-text">替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%BC%96%E8%BE%91%E9%80%89%E9%A1%B9"><span class="nav-number">9.</span> <span class="nav-text">修改编辑选项</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">andrew</p>
+  <div class="site-description" itemprop="description">做自己爱做的事，爱自己在做的事！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/21/vim-%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vim 技巧 | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vim 技巧
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-21 17:38:14 / 修改时间：17:38:27" itemprop="dateCreated datePublished" datetime="2023-08-21T17:38:14+08:00">2023-08-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><p>vim是一个常用的文本编辑工具，在远程服务器中更改系统配置中经常使用。</p>
+<p>基础<br>vim的模式<br>Vim一般分为三种不同的模式，普通模式( normal mode )、编辑模式和命令模式.</p>
+<h3 id="普通模式-normal-mode"><a href="#普通模式-normal-mode" class="headerlink" title="普通模式( normal mode )"></a>普通模式( normal mode )</h3><p>使用vim打开文件则进入普通模式。在普通模式下可通过按键 h、j、k、l来控制光标的移动，通过 x、d(delete) 、 y(yank) 、p(put)等按键可对文本进行操作，在该模式下，键盘按键被视为类似 Word下的快捷键的功能，而不是被视为简单的文本输入。</p>
+<h3 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h3><p>在编辑模式下可对文件内容进行编辑。编辑模式下按键输入均被视为文本输入，而不再具备普通模式下的各种功能。用户可以通过按键ESC从编辑模式返回普通模式。</p>
+<h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>在普通模式下，键盘输入 ‘ : ‘、 ‘ &#x2F; ‘、 ‘ ? ‘则光标移动至界面最下行，并等待进一步输入。之后Vim会根据用户输入执行相应的动作，如保存和退出、查找和替换、执行外部命令等。命令模式下同样通过ESC键返回普通模式。</p>
+<p>普通模式下的操作文件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim filename　　　//打开名为filename的文件</span><br><span class="line">    :w               //保存修改至源文件</span><br><span class="line">    :wq              //保存修改并退出</span><br><span class="line">    :q!              //不保存修改，直接退出</span><br><span class="line">    :w filename      //保存修改(选中的部分)至filename(其中filename为不存在重名的新文件)</span><br></pre></td></tr></table></figure>
+<h2 id="进入编辑模式"><a href="#进入编辑模式" class="headerlink" title="进入编辑模式"></a>进入编辑模式</h2><p>常用小写的i和o即可，i代表当行这个光标位插入，o代表下一行插入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">i    //insert即插入模式，从光标所在位置开始插入，即插入的内容位于原光标所在位置字符之前</span><br><span class="line">I    //从光标所在行的行首开始插入</span><br><span class="line">a    //append即附加模式，从光标所在位置之后附加，即新增内容位于原光标所在位置字符之后</span><br><span class="line">A    //从光标所在行的行末开始附加</span><br><span class="line">o    //在光标所在行的下一行加入新一行</span><br><span class="line">O    //在光标所在行的上一行加入新一行</span><br><span class="line">R    //进入替换模式，屏幕下方会出现Replace提示，此时的输入会直接替换光标所在位置的字符，与Windows下的 <span class="number">0</span> 作用类似，同样通过ESC键返回</span><br></pre></td></tr></table></figure>
+<h2 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h2><p>在普通模式下使用dd命令即可删除当行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x        //删除光标所在处的字符(其大写形式X为将光标之前的字符删除，相当于Backspace)</span><br><span class="line">dd     　//删除光标所在行的操作(常用)</span><br><span class="line">dw         //删除一个单词</span><br><span class="line">d3w      　//删除三个单词</span><br><span class="line">d$         //删除光标所在处至行尾的字符</span><br><span class="line">d4l        //删除光标所在处起的四个字符</span><br><span class="line">d2j        //删除两行</span><br></pre></td></tr></table></figure>
+<p>同样的，如 2dd 指令则表示将dd指令重复两次，即为删除两行操作，2d2w 则表示将 d2w 操作执行两次，即删除四个单词。</p>
+<h2 id="复制与粘贴"><a href="#复制与粘贴" class="headerlink" title="复制与粘贴"></a>复制与粘贴</h2><p>复制即通过 v 指令选定文本段，通过 y 指令复制内容，再通过 p 指令将文本放置在指定位置；剪切即通过 v 指令选定文本段，通过 d (或 x )指令删除内容，再通过 p 指令将文本放置在指定的位置； p 指令除了用于复制内容的粘贴外，还可以将上一次删除的内容粘贴在指定的位置，故而可以达到类似剪切的效果。对于 v 指令选中的文本，可以进行多种操作，包括复制(y)、删除(x&#x2F;d)、另存(:w filename)等，读者完全可以自行进行组合尝试。指令y和d的指令形式有许多相同之处，除了均有yy和dd这种针对一行内容的处理指令外，指令y可以与光标移动指令相结合，得到更好的使用效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">p                    //put命令，将剪贴的内容(注意，既可以是复制的内容，也可以为之前删除的内容)放置在光标后的位置，其大小字母P则表示放置在光标之前的位置</span><br><span class="line">v                    //进入虚拟选择模式(visual selection)，被选择的文本段被高亮显示(v的选择对象为字符，对应的大写字母V则是以行为单位选择)</span><br><span class="line">　　Ctrl + v　　　　　　　 //以矩形框的形式进行内容选择</span><br><span class="line">y                    //复制通过 v 操作选择的文本，或则其本身也可以与光标移动指令一同使用</span><br><span class="line">y5w                     //如y5w，则复制<span class="number">5</span>个单词(注意复制是从光标所在处开始的)</span><br><span class="line">yy    //复制光标所在行的内容</span><br><span class="line">y0    //复制光标所在位置至行首的内容</span><br><span class="line">y$    //复制光标所在位置至行尾的内容</span><br><span class="line">yG    //复制光标所在位置至文本结束的内容</span><br><span class="line">ynG   //复制指令与nG指令的结合</span><br><span class="line">　　　　　　//以及诸如y3w、y3j等指令</span><br></pre></td></tr></table></figure>
+
+<h2 id="行跳转"><a href="#行跳转" class="headerlink" title="行跳转"></a>行跳转</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gg        //跳转至文件第一行</span><br><span class="line">G         //跳转至文件最后行</span><br><span class="line">nG        //跳转至文件第 n 行  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">u            //撤销上一次操作</span><br><span class="line">U            //撤销对光标所在行的所有操作</span><br><span class="line">Ctrl+r    　 //重做上一操作</span><br></pre></td></tr></table></figure>
+
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/keyword         //按默认方向查找关键字</span><br><span class="line">?keyword         //按与默认方向相反的方向查找关键字</span><br><span class="line">n                //按与之前相同的查找顺序匹配下一个出现相同关键字的位置</span><br><span class="line">N                //按与之前相反的查找顺序匹配下一个出现相同关键字的位置</span><br><span class="line">　　　　　　　　　 //用户也可以通过Ctrl + o 和 Ctrl + i 进行位置的切换</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<h2 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">:s/old/new           //将光标所在行出现的第一个old替换为new(仅对该行的第一个old)             </span><br><span class="line">:s/old/new/g      　 // 将光标所在行出现的所有old替换为new            </span><br><span class="line">:s/old/new/gc     　 //同上，替换之前提示用户确认是否替换      </span><br><span class="line">:n,ms/old/new/g　　　//在n和m指定的行之间进行检查和替换    </span><br><span class="line">:%s/old/new/g　　　　//针对整个文本进行替换</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改编辑选项"><a href="#修改编辑选项" class="headerlink" title="修改编辑选项"></a>修改编辑选项</h2><p>修改 ～&#x2F;.vimrc 文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">:<span class="built_in">set</span> nu        　//显示行号，相应的<span class="built_in">set</span> nonu则为不显示行号</span><br><span class="line">:<span class="built_in">set</span> ic        　//搜索忽略大小写(ignore <span class="keyword">case</span>),取消即为 <span class="built_in">set</span> noic</span><br><span class="line">:<span class="built_in">set</span> hlsearch    //搜索时匹配的结果高亮显示</span><br><span class="line">:<span class="built_in">set</span> incserch    //设置搜索时的搜索顺序</span><br><span class="line">                //可以看到，在对应的选项前面加入前缀no即表示取消取消对应的选项</span><br><span class="line">:<span class="built_in">set</span> ruler　　　　//右下角展示状态栏</span><br><span class="line">:<span class="built_in">set</span>             //显示与系统默认设置不同的参数情况，即被修改过的参数情况</span><br><span class="line">:<span class="built_in">set</span> syntax on　 //设置Vim会根据语法以不同颜色显示不同的内容</span><br><span class="line">:<span class="built_in">set</span> syntax off</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/server/" rel="tag"># server</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/21/pyspark-mongodb/" rel="prev" title="pyspark mongodb">
+                  <i class="fa fa-angle-left"></i> pyspark mongodb
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">andrew</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
