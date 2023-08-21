@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,75 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/21/python-mail/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/21/python-mail/" class="post-title-link" itemprop="url">python mail</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-21 16:25:37 / 修改时间：16:27:11" itemprop="dateCreated datePublished" datetime="2023-08-21T16:25:37+08:00">2023-08-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">mail_host = <span class="string">&#x27;smtp.163.com&#x27;</span></span><br><span class="line"><span class="comment"># 163用户名</span></span><br><span class="line">mail_user = <span class="string">&#x27;username&#x27;</span></span><br><span class="line"><span class="comment"># 密码(部分邮箱为授权码)</span></span><br><span class="line">mail_pass = <span class="string">&#x27;--------------&#x27;</span></span><br><span class="line"><span class="comment"># 邮件发送方邮箱地址</span></span><br><span class="line">sender = <span class="string">&#x27;sender@163.com&#x27;</span></span><br><span class="line"><span class="comment"># ff</span></span><br><span class="line"><span class="comment"># 邮件接受方邮箱地址，注意需要[]包裹，这意味着你可以写多个邮件地址群发</span></span><br><span class="line">receivers = [<span class="string">&quot;xxx@email.com&quot;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send</span>(<span class="params">title, messages</span>):</span><br><span class="line">    <span class="comment"># 设置email信息</span></span><br><span class="line">    <span class="comment"># 邮件内容设置</span></span><br><span class="line">    message = MIMEText(messages, <span class="string">&#x27;plain&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    <span class="comment"># message= MIMEMultipart(&#x27;mixed&#x27;)</span></span><br><span class="line">    <span class="comment"># 邮件主题</span></span><br><span class="line">    message[<span class="string">&#x27;Subject&#x27;</span>] = title</span><br><span class="line">    <span class="comment"># 发送方信息</span></span><br><span class="line">    message[<span class="string">&#x27;From&#x27;</span>] = sender</span><br><span class="line">    <span class="comment"># 接受方信息</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 登录并发送邮件</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        smtpObj = smtplib.SMTP(mail_host)</span><br><span class="line">        <span class="comment"># smtpObj = smtplib.SMTP_SSL(mail_host)</span></span><br><span class="line">        <span class="comment"># 连接到服务器</span></span><br><span class="line">        smtpObj.connect(mail_host, <span class="number">25</span>)</span><br><span class="line">        smtpObj.starttls()</span><br><span class="line">        <span class="comment"># 登录到服务器</span></span><br><span class="line">        smtpObj.login(mail_user, mail_pass)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 发送</span></span><br><span class="line">        <span class="keyword">for</span> receiver <span class="keyword">in</span> receivers:</span><br><span class="line">            message[<span class="string">&quot;To&quot;</span>] = <span class="string">&quot;, &quot;</span>.join(message)</span><br><span class="line">            <span class="comment"># message[&#x27;To&#x27;] = receiver</span></span><br><span class="line">            smtpObj.sendmail(</span><br><span class="line">                sender, receiver, message.as_string())</span><br><span class="line">        <span class="comment"># 退出</span></span><br><span class="line">        smtpObj.quit()</span><br><span class="line">        logger.info(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span> smtplib.SMTPException <span class="keyword">as</span> e:</span><br><span class="line">        logger.error(<span class="string">f&#x27;error <span class="subst">&#123;e&#125;</span>&#x27;</span>)  <span class="comment"># 打印错误</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        send(<span class="string">&quot;test&quot;</span>,<span class="string">f&quot;hello_<span class="subst">&#123;i&#125;</span>&quot;</span>)</span><br><span class="line">        time.sleep(<span class="number">3</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -423,77 +492,6 @@
     
     <div class="post-body" itemprop="articleBody">
           
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/pykafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/18/pykafka/" class="post-title-link" itemprop="url">pykafka</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-08-18 17:29:44 / 修改时间：17:29:54" itemprop="dateCreated datePublished" datetime="2023-08-18T17:29:44+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pykafka <span class="keyword">import</span> KafkaClient</span><br><span class="line"></span><br><span class="line">client = KafkaClient(hosts=<span class="string">&quot;localhost:9092&quot;</span>)</span><br><span class="line"></span><br><span class="line">topic = client.topics[<span class="string">&#x27;maoyan_wish&#x27;</span>]</span><br><span class="line">consumer = topic.get_simple_consumer(consumer_group=<span class="string">&#x27;test&#x27;</span>, auto_commit_enable=<span class="literal">True</span>, consumer_id=<span class="string">&#x27;test&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> message <span class="keyword">in</span> consumer:</span><br><span class="line">  <span class="keyword">if</span> message <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="built_in">print</span>(message.offset, message.value)</span><br></pre></td></tr></table></figure>
-<p>这个程序貌似是不会停止的</p>
-
       
     </div>
 
