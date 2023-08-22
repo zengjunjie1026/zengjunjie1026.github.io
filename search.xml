@@ -1671,7 +1671,18 @@
   <entry>
     <title>jupyter notebook</title>
     <url>/2023/08/16/jupyter-notebook/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) andrew@imac:~<span class="comment">#jupyter notebook password</span></span><br><span class="line">Enter password: </span><br><span class="line">Verify password: </span><br><span class="line">[NotebookPasswordApp] Wrote hashed password to /Users/andrew/.jupyter/jupyter_notebook_config.json</span><br><span class="line">(base) andrew@imac:~<span class="comment">#jupyter notebook --generate-config </span></span><br><span class="line">Writing default config to: /Users/andrew/.jupyter/jupyter_notebook_config.py</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="一-使用"><a href="#一-使用" class="headerlink" title="(一)使用"></a>(一)使用</h2><h3 id="1-终端输入：jupyter-notebook-–generate-config"><a href="#1-终端输入：jupyter-notebook-–generate-config" class="headerlink" title="1.终端输入：jupyter notebook –generate-config"></a>1.终端输入：jupyter notebook –generate-config</h3><p>会生成一个配置文件，成功后会显示文件路径（～&#x2F;.jupyter&#x2F;jupyter_notebook_config.py）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">c.NotebookApp.ip = <span class="string">&#x27;0.0.0.0&#x27;</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-打开路径下的jupyter-notebook-config-py配置文件"><a href="#2-打开路径下的jupyter-notebook-config-py配置文件" class="headerlink" title="2.打开路径下的jupyter_notebook_config.py配置文件"></a>2.打开路径下的jupyter_notebook_config.py配置文件</h3><p>找到c.NotebookApp.notebook_dir&#x3D;修改为自己的工作目录</p>
+<h3 id="3-在终端输入：jupyter-notebook即可打开jupyter，就可以在web端编写python啦！"><a href="#3-在终端输入：jupyter-notebook即可打开jupyter，就可以在web端编写python啦！" class="headerlink" title="3.在终端输入：jupyter notebook即可打开jupyter，就可以在web端编写python啦！"></a>3.在终端输入：jupyter notebook即可打开jupyter，就可以在web端编写python啦！</h3><h2 id="二-设置密码"><a href="#二-设置密码" class="headerlink" title="(二)设置密码"></a>(二)设置密码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jupyter notebook password</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>mysql</title>
@@ -1752,6 +1763,7 @@
     <content><![CDATA[<h3 id="zerotier"><a href="#zerotier" class="headerlink" title="zerotier"></a>zerotier</h3><p>zerotier是一个异地组网实现方案，个人尤其是小公司（设备数量50以下）虚拟组网的最简单实现放完，异地访问家里的nas，数据库，远程桌面等，具有简单和安全的特性。</p>
 <p>我是在openwrt软路由上发现这个内置的组建，尝试了一下发现特别简单，按照官网给的文档，可以在5分钟之内组建自己的专属局域网，实现家里的nas当远程网盘。数据共享，不需要DDNS动态域名解析，也无需借助公网ip，活着VPS进行frp反向代理实现内网穿透。</p>
 <p>在官网注册登入之后新建虚拟网络，一个id可以支持50台设备</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zerotier-cli <span class="built_in">join</span> network_id</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>server,内网穿透</tag>
@@ -1958,7 +1970,7 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
   <entry>
     <title>pymongo分片</title>
     <url>/2023/08/18/pymongo%E5%88%86%E7%89%87/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoReplicaSetClient</span><br><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</span><br><span class="line"><span class="comment"># 连接单机</span></span><br><span class="line"><span class="comment"># single mongo</span></span><br><span class="line"><span class="comment"># c = MongoClient(host=&quot;192.168.89.151&quot;, port=27017) # okay</span></span><br><span class="line"><span class="comment"># 连接集群</span></span><br><span class="line"><span class="comment"># mongo cluster</span></span><br><span class="line">c = MongoClient(<span class="string">&#x27;mongodb://192.168.89.151,192.168.89.152,192.168.89.153&#x27;</span>)<span class="comment">#okay</span></span><br><span class="line"><span class="built_in">print</span> c.database_names()</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>pykafka</title>
@@ -2069,7 +2081,12 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
   <entry>
     <title>pyspark mongodb</title>
     <url>/2023/08/21/pyspark-mongodb/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="1-创建pyspark与mongodb的连接，首先加载依赖包，其有三种方式："><a href="#1-创建pyspark与mongodb的连接，首先加载依赖包，其有三种方式：" class="headerlink" title="1.创建pyspark与mongodb的连接，首先加载依赖包，其有三种方式："></a>1.创建pyspark与mongodb的连接，首先加载依赖包，其有三种方式：</h3><h4 id="1）直接将其放在在安装spark的jars目录下；"><a href="#1）直接将其放在在安装spark的jars目录下；" class="headerlink" title="1）直接将其放在在安装spark的jars目录下；"></a>1）直接将其放在在安装spark的jars目录下；</h4><h4 id="2）在spark-submit中，添加依赖包信息；"><a href="#2）在spark-submit中，添加依赖包信息；" class="headerlink" title="2）在spark_submit中，添加依赖包信息；"></a>2）在spark_submit中，添加依赖包信息；</h4><h4 id="3）在创建spark的对象的时候添加依赖信息，具体案例如下图所示"><a href="#3）在创建spark的对象的时候添加依赖信息，具体案例如下图所示" class="headerlink" title="3）在创建spark的对象的时候添加依赖信息，具体案例如下图所示"></a>3）在创建spark的对象的时候添加依赖信息，具体案例如下图所示</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">spark = SparkSession \</span><br><span class="line">    .builder \</span><br><span class="line">    .appName(&#x27;mongo connection&#x27;) \</span><br><span class="line">    .config(&quot;spark.mongodb.input.uri&quot;, &quot;mongodb://节点:端口号/dev.myCollection?readPreference=primaryPreferred&quot;) \</span><br><span class="line">    .config(&quot;spark.mongodb.output.uri&quot;, &quot;mongodb://节点:端口号/dev.myCollection&quot;) \</span><br><span class="line">    .config(&#x27;spark.jars.packages&#x27;, &quot;org.mongodb.spark:mongo-spark-connector_2.11:2.4.2&quot;) \</span><br><span class="line">    .getOrCreate()</span><br></pre></td></tr></table></figure>
+<p>备注：</p>
+<p>config的信息，都可以在spark_submit中添加。</p>
+<h3 id="2-读取mongodb"><a href="#2-读取mongodb" class="headerlink" title="2.读取mongodb"></a>2.读取mongodb</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">df1 = (</span><br><span class="line">spark.read</span><br><span class="line">.format(<span class="string">&quot;mongo&quot;</span>)</span><br><span class="line">.option(<span class="string">&quot;database&quot;</span>, <span class="string">&#x27;dev&#x27;</span>)</span><br><span class="line">.option(<span class="string">&quot;collection&quot;</span>, <span class="string">&#x27;test_mongo_connect&#x27;</span>)</span><br><span class="line">.load()</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="3-写入mongodb"><a href="#3-写入mongodb" class="headerlink" title="3.写入mongodb"></a>3.写入mongodb</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = spark.createDataFrame([(1,), (2,)], [<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line">(</span><br><span class="line">df.write</span><br><span class="line">.format(<span class="string">&quot;mongo&quot;</span>)</span><br><span class="line">.mode(<span class="string">&quot;overwrite&quot;</span>)</span><br><span class="line">.option(<span class="string">&quot;database&quot;</span>, <span class="string">&#x27;dev&#x27;</span>)</span><br><span class="line">.option(<span class="string">&quot;collection&quot;</span>, <span class="string">&#x27;test_mongo_connect&#x27;</span>)</span><br><span class="line">.save()</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+]]></content>
   </entry>
   <entry>
     <title>vim 技巧</title>

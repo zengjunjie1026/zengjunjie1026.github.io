@@ -431,6 +431,13 @@
 
       <time title="创建时间：2023-08-16 21:48:30" itemprop="dateCreated datePublished" datetime="2023-08-16T21:48:30+08:00">2023-08-16</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-22 11:06:13" itemprop="dateModified" datetime="2023-08-22T11:06:13+08:00">2023-08-22</time>
+    </span>
 
   
 </div>
@@ -442,7 +449,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) andrew@imac:~<span class="comment">#jupyter notebook password</span></span><br><span class="line">Enter password: </span><br><span class="line">Verify password: </span><br><span class="line">[NotebookPasswordApp] Wrote hashed password to /Users/andrew/.jupyter/jupyter_notebook_config.json</span><br><span class="line">(base) andrew@imac:~<span class="comment">#jupyter notebook --generate-config </span></span><br><span class="line">Writing default config to: /Users/andrew/.jupyter/jupyter_notebook_config.py</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="一-使用"><a href="#一-使用" class="headerlink" title="(一)使用"></a>(一)使用</h2><h3 id="1-终端输入：jupyter-notebook-–generate-config"><a href="#1-终端输入：jupyter-notebook-–generate-config" class="headerlink" title="1.终端输入：jupyter notebook –generate-config"></a>1.终端输入：jupyter notebook –generate-config</h3><p>会生成一个配置文件，成功后会显示文件路径（～&#x2F;.jupyter&#x2F;jupyter_notebook_config.py）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.ip = <span class="string">&#x27;0.0.0.0&#x27;</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-打开路径下的jupyter-notebook-config-py配置文件"><a href="#2-打开路径下的jupyter-notebook-config-py配置文件" class="headerlink" title="2.打开路径下的jupyter_notebook_config.py配置文件"></a>2.打开路径下的jupyter_notebook_config.py配置文件</h3><p>找到c.NotebookApp.notebook_dir&#x3D;修改为自己的工作目录</p>
+<h3 id="3-在终端输入：jupyter-notebook即可打开jupyter，就可以在web端编写python啦！"><a href="#3-在终端输入：jupyter-notebook即可打开jupyter，就可以在web端编写python啦！" class="headerlink" title="3.在终端输入：jupyter notebook即可打开jupyter，就可以在web端编写python啦！"></a>3.在终端输入：jupyter notebook即可打开jupyter，就可以在web端编写python啦！</h3><h2 id="二-设置密码"><a href="#二-设置密码" class="headerlink" title="(二)设置密码"></a>(二)设置密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook password</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
