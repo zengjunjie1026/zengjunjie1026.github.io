@@ -2235,6 +2235,11 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
       </tags>
   </entry>
   <entry>
+    <title>gitlab-runner</title>
+    <url>/2023/08/23/gitlab-runner/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>ceph安装以及测试</title>
     <url>/ceph%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E6%B5%8B%E8%AF%95/index.html</url>
     <content><![CDATA[<p>1.环境配置<br>#在所有节点配置YUM：<br>#清空原来自带配置文件：<br>cd &#x2F;etc&#x2F;yum.repos.d&#x2F;<br>mkdir &#x2F;tmp&#x2F;bak<br>mv * &#x2F;tmp&#x2F;bak&#x2F;<br>#配置系统源码，epel源：</p>
