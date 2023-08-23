@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,174 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2019/08/16/spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="andrew">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="分子美食家的博客">
+      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 分子美食家的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/16/spark/" class="post-title-link" itemprop="url">spark</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-08-16 21:40:18" itemprop="dateCreated datePublished" datetime="2019-08-16T21:40:18+08:00">2019-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-22 07:24:26" itemprop="dateModified" datetime="2023-08-22T07:24:26+08:00">2023-08-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h1><nav>
+<a href="#一简介">一、简介</a><br/>
+<a href="#二特点">二、特点</a><br/>
+<a href="#三集群架构">三、集群架构</a><br/>
+<a href="#四核心组件">四、核心组件</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-Spark--SQL">3.1 Spark  SQL</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-Spark-Streaming">3.2 Spark Streaming</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-MLlib">3.3 MLlib</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-Graphx">3.4 Graphx</a><br/>
+<a href="#">  </a><br/>
+</nav>
+
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Spark 于 2009 年诞生于加州大学伯克利分校 AMPLab，2013 年被捐赠给 Apache 软件基金会，2014 年 2 月成为 Apache 的顶级项目。相对于 MapReduce 的批处理计算，Spark 可以带来上百倍的性能提升，因此它成为继 MapReduce 之后，最为广泛使用的分布式计算框架。</p>
+<h2 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h2><p>Apache Spark 具有以下特点：</p>
+<ul>
+<li>使用先进的 DAG 调度程序，查询优化器和物理执行引擎，以实现性能上的保证；</li>
+<li>多语言支持，目前支持的有 Java，Scala，Python 和 R；</li>
+<li>提供了 80 多个高级 API，可以轻松地构建应用程序；</li>
+<li>支持批处理，流处理和复杂的业务分析；</li>
+<li>丰富的类库支持：包括 SQL，MLlib，GraphX 和 Spark Streaming 等库，并且可以将它们无缝地进行组合；  </li>
+<li>丰富的部署模式：支持本地模式和自带的集群模式，也支持在 Hadoop，Mesos，Kubernetes 上运行；</li>
+<li>多数据源支持：支持访问 HDFS，Alluxio，Cassandra，HBase，Hive 以及数百个其他数据源中的数据。</li>
+</ul>
+<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/future-of-spark.png"/> </div>
+
+<h2 id="三、集群架构"><a href="#三、集群架构" class="headerlink" title="三、集群架构"></a>三、集群架构</h2><table>
+<thead>
+<tr>
+<th>Term（术语）</th>
+<th>Meaning（含义）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Application</td>
+<td>Spark 应用程序，由集群上的一个 Driver 节点和多个 Executor 节点组成。</td>
+</tr>
+<tr>
+<td>Driver program</td>
+<td>主运用程序，该进程运行应用的 main() 方法并且创建  SparkContext</td>
+</tr>
+<tr>
+<td>Cluster manager</td>
+<td>集群资源管理器（例如，Standlone Manager，Mesos，YARN）</td>
+</tr>
+<tr>
+<td>Worker node</td>
+<td>执行计算任务的工作节点</td>
+</tr>
+<tr>
+<td>Executor</td>
+<td>位于工作节点上的应用进程，负责执行计算任务并且将输出数据保存到内存或者磁盘中</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>被发送到 Executor 中的工作单元</td>
+</tr>
+</tbody></table>
+<div align="center"> <img src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-集群模式.png"/> </div>
+
+<p><strong>执行过程</strong>：</p>
+<ol>
+<li>用户程序创建 SparkContext 后，它会连接到集群资源管理器，集群资源管理器会为用户程序分配计算资源，并启动 Executor；</li>
+<li>Driver 将计算程序划分为不同的执行阶段和多个 Task，之后将 Task 发送给 Executor；</li>
+<li>Executor 负责执行 Task，并将执行状态汇报给 Driver，同时也会将当前节点资源的使用情况汇报给集群资源管理器。</li>
+</ol>
+<h2 id="四、核心组件"><a href="#四、核心组件" class="headerlink" title="四、核心组件"></a>四、核心组件</h2><p>Spark 基于 Spark Core 扩展了四个核心组件，分别用于满足不同领域的计算需求。</p>
+<div align="center"> <img  width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-stack.png"/> </div>
+
+<h3 id="3-1-Spark-SQL"><a href="#3-1-Spark-SQL" class="headerlink" title="3.1 Spark  SQL"></a>3.1 Spark  SQL</h3><p>Spark SQL 主要用于结构化数据的处理。其具有以下特点：</p>
+<ul>
+<li>能够将 SQL 查询与 Spark 程序无缝混合，允许您使用 SQL 或 DataFrame API 对结构化数据进行查询；</li>
+<li>支持多种数据源，包括 Hive，Avro，Parquet，ORC，JSON 和 JDBC；</li>
+<li>支持 HiveQL 语法以及用户自定义函数 (UDF)，允许你访问现有的 Hive 仓库；</li>
+<li>支持标准的 JDBC 和 ODBC 连接；</li>
+<li>支持优化器，列式存储和代码生成等特性，以提高查询效率。</li>
+</ul>
+<h3 id="3-2-Spark-Streaming"><a href="#3-2-Spark-Streaming" class="headerlink" title="3.2 Spark Streaming"></a>3.2 Spark Streaming</h3><p>Spark Streaming 主要用于快速构建可扩展，高吞吐量，高容错的流处理程序。支持从 HDFS，Flume，Kafka，Twitter 和 ZeroMQ 读取数据，并进行处理。</p>
+<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-arch.png"/> </div>
+
+<p> Spark Streaming 的本质是微批处理，它将数据流进行极小粒度的拆分，拆分为多个批处理，从而达到接近于流处理的效果。</p>
+<div align="center"> <img width="600px"   src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark-streaming-flow.png"/> </div>
+
+
+
+<h3 id="3-3-MLlib"><a href="#3-3-MLlib" class="headerlink" title="3.3 MLlib"></a>3.3 MLlib</h3><p>MLlib 是 Spark 的机器学习库。其设计目标是使得机器学习变得简单且可扩展。它提供了以下工具：</p>
+<ul>
+<li><strong>常见的机器学习算法</strong>：如分类，回归，聚类和协同过滤；</li>
+<li><strong>特征化</strong>：特征提取，转换，降维和选择；</li>
+<li><strong>管道</strong>：用于构建，评估和调整 ML 管道的工具；</li>
+<li><strong>持久性</strong>：保存和加载算法，模型，管道数据；</li>
+<li><strong>实用工具</strong>：线性代数，统计，数据处理等。</li>
+</ul>
+<h3 id="3-4-Graphx"><a href="#3-4-Graphx" class="headerlink" title="3.4 Graphx"></a>3.4 Graphx</h3><p>GraphX 是 Spark 中用于图形计算和图形并行计算的新组件。在高层次上，GraphX 通过引入一个新的图形抽象来扩展 RDD(一种具有附加到每个顶点和边缘的属性的定向多重图形)。为了支持图计算，GraphX 提供了一组基本运算符（如： subgraph，joinVertices 和 aggregateMessages）以及优化后的 Pregel API。此外，GraphX 还包括越来越多的图形算法和构建器，以简化图形分析任务。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -511,144 +679,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="andrew">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="分子美食家的博客">
-      <meta itemprop="description" content="做自己爱做的事，爱自己在做的事！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 分子美食家的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/16/loguru-elasticsearch-kibana-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">loguru elasticsearch kibana 日志处理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-05-16 18:00:53" itemprop="dateCreated datePublished" datetime="2018-05-16T18:00:53+08:00">2018-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-18 12:49:14" itemprop="dateModified" datetime="2023-08-18T12:49:14+08:00">2023-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="日志的重要性"><a href="#日志的重要性" class="headerlink" title="日志的重要性"></a>日志的重要性</h3><p>常见日志记录方式</p>
-<h4 id="一、print"><a href="#一、print" class="headerlink" title="一、print()"></a>一、print()</h4><h4 id="二、自写模板"><a href="#二、自写模板" class="headerlink" title="二、自写模板"></a>二、自写模板</h4><h4 id="三、Logging"><a href="#三、Logging" class="headerlink" title="三、Logging"></a>三、Logging</h4><h5 id="更优雅的解决方案：Loguru"><a href="#更优雅的解决方案：Loguru" class="headerlink" title="更优雅的解决方案：Loguru"></a>更优雅的解决方案：Loguru</h5><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>开箱即用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add() / remove()</span><br><span class="line">完整参数</span><br><span class="line">rotation 日志文件分隔</span><br><span class="line">retention 日志保留时间</span><br><span class="line">compression 日志压缩格式</span><br><span class="line">字符串格式化</span><br><span class="line">异常追溯</span><br></pre></td></tr></table></figure>
-
-<h3 id="日志的重要性-1"><a href="#日志的重要性-1" class="headerlink" title="日志的重要性"></a>日志的重要性</h3><p>日志的作用非常重要，日志可以记录用户的操作、程序的异常，还可以为数据分析提供依据，日志的存在意义就是为了能够在程序在运行过程中记录错误，方便维护和调试，能够快速定位出错的地方，减少维护成本。每个程序员都应该知道，不是为了记录日志而记录日志，日志也不是随意记的。要实现能够只通过日志文件还原整个程序执行的过程，达到能透明地看到程序里执行情况，每个线程、每个过程到底执行到哪的目的。日志就像飞机的黑匣子一样，应当能够复原异常的整个现场乃至细节！</p>
-<h3 id="常见日志记录方式"><a href="#常见日志记录方式" class="headerlink" title="常见日志记录方式"></a>常见日志记录方式</h3><h4 id="一、print-1"><a href="#一、print-1" class="headerlink" title="一、print()"></a>一、print()</h4><p>最常见的是把输出函数 print() 当作日志记录的方式，直接打印各种提示信息，常见于个人练习项目里，通常是懒得单独配置日志，而且项目太小不需要日志信息，不需要上线，不需要持续运行，完整的项目不推荐直接打印日志信息，现实中也几乎没有人这么做。</p>
-<h4 id="二、自写模板-1"><a href="#二、自写模板-1" class="headerlink" title="二、自写模板"></a>二、自写模板</h4><p>我们可以在不少小项目里面看到作者自己写了一个日志模板，通常利用 print() 或者 sys.stdout 稍微封装一下即可实现简单的日志输出，这里的 sys.stdout 是 Python 中的标准输出流，print() 函数是对 sys.stdout 的高级封装，当我们在 Python 中打印对象调用 print(obj) 时候，事实上是调用了 sys.stdout.write(obj+’\n’)，print() 将内容打印到了控制台，然后追加了一个换行符 \n。</p>
-<p>自写日志模板适合比较小的项目，可以按照自己的喜好编写模板，不需要太多复杂配置，方便快捷，但是这种记录日志的方式并不是很规范，有可能你自己觉得阅读体验不错，但是别人在接触你的项目的时候往往需要花费一定的时间去学习日志的逻辑、格式、输出方式等，比较大的项目同样不推荐这种方法。</p>
-<p>一个简单的自写日志模板举例：</p>
-<p>日志模板 log.py：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getnowtime</span>():</span><br><span class="line">    <span class="keyword">return</span> datetime.datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_log</span>(<span class="params">content, level, *args</span>):</span><br><span class="line">    sys.stdout.write(<span class="string">&quot;%s - %s - %s\n&quot;</span> % (getnowtime(), level, content))</span><br><span class="line">    <span class="keyword">for</span> arg <span class="keyword">in</span> args:</span><br><span class="line">        sys.stdout.write(<span class="string">&quot;%s\n&quot;</span> % arg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">debug</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;DEBUG&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">info</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;INFO&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">warn</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;WARN&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">content, *args</span>):</span><br><span class="line">    _log(content, <span class="string">&#x27;ERROR&#x27;</span>, *args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exception</span>(<span class="params">content</span>):</span><br><span class="line">    sys.stdout.write(<span class="string">&quot;%s - %s\n&quot;</span> % (getnowtime(), content))</span><br><span class="line">    traceback.print_exc(file=sys.stdout)</span><br></pre></td></tr></table></figure>
-<p>调用日志模块：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;This is log info!&quot;</span>)</span><br><span class="line">log.warn(<span class="string">&quot;This is log warn!&quot;</span>)</span><br><span class="line">log.error(<span class="string">&quot;This is log error!&quot;</span>)</span><br><span class="line">log.debug(<span class="string">&quot;This is log debug!&quot;</span>)</span><br><span class="line"></span><br><span class="line">people_info = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Bob&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">20</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> error:</span><br><span class="line">    log.exception(error)</span><br><span class="line">日志输出：</span><br><span class="line"></span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - INFO - This <span class="keyword">is</span> log info!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - WARN - This <span class="keyword">is</span> log warn!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - ERROR - This <span class="keyword">is</span> log error!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - DEBUG - This <span class="keyword">is</span> log debug!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> 09:<span class="number">50</span>:<span class="number">58</span> - <span class="string">&#x27;gender&#x27;</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;D:/python3Project/test.py&quot;</span>, line <span class="number">18</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">KeyError: <span class="string">&#x27;gender&#x27;</span></span><br></pre></td></tr></table></figure>
-<h4 id="三、Logging-1"><a href="#三、Logging-1" class="headerlink" title="三、Logging"></a>三、Logging</h4><p>在一个完整的项目中，大多数人都会引入专门的日志记录库，而 Python 自带的标准库 logging 就是专门为日志记录而生的，logging 模块定义的函数和类为应用程序和库的开发实现了一个灵活的事件日志系统。由标准库模块提供日志记录 API 的关键好处是所有 Python 模块都可以使用这个日志记录功能。所以，你的应用日志可以将你自己的日志信息与来自第三方模块的信息整合起来。</p>
-<p>logging 模块虽然强大，但是其配置也是比较繁琐的，在大型项目中通常需要单独初始化日志、配置日志格式等等，我在日常使用中通常都会对 logging 做如下的封装写法，使日志可以按天保存，保留15天的日志，可以配置是否输出到控制台和文件，如下所示：</p>
-<h1 id="实现按天分割保留日志"><a href="#实现按天分割保留日志" class="headerlink" title="实现按天分割保留日志"></a>实现按天分割保留日志</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> logging <span class="keyword">import</span> handlers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PARENT_DIR = os.path.split(os.path.realpath(__file__))[<span class="number">0</span>]  <span class="comment"># 父目录</span></span><br><span class="line">LOGGING_DIR = os.path.join(PARENT_DIR, <span class="string">&quot;log&quot;</span>)              <span class="comment"># 日志目录</span></span><br><span class="line">LOGGING_NAME = <span class="string">&quot;test&quot;</span>                                      <span class="comment"># 日志文件名</span></span><br><span class="line"></span><br><span class="line">LOGGING_TO_FILE = <span class="literal">True</span>                                     <span class="comment"># 日志输出文件</span></span><br><span class="line">LOGGING_TO_CONSOLE = <span class="literal">True</span>                                  <span class="comment"># 日志输出到控制台</span></span><br><span class="line"></span><br><span class="line">LOGGING_WHEN = <span class="string">&#x27;D&#x27;</span>                                         <span class="comment"># 日志文件切分维度</span></span><br><span class="line">LOGGING_INTERVAL = <span class="number">1</span>                                       <span class="comment"># 间隔少个 when 后，自动重建文件</span></span><br><span class="line">LOGGING_BACKUP_COUNT = <span class="number">15</span>                                  <span class="comment"># 日志保留个数，0 保留所有日志</span></span><br><span class="line">LOGGING_LEVEL = logging.DEBUG                              <span class="comment"># 日志等级</span></span><br><span class="line">LOGGING_suffix = <span class="string">&quot;%Y.%m.%d.log&quot;</span>                            <span class="comment"># 旧日志文件名</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志输出格式</span></span><br><span class="line">LOGGING_FORMATTER = <span class="string">&quot;%(levelname)s - %(asctime)s - process:%(process)d - %(filename)s - %(name)s - line:%(lineno)d - %(module)s - %(message)s&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">logging_init</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(LOGGING_DIR):</span><br><span class="line">        os.makedirs(LOGGING_DIR)</span><br><span class="line">    logger = logging.getLogger()</span><br><span class="line">    logger.setLevel(LOGGING_LEVEL)</span><br><span class="line">    formatter = logging.Formatter(LOGGING_FORMATTER)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> LOGGING_TO_FILE:</span><br><span class="line">        file_handler = handlers.TimedRotatingFileHandler(filename=os.path.join(LOGGING_DIR, LOGGING_NAME), when=LOGGING_WHEN, interval=LOGGING_INTERVAL, backupCount=LOGGING_BACKUP_COUNT)</span><br><span class="line">        file_handler.suffix = LOGGING_suffix</span><br><span class="line">        file_handler.setFormatter(formatter)</span><br><span class="line">        logger.addHandler(file_handler)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> LOGGING_TO_CONSOLE:</span><br><span class="line">        stream_handler = logging.StreamHandler(sys.stderr)</span><br><span class="line">        stream_handler.setFormatter(formatter)</span><br><span class="line">        logger.addHandler(stream_handler)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">logging_test</span>():</span><br><span class="line">    logging.info(<span class="string">&quot;This is log info!&quot;</span>)</span><br><span class="line">    logging.warning(<span class="string">&quot;This is log warn!&quot;</span>)</span><br><span class="line">    logging.error(<span class="string">&quot;This is log error!&quot;</span>)</span><br><span class="line">    logging.debug(<span class="string">&quot;This is log debug!&quot;</span>)</span><br><span class="line">    people_info = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Bob&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">20</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> error:</span><br><span class="line">        logging.exception(error)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    logging_init()</span><br><span class="line">    logging_test()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出日志：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INFO - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">103</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">52</span> - test - This <span class="keyword">is</span> log info!</span><br><span class="line">WARNING - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">53</span> - test - This <span class="keyword">is</span> log warn!</span><br><span class="line">ERROR - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">54</span> - test - This <span class="keyword">is</span> log error!</span><br><span class="line">DEBUG - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">55</span> - test - This <span class="keyword">is</span> log debug!</span><br><span class="line">ERROR - <span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">11</span>:<span class="number">28</span>:<span class="number">10</span>,<span class="number">105</span> - process:<span class="number">15144</span> - test.py - root - line:<span class="number">61</span> - test - <span class="string">&#x27;gender&#x27;</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;D:/python3Project/test.py&quot;</span>, line <span class="number">59</span>, <span class="keyword">in</span> logging_test</span><br><span class="line">    gender = people_info[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">KeyError: <span class="string">&#x27;gender&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-<p>当然，如果你不需要很复杂的功能，希望简洁一点，仅仅需要在控制台输出一下日志的话，也可以只进行简单的配置：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(level=logging.DEBUG, <span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#x27;</span>)</span><br><span class="line">logging.getLogger()</span><br></pre></td></tr></table></figure>
-<p>更优雅的解决方案：Loguru<br>对于 logging 模块，即便是简单的使用，也需要自己定义格式，这里介绍一个更加优雅、高效、简洁的第三方模块：loguru，官方的介绍是：Loguru is a library which aims to bring enjoyable logging in Python. Loguru 旨在为 Python 带来愉快的日志记录。这里引用官方的一个 GIF 来快速演示其功能：</p>
-<h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><p>Loguru 仅支持 Python 3.5 及以上的版本，使用 pip 安装即可：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install loguru</span><br></pre></td></tr></table></figure>
-<p>开箱即用<br>Loguru 的主要概念是只有一个：logger</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">logger.info(<span class="string">&quot;This is log info!&quot;</span>)</span><br><span class="line">logger.warning(<span class="string">&quot;This is log warn!&quot;</span>)</span><br><span class="line">logger.error(<span class="string">&quot;This is log error!&quot;</span>)</span><br><span class="line">logger.debug(<span class="string">&quot;This is log debug!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>控制台输出：</p>
-<p>03.png</p>
-<p>可以看到不需要手动设置，Loguru 会提前配置一些基础信息，自动输出时间、日志级别、模块名、行号等信息，而且根据等级的不同，还自动设置了不同的颜色，方便观察，真正做到了开箱即用！</p>
-<p>add() &#x2F; remove()<br>如果想自定义日志级别，自定义日志格式，保存日志到文件该怎么办？与 logging 模块不同，不需要 Handler，不需要 Formatter，只需要一个 add() 函数就可以了，例如我们想把日志储存到文件：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;test.log&#x27;</span>)</span><br><span class="line">logger.debug(<span class="string">&#x27;this is a debug&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>我们不需要像 logging 模块一样再声明一个 FileHandler 了，就一行 add() 语句搞定，运行之后会发现目录下 test.log 里面同样出现了刚刚控制台输出的 debug 信息。</p>
-<p>与 add() 语句相反，remove() 语句可以删除我们添加的配置：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">log_file = logger.add(<span class="string">&#x27;test.log&#x27;</span>)</span><br><span class="line">logger.debug(<span class="string">&#x27;This is log debug!&#x27;</span>)</span><br><span class="line">logger.remove(log_file)</span><br><span class="line">logger.debug(<span class="string">&#x27;This is another log debug!&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>此时控制台会输出两条 debug 信息：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">13</span>:<span class="number">53</span>:<span class="number">36.610</span> | DEBUG    | __main__:&lt;module&gt;:<span class="number">86</span> - This <span class="keyword">is</span> log debug!</span><br><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">13</span>:<span class="number">53</span>:<span class="number">36.611</span> | DEBUG    | __main__:&lt;module&gt;:<span class="number">88</span> - This <span class="keyword">is</span> another log debug!</span><br></pre></td></tr></table></figure>
-<p>而 test.log 日志文件里面只有一条 debug 信息，原因就在于我们在第二条 debug 语句之前使用了 remove() 语句。</p>
-<p>完整参数<br>Loguru 对输出到文件的配置有非常强大的支持，比如支持输出到多个文件，分级别分别输出，过大创建新文件，过久自动删除等等。 下面我们来详细看一下 add() 语句的详细参数：</p>
-<p>基本语法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add(sink, *, level=<span class="string">&#x27;DEBUG&#x27;</span>, <span class="built_in">format</span>=<span class="string">&#x27;&lt;green&gt;&#123;time:YYYY-MM-DD HH:mm:ss.SSS&#125;&lt;/green&gt; | &lt;level&gt;&#123;level: &lt;8&#125;&lt;/level&gt; | &lt;cyan&gt;&#123;name&#125;&lt;/cyan&gt;:&lt;cyan&gt;&#123;function&#125;&lt;/cyan&gt;:&lt;cyan&gt;&#123;line&#125;&lt;/cyan&gt; - &lt;level&gt;&#123;message&#125;&lt;/level&gt;&#x27;</span>, <span class="built_in">filter</span>=<span class="literal">None</span>, colorize=<span class="literal">None</span>, serialize=<span class="literal">False</span>, backtrace=<span class="literal">True</span>, diagnose=<span class="literal">True</span>, enqueue=<span class="literal">False</span>, catch=<span class="literal">True</span>, **kwargs)</span><br></pre></td></tr></table></figure>
-<h5 id="基本参数释义："><a href="#基本参数释义：" class="headerlink" title="基本参数释义："></a>基本参数释义：</h5><p>sink：可以是一个 file 对象，例如 sys.stderr 或 open(‘file.log’, ‘w’)，也可以是 str 字符串或者 pathlib.Path 对象，即文件路径，也可以是一个方法，可以自行定义输出实现，也可以是一个 logging 模块的 Handler，比如 FileHandler、StreamHandler 等，还可以是 coroutine function，即一个返回协程对象的函数等。<br>level：日志输出和保存级别。<br>format：日志格式模板。<br>filter：一个可选的指令，用于决定每个记录的消息是否应该发送到 sink。<br>colorize：格式化消息中包含的颜色标记是否应转换为用于终端着色的 ansi 代码，或以其他方式剥离。 如果没有，则根据 sink 是否为 tty（电传打字机缩写） 自动做出选择。<br>serialize：在发送到 sink 之前，是否应首先将记录的消息转换为 JSON 字符串。<br>backtrace：格式化的异常跟踪是否应该向上扩展，超出捕获点，以显示生成错误的完整堆栈跟踪。<br>diagnose：异常跟踪是否应显示变量值以简化调试。建议在生产环境中设置 False，避免泄露敏感数据。<br>enqueue：要记录的消息是否应在到达 sink 之前首先通过多进程安全队列，这在通过多个进程记录到文件时很有用，这样做的好处还在于使日志记录调用是非阻塞的。<br>catch：是否应自动捕获 sink 处理日志消息时发生的错误，如果为 True，则会在 sys.stderr 上显示异常消息，但该异常不会传播到 sink，从而防止应用程序崩溃。<br>**kwargs：仅对配置协程或文件接收器有效的附加参数（见下文）。<br>当且仅当 sink 是协程函数时，以下参数适用：</p>
-<p>loop：将在其中调度和执行异步日志记录任务的事件循环。如果为 None，将使用 asyncio.get_event_loop() 返回的循环。<br>当且仅当 sink 是文件路径时，以下参数适用：</p>
-<p>rotation：一种条件，指示何时应关闭当前记录的文件并开始新的文件。<br>**retention **：过滤旧文件的指令，在循环或程序结束期间会删除旧文件。<br>compression：日志文件在关闭时应转换为的压缩或存档格式。<br>delay：是在配置 sink 后立即创建文件，还是延迟到第一条记录的消息时再创建。默认为 False。<br>mode：内置 open() 函数的打开模式，默认为 a（以追加模式打开文件）。<br>buffering：内置 open() 函数的缓冲策略，默认为1（行缓冲文件）。<br>encoding：内置 open() 函数的文件编码，如果 None，则默认为 locale.getpreferredencoding()。<br>**kwargs：其他传递给内置 open() 函数的参数。<br>这么多参数可以见识到 add() 函数的强大之处，仅仅一个函数就能实现 logging 模块的诸多功能，接下来介绍几个比较常用的方法。</p>
-<p>rotation 日志文件分隔</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">add() 函数的 rotation 参数，可以实现按照固定时间创建新的日志文件，比如设置每天 <span class="number">0</span> 点新创建一个 log 文件：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, rotation=<span class="string">&#x27;00:00&#x27;</span>)</span><br><span class="line">设置超过 <span class="number">500</span> MB 新创建一个 log 文件：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, rotation=<span class="string">&quot;500 MB&quot;</span>)</span><br><span class="line">设置每隔一个周新创建一个 log 文件：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, rotation=<span class="string">&#x27;1 week&#x27;</span>)</span><br><span class="line">retention 日志保留时间</span><br><span class="line">add() 函数的 retention 参数，可以设置日志的最长保留时间，比如设置日志文件最长保留 <span class="number">15</span> 天：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, retention=<span class="string">&#x27;15 days&#x27;</span>)</span><br><span class="line">设置日志文件最多保留 <span class="number">10</span> 个：</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, retention=<span class="number">10</span>)</span><br><span class="line">也可以是一个 datetime.timedelta 对象，比如设置日志文件最多保留 <span class="number">5</span> 个小时：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, retention=datetime.timedelta(hours=<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-<p>compression 日志压缩格式<br>add() 函数的 compression 参数，可以配置日志文件的压缩格式，这样可以更加节省存储空间，比如设置使用 zip 文件格式保存：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger.add(<span class="string">&#x27;runtime_&#123;time&#125;.log&#x27;</span>, compression=<span class="string">&#x27;zip&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>其格式支持：gz、bz2、xz、lzma、tar、tar.gz、tar.bz2、tar.xz</p>
-<p>字符串格式化<br>Loguru 在输出 log 的时候还提供了非常友好的字符串格式化功能，相当于 str.format()：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger.info(<span class="string">&#x27;If you are using Python &#123;&#125;, prefer &#123;feature&#125; of course!&#x27;</span>, <span class="number">3.6</span>, feature=<span class="string">&#x27;f-strings&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">14</span>:<span class="number">59</span>:<span class="number">06.412</span> | INFO     | __main__:&lt;module&gt;:<span class="number">3</span> - If you are using Python <span class="number">3.6</span>, prefer f-strings of course!</span><br></pre></td></tr></table></figure>
-<p>异常追溯<br>在 Loguru 里可以直接使用它提供的装饰器就可以直接进行异常捕获，而且得到的日志是无比详细的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> loguru <span class="keyword">import</span> logger</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@logger.catch</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">x, y, z</span>):</span><br><span class="line">    <span class="comment"># An error? It&#x27;s caught anyway!</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (x + y + z)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">my_function(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<p>日志输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">15</span>:04:<span class="number">51.675</span> | ERROR    | __main__:&lt;module&gt;:<span class="number">10</span> - An error has been caught <span class="keyword">in</span> function <span class="string">&#x27;&lt;module&gt;&#x27;</span>, process <span class="string">&#x27;MainProcess&#x27;</span> (<span class="number">30456</span>), thread <span class="string">&#x27;MainThread&#x27;</span> (<span class="number">26268</span>):</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"></span><br><span class="line">&gt; File <span class="string">&quot;D:/python3Project\test.py&quot;</span>, line <span class="number">10</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    my_function(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    └ &lt;function my_function at <span class="number">0x014CDFA8</span>&gt;</span><br><span class="line"></span><br><span class="line">  File <span class="string">&quot;D:/python3Project\test.py&quot;</span>, line <span class="number">7</span>, <span class="keyword">in</span> my_function</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (x + y + z)</span><br><span class="line">                │   │   └ <span class="number">0</span></span><br><span class="line">                │   └ <span class="number">0</span></span><br><span class="line">                └ <span class="number">0</span></span><br><span class="line"></span><br><span class="line">ZeroDivisionError: division by zero</span><br></pre></td></tr></table></figure>
-<p>在控制台的输出是这样的：</p>
-<p>相比 Logging，Loguru 无论是在配置方面、日志输出样式还是异常追踪，都远优于 Logging，使用 Loguru 无疑能提升开发人员效率。本文仅介绍了一些常用的方法，想要详细了解可参考 Loguru 官方文档或关注 Loguru GitHub。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
