@@ -19,27 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zengjunjie1026.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="123456789101112#!&#x2F;usr&#x2F;bin&#x2F;python# -*- coding: UTF-8 -*-import timefrom pymongo import MongoReplicaSetClientfrom pymongo import MongoClient# 连接单机# single mongo# c &#x3D; MongoClient(host&#x3D;&quot;192.168.89.15">
+    <meta name="description" content="yum -y install ntpsystemctl enable ntpdsystemctl start ntpdtimedatectl set-ntp yesntpdate -u cn.pool.ntp.orgln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtimewa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pymongo分片">
-<meta property="og:url" content="https://zengjunjie1026.github.io/2023/08/18/pymongo%E5%88%86%E7%89%87/index.html">
+<meta property="og:title" content="minio分布式安装2">
+<meta property="og:url" content="https://zengjunjie1026.github.io/2023/08/29/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%852/index.html">
 <meta property="og:site_name" content="分子美食家的博客">
-<meta property="og:description" content="123456789101112#!&#x2F;usr&#x2F;bin&#x2F;python# -*- coding: UTF-8 -*-import timefrom pymongo import MongoReplicaSetClientfrom pymongo import MongoClient# 连接单机# single mongo# c &#x3D; MongoClient(host&#x3D;&quot;192.168.89.15">
+<meta property="og:description" content="yum -y install ntpsystemctl enable ntpdsystemctl start ntpdtimedatectl set-ntp yesntpdate -u cn.pool.ntp.orgln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtimewa">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-18T09:28:46.000Z">
-<meta property="article:modified_time" content="2023-08-22T03:06:13.244Z">
+<meta property="article:published_time" content="2023-08-29T02:58:43.000Z">
+<meta property="article:modified_time" content="2023-08-30T02:40:12.376Z">
 <meta property="article:author" content="andrew">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://zengjunjie1026.github.io/2023/08/18/pymongo%E5%88%86%E7%89%87/">
+<link rel="canonical" href="https://zengjunjie1026.github.io/2023/08/29/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%852/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2023/08/18/pymongo%E5%88%86%E7%89%87/","path":"2023/08/18/pymongo分片/","title":"pymongo分片"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zengjunjie1026.github.io/2023/08/29/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%852/","path":"2023/08/29/minio分布式安装2/","title":"minio分布式安装2"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>pymongo分片 | 分子美食家的博客</title>
+<title>minio分布式安装2 | 分子美食家的博客</title>
   
 
 
@@ -149,7 +149,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/18/pymongo%E5%88%86%E7%89%87/">
+    <link itemprop="mainEntityOfPage" href="https://zengjunjie1026.github.io/2023/08/29/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%852/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -162,12 +162,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="pymongo分片 | 分子美食家的博客">
+      <meta itemprop="name" content="minio分布式安装2 | 分子美食家的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          pymongo分片
+          minio分布式安装2
         </h1>
 
         <div class="post-meta-container">
@@ -178,14 +178,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-08-18 17:28:46" itemprop="dateCreated datePublished" datetime="2023-08-18T17:28:46+08:00">2023-08-18</time>
+      <time title="创建时间：2023-08-29 10:58:43" itemprop="dateCreated datePublished" datetime="2023-08-29T10:58:43+08:00">2023-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-22 11:06:13" itemprop="dateModified" datetime="2023-08-22T11:06:13+08:00">2023-08-22</time>
+      <time title="修改时间：2023-08-30 10:40:12" itemprop="dateModified" datetime="2023-08-30T10:40:12+08:00">2023-08-30</time>
     </span>
 
   
@@ -197,7 +197,22 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoReplicaSetClient</span><br><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</span><br><span class="line"><span class="comment"># 连接单机</span></span><br><span class="line"><span class="comment"># single mongo</span></span><br><span class="line"><span class="comment"># c = MongoClient(host=&quot;192.168.89.151&quot;, port=27017) # okay</span></span><br><span class="line"><span class="comment"># 连接集群</span></span><br><span class="line"><span class="comment"># mongo cluster</span></span><br><span class="line">c = MongoClient(<span class="string">&#x27;mongodb://192.168.89.151,192.168.89.152,192.168.89.153&#x27;</span>)<span class="comment">#okay</span></span><br><span class="line"><span class="built_in">print</span> c.database_names()</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><p>yum -y install ntp<br>systemctl enable ntpd<br>systemctl start ntpd<br>timedatectl set-ntp yes<br>ntpdate -u cn.pool.ntp.org<br>ln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime<br>watch -n 1 ‘date’</p>
+<p>mkdir &#x2F;mnt&#x2F;minio&#x2F;{app,config,data,logs} -p</p>
+<p>#!&#x2F;bin&#x2F;bash<br>export MINIO_ACCESS_KEY&#x3D;circue<br>export MINIO_SECRET_KEY&#x3D;circue@data<br>&#x2F;mnt&#x2F;minio&#x2F;app&#x2F;minio server –config-dir &#x2F;mnt&#x2F;minio&#x2F;config  –console-address “:9001” \<br><a target="_blank" rel="noopener" href="http://10.30.0.40:9000/mnt/minio/data">http://10.30.0.40:9000/mnt/minio/data</a> <br><a target="_blank" rel="noopener" href="http://10.30.0.43:9000/mnt/minio/data">http://10.30.0.43:9000/mnt/minio/data</a> <br><a target="_blank" rel="noopener" href="http://10.30.0.93:9000/mnt/minio/data">http://10.30.0.93:9000/mnt/minio/data</a> <br><a target="_blank" rel="noopener" href="http://10.30.0.72:9000/mnt/minio/data">http://10.30.0.72:9000/mnt/minio/data</a> &gt; &#x2F;mnt&#x2F;minio&#x2F;logs&#x2F;start.txt 2&gt;&amp;1 &amp;</p>
+<p>cat minio-cluster.conf<br>upstream minio_console {<br>    server 10.30.0.40:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.43:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.93:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.72:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>}<br>upstream minio_api {<br>    server 10.30.0.40:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.43:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.93:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.72:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>}</p>
+<p>server {<br>    listen          80;   #或者用80端口也可以<br>    server_name     10.30.0.41;    #可以用域名<br>    access_log      &#x2F;var&#x2F;log&#x2F;minio.com_access.log main;<br>    error_log       &#x2F;var&#x2F;log&#x2F;minio.com_error.log warn;<br>    location &#x2F; {<br>        proxy_next_upstream     http_500 http_502 http_503 http_504 error timeout invalid_header;<br>        proxy_set_header        Host  $host;<br>        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;<br>        proxy_pass              <a target="_blank" rel="noopener" href="http://minio_console/">http://minio_console</a>;<br>        expires                 0;<br>    }<br>}</p>
+<p>server {<br>    listen          9001;<br>    server_name     10.30.0.41;   #可以用域名<br>    access_log      &#x2F;var&#x2F;log&#x2F;minio.com_access.log main;<br>    error_log       &#x2F;var&#x2F;log&#x2F;minio.com_error.log warn;<br>    #root            &#x2F;mnt&#x2F;minio&#x2F;app&#x2F;;</p>
+<pre><code>location / &#123;
+    proxy_next_upstream     http_500 http_502 http_503 http_504 error timeout invalid_header;
+    proxy_set_header        Host  $host;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass              http://minio_api;
+    expires                 0;
+&#125;
+</code></pre>
+<p>}</p>
+
     </div>
 
     
@@ -210,14 +225,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/08/18/%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7docker%E6%89%A7%E8%A1%8C%E9%97%AE%E9%A2%98/" rel="prev" title="普通用户docker执行问题">
-                  <i class="fa fa-angle-left"></i> 普通用户docker执行问题
+                <a href="/2023/08/28/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BB%A5%E5%8F%8A%E9%80%89%E5%9E%8B/" rel="prev" title="文件系统以及选型">
+                  <i class="fa fa-angle-left"></i> 文件系统以及选型
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/08/18/pykafka/" rel="next" title="pykafka">
-                  pykafka <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>

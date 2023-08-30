@@ -345,13 +345,19 @@
     <title>kubeflow基础搭建</title>
     <url>/2023/08/16/kubeflow%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>linux硬盘格式化与挂载</title>
     <url>/2020/03/16/linux%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E6%8C%82%E8%BD%BD/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y gdisk</span><br><span class="line">fdisk /dev/sdb</span><br><span class="line">m</span><br><span class="line">g</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="built_in">mkdir</span> /data</span><br><span class="line">mounr /dev/sdb /data</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="built_in">mkdir</span> /data</span><br><span class="line">mounr /dev/sdb /data</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">base) [root@gpu004:<span class="number">7</span> /]# fdisk /dev/sdb</span><br><span class="line"><span class="built_in">WARNING</span>: fdisk GPT support <span class="keyword">is</span> currently <span class="built_in">new</span>, <span class="keyword">and</span> therefore <span class="keyword">in</span> an experimental phase. Use at your own discretion.</span><br><span class="line">欢迎使用 fdisk (util-linux <span class="number">2.23</span><span class="number">.2</span>)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：d</span><br><span class="line"><span class="keyword">No</span> <span class="keyword">partition</span> <span class="keyword">is</span> defined yet!</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：g</span><br><span class="line">Building a <span class="built_in">new</span> GPT disklabel (GUID: <span class="number">8</span>BC566A3<span class="number">-7</span>EC7<span class="number">-4</span>A20<span class="number">-887</span>C<span class="number">-107</span>BB9D3D01D)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w</span><br><span class="line">The <span class="keyword">partition</span> <span class="keyword">table</span> has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() <span class="keyword">to</span> re-<span class="keyword">read</span> <span class="keyword">partition</span> <span class="keyword">table</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">WARNING</span>: Re-reading the <span class="keyword">partition</span> <span class="keyword">table</span> failed <span class="keyword">with</span> error <span class="number">16</span>: 设备或资源忙.</span><br><span class="line">The kernel still uses the <span class="built_in">old</span> <span class="keyword">table</span>. The <span class="built_in">new</span> <span class="keyword">table</span> will be used at</span><br><span class="line">the next reboot <span class="keyword">or</span> <span class="keyword">after</span> you run partprobe(<span class="number">8</span>) <span class="keyword">or</span> kpartx(<span class="number">8</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>loguru elasticsearch kibana 日志处理</title>
@@ -423,9 +429,194 @@
       </tags>
   </entry>
   <entry>
-    <title>minio分布式安装</title>
+    <title>minio介绍</title>
     <url>/2023/08/16/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="minio"><a href="#minio" class="headerlink" title="minio"></a>minio</h1><h1 id="文件系统了解及对比选型"><a href="#文件系统了解及对比选型" class="headerlink" title="文件系统了解及对比选型"></a><strong>文件系统了解及对比选型</strong></h1><p><strong>分布式文件系统</strong>（<strong>Distributed file system，DFS</strong>），或是网络文件系统（Network File System），是一种允许文件透过网络在多台主机上分享的文件系统，可让多机器上的多用户分享文件和存储空间。分布式文件系统解决的最大的问题是资源共享的问题，因此分布式文件系统最大的特点是多个客户端可以访问相同的服务端</p>
+<h2 id="1-专业名词"><a href="#1-专业名词" class="headerlink" title="#1. 专业名词"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_1-%E4%B8%93%E4%B8%9A%E5%90%8D%E8%AF%8D">#</a>1. 专业名词</strong></h2><table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SDS</td>
+<td>Software Defined Storag</td>
+<td>软件定义存储技术</td>
+</tr>
+<tr>
+<td>RAID</td>
+<td>Redundant Array of Independent Disk</td>
+<td>磁盘阵列技术</td>
+</tr>
+<tr>
+<td>DG</td>
+<td>Disk Group</td>
+<td>硬盘组</td>
+</tr>
+<tr>
+<td>VD</td>
+<td>Virtual Disk</td>
+<td>虚拟磁盘（等效磁盘组）</td>
+</tr>
+<tr>
+<td>Mirroring</td>
+<td>-</td>
+<td>镜像技术，又称为复制技术(Replication)</td>
+</tr>
+<tr>
+<td>Striping</td>
+<td>-</td>
+<td>条带（可提供并行的数据吞吐能力）</td>
+</tr>
+<tr>
+<td>Erasure Code</td>
+<td>-</td>
+<td>纠删码（提供高可用性和高速读写能力）</td>
+</tr>
+<tr>
+<td>RADOS</td>
+<td>Reliable，Autonomic，Distributed Object Store</td>
+<td>可靠的自主的分布式对象存储</td>
+</tr>
+<tr>
+<td>OSD</td>
+<td>Object Storage Device</td>
+<td>对象存储设备</td>
+</tr>
+<tr>
+<td>MDS</td>
+<td>Metadata Server</td>
+<td>元数据服务</td>
+</tr>
+<tr>
+<td>MTTR</td>
+<td>Mean Time To Restoration</td>
+<td>平均恢复时间</td>
+</tr>
+</tbody></table>
+<h2 id="2-存储方式"><a href="#2-存储方式" class="headerlink" title="#2. 存储方式"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_2-%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F">#</a>2. 存储方式</strong></h2><p>块存储、文件存储、对象存储</p>
+<h3 id="2-1-块存储"><a href="#2-1-块存储" class="headerlink" title="#2.1. 块存储"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_2-1-%E5%9D%97%E5%AD%98%E5%82%A8">#</a>2.1. 块存储</strong></h3><p>就好比硬盘一样，直接挂在到主机， 一般用于主机的直接存储空间和数据库应用(MySQL)的存储</p>
+<p><strong>块存储</strong>(<strong>DAS&#x2F;SAN</strong>)通常应用在某些专有的系统中，这类应用要求很高的随机读写性能和高可靠性，上面搭载的通常是 Oracle&#x2F;DB2 这种传统数据库，连接通常是以 FC 光纤(8Gb&#x2F;16Gb)为主，走光纤协议。如果要求稍低一些，也会出现基于千兆&#x2F;万兆以太网的连接方式，MySQL 这种数据库就可能会使用 IP SAN，走 iSCSI 协议</p>
+<p>通常使用<strong>块存储</strong>的都是系统而非用户，并发访问不会很多，经常出现一套存储只服务一个应用系统，例如如交易系统，计费系统。典型行业如金融，制造，能源，电信等</p>
+<h3 id="2-2-文件存储"><a href="#2-2-文件存储" class="headerlink" title="#2.2. 文件存储"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_2-2-%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8">#</a>2.2. 文件存储</strong></h3><p><strong>文件存储</strong>(<strong>NAS</strong>)相对来说就更能兼顾多个应用和更多用户访问，同时提供方便的数据共享手段</p>
+<p>在 PC 时代，数据共享也大多是用文件的形式，比如常见的的 FTP 服务，NFS 服务，Samba 共享这些都是属于典型的文件存储。几十个用户甚至上百用户的文件存储共享访问都可以用 NAS 存储加以解决</p>
+<p>在中小企业市场，一两台 NAS 存储设备就能支撑整个 IT 部门了。CRM 系统，SCM 系统，OA 系统，邮件系统都可以使用 NAS 存储统统搞定。甚至在公有云发展的早几年，用户规模没有上来时，云存储的底层硬件也有用几套 NAS 存储设备就解决的，甚至云主机的镜像也有放在 NAS 存储上的例子</p>
+<p><strong>文件存储</strong>的广泛兼容性和易用性，是这类存储的突出特点，但是从性能上来看，相对 SAN 就要低一些。NAS 存储基本上是以太网访问模式，普通千兆网，走 NFS&#x2F;CIFS 协议</p>
+<h3 id="2-3-对象存储"><a href="#2-3-对象存储" class="headerlink" title="#2.3. 对象存储"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_2-3-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8">#</a>2.3. 对象存储</strong></h3><p>前面说到的<strong>块存储</strong>和<strong>文件存储</strong>，基本上都还是在专有的局域网络内部使用，而<strong>对象存储</strong>的优势场景却是互联网或者公网，主要解决海量数据，海量并发访问的需求</p>
+<p>基于互联网的应用才是对象存储的主要适配（当然这个条件同样适用于云计算，基于互联网的应用最容易迁移到云上），基本所有成熟的公有云都提供了对象存储产品，不管是国内还是国外</p>
+<p><strong>对象存储</strong>常见的适配应用如网盘、媒体娱乐，医疗 PACS，气象，归档等数据量超大而又相对 冷数据 和非在线处理的应用类型，这类应用单个数据大，总量也大，适合对象存储海量和易扩展的特点</p>
+<p>网盘类应用也差不多，数据总量很大，另外还有并发访问量也大，支持 10 万级用户访问这种需求就值得单列一个项目了。归档类应用只是数据量大的 冷数据，并发访问的需求倒是不太突出</p>
+<p>另外基于移动端的一些新兴应用也是适合的，智能手机和移动互联网普及的情况下，所谓 UGD（用户产生的数据，手机的照片视频）总量和用户数都是很大挑战。毕竟直接使用 HTTP get&#x2F;put 就能直接实现数据存取，对移动应用来说还是有一定吸引力的</p>
+<p><strong>对象存储</strong>的访问通常是在互联网，走 HTTP 协议，性能方面，单独看一个连接的是不高的（还要解决掉线断点续传之类的可靠性问题），主要强大的地方是支持的并发数量，聚合起来的性能带宽就非常可观了</p>
+<h3 id="2-4-性能对比"><a href="#2-4-性能对比" class="headerlink" title="#2.4. 性能对比"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_2-4-%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94">#</a>2.4. 性能对比</strong></h3><ul>
+<li><strong>块存储就像超跑，根本不在意能不能多载几个人，要的就是极限速度和高速下的稳定性和可靠性</strong>，各大厂商出新产品都要去纽北赛道刷个单圈最快纪录，千方百计就为提高一两秒。<strong>块存储容量也不大，TB 这个数量级，支持的应用和适用的环境也比较专业</strong>（FC+Oracle），在乎的都是 IOPS 的性能值</li>
+<li><strong>文件存储像集卡，普适各种场合，又能装数据（数百TB），而且兼容性好</strong>，只要你是文件，各种货物都能往里塞，在不超过性能载荷的前提下，能拉动常见的各种系统。标准 POXIS 接口，后车门打开就能装卸。卡车也不挑路，不像块存储非要上赛道才能开，<strong>普通的千兆公路就能畅通无阻</strong>。速度虽然没有块存储超跑那么块，但跑个 80&#x2F;100 码还是稳稳当当</li>
+<li><strong>对象存储就像海运货轮，应对的是”真·海量”，几十上百 PB 的数据</strong>，以集装箱 &#x2F;container（桶&#x2F;bucket）为单位码得整整齐齐，里面装满各种对象数据，十万客户发的货（数据），一条船就都处理得过来，<strong>按照键值</strong>（KeyVaule）记得清清楚楚。海运速度慢是慢点，有时候遇到点网络风暴还不稳定，但支持断点续传，最终还是能安全送达的，对大宗货物尤其是非结构化数据，整体上来看是最快捷便利的</li>
+</ul>
+<h3 id="2-5-访问方式"><a href="#2-5-访问方式" class="headerlink" title="#2.5. 访问方式"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_2-5-%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F">#</a>2.5. 访问方式</strong></h3><ul>
+<li><strong>块存储通常都是通过光纤网络连接</strong>，服务器&#x2F;小机上配置 FC 光纤 HBA 卡，通过光纤交换机连接存储（IP SAN 可以通过千兆以太网，以 iSCSI 客户端连接存储），主机端以逻辑卷（Volume）的方式访问。连接成功后，应用访问存储是按起始地址，偏移量 Offset 的方法来访问的</li>
+<li><strong>文件存储通常只要是局域网内，千兆&#x2F;百兆的以太网环境皆可</strong>。网线连上，服务器端通过操作系统内置的 NAS 客户端，如 NFS&#x2F;CIFS&#x2F;FTP 客户端挂载存储成为一个本地的文件夹后访问，只要符合 POXIS 标准，应用就可以用标准的 open，seek，write&#x2F;read，close 这些方法对其访问操作</li>
+<li><strong>对象存储不在乎网络</strong>，而且它的访问比较有特色，只能存取删（put&#x2F;get&#x2F;delete），不能打开修改存盘。只能取下来改好后上传，去覆盖原对象</li>
+</ul>
+<h2 id="3-文件系统"><a href="#3-文件系统" class="headerlink" title="#3. 文件系统"></a><strong><a href="https://note.dolyw.com/fs/00-FS-Select.html#_3-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">#</a>3. 文件系统</strong></h2><p>开源分布式存储系统对比，还有很多其他，这里只列举这几款</p>
+<table>
+<thead>
+<tr>
+<th>存储系统</th>
+<th>Ceph</th>
+<th>Swift</th>
+<th>HDFS</th>
+<th>FastDFS</th>
+<th>Ambry</th>
+<th>MinIO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开发语言</td>
+<td>C++</td>
+<td>Python</td>
+<td>Java</td>
+<td>C</td>
+<td>Java</td>
+<td>Go</td>
+</tr>
+<tr>
+<td>开源协议</td>
+<td>LGPL</td>
+<td>Apache</td>
+<td>Apache</td>
+<td>GPL3</td>
+<td>Apache</td>
+<td>Apache</td>
+</tr>
+<tr>
+<td>存储方式</td>
+<td>对象&#x2F;文件&#x2F;块</td>
+<td>对象</td>
+<td>文件</td>
+<td>文件&#x2F;块</td>
+<td>对象</td>
+<td>对象</td>
+</tr>
+<tr>
+<td>在线扩容</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>-</td>
+</tr>
+<tr>
+<td>冗余备份</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>-</td>
+</tr>
+<tr>
+<td>单点故障</td>
+<td>不存在</td>
+<td>不存在</td>
+<td>存在</td>
+<td>不存在</td>
+<td>不存在</td>
+<td>-</td>
+</tr>
+<tr>
+<td>易用性</td>
+<td>一般</td>
+<td>一般</td>
+<td>一般</td>
+<td>简单</td>
+<td>简单</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>跨集群</td>
+<td>不支持</td>
+<td>-</td>
+<td>不支持</td>
+<td>部分支持</td>
+<td>不支持</td>
+<td>-</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>大中小文件</td>
+<td>大中小文件</td>
+<td>大中文件</td>
+<td>中小文件</td>
+<td>大中小文件</td>
+<td>大中小文件</td>
+</tr>
+</tbody></table>
+<p>对比了 Github 的 Star，MinIO 增长的很快，而且官方还有中文文档提供，中小企业使用不错</p>
+]]></content>
   </entry>
   <entry>
     <title>mongodb 分布式安装</title>
@@ -1589,7 +1780,9 @@
   <entry>
     <title>2.5G交换机</title>
     <url>/2023/08/16/2-5G%E4%BA%A4%E6%8D%A2%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>2个万兆光4个2.5G电，刚好将nas以及gpu——server串起来</p>
+<p>黑群晖的4个2.5G电没用起来，万兆光也不兼容。</p>
+]]></content>
       <tags>
         <tag>server</tag>
       </tags>
@@ -1785,7 +1978,8 @@
   <entry>
     <title>黑群晖</title>
     <url>/2023/08/16/%E9%BB%91%E7%BE%A4%E6%99%96/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="conda-initialize"><a href="#conda-initialize" class="headerlink" title="&gt;&gt;&gt; conda initialize &gt;&gt;&gt;"></a>&gt;&gt;&gt; conda initialize &gt;&gt;&gt;</h1><h1 id="Contents-within-this-block-are-managed-by-‘conda-init’"><a href="#Contents-within-this-block-are-managed-by-‘conda-init’" class="headerlink" title="!! Contents within this block are managed by ‘conda init’ !!"></a>!! Contents within this block are managed by ‘conda init’ !!</h1><p>__conda_setup&#x3D;”$(‘&#x2F;opt&#x2F;module&#x2F;miniconda3&#x2F;bin&#x2F;conda’ ‘shell.bash’ ‘hook’ 2&gt; &#x2F;dev&#x2F;null)”<br>if [ $? -eq 0 ]; then<br>    eval “$__conda_setup”<br>else<br>    if [ -f “&#x2F;opt&#x2F;module&#x2F;miniconda3&#x2F;etc&#x2F;profile.d&#x2F;conda.sh” ]; then<br>        . “&#x2F;opt&#x2F;module&#x2F;miniconda3&#x2F;etc&#x2F;profile.d&#x2F;conda.sh”<br>    else<br>        export PATH&#x3D;”&#x2F;opt&#x2F;module&#x2F;miniconda3&#x2F;bin:$PATH”<br>    fi<br>fi<br>unset __conda_setup</p>
+<h1 id="conda-initialize-1"><a href="#conda-initialize-1" class="headerlink" title="&lt;&lt;&lt; conda initialize &lt;&lt;&lt;"></a>&lt;&lt;&lt; conda initialize &lt;&lt;&lt;</h1>]]></content>
       <tags>
         <tag>服务器折腾</tag>
       </tags>
@@ -2237,17 +2431,82 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
   <entry>
     <title>gitlab-runner</title>
     <url>/2023/08/23/gitlab-runner/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> -v /srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \</span><br><span class="line">--non-interactive \</span><br><span class="line">--executor <span class="string">&quot;docker&quot;</span> \</span><br><span class="line">--docker-image alpine:latest \</span><br><span class="line">--url <span class="string">&quot;http://andrewandbecky.top:30000/&quot;</span> \</span><br><span class="line">--registration-token <span class="string">&quot;YR6LxsAsd6VF9X8CbLz2&quot;</span> \</span><br><span class="line">--description <span class="string">&quot;first-register-runner&quot;</span> \</span><br><span class="line">--tag-list <span class="string">&quot;docker,shared&quot;</span> \</span><br><span class="line">--run-untagged=<span class="string">&quot;true&quot;</span> \</span><br><span class="line">--locked=<span class="string">&quot;false&quot;</span> \</span><br><span class="line">--access-level=<span class="string">&quot;not_protected&quot;</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
   </entry>
   <entry>
     <title>pc电源</title>
     <url>/2023/08/23/pc%E7%94%B5%E6%BA%90/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>pc电源的线不通用，会烧硬盘以及显卡，已经烧了2个3T的日立HDD以及一个8T的日立HDD和256G的sata ssd。蛋疼。</p>
+]]></content>
   </entry>
   <entry>
     <title>centos升级git</title>
     <url>/2023/08/23/centos%E5%8D%87%E7%BA%A7git/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>1.2 Centos7</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-1.noarch.rpm</span><br><span class="line">rpm -ivh wandisco-git-release-7-1.noarch.rpm</span><br></pre></td></tr></table></figure>
+<h1 id="或者"><a href="#或者" class="headerlink" title="或者"></a>或者</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-2.noarch.rpm</span><br><span class="line">rpm -ivh wandisco-git-release-7-2.noarch.rpm</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>安装git 2.x</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install git -y</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>验证</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git --version </span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>server</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>minio分布式安装2</title>
+    <url>/2023/08/29/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%852/</url>
+    <content><![CDATA[<p>yum -y install ntp<br>systemctl enable ntpd<br>systemctl start ntpd<br>timedatectl set-ntp yes<br>ntpdate -u cn.pool.ntp.org<br>ln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime<br>watch -n 1 ‘date’</p>
+<p>mkdir &#x2F;mnt&#x2F;minio&#x2F;{app,config,data,logs} -p</p>
+<p>#!&#x2F;bin&#x2F;bash<br>export MINIO_ACCESS_KEY&#x3D;circue<br>export MINIO_SECRET_KEY&#x3D;circue@data<br>&#x2F;mnt&#x2F;minio&#x2F;app&#x2F;minio server –config-dir &#x2F;mnt&#x2F;minio&#x2F;config  –console-address “:9001” \<br><a href="http://10.30.0.40:9000/mnt/minio/data">http://10.30.0.40:9000/mnt/minio/data</a> <br><a href="http://10.30.0.43:9000/mnt/minio/data">http://10.30.0.43:9000/mnt/minio/data</a> <br><a href="http://10.30.0.93:9000/mnt/minio/data">http://10.30.0.93:9000/mnt/minio/data</a> <br><a href="http://10.30.0.72:9000/mnt/minio/data">http://10.30.0.72:9000/mnt/minio/data</a> &gt; &#x2F;mnt&#x2F;minio&#x2F;logs&#x2F;start.txt 2&gt;&amp;1 &amp;</p>
+<p>cat minio-cluster.conf<br>upstream minio_console {<br>    server 10.30.0.40:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.43:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.93:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.72:9001 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>}<br>upstream minio_api {<br>    server 10.30.0.40:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.43:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.93:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>    server 10.30.0.72:9000 max_fails&#x3D;3 fail_timeout&#x3D;5s;<br>}</p>
+<p>server {<br>    listen          80;   #或者用80端口也可以<br>    server_name     10.30.0.41;    #可以用域名<br>    access_log      &#x2F;var&#x2F;log&#x2F;minio.com_access.log main;<br>    error_log       &#x2F;var&#x2F;log&#x2F;minio.com_error.log warn;<br>    location &#x2F; {<br>        proxy_next_upstream     http_500 http_502 http_503 http_504 error timeout invalid_header;<br>        proxy_set_header        Host  $host;<br>        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;<br>        proxy_pass              <a href="http://minio_console/">http://minio_console</a>;<br>        expires                 0;<br>    }<br>}</p>
+<p>server {<br>    listen          9001;<br>    server_name     10.30.0.41;   #可以用域名<br>    access_log      &#x2F;var&#x2F;log&#x2F;minio.com_access.log main;<br>    error_log       &#x2F;var&#x2F;log&#x2F;minio.com_error.log warn;<br>    #root            &#x2F;mnt&#x2F;minio&#x2F;app&#x2F;;</p>
+<pre><code>location / &#123;
+    proxy_next_upstream     http_500 http_502 http_503 http_504 error timeout invalid_header;
+    proxy_set_header        Host  $host;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass              http://minio_api;
+    expires                 0;
+&#125;
+</code></pre>
+<p>}</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>文件系统以及选型</title>
+    <url>/2023/08/28/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BB%A5%E5%8F%8A%E9%80%89%E5%9E%8B/</url>
+    <content><![CDATA[<p>文件系统了解及对比选型<br>分布式文件系统（Distributed file system，DFS），或是网络文件系统（Network File System），是一种允许文件透过网络在多台主机上分享的文件系统，可让多机器上的多用户分享文件和存储空间。分布式文件系统解决的最大的问题是资源共享的问题，因此分布式文件系统最大的特点是多个客户端可以访问相同的服务端</p>
+<ol>
+<li>专业名词<br>缩写	全称	注释<br>SDS	Software Defined Storag	软件定义存储技术<br>RAID	Redundant Array of Independent Disk	磁盘阵列技术<br>DG	Disk Group	硬盘组<br>VD	Virtual Disk	虚拟磁盘（等效磁盘组）<br>Mirroring	-	镜像技术，又称为复制技术(Replication)<br>Striping	-	条带（可提供并行的数据吞吐能力）<br>Erasure Code	-	纠删码（提供高可用性和高速读写能力）<br>RADOS	Reliable，Autonomic，Distributed Object Store	可靠的自主的分布式对象存储<br>OSD	Object Storage Device	对象存储设备<br>MDS	Metadata Server	元数据服务<br>MTTR	Mean Time To Restoration	平均恢复时间</li>
+<li>存储方式<br>块存储、文件存储、对象存储</li>
+</ol>
+<p>2.1. 块存储<br>就好比硬盘一样，直接挂在到主机， 一般用于主机的直接存储空间和数据库应用(MySQL)的存储</p>
+<p>块存储(DAS&#x2F;SAN)通常应用在某些专有的系统中，这类应用要求很高的随机读写性能和高可靠性，上面搭载的通常是 Oracle&#x2F;DB2 这种传统数据库，连接通常是以 FC 光纤(8Gb&#x2F;16Gb)为主，走光纤协议。如果要求稍低一些，也会出现基于千兆&#x2F;万兆以太网的连接方式，MySQL 这种数据库就可能会使用 IP SAN，走 iSCSI 协议</p>
+<p>通常使用块存储的都是系统而非用户，并发访问不会很多，经常出现一套存储只服务一个应用系统，例如如交易系统，计费系统。典型行业如金融，制造，能源，电信等</p>
+<p>2.2. 文件存储<br>文件存储(NAS)相对来说就更能兼顾多个应用和更多用户访问，同时提供方便的数据共享手段</p>
+<p>在 PC 时代，数据共享也大多是用文件的形式，比如常见的的 FTP 服务，NFS 服务，Samba 共享这些都是属于典型的文件存储。几十个用户甚至上百用户的文件存储共享访问都可以用 NAS 存储加以解决</p>
+<p>在中小企业市场，一两台 NAS 存储设备就能支撑整个 IT 部门了。CRM 系统，SCM 系统，OA 系统，邮件系统都可以使用 NAS 存储统统搞定。甚至在公有云发展的早几年，用户规模没有上来时，云存储的底层硬件也有用几套 NAS 存储设备就解决的，甚至云主机的镜像也有放在 NAS 存储上的例子</p>
+<p>文件存储的广泛兼容性和易用性，是这类存储的突出特点，但是从性能上来看，相对 SAN 就要低一些。NAS 存储基本上是以太网访问模式，普通千兆网，走 NFS&#x2F;CIFS 协议</p>
+<p>2.3. 对象存储<br>前面说到的块存储和文件存储，基本上都还是在专有的局域网络内部使用，而对象存储的优势场景却是互联网或者公网，主要解决海量数据，海量并发访问的需求</p>
+<p>基于互联网的应用才是对象存储的主要适配（当然这个条件同样适用于云计算，基于互联网的应用最容易迁移到云上），基本所有成熟的公有云都提供了对象存储产品，不管是国内还是国外</p>
+<p>对象存储常见的适配应用如网盘、媒体娱乐，医疗 PACS，气象，归档等数据量超大而又相对 冷数据 和非在线处理的应用类型，这类应用单个数据大，总量也大，适合对象存储海量和易扩展的特点</p>
+<p>网盘类应用也差不多，数据总量很大，另外还有并发访问量也大，支持 10 万级用户访问这种需求就值得单列一个项目了。归档类应用只是数据量大的 冷数据，并发访问的需求倒是不太突出</p>
+<p>另外基于移动端的一些新兴应用也是适合的，智能手机和移动互联网普及的情况下，所谓 UGD（用户产生的数据，手机的照片视频）总量和用户数都是很大挑战。毕竟直接使用 HTTP get&#x2F;put 就能直接实现数据存取，对移动应用来说还是有一定吸引力的</p>
+<p>对象存储的访问通常是在互联网，走 HTTP 协议，性能方面，单独看一个连接的是不高的（还要解决掉线断点续传之类的可靠性问题），主要强大的地方是支持的并发数量，聚合起来的性能带宽就非常可观了</p>
+<p>2.4. 性能对比<br>块存储就像超跑，根本不在意能不能多载几个人，要的就是极限速度和高速下的稳定性和可靠性，各大厂商出新产品都要去纽北赛道刷个单圈最快纪录，千方百计就为提高一两秒。块存储容量也不大，TB 这个数量级，支持的应用和适用的环境也比较专业（FC+Oracle），在乎的都是 IOPS 的性能值<br>文件存储像集卡，普适各种场合，又能装数据（数百TB），而且兼容性好，只要你是文件，各种货物都能往里塞，在不超过性能载荷的前提下，能拉动常见的各种系统。标准 POXIS 接口，后车门打开就能装卸。卡车也不挑路，不像块存储非要上赛道才能开，普通的千兆公路就能畅通无阻。速度虽然没有块存储超跑那么块，但跑个 80&#x2F;100 码还是稳稳当当<br>对象存储就像海运货轮，应对的是”真·海量”，几十上百 PB 的数据，以集装箱 &#x2F;container（桶&#x2F;bucket）为单位码得整整齐齐，里面装满各种对象数据，十万客户发的货（数据），一条船就都处理得过来，按照键值（KeyVaule）记得清清楚楚。海运速度慢是慢点，有时候遇到点网络风暴还不稳定，但支持断点续传，最终还是能安全送达的，对大宗货物尤其是非结构化数据，整体上来看是最快捷便利的<br>2.5. 访问方式<br>块存储通常都是通过光纤网络连接，服务器&#x2F;小机上配置 FC 光纤 HBA 卡，通过光纤交换机连接存储（IP SAN 可以通过千兆以太网，以 iSCSI 客户端连接存储），主机端以逻辑卷（Volume）的方式访问。连接成功后，应用访问存储是按起始地址，偏移量 Offset 的方法来访问的<br>文件存储通常只要是局域网内，千兆&#x2F;百兆的以太网环境皆可。网线连上，服务器端通过操作系统内置的 NAS 客户端，如 NFS&#x2F;CIFS&#x2F;FTP 客户端挂载存储成为一个本地的文件夹后访问，只要符合 POXIS 标准，应用就可以用标准的 open，seek，write&#x2F;read，close 这些方法对其访问操作<br>对象存储不在乎网络，而且它的访问比较有特色，只能存取删（put&#x2F;get&#x2F;delete），不能打开修改存盘。只能取下来改好后上传，去覆盖原对象<br>3. 文件系统<br>开源分布式存储系统对比，还有很多其他，这里只列举这几款</p>
+<p>存储系统	Ceph	Swift	HDFS	FastDFS	Ambry	MinIO<br>开发语言	C++	Python	Java	C	Java	Go<br>开源协议	LGPL	Apache	Apache	GPL3	Apache	Apache<br>存储方式	对象&#x2F;文件&#x2F;块	对象	文件	文件&#x2F;块	对象	对象<br>在线扩容	支持	支持	支持	支持	支持	-<br>冗余备份	支持	支持	支持	支持	支持	-<br>单点故障	不存在	不存在	存在	不存在	不存在	-<br>易用性	一般	一般	一般	简单	简单	简单<br>跨集群	不支持	-	不支持	部分支持	不支持	-<br>适用场景	大中小文件	大中小文件	大中文件	中小文件	大中小文件	大中小文件<br>对比了 Github 的 Star，MinIO 增长的很快，而且官方还有中文文档提供，中小企业使用不错</p>
+]]></content>
   </entry>
   <entry>
     <title>ceph安装以及测试</title>
