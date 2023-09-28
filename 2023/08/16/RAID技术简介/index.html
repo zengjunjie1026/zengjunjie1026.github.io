@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>RAID技术简介 | 分子美食家的博客</title><meta name="author" content="andrew"><meta name="copyright" content="andrew"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="RAID技术简介"><meta name="application-name" content="RAID技术简介"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="RAID技术简介"><meta property="og:url" content="http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/index.html"><meta property="og:site_name" content="分子美食家的博客"><meta property="og:description" content="## 前言 RAID解释我偷个小懒引用WikipediA，独立硬盘冗余阵列（RAID, Redundant Array of Independent Disks），旧称廉价磁盘冗余阵列（Redundant Array of Inexpensive Disks），简称磁盘阵列。其基本思想就是把多个相"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta property="article:author" content="andrew"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta name="description" content="## 前言 RAID解释我偷个小懒引用WikipediA，独立硬盘冗余阵列（RAID, Redundant Array of Independent Disks），旧称廉价磁盘冗余阵列（Redundant Array of Inexpensive Disks），简称磁盘阵列。其基本思想就是把多个相"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: andrew","link":"链接: ","source":"来源: 分子美食家的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '分子美食家的博客',
+  title: 'RAID技术简介',
+  postAI: '',
+  pageFillDescription: '前言解释我偷个小懒引用独立硬盘冗余阵列旧称廉价磁盘冗余阵列简称磁盘阵列其基本思想就是把多个相对便宜的硬盘组合起来成为一个硬盘阵列组使性能达到甚至超过一个价格昂贵容量巨大的硬盘根据选择的版本不同比单颗硬盘有以下一个或多个方面的好处增强数据集成度增强容错功能增加处理量或容量另外磁盘阵列对于电脑来说看起来就像一个单独的硬盘或逻辑存储单元写这篇文章当然不是单纯的介绍概念和使用方法更重要的是如何针对不同的业务场景做合理的配置和参数优化对于固态硬盘的加入我引入小米运维团队的实验数据同时我也相信分布式存储会逐步走向成熟以为代表头顶软件定义和超融合概念的技术也已经开始了暗战的本质是平衡可用性与成本更新历史年月日初稿阅读原文磁盘阵列配置和调优小结扩展阅读技术发展综述技术发展综述阵列卡方案优化考虑使用替代阵列卡方案优化考虑使用替代基础知识感谢刘爱贵详细知识点可参考扩展阅读基本原理即独立磁盘冗余阵列通常简称为磁盘阵列简单地说是由多个独立的高性能磁盘驱动器组成的磁盘子系统从而提供比单个磁盘更高的存储性能和数据冗余的技术是一类多磁盘管理技术其向主机环境提供了成本适中数据可靠性高的高性能存储对的定义是一种磁盘阵列部分物理存储空间用来记录保存在剩余空间上的用户数据的冗余信息当其中某一个磁盘或访问路径发生故障时冗余信息可用来重建用户数据磁盘条带化虽然与定义不符通常还是称为即的初衷是为大型服务器提供高端的存储功能和冗余的数据安全在整个系统中被看作是由两个或更多磁盘组成的存储空间通过并发地在多个磁盘上读写数据来提高存储系统的性能大多数等级具有完备的数据校验纠正措施从而提高系统的容错性甚至镜像方式大大增强系统的可靠性也由此而来这里要提一下最初用来表示一个没有控制软件提供协调控制的磁盘集合这是区别与的主要因素目前常指磁盘柜而不论其是否提供功能的两个关键目标是提高数据可靠性和性能磁盘阵列中数据分散在多个磁盘中然而对于计算机系统来说就像一个单独的磁盘通过把相同数据同时写入到多块磁盘典型地如镜像或者将计算的校验数据写入阵列中来获得冗余能力当单块磁盘出现故障时可以保证不会导致数据丢失有些等级允许更多地磁盘同时发生故障比如可以是两块磁盘同时损坏在这样的冗余机制下可以用新磁盘替换故障磁盘会自动根据剩余磁盘中的数据和校验数据重建丢失的数据保证数据一致性和完整性数据分散保存在中的多个不同磁盘上并发数据读写要大大优于单个磁盘因此可以获得更高的聚合带宽当然磁盘阵列会减少全体磁盘的总可用存储空间牺牲空间换取更高的可靠性和性能比如存储空间利用率仅有会损失其中一个磁盘的存储容量空间利用率为磁盘阵列可以在部分磁盘单块或多块根据实现而论损坏的情况下仍能保证系统不中断地连续运行在重建故障磁盘数据至新磁盘的过程中系统可以继续正常运行但是性能方面会有一定程度上的降低一些磁盘阵列在添加或删除磁盘时必须停机而有些则支持热交换允许不停机下替换磁盘驱动器这种高端磁盘阵列主要用于要求高可能性的应用系统系统不能停机或尽可能少的停机时间一般来说不可作为数据备份的替代方案它对非磁盘故障等造成的数据丢失无能为力比如病毒人为破坏意外删除等情形此时的数据丢失是相对操作系统文件系统卷管理器或者应用系统来说的对于系统来身数据都是完好的没有发生丢失所以数据备份灾备等数据保护措施是非常必要的与相辅相成保护数据在不同层次的安全性防止发生数据丢失中主要有三个关键概念和技术镜像数据条带和数据校验镜像将数据复制到多个磁盘一方面可以提高可靠性另一方面可并发从两个或多个副本读取数据来提高读性能显而易见镜像的写性能要稍低确保数据正确地写到多个磁盘需要更多的时间消耗数据条带将数据分片保存在多个不同的磁盘多个数据分片共同组成一个完整数据副本这与镜像的多个副本是不同的它通常用于性能考虑数据条带具有更高的并发粒度当访问数据时可以同时对位于不同磁盘上数据进行读写操作从而获得非常可观的性能提升数据校验利用冗余数据进行数据错误检测和修复冗余数据通常采用海明码异或操作等算法来计算获得利用校验功能可以很大程度上提高磁盘阵列的可靠性鲁棒性和容错能力不过数据校验需要从多处读取数据并进行计算和对比会影响系统性能不同等级的采用一个或多个以上的三种技术来获得不同的数据可靠性可用性和性能至于设计何种甚至新的等级或类型或采用何种模式的需要在深入理解系统需求的前提下进行合理选择综合评估可靠性性能和成本来进行折中的选择思想从提出后就广泛被业界所接纳存储工业界投入了大量的时间和财力来研究和开发相关产品而且随着处理器内存计算机接口等技术的不断发展不断地发展和革新在计算机存储领域得到了广泛的应用从高端系统逐渐延伸到普通的中低端系统技术如此流行源于其具有显著的特征和优势基本可以满足大部分的数据存储需求总体说来主要优势有如下几点大容量这是的一个显然优势它扩大了磁盘的容量由多个磁盘组成的系统具有海量的存储空间现在单个磁盘的容量就可以到以上这样的存储容量就可以达到级大多数的存储需求都可以满足一般来说可用容量要小于所有成员磁盘的总容量不同等级的算法需要一定的冗余开销具体容量开销与采用算法相关如果已知算法和容量可以计算出的可用容量通常容量利用率在之间高性能的高性能受益于数据条带化技术单个磁盘的性能受到接口带宽等计算机技术的限制性能往往很有限容易成为系统性能的瓶颈通过数据条带化将数据分散到各个成员磁盘上从而获得比单个磁盘成倍增长的聚合性能可靠性可用性和可靠性是的另一个重要特征从理论上讲由多个磁盘组成的系统在可靠性方面应该比单个磁盘要差这里有个隐含假定单个磁盘故障将导致整个不可用采用镜像和数据校验等数据冗余技术打破了这个假定镜像是最为原始的冗余技术把某组磁盘驱动器上的数据完全复制到另一组磁盘驱动器上保证总有数据副本可用比起镜像的冗余开销数据校验要小很多它利用校验冗余信息对数据进行校验和纠错冗余技术大幅提升数据可用性和可靠性保证了若干磁盘出错时不会导致数据的丢失不影响系统的连续运行可管理性实际上是一种虚拟化技术它对多个物理磁盘驱动器虚拟成一个大容量的逻辑驱动器对于外部主机系统来说是一个单一的快速可靠的大容量磁盘驱动器这样用户就可以在这个虚拟驱动器上来组织和存储应用系统数据从用户应用角度看可使存储系统简单易用管理也很便利由于内部完成了大量的存储管理工作管理员只需要管理单个虚拟驱动器可以节省大量的管理工作可以动态增减磁盘驱动器可自动进行数据校验和数据重建这些都可以大大简化管理工作关键技术镜像镜像是一种冗余技术为磁盘提供保护功能防止磁盘发生故障而造成数据丢失对于而言采用镜像技术典型地将会同时在阵列中产生两个完全相同的数据副本分布在两个不同的磁盘驱动器组上镜像提供了完全的数据冗余能力当一个数据副本失效不可用时外部系统仍可正常访问另一副本不会对应用系统运行和性能产生影响而且镜像不需要额外的计算和校验故障修复非常快直接复制即可镜像技术可以从多个副本进行并发读取数据提供更高的读性能但不能并行写数据写多个副本会会导致一定的性能降低镜像技术提供了非常高的数据安全性其代价也是非常昂贵的需要至少双倍的存储空间高成本限制了镜像的广泛应用主要应用于至关重要的数据保护这种场合下数据丢失会造成巨大的损失另外镜像通过拆分能获得特定时间点的上数据快照从而可以实现一种备份窗口几乎为零的数据备份技术数据条带磁盘存储的性能瓶颈在于磁头寻道定位它是一种慢速机械运动无法与高速的匹配再者单个磁盘驱动器性能存在物理极限性能非常有限由多块磁盘组成数据条带技术将数据以块的方式分布存储在多个磁盘中从而可以对数据进行并发处理这样写入和读取数据就可以在多个磁盘上同时进行并发产生非常高的聚合有效提高了整体性能而且具有良好的线性扩展性这对大容量数据尤其显著如果不分块数据只能按顺序存储在磁盘阵列的磁盘上需要时再按顺序读取而通过条带技术可获得数倍与顺序访问的性能提升数据条带技术的分块大小选择非常关键条带粒度可以是一个字节至几大小分块越小并行处理能力就越强数据存取速度就越高但同时就会增加块存取的随机性和块寻址时间实际应用中要根据数据特征和需求来选择合适的分块大小在数据存取随机性和并发处理能力之间进行平衡以争取尽可能高的整体性能数据条带是基于提高性能而提出的也就是说它只关注性能而对数据可靠性可用性没有任何改善实际上其中任何一个数据条带损坏都会导致整个数据不可用采用数据条带技术反而增加了数据发生丢失的概念率数据校验镜像具有高安全性高读性能但冗余开销太昂贵数据条带通过并发性来大幅提高性能然而对数据安全性可靠性未作考虑数据校验是一种冗余技术它用校验数据来提供数据的安全可以检测数据错误并在能力允许的前提下进行数据重构相对镜像数据校验大幅缩减了冗余开销用较小的代价换取了极佳的数据完整性和可靠性数据条带技术提供高性能数据校验提供数据安全性不同等级往往同时结合使用这两种技术采用数据校验时要在写入数据同时进行校验计算并将得到的校验数据存储在成员磁盘中校验数据可以集中保存在某个磁盘或分散存储在多个不同磁盘中甚至校验数据也可以分块不同等级实现各不相同当其中一部分数据出错时就可以对剩余数据和校验数据进行反校验计算重建丢失的数据校验技术相对于镜像技术的优势在于节省大量开销但由于每次数据读写都要进行大量的校验运算对计算机的运算速度要求很高必须使用硬件控制器在数据重建恢复方面检验技术比镜像技术复杂得多且慢得多海明校验码和异或校验是两种最为常用的数据校验算法海明校验码是由理查德海明提出的不仅能检测错误还能给出错误位置并自动纠正海明校验的基本思想是将有效信息按照某种规律分成若干组对每一个组作奇偶测试并安排一个校验位从而能提供多位检错信息以定位错误点并纠正可见海明校验实质上是一种多重奇偶校验异或校验通过异或逻辑运算产生将一个有效信息与一个给定的初始值进行异或运算会得到校验信息如果有效信息出现错误通过校验信息与初始值的异或运算能还原正确的有效信息常见类型常见种类型对比位磁盘数量详细介绍可参考扩展阅读等级别名条带镜像分布奇偶校验条带双重奇偶校验条带镜像加条带容错性无有有有有冗余类型无有有有有热备盘无有有有有读性能高低高高高随机写性能高低一般低一般连续写性能高低低低一般需要磁盘数可用容量全部等级标准等级等组织机构把七个等级定为标准的等级这也被业界和学术界所公认标准等级是最基本的配置集合单独或综合利用数据条带镜像和数据校验技术标准可以组合即组合等级满足对性能安全性可靠性要求更高的存储应用需求不是标准的等级它通常用来表示一个没有控制软件提供协调控制的磁盘集合将多个物理磁盘串联起来提供一个巨大的逻辑磁盘的数据存放机制是由第一块磁盘开始按顺序往后存储当前磁盘存储空间用完后再依次往后面的磁盘存储数据存储性能完全等同于单块磁盘而且也不提供数据安全保护它只是简单提供一种扩展存储空间的机制可用存储容量等于所有成员磁盘的存储空间之和目前常指磁盘柜而不论其是否提供功能是一种简单的无数据校验的数据条带化技术实际上不是一种真正的因为它并不提供任何形式的冗余策略将所在磁盘条带化后组成大容量的存储空间将数据分散存储在所有磁盘中以独立访问方式实现多块磁盘的并读访问由于可以并发执行操作总线带宽得到充分利用再加上不需要进行数据校验的性能在所有等级中是最高的理论上讲一个由块磁盘组成的它的读写性能是单个磁盘性能的倍但由于总线带宽等多种因素的限制实际的性能提升低于理论值具有低成本高读写性能的高存储空间利用率等优点但是它不提供数据冗余保护一旦数据损坏将无法恢复因此一般适用于对性能要求严格但对数据安全性和可靠性不高的应用如视频音频存储临时数据缓存空间等称为镜像它将数据完全一致地分别写到工作磁盘和镜像磁盘它的磁盘空间利用率为在数据写入时响应时间会有所影响但是读数据的时候没有影响提供了最佳的数据保护一旦工作磁盘发生故障系统自动从镜像磁盘读取数据不会影响用户工作与刚好相反是为了增强数据安全性使两块磁盘数据呈现完全镜像从而达到安全性好技术简单管理方便拥有完全容错的能力但实现成本高应用于对顺序读写性能要求高以及对数据保护极为重视的应用如对邮件系统的数据保护应该是目前最常见的等级它的原理与相似区别在于校验数据分布在阵列中的所有磁盘上而没有采用专门的校验磁盘对于数据和校验数据它们的写操作可以同时发生在完全不同的磁盘上因此不存在中的并发写操作时的校验盘性能瓶颈问题另外还具备很好的扩展性当阵列磁盘数量增加时并行操作量的能力也随之增长可比支持更多的磁盘从而拥有更高的容量以及更高的性能的磁盘上同时存储数据和校验数据数据块和对应的校验信息存保存在不同的磁盘上当一个数据盘损坏时系统可以根据同一条带的其他数据块和对应的校验数据来重建损坏的数据与其他等级一样重建数据时的性能会受到较大的影响兼顾存储性能数据安全和存储成本等各方面因素它可以理解为和的折中方案是目前综合性能最佳的数据保护解决方案基本上可以满足大部分的存储应用需求数据中心大多采用它作为应用数据的保护方案前面所述的各个等级都只能保护因单个磁盘失效而造成的数据丢失如果两个磁盘同时发生故障数据将无法恢复引入双重校验的概念它可以保护阵列中同时出现两个磁盘失效时阵列仍能够继续工作不会发生数据丢失等级是在的基础上为了进一步增强数据保护而设计的一种方式它可以看作是一种扩展的等级不仅要支持数据的恢复还要支持校验数据的恢复因此实现代价很高控制器的设计也比其他等级更复杂更昂贵思想最常见的实现方式是采用两个独立的校验算法假设称为和校验数据可以分别存储在两个不同的校验盘上或者分散存储在所有成员磁盘中当两个磁盘同时失效时即可通过求解两元方程来重建两个磁盘上的数据具有快速的读取性能更高的容错能力但是它的成本要高于许多写性能也较差并有设计和实施非常复杂因此很少得到实际应用主要用于对数据安全等级要求非常高的场合它一般是替代方案的经济性选择组合等级标准等级各有优势和不足自然地我们想到把多个等级组合起来实现优势互补弥补相互的不足从而达到在性能数据安全性等指标上更高的系统目前在业界和学术研究中提到的组合等级主要有但实际得到较为广泛应用的只有和两个等级当然组合等级的实现成本一般都非常昂贵只是在少数特定场合应用和一些文献把这两种等级看作是等同的本文认为是不同的是先做条带化再作镜像本质是对物理磁盘实现镜像而是先做镜像再作条带化是对虚拟磁盘实现镜像相同的配置下通常比具有更好的容错能力兼备了和的优点它先用两块磁盘建立镜像然后再在镜像内部做条带化的数据将同时写入到两个磁盘阵列中如果其中一个阵列损坏仍可继续工作保证数据安全性的同时又提高了性能和内部都含有模式因此整体磁盘利用率均仅为与的组合先作再作也就是对多组彼此构成访问由于是以为基础而至少需要颗硬盘因此要以多组构成至少需要颗硬盘以最小的颗硬盘配置为例先把颗硬盘分为组每组颗构成如此就得到两组然后再把两组构成在底层的任一组或多组中出现颗硬盘损坏时仍能维持运作不过如果任一组中出现颗或颗以上硬盘损毁整组就会失效由于在上层把多组构成性能比起单纯的高容量利用率比要低比如同样使用颗硬盘由各颗再组成的每组浪费一颗硬盘利用率为则为与的组合先作再作换句话说就是对两组以上的作访问至少需具备颗硬盘所以的最小需求是颗硬盘由于底层是以组成所以可以容许任一组中损毁最多颗硬盘而系统仍能维持运作不过只要底层任一组中损毁颗硬盘整组就会失效当然这种情况的概率相当低比起单纯的的上层通过结合多组构成访问因此性能较高不过使用门槛高而且容量利用率低是较大的问题关于参数调优通常情况下建议系统与数据分离这里引用叶金荣老师的一段话使用或者设备至少获得数百倍甚至万倍的提升购置阵列卡同时配备及模块可明显提升主要是指机械盘或除外同时需要定期检查及模块的健康状况确保意外时不至于丢失数据有阵列卡时设置阵列写策略为甚至若有双电保护或对数据安全性要求不是特别高的话严禁使用策略并且闭阵列预读策略尽可能选用而非这句话有待商榷使用机械盘的话尽可能选择高转速的例如选用而不是的盘不差几个钱的阵列卡方案优化感谢小米运维团队详细实验数据请参考扩展阅读性能测试结论性能测试显示相同容量的和性能接近其中小块文件的随机读要全面好于随机写虽然和差距在但是块增大后要全面优于顺序读写方面和十分接近容错方面接近第二块盘容错率十分接近两者相差的优势主要是在有一定的概率提供第三甚至第四块磁盘的容错率但是考虑到并非容错因此从容错角度来看虽然和有一些差距但也已体现出较好的容错率至少优于而且搭配灵活甚至可以指定组以达到最大块磁盘的容错成本方面有很大优势按这个配置计算只有的总结提供了接近性能可用性以及接近成本的特性具有较好的整体性价比优势所以考虑使用替换吧',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-08-17 11:34:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">分子美食家的博客</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/server/" style="font-size: 1.05rem;">server<sup>29</sup></a><a href="/tags/server-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 1.05rem;">server,内网穿透<sup>2</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 1.05rem;">日常<sup>1</sup></a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8A%98%E8%85%BE/" style="font-size: 1.05rem;">服务器折腾<sup>3</sup></a><a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 1.05rem;">面试<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">57</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/08/"><span class="card-archive-list-date">八月 2022</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">六月 2022</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">八月 2021</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/03/"><span class="card-archive-list-date">三月 2020</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/08/"><span class="card-archive-list-date">八月 2019</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="article-meta tags"></span></div></div><h1 class="post-title" itemprop="name headline">RAID技术简介</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2023-08-16T13:11:00.000Z" title="发表于 2023-08-16 21:11:00">2023-08-16</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2023-08-17T03:34:15.862Z" title="更新于 2023-08-17 11:34:15">2023-08-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为长沙"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>长沙</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/"><header><h1 id="CrawlerTitle" itemprop="name headline">RAID技术简介</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">andrew</span><time itemprop="dateCreated datePublished" datetime="2023-08-16T13:11:00.000Z" title="发表于 2023-08-16 21:11:00">2023-08-16</time><time itemprop="dateCreated datePublished" datetime="2023-08-17T03:34:15.862Z" title="更新于 2023-08-17 11:34:15">2023-08-17</time></header><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pica.zhimg.com/50/3d84e446492f99c8082089313c3944ac_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pica.zhimg.com/80/3d84e446492f99c8082089313c3944ac_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>## 前言</strong></p>
+<p>RAID解释我偷个小懒引用WikipediA，独立硬盘冗余阵列（RAID, Redundant Array of Independent Disks），旧称廉价磁盘冗余阵列（Redundant Array of Inexpensive Disks），简称磁盘阵列。其基本思想就是把多个相对便宜的硬盘组合起来，成为一个硬盘阵列组，使性能达到甚至超过一个价格昂贵、容量巨大的硬盘。根据选择的版本不同，RAID比单颗硬盘有以下一个或多个方面的好处：增强数据集成度，增强容错功能，增加处理量或容量。另外，磁盘阵列对于电脑来说，看起来就像一个单独的硬盘或逻辑存储单元。写这篇文章当然不是单纯的介绍概念和使用方法，更重要的是如何针对不同的业务场景做合理的RAID配置和参数优化，对于SSD固态硬盘的加入我引入小米运维团队的实验数据，同时我也相信分布式存储会逐步走向成熟，以OpenStack，VSAN，Nutanix为代表头顶软件定义和超融合概念的技术也已经开始了暗战。</p>
+<p>&gt; RAID的本质是平衡可用性与成本  </p>
+<p>-–</p>
+<p><strong>## 更新历史</strong></p>
+<p>2016年03月11日 - 初稿</p>
+<p>阅读原文 - <a href="https://link.zhihu.com/?target=http://wsgzao.github.io/post/raid/">RAID磁盘阵列配置和调优小结</a></p>
+<p><strong>扩展阅读</strong></p>
+<p>RAID - <a href="https://link.zhihu.com/?target=https://zh.wikipedia.org/wiki/RAID">https://zh.wikipedia.org/wiki/RAID</a><br>RAID技术发展综述 - <a href="https://link.zhihu.com/?target=http://blog.csdn.net/liuaigui/article/details/4581970">RAID技术发展综述</a><br>SSD阵列卡方案优化：考虑使用RAID 50替代RAID 10 - <a href="https://link.zhihu.com/?target=http://noops.me/?p=1805">SSD阵列卡方案优化：考虑使用RAID 50替代RAID 10</a></p>
+<p>-–</p>
+<p><strong>## RAID基础知识</strong></p>
+<p>&gt;感谢@刘爱贵，详细知识点可参考扩展阅读</p>
+<p>### 基本原理</p>
+<p>RAID （ Redundant Array of Independent Disks ）即独立磁盘冗余阵列，通常简称为磁盘阵列。简单地说， RAID 是由多个独立的高性能磁盘驱动器组成的磁盘子系统，从而提供比单个磁盘更高的存储性能和数据冗余的技术。 RAID 是一类多磁盘管理技术，其向主机环境提供了成本适中、数据可靠性高的高性能存储。 SNIA 对 RAID 的定义是 ：一种磁盘阵列，部分物理存储空间用来记录保存在剩余空间上的用户数据的冗余信息。当其中某一个磁盘或访问路径发生故障时，冗余信息可用来重建用户数据。磁盘条带化虽然与 RAID 定义不符，通常还是称为 RAID （即 RAID0 ）。</p>
+<p>RAID 的初衷是为大型服务器提供高端的存储功能和冗余的数据安全。在整个系统中， RAID 被看作是由两个或更多磁盘组成的存储空间，通过并发地在多个磁盘上读写数据来提高存储系统的 I&#x2F;O 性能。大多数 RAID 等级具有完备的数据校验、纠正措施，从而提高系统的容错性，甚至镜像方式，大大增强系统的可靠性， Redundant 也由此而来。</p>
+<p>这里要提一下 JBOD （ Just a Bunch of Disks ）。最初 JBOD 用来表示一个没有控制软件提供协调控制的磁盘集合，这是 RAID 区别与 JBOD 的主要因素。目前 JBOD 常指磁盘柜，而不论其是否提供 RAID 功能。</p>
+<p>RAID 的两个关键目标是提高数据可靠性和 I&#x2F;O 性能。磁盘阵列中，数据分散在多个磁盘中，然而对于计算机系统来说，就像一个单独的磁盘。通过把相同数据同时写入到多块磁盘（典型地如镜像），或者将计算的校验数据写入阵列中来获得冗余能力，当单块磁盘出现故障时可以保证不会导致数据丢失。有些 RAID 等级允许更多地 磁盘同时发生故障，比如 RAID6 ，可以是两块磁盘同时损坏。在这样的冗余机制下，可以用新磁盘替换故障磁盘， RAID 会自动根据剩余磁盘中的数据和校验数据重建丢失的数据，保证数据一致性和完整性。数据分散保存在 RAID 中的多个不同磁盘上，并发数据读写要大大优于单个磁盘，因此可以获得更高的聚合 I&#x2F;O 带宽。当然，磁盘阵列会减少全体磁盘的总可用存储空间，牺牲空间换取更高的可靠性和性能。比如， RAID1 存储空间利用率仅有 50% ， RAID5 会损失其中一个磁盘的存储容量，空间利用率为 (n-1)&#x2F;n 。</p>
+<p>磁盘阵列可以在部分磁盘（单块或多块，根据实现而论）损坏的情况下，仍能保证系统不中断地连续运行。在重建故障磁盘数据至新磁盘的过程中，系统可以继续正常运行，但是性能方面会有一定程度上的降低。一些磁盘阵列在添加或删除磁盘时必须停机，而有些则支持热交换 （ Hot Swapping ），允许不停机下替换磁盘驱动器。这种高端磁盘阵列主要用于要求高可能性的应用系统，系统不能停机或尽可能少的停机时间。一般来说， RAID 不可作为数据备份的替代方案，它对非磁盘故障等造成的数据丢失无能为力，比如病毒、人为破坏、意外删除等情形。此时的数据丢失是相对操作系统、文件系统、卷管理器或者应用系统来说的，对于 RAID 系统来身，数据都是完好的，没有发生丢失。所以，数据备份、灾 备等数据保护措施是非常必要的，与 RAID 相辅相成，保护数据在不同层次的安全性，防止发生数据丢失。</p>
+<p>RAID 中主要有三个关键概念和技术：镜像（ Mirroring ）、数据条带（ Data Stripping ）和数据校验（ Data parity ）。镜像，将数据复制到多个磁盘，一方面可以提高可靠性，另一方面可并发从两个或多个副本读取数据来提高读性能。显而易见，镜像的写性能要稍低， 确保数据正确地写到多个磁盘需要更多的时间消耗。数据条带，将数据分片保存在多个不同的磁盘，多个数据分片共同组成一个完整数据副本，这与镜像的多个副本是不同的，它通常用于性能考虑。数据条带具有更高的并发粒度，当访问数据时，可以同时对位于不同磁盘上数据进行读写操作， 从而获得非常可观的 I&#x2F;O 性能提升 。数据校验，利用冗余数据进行数据错误检测和修复，冗余数据通常采用海明码、异或操作等算法来计算获得。利用校验功能，可以很大程度上提高磁盘阵列的可靠性、鲁棒性和容错能力。不过，数据校验需要从多处读取数据并进行计算和对比，会影响系统性能。 不同等级的 RAID 采用一个或多个以上的三种技术，来获得不同的数据可靠性、可用性和 I&#x2F;O 性能。至于设计何种 RAID （甚至新的等级或类型）或采用何种模式的 RAID ，需要在深入理解系统需求的前提下进行合理选择，综合评估可靠性、性能和成本来进行折中的选择。</p>
+<p>RAID 思想从提出后就广泛被业界所接纳，存储工业界投入了大量的时间和财力来研究和开发相关产品。而且，随着处理器、内存、计算机接口等技术的不断发展， RAID 不断地发展和革新，在计算机存储领域得到了广泛的应用，从高端系统逐渐延伸到普通的中低端系统。 RAID 技术如此流行，源于其具有显著的特征和优势，基本可以满足大部分的数据存储需求。总体说来， RAID 主要优势有如下几点：<br>(1) 大容量<br>　　这是 RAID 的一个显然优势，它扩大了磁盘的容量，由多个磁盘组成的 RAID 系统具有海量的存储空间。现在单个磁盘的容量就可以到 1TB 以上，这样 RAID 的存储容量就可以达到 PB 级，大多数的存储需求都可以满足。一般来说， RAID 可用容量要小于所有成员磁盘的总容量。不同等级的 RAID 算法需要一定的冗余开销，具体容量开销与采用算法相关。如果已知 RAID 算法和容量，可以计算出 RAID 的可用容量。通常， RAID 容量利用率在 50% ~ 90% 之间。<br>(2) 高性能<br>　　 RAID 的高性能受益于数据条带化技术。单个磁盘的 I&#x2F;O 性能受到接口、带宽等计算机技术的限制，性能往往很有 限，容易成为系统性能的瓶颈。通过数据条带化， RAID 将数据 I&#x2F;O 分散到各个成员磁盘上，从而获得比单个磁盘成倍增长的聚合 I&#x2F;O 性能。<br>(3) 可靠性<br>　　可用性和可靠性是 RAID 的另一个重要特征。从理论上讲，由多个磁盘组成的 RAID 系统在可靠性方面应该比单个磁盘要差。这里有个隐含假定：单个磁盘故障将导致整个 RAID 不可用。 RAID 采用镜像和数据校验等数据冗余技术，打破了这个假定。 镜像是最为原始的冗余技术，把某组磁盘驱动器上的数据完全复制到另一组磁盘驱动器上，保证总有数据副本可用。 比起镜像 50% 的冗余开销 ，数据校验要小很多，它利用校验冗余信息对数据进行校验和纠错。 RAID 冗余技术大幅提升数据可用性和可靠性，保证了若干磁盘出错时，不 会导致数据的丢失，不影响系统的连续运行。<br>(4) 可管理性<br>　　实际上， RAID 是一种虚拟化技术，它对多个物理磁盘驱动器虚拟成一个大容量的逻辑驱动器。对于外部主机系统来说， RAID 是一个单一的、快速可靠的大容量磁盘驱动器。这样，用户就可以在这个虚拟驱动器上来组织和存储应用系统数据。 从用户应用角度看，可使存储系统简单易用，管理也很便利。 由于 RAID 内部完成了大量的存储管理工作，管理员只需要管理单个虚拟驱动器，可以节省大量的管理工作。 RAID 可以动态增减磁盘驱动器，可自动进行数据校验和数据重建，这些都可以 大大简化管理工作。</p>
+<p><strong>### 关键技术</strong></p>
+<p>&gt; 镜像</p>
+<p>镜像是一种冗余技术，为磁盘提供保护功能，防止磁盘发生故障而造成数据丢失。对于 RAID 而言，采用镜像技术 典型地 将会同时在阵列中产生两个完全相同的数据副本，分布在两个不同的磁盘驱动器组上。镜像提供了完全的数据冗余能力，当一个数据副本失效不可用时，外部系统仍可正常访问另一副本，不会对应用系统运行和性能产生影响。而且，镜像不需要额外的计算和校验，故障修复非常快，直接复制即可。镜像技术可以从多个副本进行并发读取数据，提供更高的读 I&#x2F;O 性能，但不能并行写数据，写多个副本会会导致一定的 I&#x2F;O 性能降低。</p>
+<p>镜像技术提供了非常高的数据安全性，其代价也是非常昂贵的，需要　　　至少双倍的存储空间。高成本限制了镜像的广泛应用，主要应用于至关重要的数据保护，这种场合下数据丢失会造成巨大的损失。另外，镜像通过 “ 拆分 ” 能获得特定时间点的上数据快照，从而可以实现一种备份窗口几乎为零的数据备份技术。</p>
+<p>&gt; 数据条带</p>
+<p>磁盘存储的性能瓶颈在于磁头寻道定位，它是一种慢速机械运动，无法与高速的 CPU 匹配。再者，单个磁盘驱动器性能存在物理极限， I&#x2F;O 性能非常有限。 RAID 由多块磁盘组成，数据条带技术将数据以块的方式分布存储在多个磁盘中，从而可以对数据进行并发处理。这样写入和读取数据就可以在多个磁盘上同时进行，并发产生非常高的聚合 I&#x2F;O ，有效提高了整体 I&#x2F;O 性能，而且具有良好的线性扩展性。这对大容量数据尤其显著，如果不分块，数据只能按顺序存储在磁盘阵列的磁盘上，需要时再按顺序读取。而通过条带技术，可获得数倍与顺序访问的性能提升。</p>
+<p>数据条带技术的分块大小选择非常关键。条带粒度可以是一个字节至几 KB 大小，分块越小，并行处理能力就越强，数据存取速度就越高，但同时就会增加块存取的随机性和块寻址时间。实际应用中，要根据数据特征和需求来选择合适的分块大小，在数据存取随机性和并发处理能力之间进行平衡，以争取尽可能高的整体性能。</p>
+<p>数据条带是基于提高 I&#x2F;O 性能而提出的，也就是说它只关注性能， 而对数据可靠性、可用性没有任何改善。实际上，其中任何一个数据条带损坏都会导致整个数据不可用，采用数据条带技术反而增加了数据发生丢失的概念率。</p>
+<p>&gt; 数据校验</p>
+<p>镜像具有高安全性、高读性能，但冗余开销太昂贵。数据条带通过并发性来大幅提高性能，然而对数据安全性、可靠性未作考虑。数据校验是一种冗余技术，它用校验数据来提供数据的安全，可以检测数据错误，并在能力允许的前提下进行数据重构。相对镜像，数据校验大幅缩减了冗余开销，用较小的代价换取了极佳的数据完整性和可靠性。数据条带技术提供高性能，数据校验提供数据安全性， RAID 不同等级往往同时结合使用这两种技术。</p>
+<p>采用数据校验时， RAID 要在写入数据同时进行校验计算，并将得到的校验数据存储在 RAID 成员磁盘中。校验数据可以集中保存在某个磁盘或分散存储在多个不同磁盘中，甚至校验数据也可以分块，不同 RAID 等级实现各不相同。当其中一部分数据出错时，就可以对剩余数据和校验数据进行反校验计算重建丢失的数据。校验技术相对于镜像技术的优势在于节省大量开销，但由于每次数据读写都要进行大量的校验运算，对计算机的运算速度要求很高，必须使用硬件 RAID 控制器。在数据重建恢复方面，检验技术比镜像技术复杂得多且慢得多。</p>
+<p>海明校验码和 异或校验是两种最为常用的 数据校验算法。海明校验码是由理查德 · 海明提出的，不仅能检测错误，还能给出错误位置并自动纠正。海明校验的基本思想是：将有效信息按照某种规律分成若干组，对每一个组作奇偶测试并安排一个校验位，从而能提供多位检错信息，以定位错误点并纠正。可见海明校验实质上是一种多重奇偶校验。异或校验通过异或逻辑运算产生，将一个有效信息与一个给定的初始值进行异或运算，会得到校验信息。如果有效信息出现错误，通过校验信息与初始值的异或运算能还原正确的有效信息。</p>
+<p><strong>## 常见RAID类型</strong></p>
+<p>&gt; 常见5种RAID类型对比，n位磁盘数量，详细介绍可参考扩展阅读</p>
+<table>
+<thead>
+<tr>
+<th>RAID 等级</th>
+<th>RAID0</th>
+<th>RAID1</th>
+<th>RAID5</th>
+<th>RAID6</th>
+<th>RAID10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>别名</td>
+<td>条带</td>
+<td>镜像</td>
+<td>分布奇偶校验条带</td>
+<td>双重奇偶校验条带</td>
+<td>镜像加条带</td>
+</tr>
+<tr>
+<td>容错性</td>
+<td>无</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>冗余类型</td>
+<td>无</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>热备盘</td>
+<td>无</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>读性能</td>
+<td>高</td>
+<td>低</td>
+<td>高</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>随机写性能</td>
+<td>高</td>
+<td>低</td>
+<td>一般</td>
+<td>低</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>连续写性能</td>
+<td>高</td>
+<td>低</td>
+<td>低</td>
+<td>低</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>需要磁盘数</td>
+<td>n≥1</td>
+<td>2n (n≥1)</td>
+<td>n≥3</td>
+<td>n≥4</td>
+<td>2n(n≥2)≥4</td>
+</tr>
+<tr>
+<td>可用容量</td>
+<td>全部</td>
+<td>50%</td>
+<td>(n-1)&#x2F;n</td>
+<td>(n-2)&#x2F;n</td>
+<td>50%</td>
+</tr>
+</tbody></table>
+<p><strong>## RAID 等级</strong></p>
+<p><strong>### 标准 RAID 等级</strong></p>
+<p>SNIA 、 Berkeley 等组织机构把 RAID0 、 RAID1 、 RAID2 、 RAID3 、 RAID4 、 RAID5 、 RAID6 七个等级定为标准的 RAID 等级，这也被业界和学术界所公认。标准等级是最基本的 RAID 配置集合，单独或综合利用数据条带、镜像和数据校验技术。标准 RAID 可以组合，即 RAID 组合等级，满足 对性能、安全性、可靠性要求更高的存储应用需求。</p>
+<p><strong>### JBOD</strong></p>
+<p>JBOD （ Just a Bunch Of Disks ）不是标准的 RAID 等级，它通常用来表示一个没有控制软件提供协调控制的磁盘集合。 JBOD 将多个物理磁盘串联起来，提供一个巨大的逻辑磁盘。 JBOD 的数据存放机制是由第一块磁盘开始按顺序往后存储，当前磁盘存储空间用完后，再依次往后面的磁盘存储数据。 JBOD 存储性能完全等同于单块磁盘，而且也不提供数据安全保护。它只是简单提供一种扩展存储空间的机制， JBOD 可用存储容量等于所有成员磁盘的存储空间之和。目前 JBOD 常指磁盘柜，而不论其是否提供 RAID 功能。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic3.zhimg.com/50/4cfb57a1c97a239af039a04697baab27_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic3.zhimg.com/80/4cfb57a1c97a239af039a04697baab27_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID0</strong></p>
+<p>RAID0 是一种简单的、无数据校验的数据条带化技术。实际上不是一种真正的 RAID ，因为它并不提供任何形式的冗余策略。 RAID0 将所在磁盘条带化后组成大容量的存储空间，将数据分散存储在所有磁盘中，以独立访问方式实现多块磁盘的并读访问。由于可以并发执行 I&#x2F;O 操作，总线带宽得到充分利用。再加上不需要进行数据校验， RAID0 的性能在所有 RAID 等级中是最高的。理论上讲，一个由 n 块磁盘组成的 RAID0 ，它的读写性能是单个磁盘性能的 n 倍，但由于总线带宽等多种因素的限制，实际的性能提升低于理论值。</p>
+<p>RAID0 具有低成本、高读写性能、 100% 的高存储空间利用率等优点，但是它不提供数据冗余保护，一旦数据损坏，将无法恢复。 因此， RAID0 一般适用于对性能要求严格但对数据安全性和可靠性不高的应用，如视频、音频存储、临时数据缓存空间等。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic3.zhimg.com/50/0ab608c6eef8e74f926f9c1e89753a99_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic3.zhimg.com/80/0ab608c6eef8e74f926f9c1e89753a99_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID1</strong></p>
+<p>RAID1 称为镜像，它将数据完全一致地分别写到工作磁盘和镜像 磁盘，它的磁盘空间利用率为 50% 。 RAID1 在数据写入时，响应时间会有所影响，但是读数据的时候没有影响。 RAID1 提供了最佳的数据保护，一旦工作磁盘发生故障，系统自动从镜像磁盘读取数据，不会影响用户工作。</p>
+<p>RAID1 与 RAID0 刚好相反，是为了增强数据安全性使两块 磁盘数据呈现完全镜像，从而达到安全性好、技术简单、管理方便。 RAID1 拥有完全容错的能力，但实现成本高。 RAID1 应用于对顺序读写性能要求高以及对数据保护极为重视的应用，如对邮件系统的数据保护。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/50/595a2d853196c5b38ceee5d98032baeb_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/80/595a2d853196c5b38ceee5d98032baeb_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID5</strong></p>
+<p>RAID5 应该是目前最常见的 RAID 等级，它的原理与 RAID4 相似，区别在于校验数据分布在阵列中的所有磁盘上，而没有采用专门的校验磁盘。对于数据和校验数据，它们的写操作可以同时发生在完全不同的磁盘上。因此， RAID5 不存在 RAID4 中的并发写操作时的校验盘性能瓶颈问题。另外， RAID5 还具备很好的扩展性。当阵列磁盘 数量增加时，并行操作量的能力也随之增长，可比 RAID4 支持更多的磁盘，从而拥有更高的容量以及更高的性能。</p>
+<p>RAID5 的磁盘上同时存储数据和校验数据，数据块和对应的校验信息存保存在不同的磁盘上，当一个数据盘损坏时，系统可以根据同一条带的其他数据块和对应的校验数据来重建损坏的数据。与其他 RAID 等级一样，重建数据时， RAID5 的性能会受到较大的影响。</p>
+<p>RAID5 兼顾存储性能、数据安全和存储成本等各方面因素，它可以理解为 RAID0 和 RAID1 的折中方案，是目前综合性能最佳的数据保护解决方案。 RAID5 基本上可以满足大部分的存储应用需求，数据中心大多采用它作为应用数据的保护方案。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/50/8ff9b2beeaf295dd1f41d98af50d1ebf_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/80/8ff9b2beeaf295dd1f41d98af50d1ebf_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID6</strong></p>
+<p>前面所 述的各个 RAID 等级都只能保护因单个磁盘失效而造成的数据丢失。如果两个磁盘同时发生故障，数据将无法恢复。 RAID6 引入双重校验的概念，它可以保护阵列中同时出现两个磁盘失效时，阵列仍能够继续工作，不会发生数据丢失。 RAID6 等级是在 RAID5 的基础上为了进一步增强数据保护而设计的一种 RAID 方式，它可以看作是一种扩展的 RAID5 等级。</p>
+<p>RAID6 不仅要支持数据的恢复，还要支持校验数据的恢复，因此实现代价很高，控制器的设计也比其他等级更复杂、更昂贵。 RAID6 思想最常见的实现方式是采用两个独立的校验算法，假设称为 P 和 Q ，校验数据可以分别存储在两个不同的校验盘上，或者分散存储在所有成员磁盘中。当两个磁盘同时失效时，即可通过求解两元方程来重建两个磁盘上的数据。</p>
+<p>RAID6 具有快速的读取性能、更高的容错能力。但是，它的成本要高于 RAID5 许多，写性能也较差，并有设计和实施非常复杂。因此， RAID6 很少得到实际应用，主要用于对数据安全等级要求非常高的场合。它一般是替代 RAID10 方案的经济性选择</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic2.zhimg.com/50/e3d61ad32bd894385be86e3c1fcc8ff7_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic2.zhimg.com/80/e3d61ad32bd894385be86e3c1fcc8ff7_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID 组合等级</strong></p>
+<p>标准 RAID 等级各有优势和不足。自然地，我们想到把多个 RAID 等级组合起来，实现优势互补，弥补相互的不足，从而达到在性能、数据安全性等指标上更高的 RAID 系统。目前在业界和学术研究中提到的 RAID 组合等级主要有 RAID00 、 RAID01 、 RAID10 、 RAID100 、 RAID30 、 RAID50 、 RAID53 、 RAID60 ，但实际得到较为广泛应用的只有 RAID01 和 RAID10 两个等级。当然，组合等级的实现成本一般都非常昂贵，只是在 少数特定场合应用。</p>
+<p><strong>### RAID10 和 RAID01</strong></p>
+<p>一些文献把这两种 RAID 等级看作是等同的，本文认为是不同的。 RAID01 是先做条带化再作镜像，本质是对物理磁盘实现镜像；而 RAID10 是先做镜像再作条带化，是对虚拟磁盘实现镜像。相同的配置下，通常 RAID01 比 RAID10 具有更好的容错能力。</p>
+<p>RAID01 兼备了 RAID0 和 RAID1 的优点，它先用两块磁盘建立镜像，然后再在镜像内部做条带化。 RAID01 的数据将同时写入到两个磁盘阵列中，如果其中一个阵列损坏，仍可继续工作，保证数据安全性的同时又提高了性能。 RAID01 和 RAID10 内部都含有 RAID1 模式，因此整体磁盘利用率均仅为 50% 。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic2.zhimg.com/50/29966aef58264fa7eabd94b2baa2fe43_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic2.zhimg.com/80/29966aef58264fa7eabd94b2baa2fe43_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pica.zhimg.com/50/b522ccd35950243675d164bbdb36011e_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pica.zhimg.com/80/b522ccd35950243675d164bbdb36011e_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID 50</strong></p>
+<p>RAID 5与RAID 0的组合，先作RAID 5，再作RAID 0，也就是对多组RAID 5彼此构成Stripe访问。由于RAID 50是以RAID 5为基础，而RAID 5至少需要3颗硬盘，因此要以多组RAID 5构成RAID 50，至少需要6颗硬盘。以RAID 50最小的6颗硬盘配置为例，先把6颗硬盘分为2组，每组3颗构成RAID 5，如此就得到两组RAID 5，然后再把两组RAID 5构成RAID 0。</p>
+<p>RAID 50在底层的任一组或多组RAID 5中出现1颗硬盘损坏时，仍能维持运作，不过如果任一组RAID 5中出现2颗或2颗以上硬盘损毁，整组RAID 50就会失效。</p>
+<p>RAID 50由于在上层把多组RAID 5构成Stripe，性能比起单纯的RAID 5高，容量利用率比RAID5要低。比如同样使用9颗硬盘，由各3颗RAID 5再组成RAID 0的RAID 50，每组RAID 5浪费一颗硬盘，利用率为(1-3&#x2F;9)，RAID 5则为(1-1&#x2F;9)。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic3.zhimg.com/50/8c26881d67c3fc5d88b2172bbed85f48_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic3.zhimg.com/80/8c26881d67c3fc5d88b2172bbed85f48_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>### RAID 60</strong></p>
+<p>RAID 6与RAID 0的组合：先作RAID 6，再作RAID 0。换句话说，就是对两组以上的RAID 6作Stripe访问。RAID 6至少需具备4颗硬盘，所以RAID 60的最小需求是8颗硬盘。</p>
+<p>由于底层是以RAID 6组成，所以RAID 60可以容许任一组RAID 6中损毁最多2颗硬盘，而系统仍能维持运作；不过只要底层任一组RAID 6中损毁3颗硬盘，整组RAID 60就会失效，当然这种情况的概率相当低。</p>
+<p>比起单纯的RAID 6，RAID 60的上层通过结合多组RAID 6构成Stripe访问，因此性能较高。不过使用门槛高，而且容量利用率低是较大的问题。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/50/7d1922f356f6e2be74cdae8c3cc8b2ac_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/80/7d1922f356f6e2be74cdae8c3cc8b2ac_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>## 关于RAID参数调优</strong></p>
+<p>&gt; 通常情况下建议系统(RAID1)与数据(RAID[5|10])分离，这里引用@叶金荣老师的一段话</p>
+<p>\1. 使用SSD或者PCIe SSD设备，至少获得数百倍甚至万倍的IOPS提升<br>\2. 购置阵列卡同时配备CACHE及BBU模块，可明显提升IOPS（主要是指机械盘，SSD或PCIe SSD除外。同时需要定期检查CACHE及BBU模块的健康状况，确保意外时不至于丢失数据）<br>\3. 有阵列卡时，设置阵列写策略为WB，甚至FORCE WB（若有双电保护，或对数据安全性要求不是特别高的话），严禁使用WT策略。并且闭阵列预读策略<br>\4. 尽可能选用RAID-10，而非RAID-5(<code>这句话有待商榷</code>)<br>\5. 使用机械盘的话，尽可能选择高转速的，例如选用15KRPM，而不是7.2KRPM的盘，不差几个钱的；</p>
+<p><strong>## SSD阵列卡方案优化</strong></p>
+<p>&gt; 感谢@小米noops运维团队，详细实验数据请参考扩展阅读</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/50/c4132b7b42d2758db39d1644ee5a3963_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic1.zhimg.com/80/c4132b7b42d2758db39d1644ee5a3963_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pica.zhimg.com/50/c76b4b4d0d3877d242ccbc037e3c3aff_720w.jpg?source=1940ef5c" alt="img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pica.zhimg.com/80/c76b4b4d0d3877d242ccbc037e3c3aff_1440w.jpg?source=1940ef5c" alt="img"></p>
+<p><strong>性能测试结论</strong></p>
+<p>性能测试显示，相同容量的R50和R10性能接近：其中小块文件的随机读R50要全面好于R10，随机写4K虽然R50和R10差距在28%，但是块增大后R50要全面优于R10。顺序读写方面，R50和R10十分接近。</p>
+<p>容错方面，R50接近R10：第二块盘容错率R50十分接近R10，两者相差30%。R10的优势主要是在有一定的概率提供第三、甚至第四块磁盘的容错率，但是考虑到并非100%容错，因此从容错角度来看R50虽然和R10有一些差距，但也已体现出较好的容错率，至少优于R5。而且R50搭配灵活，甚至可以指定3组R5以达到最大3块磁盘的容错；</p>
+<p>成本方面，R50有很大优势：按这个配置计算R50只有R10的3&#x2F;4。</p>
+<p><strong>总结</strong></p>
+<p>RAID 50提供了接近RAID 10性能、可用性以及接近RAID 5成本的特性，具有较好的整体性价比优势，所以考虑使用RAID 50替换RAID 10吧</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">andrew</div><div class="post-copyright__author_desc">记录学习的技能和遇到的问题</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/')">RAID技术简介</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=RAID技术简介&amp;url=http://example.com/2023/08/16/RAID%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">分子美食家的博客</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"></div></div></div><div class="post_share"><div class="social-share" data-image="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/16/%E7%BE%A4%E6%99%96%E5%8F%98%E8%BA%ABairdrop/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">群晖变身airdrop</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/16/zerotier/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">zerotier</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">做自己爱做的事，爱自己在做的事！</div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><div class="content"><a class="title" href="/2023/08/29/minio%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%852/" title="minio分布式安装2">minio分布式安装2</a><time datetime="2023-08-29T02:58:43.000Z" title="发表于 2023-08-29 10:58:43">2023-08-29</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2023/08/28/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BB%A5%E5%8F%8A%E9%80%89%E5%9E%8B/" title="文件系统以及选型">文件系统以及选型</a><time datetime="2023-08-28T08:43:52.000Z" title="发表于 2023-08-28 16:43:52">2023-08-28</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2023/08/23/centos%E5%8D%87%E7%BA%A7git/" title="centos升级git">centos升级git</a><time datetime="2023-08-23T09:44:41.000Z" title="发表于 2023-08-23 17:44:41">2023-08-23</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2023/08/23/pc%E7%94%B5%E6%BA%90/" title="pc电源">pc电源</a><time datetime="2023-08-23T09:18:06.000Z" title="发表于 2023-08-23 17:18:06">2023-08-23</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2023/08/23/gitlab-runner/" title="gitlab-runner">gitlab-runner</a><time datetime="2023-08-23T03:28:43.000Z" title="发表于 2023-08-23 11:28:43">2023-08-23</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2023 By <a class="footer-bar-link" href="/" title="andrew" target="_blank">andrew</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">74</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">0</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/server/" style="font-size: 0.88rem;">server<sup>29</sup></a><a href="/tags/server-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 0.88rem;">server,内网穿透<sup>2</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 0.88rem;">日常<sup>1</sup></a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8A%98%E8%85%BE/" style="font-size: 0.88rem;">服务器折腾<sup>3</sup></a><a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 0.88rem;">面试<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.6.7",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 andrew 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
