@@ -2547,6 +2547,7 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
   <entry>
     <title>some-ai-projects</title>
     <url>/2023/10/16/some-ai-projects/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p><a href="https://github.com/luban-agi/Awesome-Domain-LLM">https://github.com/luban-agi/Awesome-Domain-LLM</a><br><a href="https://github.com/easychen/one-person-businesses-methodology">https://github.com/easychen/one-person-businesses-methodology</a><br><a href="https://github.com/leandromoreira/digital_video_introduction/blob/master/README-cn.md">https://github.com/leandromoreira/digital_video_introduction/blob/master/README-cn.md</a>  </p>
+]]></content>
   </entry>
 </search>
