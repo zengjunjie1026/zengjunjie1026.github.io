@@ -2564,6 +2564,9 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
 
 <p>下次需要到香河安装istoreos openwrt路由设备即可异地组网。大大扩展zerotier的可玩性。</p>
 <p>关闭wifi</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ip <span class="built_in">link</span> <span class="built_in">set</span> wlan0 down</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ip <span class="built_in">link</span> <span class="built_in">set</span> wlan0 down</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>问题是zerotier的服务器被墙了，至少ipv4被墙了，ipv6还行，但是延迟很大，400ms<br>真是日了狗了</p>
+]]></content>
   </entry>
 </search>
