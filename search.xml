@@ -2550,4 +2550,15 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
     <content><![CDATA[<p><a href="https://github.com/luban-agi/Awesome-Domain-LLM">https://github.com/luban-agi/Awesome-Domain-LLM</a><br><a href="https://github.com/easychen/one-person-businesses-methodology">https://github.com/easychen/one-person-businesses-methodology</a><br><a href="https://github.com/leandromoreira/digital_video_introduction/blob/master/README-cn.md">https://github.com/leandromoreira/digital_video_introduction/blob/master/README-cn.md</a>  </p>
 ]]></content>
   </entry>
+  <entry>
+    <title>zerotier</title>
+    <url>/2023/10/23/zerotier-1/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -I FORWARD -i ztqu3pfdod -j ACCEPT</span><br><span class="line">iptables -I FORWARD -o ztqu3pfdod -j ACCEPT</span><br><span class="line">iptables -t nat -I POSTROUTING -o ztqu3pfdod -j MASQUERADE</span><br></pre></td></tr></table></figure>
+
+<p>zerotier的问题</p>
+<p>同一局域网的机器有的延迟400ms有的延迟20ms。这也太奇怪了吧。可能是路由表的原因。</p>
+<p>将两个局域网打通。目前只成功了一半，香河的路由不通。但是北京的是可以的，延迟在10ms以内，至少把服务器放在北京延迟非常低。。。。</p>
+<p>但是北京到香河的延迟都是400ms，昨天还有7ms的延迟，双向不对等的延迟是什么鬼啊</p>
+]]></content>
+  </entry>
 </search>
