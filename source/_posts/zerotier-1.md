@@ -45,3 +45,6 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 sudo ip link set wlan0 down
 
 ```
+
+问题是zerotier的服务器被墙了，至少ipv4被墙了，ipv6还行，但是延迟很大，400ms
+真是日了狗了
