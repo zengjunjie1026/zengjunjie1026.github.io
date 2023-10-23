@@ -2553,12 +2553,17 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
   <entry>
     <title>zerotier</title>
     <url>/2023/10/23/zerotier-1/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -I FORWARD -i ztqu3pfdod -j ACCEPT</span><br><span class="line">iptables -I FORWARD -o ztqu3pfdod -j ACCEPT</span><br><span class="line">iptables -t nat -I POSTROUTING -o ztqu3pfdod -j MASQUERADE</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -I FORWARD -i ztly56xsfh -j ACCEPT</span><br><span class="line">iptables -I FORWARD -o ztly56xsfh -j ACCEPT</span><br><span class="line">iptables -t nat -I POSTROUTING -o ztly56xsfh -j MASQUERADE</span><br></pre></td></tr></table></figure>
 
 <p>zerotier的问题</p>
 <p>同一局域网的机器有的延迟400ms有的延迟20ms。这也太奇怪了吧。可能是路由表的原因。</p>
 <p>将两个局域网打通。目前只成功了一半，香河的路由不通。但是北京的是可以的，延迟在10ms以内，至少把服务器放在北京延迟非常低。。。。</p>
 <p>但是北京到香河的延迟都是400ms，昨天还有7ms的延迟，双向不对等的延迟是什么鬼啊</p>
-]]></content>
+<p>查看完整路由表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">route -n</span><br><span class="line"></span><br><span class="line">andrew@macintosh:~<span class="comment">#route -n</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.2.1     0.0.0.0         UG    100    0        0 enp24s0</span><br><span class="line">0.0.0.0         192.168.2.1     0.0.0.0         UG    1002   0        0 enp24s0</span><br><span class="line">10.147.20.0     0.0.0.0         255.255.255.0   U     0      0        0 ztly56xsfh</span><br><span class="line">172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">172.18.0.0      0.0.0.0         255.255.0.0     U     0      0        0 br-9d21bdcc9562</span><br><span class="line">192.168.2.0     0.0.0.0         255.255.255.0   U     100    0        0 enp24s0</span><br><span class="line">192.168.2.0     0.0.0.0         255.255.255.0   U     1002   0        0 enp24s0</span><br><span class="line">192.168.2.0     10.147.20.1     255.255.255.0   UG    5000   0        0 ztly56xsfh</span><br><span class="line">192.168.31.0    10.147.20.203   255.255.255.0   UG    5000   0        0 ztly56xsfh</span><br></pre></td></tr></table></figure>
+
+<p>下次需要到香河安装istoreos openwrt路由设备即可异地组网。大大扩展zerotier的可玩性。</p>
+<p>关闭wifi</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ip <span class="built_in">link</span> <span class="built_in">set</span> wlan0 down</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
   </entry>
 </search>
