@@ -1,0 +1,22 @@
+stages:
+  - deploy
+
+
+deploy:
+  stage: deploy
+  tags:
+    - eur
+  script:
+    - echo "This is the test job"
+    - ls -alh
+    - ps -ef | grep python
+    - nohup ps -ef |grep gitlab| grep hexo | grep -v grep | awk '{print $2}' | xargs kill -9 > /dev/null 2>&1&
+    - nohup /opt/module/miniconda3/bin/python all_house.py > /dev/null 2>&1&
+    - nohup cd /var/www/zengjunjie1026.github.io && git pull && hexo s  > /dev/null 2>&1&
+
+
+
+
+
+
+
