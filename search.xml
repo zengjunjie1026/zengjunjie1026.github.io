@@ -988,7 +988,8 @@
   <entry>
     <title>hexo-back-up-bug</title>
     <url>/2023/10/16/hexo-back-up-bug/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>修改hexo-git-backup的git.js</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">var</span> t <span class="keyword">in</span> repo)&#123;</span><br><span class="line">        commands.<span class="title function_">push</span>([<span class="string">&#x27;push&#x27;</span>, <span class="string">&#x27;-u&#x27;</span>, t,   repo[t].<span class="property">branch</span>, <span class="string">&#x27;--force&#x27;</span>]);</span><br><span class="line">		<span class="comment">//commands.push([&#x27;push&#x27;, &#x27;-u&#x27;, t, &#x27;master:&#x27; + repo[t].branch, &#x27;--force&#x27;]);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>hive cheatsheet</title>
@@ -2604,6 +2605,16 @@ sum(cost) over(PARTITION BY name ORDER BY orderdate ROWS BETWEEN CURRENT ROW and
 ]]></content>
       <tags>
         <tag>日常吐槽</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>truenas scale 10000mbps服务器搭建完成</title>
+    <url>/2023/10/24/truenas-scale-10000mbps%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%88%90/</url>
+    <content><![CDATA[<p><img src="/../img/truenas-network.png" alt="Alt text"></p>
+<p>群晖不支持买的10G网卡，但是truenas完美支持，目前最快能跑到3.27G的带宽，以后加两块ssd做缓存试试能跑到万兆不，哈哈</p>
+]]></content>
+      <tags>
+        <tag>服务器</tag>
       </tags>
   </entry>
 </search>
